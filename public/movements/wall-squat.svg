@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 480" role="img" aria-labelledby="title desc">
+  <title id="title">Wall squat movement reference</title>
+  <desc id="desc">Stylized athlete supported against a wall in a squat.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#112340"/>
+      <stop offset="100%" stop-color="#d6a52f"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="480" rx="36" fill="url(#bg)"/>
+  <rect x="490" y="88" width="20" height="300" rx="10" fill="#f7f9ff" fill-opacity=".6"/>
+  <circle cx="404" cy="116" r="28" fill="#fff3ea"/>
+  <path d="M374 146h62l30 96-34 14-16-52-28 48-48 20-14-32 42-20z" fill="#f2c14a"/>
+  <path d="M340 274l58 26 18 114h-42l-14-84-30-10zM404 304l44 110h42l-48-122z" fill="#081325"/>
+</svg>

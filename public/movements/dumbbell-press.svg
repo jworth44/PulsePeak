@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 480" role="img" aria-labelledby="title desc">
+  <title id="title">Dumbbell press movement reference</title>
+  <desc id="desc">Stylized athlete pressing dumbbells from a bench.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#081325"/>
+      <stop offset="100%" stop-color="#f2c14a"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="480" rx="36" fill="url(#bg)"/>
+  <rect x="194" y="326" width="300" height="18" rx="9" fill="#f7f9ff" fill-opacity=".7"/>
+  <circle cx="336" cy="214" r="28" fill="#fff3ea"/>
+  <path d="M292 242h88l42 66-34 18-26-34-22 58h-40l12-60-36 28-24-30 40-38z" fill="#d92b31"/>
+  <path d="M238 186h26v26h-26zM258 176h14v46h-14zM448 186h26v26h-26zM468 176h14v46h-14z" fill="#f7f9ff"/>
+</svg>

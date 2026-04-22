@@ -1,0 +1,10 @@
+node_modules/
+dist/
+artifacts/
+*.log
+server/data/db.json
+.env
+.env.local
+.env.*.local
+API Test Keys.txt
+API Test Keys.txt

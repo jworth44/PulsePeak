@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 480" role="img" aria-labelledby="title desc">
+  <title id="title">Supported split squat movement reference</title>
+  <desc id="desc">Stylized athlete using support during a split squat.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#081325"/>
+      <stop offset="100%" stop-color="#53d37d"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="480" rx="36" fill="url(#bg)"/>
+  <path d="M194 122v292" stroke="#f7f9ff" stroke-linecap="round" stroke-opacity=".65" stroke-width="10"/>
+  <circle cx="330" cy="108" r="30" fill="#fff3ea"/>
+  <path d="M300 144h70l26 82-36 12-14-40-30 42-42 24-18-30 40-24z" fill="#f2c14a"/>
+  <path d="M272 262l44 34-30 118h-42l18-88-28-18zM348 268l54 32 32 114h-42l-28-82-38-26z" fill="#112340"/>
+  <path d="M188 414h280" stroke="#f7f9ff" stroke-linecap="round" stroke-opacity=".55" stroke-width="10"/>
+</svg>
