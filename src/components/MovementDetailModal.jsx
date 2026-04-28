@@ -1,29 +1,161 @@
-import React from "react";
-import { getMovementMedia } from "../../shared/exerciseCatalog";
+import React, { useEffect, useMemo, useState } from "react";
+import { apiRequest } from "../api/client";
+import { useAuth } from "../state/AuthContext";
+import { getGuideStatusLabel, getMovementMedia, resolveMovementVisual } from "../../shared/exerciseCatalog";
 
-export default function MovementDetailModal({ movement, onClose, guidanceLevel = "standard" }) {
-  if (!movement) {
+export default function MovementDetailModal({ movement, movementId, visualModelPreference = "default", onClose }) {
+  const { token } = useAuth();
+  const [fullExerciseRecord, setFullExerciseRecord] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState("");
+  const hasGuideRequest = Boolean(movement || movementId);
+  const expectedName = String(movement?.expectedName || movement?.name || "").trim();
+  const requestedIds = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          [
+            movement?.detailId,
+            movementId,
+            movement?.guideTargetId,
+            movement?.movementId,
+            movement?.id
+          ]
+            .map((value) => String(value || "").trim())
+            .filter(Boolean)
+        )
+      ),
+    [movement?.detailId, movement?.guideTargetId, movement?.id, movement?.movementId, movementId]
+  );
+  const requestedId = requestedIds[0] || "";
+
+  useEffect(() => {
+    if (!token || !requestedIds.length) {
+      setFullExerciseRecord(null);
+      setLoadError("");
+      return;
+    }
+
+    let cancelled = false;
+    setFullExerciseRecord(null);
+    setLoading(true);
+    setLoadError("");
+
+    (async () => {
+      let lastError = "";
+      for (const candidateId of requestedIds) {
+        try {
+          const payload = await apiRequest(`/exercise-library/${candidateId}`, {}, token);
+          const resolvedName = String(payload?.name || "").trim();
+          if (expectedName && resolvedName && resolvedName !== expectedName) {
+            console.warn(`MAPPING_MISMATCH: expected ${expectedName}, got ${resolvedName}`);
+            continue;
+          }
+          if (!cancelled) {
+            setFullExerciseRecord(payload);
+            setLoadError("");
+          }
+          return;
+        } catch (error) {
+          lastError = error.message;
+        }
+      }
+
+      if (!cancelled) {
+        console.warn("MOVEMENT DETAIL LOAD FAILED", requestedIds.join(" -> "), lastError || "Guide not available for this movement");
+        setFullExerciseRecord(null);
+        setLoadError(lastError || "Guide not available for this movement");
+      }
+    })()
+      .finally(() => {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [expectedName, requestedIds, token]);
+
+  const exercise = fullExerciseRecord || movement || null;
+
+  useEffect(() => {
+    if (!exercise) {
+      return;
+    }
+    console.log("MOVEMENT DETAIL FULL RECORD", exercise);
+  }, [exercise]);
+
+  const mediaView = getMovementMedia(exercise || {}, { visualModelPreference });
+  const visual = resolveMovementVisual(exercise || {}, { visualModelPreference });
+  const guideStatusLabel = getGuideStatusLabel(exercise || {}, { visualModelPreference });
+  const equipment = normalizeStringArray(exercise?.equipment);
+  const primaryMuscles = normalizeStringArray(exercise?.primaryMuscles);
+  const secondaryMuscles = normalizeStringArray(exercise?.secondaryMuscles);
+  const commonMistakes = normalizeStringArray(exercise?.commonMistakes);
+  const safetyNotes = normalizeStringArray(exercise?.safetyNotes);
+  const modificationGroups = normalizeModificationGroups(exercise);
+  const stepSequence = normalizeStepSequence(exercise);
+
+  const description = normalizeText(exercise?.whatThisExerciseIs || exercise?.description);
+  const trainingUse = normalizeText(exercise?.trainingUse);
+  const setup = normalizeText(exercise?.setup);
+  const execution = normalizeText(exercise?.howToPerform || exercise?.execution);
+  const breathing = normalizeText(exercise?.breathing);
+  const tempo = normalizeText(exercise?.tempo);
+  const category = normalizeText(exercise?.category);
+  const difficulty = normalizeText(exercise?.difficulty);
+  const movementPattern = normalizeText(exercise?.movementPattern);
+
+  const usesDirectVideo = /\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(mediaView.media?.videoUrl || "");
+  const hasExternalVideo = Boolean(mediaView.media?.videoUrl) && !usesDirectVideo;
+  const textFirstGuide = mediaView.visualLevel !== "full";
+  const hasMediaReference = usesDirectVideo || visual.mode === "image" || hasExternalVideo;
+
+  const requiredFieldGaps = useMemo(
+    () =>
+      [
+        !description && "description",
+        !setup && "setup",
+        !execution && "execution",
+        !primaryMuscles.length && "primaryMuscles",
+        (stepSequence.length < 4 || stepSequence.length > 5) && "stepSequence"
+      ].filter(Boolean),
+    [description, execution, primaryMuscles.length, setup, stepSequence.length]
+  );
+
+  useEffect(() => {
+    if (requiredFieldGaps.length) {
+      console.warn("MOVEMENT DETAIL REQUIRED FIELDS MISSING", exercise?.id || exercise?.name || requestedId, requiredFieldGaps);
+    }
+  }, [exercise?.id, exercise?.name, requestedId, requiredFieldGaps]);
+
+  const visibleSteps = stepSequence.slice(0, 5);
+  const hasMuscleData = primaryMuscles.length || secondaryMuscles.length;
+  const hasModificationData =
+    modificationGroups.adjustments.length || modificationGroups.easierOptions.length || modificationGroups.progressions.length;
+  const hasUsableGuideContent = Boolean(description || setup || execution || primaryMuscles.length || visibleSteps.length);
+
+  if (!hasGuideRequest) {
     return null;
   }
 
-  const mediaView = getMovementMedia(movement);
-  const equipment = Array.isArray(movement.equipment) ? movement.equipment : [];
-  const primaryMuscles = Array.isArray(movement.primaryMuscles) ? movement.primaryMuscles : [];
-  const secondaryMuscles = Array.isArray(movement.secondaryMuscles) ? movement.secondaryMuscles : [];
-  const cues = Array.isArray(movement.cues) ? movement.cues : [];
-  const commonMistakes = Array.isArray(movement.commonMistakes) ? movement.commonMistakes : [];
-  const safetyNotes = Array.isArray(movement.safetyNotes) ? movement.safetyNotes : [];
-  const modifications = Array.isArray(movement.modifications) ? movement.modifications : [];
-  const instructions = Array.isArray(movement.instructions) ? movement.instructions : [];
-  const sequenceSteps = [
-    { key: "start", title: "Start", support: "Set your position and brace before the rep starts." },
-    { key: "mid", title: "Mid", support: "Move into the working range without rushing." },
-    { key: "peak", title: "Peak", support: "Own the strongest part of the rep with control." },
-    { key: "finish", title: "Finish", support: "Return cleanly and reset for the next rep." }
-  ];
-  const showFullGuidance = guidanceLevel === "full";
-  const showStandardGuidance = guidanceLevel !== "minimal";
-  const instructionList = guidanceLevel === "minimal" ? instructions.slice(0, 2) : instructions;
+  if (loading && !exercise) {
+    return <GuideStatusModal message="Loading guide..." onClose={onClose} title="Guide loading" />;
+  }
+
+  if (!exercise && !requestedId) {
+    return <GuideStatusModal message="Guide not available." onClose={onClose} title="Guide unavailable" />;
+  }
+
+  if (!exercise) {
+    return <GuideStatusModal message="Guide not available for this movement." onClose={onClose} title="Guide unavailable" />;
+  }
+
+  if (!loading && loadError && !hasUsableGuideContent) {
+    return <GuideStatusModal message="Guide not available for this movement." onClose={onClose} title="Guide unavailable" />;
+  }
 
   return (
     <div className="modal-backdrop" role="presentation" onClick={onClose}>
@@ -33,183 +165,307 @@ export default function MovementDetailModal({ movement, onClose, guidanceLevel =
         role="dialog"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="panel-heading">
-          <div>
+        <div className="panel-heading movement-guide-header">
+          <div className="movement-guide-header-copy">
             <p className="section-label">Movement guide</p>
-            <h3>{movement.name}</h3>
+            <h3 className="movement-guide-title">{exercise.name}</h3>
+            <div className="movement-guide-header-meta">
+              {category ? <span className="movement-guide-meta-pill">{category}</span> : null}
+              {equipment.length ? <span className="movement-guide-meta-pill">{equipment.join(", ")}</span> : null}
+              {difficulty ? <span className="movement-guide-meta-pill">{difficulty}</span> : null}
+            </div>
           </div>
           <button className="icon-button" type="button" onClick={onClose}>
             Close
           </button>
         </div>
 
-        <div className="movement-hero">
-          <div className="movement-guide-intro">
-            <div className="movement-detail-block">
-              <p className="section-label">Movement snapshot</p>
-              <strong>Use the visual sequence first, then run the set with the cues below.</strong>
-              <p className="support-copy">
-                {mediaView.hasVideo
-                  ? "Video sits at the top of the guide when it is available so you can confirm the movement quickly."
-                  : mediaView.hasThumbnail
-                    ? "Reference imagery is ready for this movement, with the written cues keeping the rep quality sharp."
-                    : "This guide is media-ready, so the same layout already supports full visuals later without changing how you use it now."}
-              </p>
-            </div>
-            <div className="movement-meta-grid">
-              <div className="insight-chip">
-                <strong>Category</strong>
-                <p className="support-copy">{movement.category}</p>
-              </div>
-              <div className="insight-chip">
-                <strong>Difficulty</strong>
-                <p className="support-copy">{movement.difficulty}</p>
-              </div>
-              <div className="insight-chip">
-                <strong>Equipment</strong>
-                <p className="support-copy">{equipment.join(", ") || "No equipment"}</p>
-              </div>
-              <div className="insight-chip">
-                <strong>Primary muscles</strong>
-                <p className="support-copy">{primaryMuscles.join(", ") || "General"}</p>
-              </div>
-              <div className="insight-chip">
-                <strong>Movement quality</strong>
-                <p className="support-copy">{movement.rehabSafe ? "Joint-friendly option" : "Standard loading option"}</p>
-              </div>
-              <div className="insight-chip">
-                <strong>Media status</strong>
-                <p className="support-copy">
-                  {mediaView.mediaStatus === "full"
-                    ? "Full media ready"
-                    : mediaView.mediaStatus === "basic"
-                      ? "Reference visual ready"
-                      : "Structured placeholder ready"}
-                </p>
-              </div>
-            </div>
-          </div>
+        <div className="movement-detail-stack">
+          {loading ? (
+            <article className="movement-detail-block">
+              <p className="section-label">Guide status</p>
+              <p className="support-copy">Loading full exercise guide...</p>
+            </article>
+          ) : null}
 
-          <div className="movement-visual-stack">
-            <div className="movement-image-frame movement-image-panel">
-              <div className="movement-image-header">
-                <span className="movement-image-badge">{mediaView.hasVideo ? "Movement video" : "Movement preview"}</span>
-                <span className="movement-reference-prefix">
-                  {mediaView.hasVideo
-                    ? "Watch one clean rep, then use the cues below."
-                    : mediaView.hasThumbnail
-                      ? "Reference visual"
-                      : "Structured placeholder"}
-                </span>
-              </div>
-              {mediaView.hasVideo ? (
-                <video className="movement-image" controls poster={mediaView.thumbnail || undefined} src={mediaView.media.videoUrl} />
-              ) : mediaView.hasThumbnail ? (
-                <img alt={movement.imageAlt || `${movement.name} preview`} className="movement-image" src={mediaView.thumbnail} />
+          {loadError ? (
+            <article className="movement-detail-block">
+              <p className="section-label">Guide status</p>
+              <p className="support-copy">Unable to load this exercise guide.</p>
+            </article>
+          ) : null}
+
+          <section className="movement-hero-summary-row">
+            <article className="movement-detail-block movement-hero-summary-main">
+              {description ? (
+                <div className="movement-hero-summary-section">
+                  <p className="section-label">What this exercise is</p>
+                  <p className="support-copy">{description}</p>
+                </div>
+              ) : null}
+              {trainingUse ? (
+                <div className="movement-hero-summary-section">
+                  <p className="section-label">Training use</p>
+                  <p className="support-copy">{trainingUse}</p>
+                </div>
+              ) : null}
+            </article>
+
+            <article className="movement-detail-block movement-hero-visual-block">
+              {hasMediaReference ? (
+                <div className="movement-image-frame movement-image-panel">
+                  <div className="movement-image-header">
+                    <span className="movement-image-badge">{usesDirectVideo ? "Movement video" : guideStatusLabel}</span>
+                    <span className="movement-reference-prefix">
+                      {usesDirectVideo
+                        ? "Watch one clean rep, then use the written steps below."
+                        : hasExternalVideo
+                          ? "Open the visual example if you want a quick rep check."
+                          : "Use the exact visual as your reference while you follow the guide."}
+                    </span>
+                  </div>
+                  {usesDirectVideo ? (
+                    <video className="movement-image" controls poster={mediaView.thumbnail || undefined} src={mediaView.media.videoUrl} />
+                  ) : visual.mode === "image" ? (
+                    <img alt={visual.alt} className="movement-image" src={visual.src} />
+                  ) : null}
+                  {hasExternalVideo ? (
+                    <div className="movement-video-actions">
+                      <a className="secondary-button" href={mediaView.media.videoUrl} rel="noreferrer" target="_blank">
+                        Open example video
+                      </a>
+                    </div>
+                  ) : null}
+                </div>
               ) : (
-                <div className="movement-media-placeholder movement-media-placeholder-hero">
-                  <span className="movement-media-placeholder-mark">{mediaView.placeholderInitials}</span>
-                  <strong>{mediaView.placeholderLabel}</strong>
-                  <p>{movement.name}</p>
+                <div className="movement-text-guide-panel movement-text-guide-panel-large">
+                  <small>Text coaching guide</small>
+                  <strong>Full exercise coaching is available</strong>
+                  <p>{trainingUse || movementPattern || "Use the setup, execution, and four-step guide below."}</p>
+                  {primaryMuscles.length ? (
+                    <div className="movement-text-guide-pills">
+                      {primaryMuscles.slice(0, 3).map((muscle) => (
+                        <span className="movement-credibility-pill" key={muscle}>
+                          {muscle}
+                        </span>
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
               )}
-            </div>
+            </article>
+          </section>
 
-            <div className="movement-credibility-strip">
-              <span className="movement-credibility-pill">
-                {movement.rehabSafe ? "Joint-friendly option" : "Matches your current setup"}
-              </span>
-              <span className="movement-credibility-pill">
-                {movement.secondaryMuscles?.length ? `Supports ${movement.secondaryMuscles[0].toLowerCase()}` : "Used in guided training"}
-              </span>
-            </div>
+          {hasMuscleData ? (
+            <article className="movement-detail-block movement-muscles-block">
+              <p className="section-label">Muscles worked</p>
+              <div className="movement-muscles-grid">
+                {primaryMuscles.length ? (
+                  <div className="movement-muscles-primary">
+                    <span className="movement-muscles-label">Primary muscles</span>
+                    <ul className="plan-list movement-muscles-list movement-muscles-primary-text">
+                      {primaryMuscles.map((muscle) => (
+                        <li key={muscle}>{muscle}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+                {secondaryMuscles.length ? (
+                  <div className="movement-muscles-secondary">
+                    <span className="movement-muscles-label">Secondary muscles</span>
+                    <ul className="plan-list movement-muscles-list">
+                      {secondaryMuscles.map((muscle) => (
+                        <li key={muscle}>{muscle}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
+            </article>
+          ) : null}
+
+          {setup ? (
+            <article className="movement-detail-block">
+              <p className="section-label">Setup</p>
+              <p className="support-copy">{setup}</p>
+            </article>
+          ) : null}
+
+          {execution ? (
+            <article className="movement-detail-block movement-perform-block">
+              <p className="section-label">How to perform</p>
+              <p className="support-copy">{execution}</p>
+            </article>
+          ) : null}
+
+          {visibleSteps.length ? (
+            <article className="movement-detail-block">
+              <div className="movement-step-header">
+                <div>
+                  <p className="section-label">Step-by-step</p>
+                  <strong>{textFirstGuide ? "Four coaching checkpoints" : "Visual sequence with coaching cues"}</strong>
+                </div>
+              </div>
+
+              <div className={`movement-sequence-grid ${textFirstGuide ? "movement-sequence-grid-text" : ""}`}>
+                {visibleSteps.map((step, index) => {
+                  const sequenceItem = mediaView.sequence[index];
+                  return (
+                    <div
+                      className={`movement-sequence-step ${textFirstGuide ? "movement-sequence-step-text" : "movement-sequence-step-visual"}`}
+                      key={`${step.title}-${index}`}
+                    >
+                      <div className="movement-sequence-labels">
+                        <span className="focus-step">{textFirstGuide ? `Step ${index + 1}` : sequenceItem.label}</span>
+                        <strong>{step.title}</strong>
+                      </div>
+                      {!textFirstGuide && sequenceItem.src ? (
+                        <img alt={`${exercise.name} ${step.title.toLowerCase()}`} className="movement-sequence-image" src={sequenceItem.src} />
+                      ) : null}
+                      <div className="movement-sequence-text-body">
+                        {textFirstGuide ? <span className="movement-sequence-index">{step.title}</span> : null}
+                        <p className="support-copy">{step.description}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </article>
+          ) : null}
+
+          <div className="movement-detail-grid movement-detail-grid-secondary">
+            {breathing ? (
+              <article className="movement-detail-block">
+                <p className="section-label">Breathing</p>
+                <p className="support-copy">{breathing}</p>
+              </article>
+            ) : null}
+
+            {tempo ? (
+              <article className="movement-detail-block">
+                <p className="section-label">Tempo</p>
+                <p className="support-copy">{tempo}</p>
+              </article>
+            ) : null}
+
+            {commonMistakes.length ? (
+              <article className="movement-detail-block">
+                <p className="section-label">Common mistakes</p>
+                <ul className="plan-list">
+                  {commonMistakes.map((mistake) => (
+                    <li key={mistake}>{mistake}</li>
+                  ))}
+                </ul>
+              </article>
+            ) : null}
+
+            {safetyNotes.length ? (
+              <article className="movement-detail-block">
+                <p className="section-label">Safety notes</p>
+                <ul className="plan-list">
+                  {safetyNotes.map((note) => (
+                    <li key={note}>{note}</li>
+                  ))}
+                </ul>
+              </article>
+            ) : null}
+
+            {hasModificationData ? (
+              <article className="movement-detail-block">
+                <p className="section-label">Modifications</p>
+                <div className="movement-modification-groups">
+                  {modificationGroups.adjustments.length ? (
+                    <div>
+                      <span className="movement-muscles-label">Adjustments</span>
+                      <ul className="plan-list">
+                        {modificationGroups.adjustments.map((modification) => (
+                          <li key={modification}>{modification}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                  {modificationGroups.easierOptions.length ? (
+                    <div>
+                      <span className="movement-muscles-label">Easier options</span>
+                      <ul className="plan-list">
+                        {modificationGroups.easierOptions.map((regression) => (
+                          <li key={regression}>{regression}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                  {modificationGroups.progressions.length ? (
+                    <div>
+                      <span className="movement-muscles-label">Progressions</span>
+                      <ul className="plan-list">
+                        {modificationGroups.progressions.map((progression) => (
+                          <li key={progression}>{progression}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                </div>
+              </article>
+            ) : null}
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
 
-        <article className="movement-detail-block">
-          <p className="section-label">Visual sequence</p>
-          <div className="movement-sequence-grid">
-            {sequenceSteps.map((step, index) => {
-              const sequenceItem = mediaView.sequence[index];
-              return (
-                <div className="movement-sequence-step" key={step.key}>
-                  <div className="movement-sequence-labels">
-                    <span className="focus-step">{sequenceItem.label}</span>
-                    <strong>{step.title}</strong>
-                  </div>
-                  {sequenceItem.src ? (
-                    <img alt={`${movement.name} ${step.title.toLowerCase()}`} className="movement-sequence-image" src={sequenceItem.src} />
-                  ) : (
-                    <div className="movement-media-placeholder movement-sequence-placeholder">
-                      <span className="movement-media-placeholder-mark">{index + 1}</span>
-                      <strong>{sequenceItem.label}</strong>
-                      <p>{step.title}</p>
-                    </div>
-                  )}
-                  <p className="support-copy">{step.support}</p>
-                </div>
-              );
-            })}
+function normalizeStringArray(value) {
+  return Array.isArray(value) ? value.filter(Boolean).map((entry) => String(entry).trim()).filter(Boolean) : [];
+}
+
+function normalizeModificationGroups(exercise) {
+  const nested = exercise?.modifications && typeof exercise.modifications === "object" && !Array.isArray(exercise.modifications)
+    ? exercise.modifications
+    : null;
+
+  return {
+    adjustments: normalizeStringArray(nested?.adjustments || exercise?.adjustmentOptions || exercise?.modifications),
+    easierOptions: normalizeStringArray(nested?.easierOptions || exercise?.regressions),
+    progressions: normalizeStringArray(nested?.progressions || exercise?.progressions)
+  };
+}
+
+function normalizeStepSequence(exercise) {
+  const rawSteps = Array.isArray(exercise?.stepByStep)
+    ? exercise.stepByStep
+    : Array.isArray(exercise?.stepSequence)
+      ? exercise.stepSequence
+      : [];
+
+  return rawSteps.filter((step) => step?.title && step?.description);
+}
+
+function normalizeText(value) {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function GuideStatusModal({ title, message, onClose }) {
+  return (
+    <div className="modal-backdrop" role="presentation" onClick={onClose}>
+      <div aria-modal="true" className="modal-card movement-detail-modal" role="dialog" onClick={(event) => event.stopPropagation()}>
+        <div className="panel-heading movement-guide-header">
+          <div className="movement-guide-header-copy">
+            <p className="section-label">Movement guide</p>
+            <h3 className="movement-guide-title">{title}</h3>
           </div>
-        </article>
-
-        <div className="movement-detail-grid">
-          <article className="movement-detail-block">
-            <p className="section-label">Step by step</p>
-            <ol className="movement-numbered-list">
-              {instructionList.map((step) => (
-                <li key={step}>{step}</li>
-              ))}
-            </ol>
-          </article>
-
-          {showStandardGuidance ? (
-            <article className="movement-detail-block">
-              <p className="section-label">Key cues</p>
-              <ul className="plan-list">
-                {cues.map((cue) => (
-                  <li key={cue}>{cue}</li>
-                ))}
-              </ul>
-            </article>
-          ) : null}
-
-          {showFullGuidance ? (
-            <article className="movement-detail-block">
-              <p className="section-label">Mistakes to avoid</p>
-              <ul className="plan-list">
-                {commonMistakes.map((mistake) => (
-                  <li key={mistake}>{mistake}</li>
-                ))}
-              </ul>
-            </article>
-          ) : null}
-
-          {showFullGuidance ? (
-            <article className="movement-detail-block">
-              <p className="section-label">Safety notes</p>
-              <ul className="plan-list">
-                {safetyNotes.map((note) => (
-                  <li key={note}>{note}</li>
-                ))}
-              </ul>
-            </article>
-          ) : null}
-
-          {showFullGuidance ? (
-            <article className="movement-detail-block">
-              <p className="section-label">Modifications</p>
-              <ul className="plan-list">
-                {modifications.map((modification) => (
-                  <li key={modification}>{modification}</li>
-                ))}
-              </ul>
-            </article>
-          ) : null}
-
-          <article className="movement-detail-block">
-            <p className="section-label">Secondary muscles</p>
-            <p className="support-copy">{secondaryMuscles.join(", ") || "None listed"}</p>
+          <button className="icon-button" type="button" onClick={onClose}>
+            Close
+          </button>
+        </div>
+        <div className="movement-detail-stack">
+          <article className="movement-detail-block empty-state-card">
+            <strong>{message}</strong>
+            <p className="support-copy">Return to the previous page and choose another exercise or workout guide.</p>
+            <div className="module-card-actions">
+              <button className="ghost-button" type="button" onClick={onClose}>
+                Go back
+              </button>
+            </div>
           </article>
         </div>
       </div>

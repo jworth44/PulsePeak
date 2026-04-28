@@ -1,6 +1,15 @@
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { findMovementForName } from "./movementLibrary.js";
 import { createLibraryEntry, createMediaPayload, validateLibraryEntries } from "../../shared/exerciseCatalog.js";
 import { buildExerciseMediaSpec } from "../../shared/mediaGenerationConfig.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const YOGA_PRODUCTION_LIST = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, "../../artifacts/pulsepeak-yoga-production-list.json"), "utf8")
+);
 
 const MOBILITY_CATEGORIES = [
   {
@@ -59,6 +68,14 @@ const INJURY_SUPPORT_OPTIONS = [
   { value: "hip_tightness_support", label: "Hip tightness support" },
   { value: "ankle_stiffness_support", label: "Ankle stiffness support" }
 ];
+
+const SUPPORT_TOPIC_EQUIVALENTS = {
+  knee_support: ["general_knee_pain_support", "patellar_tracking_support", "acl_mcl_support", "meniscus_support"],
+  lower_back: ["general_low_back_stiffness", "lumbar_strain_support", "disc_irritation_support"],
+  shoulder_irritation: ["rotator_cuff_support", "shoulder_impingement_support", "shoulder_instability_support"],
+  hip_tightness: ["hip_tightness_support"],
+  ankle_stiffness: ["ankle_stiffness_support"]
+};
 
 const BASE_MOBILITY_LIBRARY = [
   routine({
@@ -314,7 +331,16 @@ const EXPANDED_MOBILITY_LIBRARY = [
   ])
 ];
 
-const MOBILITY_LIBRARY = validateLibraryEntries([...BASE_MOBILITY_LIBRARY, ...EXPANDED_MOBILITY_LIBRARY], "mobility catalog");
+const YOGA_PRODUCTION_LIBRARY = YOGA_PRODUCTION_LIST.map((pose) => createYogaProductionRoutine(pose));
+
+const RAW_MOBILITY_LIBRARY = [...BASE_MOBILITY_LIBRARY, ...EXPANDED_MOBILITY_LIBRARY, ...YOGA_PRODUCTION_LIBRARY];
+const MOBILITY_LIBRARY = validateLibraryEntries(RAW_MOBILITY_LIBRARY, "mobility catalog").map((entry) => {
+  const rawEntry = RAW_MOBILITY_LIBRARY.find((candidate) => candidate.id === entry.id);
+  return {
+    ...entry,
+    ...(rawEntry || {})
+  };
+});
 
 export function buildMobilityPlan({ goalType, injuryStatus, restrictedAreas, lowRecovery, workoutEnvironment }) {
   const selectedCategory =
@@ -466,7 +492,7 @@ export function buildMobilitySessionSet({
   const additionalPool = dedupeByName([
     ...primary.slice(guidedBlock.length),
     ...MOBILITY_LIBRARY.filter((entry) => !guidedBlock.some((selected) => selected.name === entry.name))
-  ]).slice(0, 10);
+  ]);
 
   return {
     guidedBlock,
@@ -491,6 +517,9 @@ export function filterMobilityLibrary({
   return dedupeByName(
     MOBILITY_LIBRARY.filter((item) => {
       if (!item.supportTypes.includes(category)) {
+        return false;
+      }
+      if (category === "yoga" && item.sourceType !== "yoga_production") {
         return false;
       }
       if (item.minutes > normalizedTimeCap) {
@@ -530,9 +559,10 @@ function routineFamily(familyId, entries) {
   return entries.map((entry) => routine({ ...entry, familyId }));
 }
 
-function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics, phase, benefit, minutes, environments, goalTags, recoveryFit, familyId = null }) {
+function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics, phase, benefit, minutes, environments, goalTags, recoveryFit, familyId = null, sourceType = "mobility_library" }) {
   const movement = findMovementForName(name);
-  const entryId = movement?.id || name.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-");
+  const entryId = name.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-");
+  const mediaMovementId = movement?.id || entryId;
   const group =
     phase === "warmup" || phase === "activation"
       ? "activation"
@@ -546,7 +576,7 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
   const content = buildMobilityContentStandard({ name, bodyAreas, supportTopics, benefit, group });
   const media = createMediaPayload(
     buildExerciseMediaSpec({
-      id: entryId,
+      id: mediaMovementId,
       name,
       familyId: resolvedFamilyId,
       trainingType: "mobility",
@@ -554,7 +584,7 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
     })
   );
 
-  return createLibraryEntry({
+  const entry = createLibraryEntry({
     id: entryId,
     name,
     mode: "mobility",
@@ -591,8 +621,18 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
       minutes,
       goalTags,
       recoveryFit,
-      movementId: movement?.id || null,
+      movementId: mediaMovementId,
+      sourceType,
       contentStandard: "v1",
+      description: content.description,
+      trainingUse: content.trainingUse,
+      setup: content.setup,
+      execution: content.execution,
+      breathing: content.breathing,
+      tempo: content.tempo,
+      stepSequence: content.stepSequence,
+      regressions: content.regressions,
+      progressions: content.progressions,
       movement: buildMobilityMovementGuide(
         {
           id: entryId,
@@ -604,6 +644,15 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
           mistakes: content.mistakes,
           safetyNotes: content.safetyNotes,
           modifications: content.modifications,
+          regressions: content.regressions,
+          progressions: content.progressions,
+          description: content.description,
+          trainingUse: content.trainingUse,
+          setup: content.setup,
+          execution: content.execution,
+          breathing: content.breathing,
+          tempo: content.tempo,
+          stepSequence: content.stepSequence,
           media,
           familyIds: [resolvedFamilyId]
         },
@@ -611,9 +660,41 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
       )
     }
   });
+
+  return {
+    ...entry,
+    supportTypes,
+    restrictedAreas,
+    bodyAreas,
+    supportTopics: resolvedSupportTopics,
+    phase,
+    group,
+    benefit,
+    minutes,
+    goalTags,
+    recoveryFit,
+    movementId: mediaMovementId,
+    sourceType
+  };
 }
 
 function buildMobilityMovementGuide(option, baseMovement = null) {
+  const standardizedGuideFields = buildStructuredGuideFields({
+    description: option.description,
+    trainingUse: option.trainingUse,
+    primaryMuscles: baseMovement?.primaryMuscles?.length ? baseMovement.primaryMuscles : option.bodyAreas || ["full_body"],
+    secondaryMuscles: baseMovement?.secondaryMuscles?.length ? baseMovement.secondaryMuscles : option.bodyAreas?.slice(1) || [],
+    setup: option.setup,
+    execution: option.execution,
+    stepSequence: option.stepSequence || [],
+    breathing: option.breathing,
+    tempo: option.tempo,
+    commonMistakes: baseMovement?.commonMistakes?.length ? baseMovement.commonMistakes : option.mistakes || [],
+    safetyNotes: baseMovement?.safetyNotes?.length ? baseMovement.safetyNotes : option.safetyNotes || [],
+    adjustments: option.modifications || [],
+    easierOptions: option.regressions || [],
+    progressions: option.progressions || []
+  });
   return {
     ...(baseMovement || {}),
     id: baseMovement?.id || option.id,
@@ -622,20 +703,39 @@ function buildMobilityMovementGuide(option, baseMovement = null) {
     difficulty: baseMovement?.difficulty || "Beginner",
     environment: baseMovement?.environment || "Home / gym",
     equipment: baseMovement?.equipment?.length ? baseMovement.equipment : ["bodyweight"],
-    primaryMuscles: baseMovement?.primaryMuscles?.length ? baseMovement.primaryMuscles : option.bodyAreas || ["full_body"],
-    secondaryMuscles: baseMovement?.secondaryMuscles?.length ? baseMovement.secondaryMuscles : option.bodyAreas?.slice(1) || [],
+    primaryMuscles: standardizedGuideFields.primaryMuscles,
+    secondaryMuscles: standardizedGuideFields.secondaryMuscles,
     instructions: baseMovement?.instructions?.length ? baseMovement.instructions : option.instructions || [],
     cues: baseMovement?.cues?.length ? baseMovement.cues : option.cues || [],
-    commonMistakes: baseMovement?.commonMistakes?.length ? baseMovement.commonMistakes : option.mistakes || [],
-    safetyNotes: baseMovement?.safetyNotes?.length ? baseMovement.safetyNotes : option.safetyNotes || [],
-    modifications: baseMovement?.modifications?.length ? baseMovement.modifications : option.modifications || [],
+    commonMistakes: standardizedGuideFields.commonMistakes,
+    safetyNotes: standardizedGuideFields.safetyNotes,
+    modifications: standardizedGuideFields.modifications,
+    adjustmentOptions: standardizedGuideFields.modifications.adjustments,
+    progressions: option.progressions || [],
+    regressions: option.regressions || [],
+    whatThisExerciseIs: standardizedGuideFields.whatThisExerciseIs,
+    trainingUse: standardizedGuideFields.trainingUse,
+    setup: standardizedGuideFields.setup,
+    execution: option.execution,
+    howToPerform: standardizedGuideFields.howToPerform,
+    stepSequence: standardizedGuideFields.stepByStep,
+    stepByStep: standardizedGuideFields.stepByStep,
+    breathing: standardizedGuideFields.breathing,
+    tempo: standardizedGuideFields.tempo,
     media: option.media,
     mediaStatus: option.media?.status || "none",
-    familyIds: option.familyIds || []
+    familyIds: option.familyIds || [],
+    guideContentStandard: "v2"
   };
 }
 
 function buildMobilityContentStandard({ name, bodyAreas, supportTopics, benefit, group }) {
+  const stepSequence = buildMobilityStepSequence(name, group);
+  const modifications = [
+    "Use a smaller range and shorter hold if the target area feels guarded.",
+    "Use props or support so the position stays calm and repeatable.",
+    "Swap to a simpler variation in the same family if this version feels too aggressive today."
+  ];
   return {
     instructions: [
       `Set up for ${name} slowly and use the first rep to find a comfortable range.`,
@@ -662,11 +762,162 @@ function buildMobilityContentStandard({ name, bodyAreas, supportTopics, benefit,
       "Keep the drill pain-free and repeatable.",
       "Use a smaller range and slower tempo if the area feels irritated."
     ],
-    modifications: [
-      "Shorten the hold or range if you feel guarding.",
-      "Swap to another drill in the same support family if this one does not feel right today."
-    ]
+    modifications,
+    regressions: modifications.slice(0, 2),
+    progressions: [
+      "Increase the hold time only if you can keep easy breathing and clean position.",
+      "Progress to the deeper variation in the same family once the base position feels stable."
+    ],
+    description: benefit || `${name} is a guided mobility drill used to improve position quality without forcing range.`,
+    trainingUse:
+      group === "activation"
+        ? "Use early in the session to prepare the target area for training."
+        : group === "control"
+          ? "Use to rebuild movement confidence and cleaner control through the target area."
+          : "Use to restore range, reduce stiffness, and make the next session feel smoother.",
+    setup: `Set up with enough space to move through ${name} calmly and keep the target area supported from the first rep.`,
+    execution:
+      group === "activation"
+        ? "Move through each rep with smooth control and stop before the drill turns into a forced stretch."
+        : group === "control"
+          ? "Own the position, breathe normally, and keep each transition slow enough that the target area stays in control."
+          : "Ease into the position, breathe steadily, and use only the range you can keep relaxed and repeatable.",
+    breathing: "Exhale as you move into the main range and inhale as you return or reset.",
+    tempo: "1-2 seconds into position, brief pause where the stretch or control is clearest, 2-3 seconds back to reset.",
+    stepSequence
   };
+}
+
+function buildMobilityStepSequence(name, group) {
+  return [
+    {
+      title: "Start",
+      description: `Set up for ${name} with a calm base position and enough support to move without rushing.`
+    },
+    {
+      title: "Mid",
+      description:
+        group === "activation"
+          ? "Move into the first working range slowly and let the target area wake up without forcing it."
+          : "Ease into the main working range while keeping breathing steady and the rest of the body relaxed."
+    },
+    {
+      title: "Peak",
+      description:
+        group === "control"
+          ? "Own the strongest position briefly and keep the target area organized instead of forcing extra range."
+          : "Pause where the stretch, reach, or control is clearest and keep the position smooth."
+    },
+    {
+      title: "Finish",
+      description: "Return to the start with the same control and reset before repeating the next rep or side."
+    }
+  ];
+}
+
+function buildStructuredGuideFields({
+  description,
+  trainingUse,
+  primaryMuscles = [],
+  secondaryMuscles = [],
+  setup,
+  execution,
+  stepSequence = [],
+  breathing,
+  tempo,
+  commonMistakes = [],
+  safetyNotes = [],
+  adjustments = [],
+  easierOptions = [],
+  progressions = []
+}) {
+  return {
+    whatThisExerciseIs: description,
+    trainingUse,
+    primaryMuscles,
+    secondaryMuscles,
+    setup,
+    howToPerform: execution,
+    stepByStep: stepSequence,
+    breathing,
+    tempo,
+    commonMistakes,
+    safetyNotes,
+    modifications: {
+      adjustments,
+      easierOptions,
+      progressions
+    }
+  };
+}
+
+function createYogaProductionRoutine(pose) {
+  const name = String(pose.displayName || "").trim();
+  const focusAreas = dedupeStringList([pose.primaryFocus, pose.secondaryFocus].map(mapYogaFocusToArea));
+  const supportTopics = dedupeStringList(focusAreas.map(mapYogaAreaToSupportTopic));
+  const normalizedFocusAreas = focusAreas.length ? focusAreas : ["full_body"];
+  const minutes = pose.sequenceType === "dynamic" ? 10 : pose.priority === "high" ? 8 : 6;
+  const phase = pose.sequenceType === "dynamic" ? "mobility" : pose.priority === "high" ? "recovery" : "release";
+  const benefit = buildYogaBenefit(pose, normalizedFocusAreas);
+
+  return routine({
+    name,
+    supportTypes: ["yoga"],
+    restrictedAreas: normalizedFocusAreas,
+    bodyAreas: normalizedFocusAreas,
+    supportTopics,
+    phase,
+    benefit,
+    minutes,
+    environments: ["home", "gym", "hybrid"],
+    goalTags: ["mobility", "general_fitness", "active_aging"],
+    recoveryFit: pose.sequenceType === "dynamic" ? "medium" : pose.priority === "low" ? "medium" : "high",
+    familyId: pose.id,
+    sourceType: "yoga_production"
+  });
+}
+
+function buildYogaBenefit(pose, focusAreas) {
+  const focusLabel = focusAreas.map(formatAreaLabel).join(", ").replaceAll("Full-body", "full-body");
+  if (pose.sequenceType === "dynamic") {
+    return `Move through ${pose.displayName} as a guided yoga flow to improve ${focusLabel} control without losing calm breathing.`;
+  }
+  return `Use ${pose.displayName} as a yoga hold to improve ${focusLabel} position quality with steady breathing and clean alignment.`;
+}
+
+function mapYogaFocusToArea(value) {
+  const normalized = String(value || "").trim().toLowerCase();
+  if (!normalized) return "full_body";
+  if (normalized.includes("hamstring")) return "hip";
+  if (normalized.includes("spine")) return "back";
+  if (normalized.includes("shoulder")) return "shoulder";
+  if (normalized.includes("core")) return "full_body";
+  if (normalized.includes("hip")) return "hip";
+  return "full_body";
+}
+
+function mapYogaAreaToSupportTopic(value) {
+  const map = {
+    shoulder: "shoulder_irritation",
+    back: "lower_back",
+    hip: "hip_tightness",
+    ankle: "ankle_stiffness",
+    knee: "knee_support",
+    elbow: "tennis_elbow",
+    wrist: "carpal_tunnel",
+    full_body: "lower_back"
+  };
+  return map[value] || "lower_back";
+}
+
+function dedupeStringList(values = []) {
+  return Array.from(
+    new Set(
+      values
+        .map((value) => String(value || "").trim())
+        .filter(Boolean)
+    )
+  );
 }
 
 function scoreRoutine(routineEntry, { goalType, restrictedAreas, recoveryStatus, injuryArea }) {
@@ -764,6 +1015,32 @@ function formatAreaLabel(value) {
   return map[value] || "Full-body";
 }
 
+function formatSupportTopic(value) {
+  const map = {
+    meniscus_support: "Meniscus support",
+    acl_mcl_support: "ACL / MCL stability support",
+    patellar_tracking_support: "Patellar tracking support",
+    general_knee_pain_support: "General knee pain support",
+    lumbar_strain_support: "Lumbar strain support",
+    disc_irritation_support: "Disc irritation support",
+    general_low_back_stiffness: "General low-back stiffness",
+    rotator_cuff_support: "Rotator cuff irritation support",
+    shoulder_impingement_support: "Shoulder impingement support",
+    shoulder_instability_support: "Shoulder instability support",
+    tennis_elbow: "Tennis elbow support",
+    carpal_tunnel: "Carpal tunnel support",
+    hip_tightness_support: "Hip tightness support",
+    ankle_stiffness_support: "Ankle stiffness support",
+    lower_back: "Lower-back support",
+    knee_support: "Knee support",
+    shoulder_irritation: "Shoulder support",
+    hip_tightness: "Hip tightness support",
+    ankle_stiffness: "Ankle stiffness support"
+  };
+
+  return map[value] || String(value || "").replaceAll("_", " ");
+}
+
 function expandSupportTopics(topics = []) {
   const expanded = new Set();
   topics.forEach((topic) => {
@@ -790,11 +1067,3 @@ function normalizeSupportTopic(value) {
 
   return map[value] || value;
 }
-
-const SUPPORT_TOPIC_EQUIVALENTS = {
-  knee_support: ["general_knee_pain_support", "patellar_tracking_support", "acl_mcl_support", "meniscus_support"],
-  lower_back: ["general_low_back_stiffness", "lumbar_strain_support", "disc_irritation_support"],
-  shoulder_irritation: ["rotator_cuff_support", "shoulder_impingement_support", "shoulder_instability_support"],
-  hip_tightness: ["hip_tightness_support"],
-  ankle_stiffness: ["ankle_stiffness_support"]
-};
