@@ -251,6 +251,27 @@ const EXPANDED_EXERCISE_VARIANTS = [
     ["plank-shoulder-tap", "Plank shoulder tap", "full_body_finish", "bodyweight", "Core", "Core control", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
     ["sled-push", "Sled push", "conditioning", "machine", "Cardio", "Conditioning", ["full_gym"], ["gym", "hybrid"]],
     ["rower-sprint", "Rower sprint", "conditioning", "machine", "Cardio", "Conditioning", ["full_gym"], ["gym", "hybrid"]]
+  ]),
+  ...variantFamily("conditioning_cardio_family", [
+    ["butt-kicks", "Butt kicks", "conditioning", "bodyweight", "Cardio", "Conditioning", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
+    ["shadow-boxing", "Shadow boxing", "conditioning", "bodyweight", "Cardio", "Conditioning", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
+    ["lateral-shuffles", "Lateral shuffles", "conditioning", "bodyweight", "Cardio", "Conditioning", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
+    ["forward-backward-sprints", "Forward-backward sprints", "conditioning", "bodyweight", "Cardio", "Conditioning", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
+    ["treadmill-walk", "Treadmill walk", "conditioning", "machine", "Cardio", "Conditioning", ["full_gym"], ["gym", "hybrid"]],
+    ["treadmill-run", "Treadmill run", "conditioning", "machine", "Cardio", "Conditioning", ["full_gym"], ["gym", "hybrid"]],
+    ["stationary-bike", "Stationary bike", "conditioning", "machine", "Cardio", "Conditioning", ["full_gym"], ["gym", "hybrid"]],
+    ["elliptical-trainer", "Elliptical trainer", "conditioning", "machine", "Cardio", "Conditioning", ["full_gym"], ["gym", "hybrid"]],
+    ["stair-climber", "Stair climber", "conditioning", "machine", "Cardio", "Conditioning", ["full_gym"], ["gym", "hybrid"]],
+    ["box-step-up-cardio", "Box step-up cardio", "conditioning", "bodyweight", "Cardio", "Conditioning", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
+    ["fast-feet-drill", "Fast feet drill", "conditioning", "bodyweight", "Cardio", "Conditioning", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
+    ["agility-ladder-in-out", "Agility ladder in-out", "conditioning", "bodyweight", "Cardio", "Conditioning", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
+    ["agility-ladder-lateral", "Agility ladder lateral", "conditioning", "bodyweight", "Cardio", "Conditioning", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
+    ["cone-drill-zigzag", "Cone drill zigzag", "conditioning", "bodyweight", "Cardio", "Conditioning", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
+    ["shuttle-run", "Shuttle run", "conditioning", "bodyweight", "Cardio", "Conditioning", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
+    ["split-jump-lunge", "Split jump lunge", "conditioning", "bodyweight", "Cardio", "Conditioning", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
+    ["bear-crawl-cardio", "Bear crawl cardio", "conditioning", "bodyweight", "Cardio", "Conditioning", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
+    ["jump-rope-double-unders", "Jump rope double unders", "conditioning", "bodyweight", "Cardio", "Conditioning", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
+    ["battle-rope-slams", "Battle rope slams", "conditioning", "ropes", "Cardio", "Conditioning", ["full_gym"], ["gym", "hybrid"]]
   ])
 ];
 
@@ -1341,6 +1362,8 @@ function buildExerciseLibraryRecord(option, baseMovement = null) {
     movementId: baseMovement?.id || null
   }).movement;
   const movement = baseMovement || fallbackMovement;
+  const normalizedPool = String(option.pool || option.category || "").trim().toLowerCase();
+  const libraryId = normalizedPool === "conditioning" ? option.id : movement?.id || option.id;
   const guideProfile = buildExerciseGuideProfile(option, movement);
   const resolvedMedia = resolveExactGuideMedia(option, movement);
   const resolvedMediaStatus = resolvedMedia?.status || "none";
@@ -1363,7 +1386,8 @@ function buildExerciseLibraryRecord(option, baseMovement = null) {
 
   return {
     ...(movement || {}),
-    id: movement?.id || option.id,
+    id: libraryId,
+    movementId: movement?.id || option.id,
     detailId: buildExerciseLibraryDetailId(option),
     title: option.title || option.name || movement?.name,
     name: option.name || movement?.name,
@@ -1606,7 +1630,519 @@ function normalizeGuideEquipment(option) {
   });
 }
 
+function cardioStepSequence(start, mid, peak, finish) {
+  return [
+    { title: "Start", description: start },
+    { title: "Mid", description: mid },
+    { title: "Peak", description: peak },
+    { title: "Finish", description: finish }
+  ];
+}
+
+function createCardioOverride({
+  equipment,
+  primaryMuscles,
+  secondaryMuscles,
+  difficulty,
+  jointStress = "moderate",
+  movementPattern,
+  trainingUse,
+  description,
+  setup,
+  execution,
+  breathing,
+  tempo,
+  stepSequence,
+  commonMistakes,
+  safetyNotes,
+  modifications,
+  cues
+}) {
+  return {
+    category: "Conditioning",
+    equipment,
+    primaryMuscles,
+    secondaryMuscles,
+    difficulty,
+    jointStress,
+    movementPattern,
+    trainingUse,
+    description,
+    setup,
+    execution,
+    breathing,
+    tempo,
+    stepSequence,
+    commonMistakes,
+    safetyNotes,
+    modifications,
+    regressions: modifications.slice(0, 2),
+    progressions: modifications.slice(-2),
+    cues
+  };
+}
+
+const CARDIO_LIBRARY_CONTENT_OVERRIDES = {
+  "butt kicks": createCardioOverride({
+    equipment: ["Bodyweight"],
+    primaryMuscles: ["Hip flexors", "Hamstrings", "Calves"],
+    secondaryMuscles: ["Conditioning", "Core", "Glutes"],
+    difficulty: "beginner",
+    jointStress: "low",
+    movementPattern: "Running drill / posterior heel recovery",
+    trainingUse: "Warm-up work, aerobic intervals, and running-mechanics conditioning with low complexity.",
+    description: "Butt kicks are a cyclical running drill where the heels recover quickly toward the glutes while the torso stays tall and relaxed.",
+    setup: "Stand tall with a light athletic stance, ribs stacked over the hips, and enough open space to cycle the feet quickly in place or over a short lane.",
+    execution: "Alternate the feet quickly, bringing each heel up toward the glutes while staying light on the balls of the feet and keeping the arms moving in rhythm.",
+    breathing: "Keep breathing short and rhythmic so the pace stays smooth instead of tense.",
+    tempo: "Move at a fast but repeatable cadence that lets the heels recover cleanly each rep.",
+    stepSequence: cardioStepSequence(
+      "Set a tall stance, soften the knees slightly, and begin with quick light contacts under the hips.",
+      "Cycle one heel toward the glute while the opposite foot lands softly and the torso stays stacked.",
+      "Reach the fastest repeatable rhythm you can maintain without leaning forward or stomping.",
+      "Ease the speed down under control and reset posture before the next interval."
+    ),
+    commonMistakes: ["Leaning too far forward", "Kicking backward instead of recovering the heel up", "Landing heavily through the whole foot", "Letting the knees collapse inward as speed rises"],
+    safetyNotes: ["Use a march version first if impact tolerance is limited.", "Stop the interval if calf or hamstring tension rises sharply."],
+    modifications: ["Marching butt kicks", "Shorter work intervals", "Reduced pace with smaller heel recovery"],
+    cues: ["Stay tall", "Heels recover quickly", "Keep the contacts light"]
+  }),
+  "shadow boxing": createCardioOverride({
+    equipment: ["Bodyweight"],
+    primaryMuscles: ["Conditioning", "Shoulders", "Core"],
+    secondaryMuscles: ["Calves", "Glutes", "Obliques"],
+    difficulty: "beginner",
+    jointStress: "low",
+    movementPattern: "Striking rhythm / locomotor conditioning",
+    trainingUse: "Conditioning blocks, coordination work, and low-load upper-body cardio with footwork.",
+    description: "Shadow boxing is a continuous striking drill performed without impact. It blends footwork, trunk rotation, and light upper-body output into a repeatable cardio interval.",
+    setup: "Stand in a staggered fighting stance with the hands up, elbows relaxed, and enough room around you to pivot and step without crowding the space.",
+    execution: "Throw light crisp punches while shifting the feet, rotating through the trunk, and keeping the shoulders loose rather than muscling every strike.",
+    breathing: "Exhale lightly on combinations and return to steady nasal or relaxed mouth breathing between bursts.",
+    tempo: "Keep the pace lively and smooth instead of throwing every punch at full power.",
+    stepSequence: cardioStepSequence(
+      "Set a staggered stance, bring the hands up, and organize your balance over the middle of both feet.",
+      "Start with light jabs and crosses while the feet stay active and the shoulders remain relaxed.",
+      "Add sharper combinations and small pivots without losing trunk control or stance position.",
+      "Flow back to a calmer rhythm and reset before the next round or combination block."
+    ),
+    commonMistakes: ["Punching with locked elbows", "Standing flat-footed", "Over-rotating the low back instead of the trunk", "Holding the breath during combinations"],
+    safetyNotes: ["Keep the punching force moderate so the shoulders and elbows stay comfortable.", "Use shorter rounds if neck or shoulder tension builds."],
+    modifications: ["Hands-only punches from a fixed stance", "Lower-tempo footwork", "Shorter combination rounds"],
+    cues: ["Hands stay relaxed", "Feet stay alive", "Rotate through the trunk"]
+  }),
+  "lateral shuffles": createCardioOverride({
+    equipment: ["Bodyweight"],
+    primaryMuscles: ["Glutes", "Adductors", "Conditioning"],
+    secondaryMuscles: ["Quadriceps", "Calves", "Core"],
+    difficulty: "beginner",
+    jointStress: "moderate",
+    movementPattern: "Lateral locomotion",
+    trainingUse: "Court-style conditioning, frontal-plane movement prep, and athletic footwork intervals.",
+    description: "Lateral shuffles are side-to-side locomotion drills that train quick foot placement, hip control, and repeatable conditioning in the frontal plane.",
+    setup: "Start in a soft athletic stance with the hips back slightly, chest tall, and enough space to move several steps left and right without crossing the feet.",
+    execution: "Push off the trail leg, shuffle laterally with quick controlled steps, and keep the feet under the hips while the torso stays level.",
+    breathing: "Use steady breaths that match the rhythm of the side-to-side work.",
+    tempo: "Move quickly enough to stay athletic, but never so fast that the feet start crossing or the hips bob wildly.",
+    stepSequence: cardioStepSequence(
+      "Set the athletic stance with knees soft, hips loaded lightly, and hands ready to counterbalance.",
+      "Drive sideways with the trail leg and take quick shuffle steps while keeping the feet separated.",
+      "Hit the fastest clean lateral rhythm you can manage without crossing the feet or standing upright.",
+      "Decelerate under control, reset the stance, and change direction cleanly."
+    ),
+    commonMistakes: ["Crossing the feet", "Standing too tall", "Letting the knees cave inward", "Slamming into each change of direction"],
+    safetyNotes: ["Shorten the travel distance if adductors or knees feel stressed.", "Use a grippy surface so lateral push-offs stay controlled."],
+    modifications: ["Short shuffle distance", "Reduced speed", "Step-and-hold lateral pattern"],
+    cues: ["Stay low", "Feet stay apart", "Push then glide"]
+  }),
+  "forward-backward sprints": createCardioOverride({
+    equipment: ["Bodyweight"],
+    primaryMuscles: ["Conditioning", "Quadriceps", "Calves"],
+    secondaryMuscles: ["Glutes", "Core", "Hamstrings"],
+    difficulty: "intermediate",
+    jointStress: "moderate",
+    movementPattern: "Acceleration / deceleration conditioning",
+    trainingUse: "Short anaerobic intervals, agility conditioning, and deceleration practice in a simple lane.",
+    description: "Forward-backward sprints combine quick accelerations with controlled backward recovery steps or backpedals, building conditioning and change-of-direction control.",
+    setup: "Mark a short lane, stand tall at one end, and make sure the surface is clear enough for both acceleration and backward travel.",
+    execution: "Sprint forward with quick powerful steps, decelerate under control, and transition into a backward run or fast backpedal without losing posture.",
+    breathing: "Use strong quick breaths during each burst and recover fully enough to keep the next change of direction sharp.",
+    tempo: "Accelerate fast, decelerate under control, and make the backward section smooth rather than panicked.",
+    stepSequence: cardioStepSequence(
+      "Set at the start of the lane with a slight forward lean and arms ready to drive.",
+      "Accelerate forward over the first few steps while staying stacked through the trunk.",
+      "Brake cleanly at the end of the lane and transition into a controlled backward sprint or backpedal.",
+      "Return to the start with quick feet, regain balance, and reset before the next rep."
+    ),
+    commonMistakes: ["Overstriding into the stop", "Losing balance during the backward transition", "Looking down instead of staying aware of space", "Letting the torso collapse as fatigue rises"],
+    safetyNotes: ["Use a short lane until deceleration is comfortable.", "Skip the backward sprint if you cannot keep the path clear and safe."],
+    modifications: ["Fast forward walk plus controlled backpedal", "Shorter lane", "Lower sprint intensity"],
+    cues: ["Accelerate smoothly", "Brake under control", "Stay aware during the backpedal"]
+  }),
+  "treadmill walk": createCardioOverride({
+    equipment: ["Treadmill"],
+    primaryMuscles: ["Conditioning", "Calves", "Glutes"],
+    secondaryMuscles: ["Hamstrings", "Core", "Quadriceps"],
+    difficulty: "beginner",
+    jointStress: "low",
+    movementPattern: "Steady-state walk",
+    trainingUse: "Low-impact aerobic work, recovery cardio, and foundational conditioning sessions.",
+    description: "Treadmill walk is a steady-state cardio option that builds aerobic volume with minimal impact while reinforcing a clean gait pattern.",
+    setup: "Set the treadmill speed to a pace that lets you walk naturally with the hands free or only lightly touching the rails if needed.",
+    execution: "Walk with purposeful steps, let the arms swing naturally, and keep the body stacked instead of leaning onto the handles.",
+    breathing: "Settle into calm rhythmic breathing that you can sustain for the full interval.",
+    tempo: "Use an even cadence that stays smooth from the first minute through the last.",
+    stepSequence: cardioStepSequence(
+      "Step onto the moving belt only once the speed is set low enough to establish a stable stride.",
+      "Settle into a natural walking rhythm with full-foot pressure and relaxed arm swing.",
+      "Own the middle of the interval with steady posture and repeatable cadence instead of drifting on the handles.",
+      "Reduce the speed gradually and step off only when the belt is safe and your balance is steady."
+    ),
+    commonMistakes: ["Hanging on the rails", "Taking overly long steps", "Looking down the whole time", "Letting posture collapse as the minutes add up"],
+    safetyNotes: ["Keep one hand available for safety if you are still getting used to the treadmill.", "Reduce the pace if shin, knee, or hip irritation builds."],
+    modifications: ["Shorter walking interval", "Lower speed", "Flat-ground walking instead of treadmill work"],
+    cues: ["Walk tall", "Hands off when possible", "Keep the stride smooth"]
+  }),
+  "treadmill run": createCardioOverride({
+    equipment: ["Treadmill"],
+    primaryMuscles: ["Conditioning", "Calves", "Hip flexors"],
+    secondaryMuscles: ["Glutes", "Hamstrings", "Core"],
+    difficulty: "intermediate",
+    jointStress: "moderate",
+    movementPattern: "Steady or interval running",
+    trainingUse: "Cardio intervals, aerobic development, and repeatable indoor run training.",
+    description: "Treadmill run is a cyclical running option that lets you control pace precisely for intervals or steady conditioning work.",
+    setup: "Choose a pace you can run with good posture, set the belt before stepping on, and leave enough headroom in speed so you do not need to overstride.",
+    execution: "Run with a light forward lean from the ankles, quick feet under the body, and relaxed arm swing while the trunk stays stacked.",
+    breathing: "Use repeatable rhythmic breathing that matches the pace and keeps the shoulders relaxed.",
+    tempo: "Run at the planned pace instead of drifting faster and losing your stride quality.",
+    stepSequence: cardioStepSequence(
+      "Start at a controlled pace and establish your stride before building to the target run speed.",
+      "Settle into a smooth cadence with the feet landing under the body and the arms swinging naturally.",
+      "Hold the target effort without overstriding, bouncing excessively, or gripping the treadmill rails.",
+      "Bring the speed down in stages and recover walking before stepping off the belt."
+    ),
+    commonMistakes: ["Overstriding in front of the body", "Clenching the shoulders and hands", "Leaning on the rails", "Starting too fast to sustain the interval"],
+    safetyNotes: ["Use a pace you can step down from safely if fatigue spikes.", "Stop the interval if the stride becomes noisy and uncontrolled."],
+    modifications: ["Run-walk intervals", "Lower pace", "Incline walk instead of running"],
+    cues: ["Quick feet", "Relax the shoulders", "Run under control"]
+  }),
+  "stationary bike": createCardioOverride({
+    equipment: ["Stationary bike"],
+    primaryMuscles: ["Conditioning", "Quadriceps", "Glutes"],
+    secondaryMuscles: ["Calves", "Hamstrings", "Core"],
+    difficulty: "beginner",
+    jointStress: "low",
+    movementPattern: "Cyclical seated cardio",
+    trainingUse: "Low-impact aerobic work, beginner conditioning, and recovery-friendly interval sessions.",
+    description: "Stationary bike is a low-impact cardio option that builds aerobic work capacity through steady or interval-based pedaling.",
+    setup: "Set the saddle height so the knee stays softly bent at the bottom of the stroke and choose a resistance that lets you pedal smoothly.",
+    execution: "Pedal with an even circular rhythm, keep light tension through the trunk, and avoid mashing the pedals with your upper body rocking around.",
+    breathing: "Keep breathing steady and relaxed so the pedal rhythm stays smooth.",
+    tempo: "Choose a cadence you can maintain cleanly instead of grinding a resistance that kills rhythm.",
+    stepSequence: cardioStepSequence(
+      "Set the seat and resistance, clip in or place the feet securely, and begin pedaling at an easy rhythm.",
+      "Build toward the target cadence while the torso stays quiet and the hands stay light.",
+      "Own the middle of the interval with even pedal strokes and consistent lower-body pressure.",
+      "Reduce resistance or cadence gradually and spin down before stopping the bike."
+    ),
+    commonMistakes: ["Seat too low or too high", "Pushing too hard against excessive resistance", "Rocking the torso side to side", "Death-gripping the handlebars"],
+    safetyNotes: ["Adjust the saddle before the interval so the knees track comfortably.", "Back the resistance off if your pedal stroke starts to grind."],
+    modifications: ["Shorter interval", "Lower resistance", "Easy recovery spin"],
+    cues: ["Smooth circles", "Hands stay light", "Let cadence do the work"]
+  }),
+  "elliptical trainer": createCardioOverride({
+    equipment: ["Elliptical trainer"],
+    primaryMuscles: ["Conditioning", "Glutes", "Quadriceps"],
+    secondaryMuscles: ["Calves", "Hamstrings", "Shoulders"],
+    difficulty: "beginner",
+    jointStress: "low",
+    movementPattern: "Gliding machine cardio",
+    trainingUse: "Low-impact conditioning, return-to-cardio work, and full-body steady-state intervals.",
+    description: "Elliptical trainer work builds conditioning with a gliding lower-body pattern that keeps impact low while still allowing meaningful output.",
+    setup: "Step onto the machine once the pedals are stable, set an appropriate resistance, and stand tall with a light grip on the handles.",
+    execution: "Drive the pedals in a smooth cycle, let the handles move naturally if you use them, and keep the torso stacked instead of leaning heavily forward.",
+    breathing: "Match your breathing to the glide rhythm so effort stays smooth rather than choppy.",
+    tempo: "Keep the pedal rhythm continuous and even from start to finish.",
+    stepSequence: cardioStepSequence(
+      "Step onto the pedals carefully, establish balance, and begin at a controlled glide.",
+      "Settle into a smooth stride while the feet stay connected and the torso remains tall.",
+      "Hold the target effort with repeatable tempo and no heavy collapse into the handles.",
+      "Lower the resistance or pace gradually and let the pedals slow before stepping off."
+    ),
+    commonMistakes: ["Leaning heavily on the handles", "Taking short choppy strides", "Letting the knees drift inward", "Starting with too much resistance"],
+    safetyNotes: ["Keep a light hold until balance on the machine feels automatic.", "Reduce resistance if the stride stops feeling fluid."],
+    modifications: ["Shorter steady interval", "Lower resistance", "Handle-assisted easy pace"],
+    cues: ["Stay tall", "Glide smoothly", "Hands stay light"]
+  }),
+  "stair climber": createCardioOverride({
+    equipment: ["Stair climber"],
+    primaryMuscles: ["Conditioning", "Glutes", "Quadriceps"],
+    secondaryMuscles: ["Calves", "Hamstrings", "Core"],
+    difficulty: "intermediate",
+    jointStress: "moderate",
+    movementPattern: "Step-cycle cardio",
+    trainingUse: "Lower-body conditioning, glute-focused aerobic work, and short machine intervals with strong leg drive.",
+    description: "Stair climber intervals use a repeated step pattern to raise the heart rate while challenging the legs through continuous loaded stepping.",
+    setup: "Step onto the machine carefully, set a pace you can manage upright, and hold the rails only lightly enough to steady yourself if needed.",
+    execution: "Drive each step through the full foot, keep the torso stacked over the hips, and let the machine rhythm stay consistent rather than surging every few steps.",
+    breathing: "Use steady breaths that help you stay upright instead of folding over the console.",
+    tempo: "Keep a repeatable step rhythm and avoid speeding up so much that each step gets short and sloppy.",
+    stepSequence: cardioStepSequence(
+      "Begin at a manageable pace and set upright posture before the intensity rises.",
+      "Settle into a repeatable stepping rhythm with even pressure through each foot.",
+      "Hold the strongest effort you can manage while still keeping tall posture and full steps.",
+      "Step the pace down gradually and exit only once the pedals are stable and slow."
+    ),
+    commonMistakes: ["Leaning hard on the rails", "Taking tiny half steps", "Letting the trunk fold forward", "Choosing a pace that kills posture immediately"],
+    safetyNotes: ["Use the rails for balance, not to offload your bodyweight through the whole interval.", "Drop the pace if the knees start to feel overloaded."],
+    modifications: ["Lower speed", "Shorter intervals", "Treadmill incline walk instead"],
+    cues: ["Full steps", "Stand tall", "Do not hang on the rails"]
+  }),
+  "box step-up cardio": createCardioOverride({
+    equipment: ["Low box or bench"],
+    primaryMuscles: ["Conditioning", "Quadriceps", "Glutes"],
+    secondaryMuscles: ["Calves", "Hamstrings", "Core"],
+    difficulty: "beginner",
+    jointStress: "moderate",
+    movementPattern: "Alternating step pattern",
+    trainingUse: "Low-skill cardio intervals, lower-body endurance, and step-based conditioning at home or in the gym.",
+    description: "Box step-up cardio uses repeated alternating step-ups on a low platform to build heart rate and leg endurance without complex coordination.",
+    setup: "Choose a stable box or bench height you can step onto without needing to jump or twist the hips to get there.",
+    execution: "Step up with one foot, drive through the platform, and alternate sides while keeping the torso tall and the pace smooth.",
+    breathing: "Use steady breaths that let you keep the stepping rhythm consistent.",
+    tempo: "Move continuously, but only as fast as you can place each foot cleanly on and off the platform.",
+    stepSequence: cardioStepSequence(
+      "Stand close to the box, brace lightly, and plant one foot fully on the step.",
+      "Drive up through the lead leg and bring the second foot through under control.",
+      "Set the fastest repeatable alternating step rhythm you can manage without stomping or twisting.",
+      "Step down softly, reset your stance, and continue or end the interval under control."
+    ),
+    commonMistakes: ["Using a box that is too high", "Pushing mainly off the trailing leg", "Twisting the hips on the box", "Landing heavily on the way down"],
+    safetyNotes: ["Lower the step height if knee control or balance fades.", "Keep the box stable and clear of clutter before starting."],
+    modifications: ["Lower box height", "Slow alternating step-up", "March in place instead of stepping"],
+    cues: ["Whole foot on the box", "Stand through the lead leg", "Step down softly"]
+  }),
+  "fast feet drill": createCardioOverride({
+    equipment: ["Bodyweight"],
+    primaryMuscles: ["Conditioning", "Calves", "Hip flexors"],
+    secondaryMuscles: ["Core", "Quadriceps", "Glutes"],
+    difficulty: "beginner",
+    jointStress: "low",
+    movementPattern: "Rapid foot turnover",
+    trainingUse: "Short conditioning bursts, warm-up acceleration work, and coordination-heavy foot-speed drills.",
+    description: "Fast feet drill uses very short quick contacts in place to raise heart rate while training foot speed and elastic rhythm.",
+    setup: "Stand in a narrow athletic stance with knees soft, arms ready to move, and enough space around you to work at high cadence safely.",
+    execution: "Tap the feet rapidly under the hips, keep the contacts small, and let the arms move naturally while the torso stays tall and quiet.",
+    breathing: "Keep the breath quick but steady so tension does not climb into the neck and shoulders.",
+    tempo: "Aim for the fastest clean turnover you can maintain while the feet stay underneath you.",
+    stepSequence: cardioStepSequence(
+      "Set the athletic stance with weight centered and heels barely brushing the floor.",
+      "Start rapid low-amplitude foot contacts while the arms move in sync with the rhythm.",
+      "Reach your fastest repeatable cadence without bouncing high or drifting forward.",
+      "Ease the speed down smoothly and re-center before the next burst."
+    ),
+    commonMistakes: ["Bouncing too high", "Letting the feet drift forward", "Tensing the shoulders", "Turning the drill into noisy stomping"],
+    safetyNotes: ["Use shorter intervals if calves fatigue faster than your cardio does.", "Stay on a surface that gives you enough grip for quick contacts."],
+    modifications: ["Slower cadence", "Marching fast feet", "Shorter work intervals"],
+    cues: ["Tiny contacts", "Stay tall", "Quick but quiet"]
+  }),
+  "agility ladder in-out": createCardioOverride({
+    equipment: ["Agility ladder"],
+    primaryMuscles: ["Conditioning", "Calves", "Hip flexors"],
+    secondaryMuscles: ["Glutes", "Adductors", "Core"],
+    difficulty: "intermediate",
+    jointStress: "low",
+    movementPattern: "Footwork ladder drill",
+    trainingUse: "Agility conditioning, rhythm work, and low-load coordination intervals using a simple ladder pattern.",
+    description: "Agility ladder in-out is a footwork drill where the feet step in and out of each ladder square in a repeating rhythm that challenges coordination and conditioning.",
+    setup: "Lay the ladder flat, stand at one end in an athletic stance, and look ahead enough to read the lane without staring straight down every step.",
+    execution: "Step into the ladder square and back out in the planned pattern while the arms help rhythm and the torso stays centered over the feet.",
+    breathing: "Use calm rhythmic breaths so the ladder pattern stays quick and crisp.",
+    tempo: "Move quickly, but only as fast as you can place the feet cleanly in each square.",
+    stepSequence: cardioStepSequence(
+      "Set the first stance just before the ladder with knees soft and eyes scanning a few rungs ahead.",
+      "Step into and out of the first squares with quick precise contacts and quiet hips.",
+      "Build to the fastest clean in-out rhythm you can hold without clipping the ladder.",
+      "Run out through the final rung, decelerate cleanly, and reset before the next pass."
+    ),
+    commonMistakes: ["Looking straight down the whole time", "Clipping the ladder because the pace is too high", "Crossing the feet unintentionally", "Letting the torso sway side to side"],
+    safetyNotes: ["Slow down before accuracy disappears.", "Use a flat surface so the ladder does not bunch or slide."],
+    modifications: ["Walk the pattern first", "Shorter ladder pass", "Single-step in-out rhythm"],
+    cues: ["Eyes ahead", "Fast accurate feet", "Quiet hips"]
+  }),
+  "agility ladder lateral": createCardioOverride({
+    equipment: ["Agility ladder"],
+    primaryMuscles: ["Conditioning", "Glutes", "Adductors"],
+    secondaryMuscles: ["Calves", "Quadriceps", "Core"],
+    difficulty: "intermediate",
+    jointStress: "low",
+    movementPattern: "Lateral ladder footwork",
+    trainingUse: "Side-to-side conditioning, coordination work, and frontal-plane foot speed.",
+    description: "Agility ladder lateral work uses repeated side-facing steps through the ladder to build conditioning and directional foot control.",
+    setup: "Stand sideways to the ladder in a soft athletic stance with enough room to shuffle through the full lane.",
+    execution: "Move laterally through each rung with quick precise steps, keeping the feet organized and the torso tall instead of twisting across the ladder.",
+    breathing: "Keep the breathing rhythmic so the feet stay light and organized.",
+    tempo: "Move quickly through the rungs while still placing every step cleanly.",
+    stepSequence: cardioStepSequence(
+      "Set the side-facing stance at the first rung with knees soft and the hips loaded lightly.",
+      "Step through the first few rungs laterally with clean foot placement and even rhythm.",
+      "Maintain the fastest side-facing cadence you can own without crossing awkwardly or clipping the ladder.",
+      "Exit the final rung, decelerate cleanly, and reset before heading back the other way."
+    ),
+    commonMistakes: ["Crossing the feet when the pattern should stay lateral", "Standing too upright", "Clipping the ladder with the trailing foot", "Rotating the shoulders wildly instead of staying organized"],
+    safetyNotes: ["Practice the pattern slowly before adding speed.", "Reduce the length of the ladder pass if hips or calves fatigue quickly."],
+    modifications: ["Shorter ladder segment", "Walk-through pace", "Simple two-feet-per-square pattern"],
+    cues: ["Stay organized", "Move laterally", "Feet stay precise"]
+  }),
+  "cone drill zigzag": createCardioOverride({
+    equipment: ["Cones or markers"],
+    primaryMuscles: ["Conditioning", "Glutes", "Calves"],
+    secondaryMuscles: ["Quadriceps", "Adductors", "Core"],
+    difficulty: "intermediate",
+    jointStress: "moderate",
+    movementPattern: "Zigzag change of direction",
+    trainingUse: "Agility conditioning, directional change work, and short repeat sprint intervals.",
+    description: "Cone drill zigzag uses angled cuts around markers to build cardio output while teaching better control into and out of direction changes.",
+    setup: "Set the cones in a zigzag pattern with enough spacing to run and cut without crowding each marker.",
+    execution: "Accelerate toward each cone, plant cleanly, and redirect the body around the angle while keeping the trunk braced and the feet underneath you.",
+    breathing: "Use strong quick breaths through the cuts and recover fully enough to keep the next run sharp.",
+    tempo: "Accelerate hard between cones, but brake early enough to cut cleanly instead of sliding through each turn.",
+    stepSequence: cardioStepSequence(
+      "Start at the first cone in an athletic stance with eyes up and the first line clear.",
+      "Accelerate toward the next marker and lower enough to prepare for the cut.",
+      "Plant and redirect around the cone with the hips and torso staying under control.",
+      "Finish the final line cleanly, decelerate, and reset before the next zigzag pass."
+    ),
+    commonMistakes: ["Waiting too long to brake into the cone", "Standing tall through the cuts", "Letting the knee collapse inward on the plant", "Looking only at the feet instead of the next cone"],
+    safetyNotes: ["Use wider cone spacing until change-of-direction mechanics feel solid.", "Reduce speed if the cuts stop feeling clean and controlled."],
+    modifications: ["Walk-jog through the cones", "Fewer cones", "Wider turning angles"],
+    cues: ["Brake before you cut", "Eyes to the next cone", "Push out of the plant"]
+  }),
+  "shuttle run": createCardioOverride({
+    equipment: ["Open lane"],
+    primaryMuscles: ["Conditioning", "Quadriceps", "Calves"],
+    secondaryMuscles: ["Glutes", "Hamstrings", "Core"],
+    difficulty: "intermediate",
+    jointStress: "moderate",
+    movementPattern: "Repeated acceleration and turn",
+    trainingUse: "Anaerobic intervals, field-style conditioning, and repeat acceleration training.",
+    description: "Shuttle run uses repeated accelerations between two points with quick turns, making it a simple but demanding conditioning drill.",
+    setup: "Mark two clear turnaround points with enough traction and space to accelerate and decelerate safely.",
+    execution: "Sprint to the far line, plant under control, turn quickly, and drive back to the start while keeping the torso organized.",
+    breathing: "Use sharp recovery breaths during the turn and keep the trunk from tensing up between efforts.",
+    tempo: "Run each segment fast, but keep the turn controlled enough that you can push hard out of it.",
+    stepSequence: cardioStepSequence(
+      "Start at one end of the lane in an athletic stance with weight ready to drive forward.",
+      "Accelerate to the far marker with quick powerful steps and a stable trunk.",
+      "Brake into the turn, plant cleanly, and reverse direction without drifting upright.",
+      "Sprint back through the start line, decelerate safely, and reset for the next rep."
+    ),
+    commonMistakes: ["Sliding into the turn", "Reaching too far with the plant foot", "Popping upright before re-accelerating", "Running too long a lane for the quality you can keep"],
+    safetyNotes: ["Choose a lane length you can turn on cleanly.", "Cut the set short if deceleration quality drops fast."],
+    modifications: ["Shorter shuttle distance", "Jog the return", "Reduce total reps"],
+    cues: ["Accelerate hard", "Turn cleanly", "Re-accelerate out of the plant"]
+  }),
+  "split jump lunge": createCardioOverride({
+    equipment: ["Bodyweight"],
+    primaryMuscles: ["Quadriceps", "Glutes", "Conditioning"],
+    secondaryMuscles: ["Calves", "Hamstrings", "Core"],
+    difficulty: "advanced",
+    jointStress: "high",
+    movementPattern: "Alternating split-jump plyometric",
+    trainingUse: "Higher-intensity conditioning, lower-body power endurance, and athletic repeat-effort work.",
+    description: "Split jump lunge alternates the legs in the air from a split stance, turning a lunge pattern into a demanding cardio and power-endurance drill.",
+    setup: "Start in a stable split stance with enough room overhead and around you to jump and switch legs safely.",
+    execution: "Lower into a controlled split stance, jump explosively, switch the legs in the air, and land softly into the opposite split stance before repeating.",
+    breathing: "Use quick exhalations on the jumps and reset your breathing during the landing rhythm.",
+    tempo: "Keep the jump crisp and reactive, but only if each landing stays quiet and balanced.",
+    stepSequence: cardioStepSequence(
+      "Set the split stance, brace lightly, and lower enough to preload the legs for the first jump.",
+      "Drive through the floor and switch the legs in the air while the torso stays tall.",
+      "Land softly in the opposite split stance and absorb the impact under control.",
+      "Rebound only if the landing stays clean; otherwise reset and take the next rep with control."
+    ),
+    commonMistakes: ["Crashing onto the front foot", "Letting the knee cave inward on landing", "Losing balance in the air switch", "Trying to move faster than you can land safely"],
+    safetyNotes: ["Use reverse lunges or split squats first if impact tolerance is not solid.", "Stop the set if landings get noisy or the trunk starts folding forward."],
+    modifications: ["Alternating reverse lunge", "Split squat cardio reps", "Low pogo split switches"],
+    cues: ["Land softly", "Switch cleanly", "Own each split stance"]
+  }),
+  "bear crawl cardio": createCardioOverride({
+    equipment: ["Bodyweight"],
+    primaryMuscles: ["Conditioning", "Shoulders", "Core"],
+    secondaryMuscles: ["Hip flexors", "Quadriceps", "Glutes"],
+    difficulty: "intermediate",
+    jointStress: "moderate",
+    movementPattern: "Quadruped crawl",
+    trainingUse: "Crawl-based conditioning, shoulder endurance, and trunk-stable locomotion intervals.",
+    description: "Bear crawl cardio uses a low quadruped position to challenge conditioning while the shoulders and trunk stabilize continuous contralateral movement.",
+    setup: "Set up on hands and feet with knees hovering just off the floor, spine long, and enough open space to crawl forward for several controlled steps.",
+    execution: "Move opposite hand and foot together in small deliberate steps while keeping the hips level and the shoulders active.",
+    breathing: "Use short steady breaths so the trunk stays braced without becoming rigid.",
+    tempo: "Crawl at a pace that raises the heart rate without letting the hips bounce high or the steps get sloppy.",
+    stepSequence: cardioStepSequence(
+      "Lift the knees just off the floor and set a long neutral spine with hands under shoulders.",
+      "Begin crawling forward with small opposite-limb steps while the hips stay level.",
+      "Hold the strongest repeatable crawl pace you can manage without losing trunk control.",
+      "Slow the crawl down under control, lower the knees, and reset before the next interval."
+    ),
+    commonMistakes: ["Hips rising too high", "Taking giant steps that twist the torso", "Shrugging into the neck", "Holding the breath during the crawl"],
+    safetyNotes: ["Reduce distance if wrists or shoulders start to fatigue before the cardio goal is met.", "Use a softer surface if hands or toes need a little more comfort."],
+    modifications: ["Short crawl distance", "Bear crawl hold with shoulder taps", "High plank march"],
+    cues: ["Small steps", "Hips stay level", "Push the floor away"]
+  }),
+  "jump rope double unders": createCardioOverride({
+    equipment: ["Jump rope"],
+    primaryMuscles: ["Conditioning", "Calves", "Shoulders"],
+    secondaryMuscles: ["Core", "Forearms", "Hip flexors"],
+    difficulty: "advanced",
+    jointStress: "moderate",
+    movementPattern: "Reactive jump rope pattern",
+    trainingUse: "Advanced conditioning, elastic lower-leg endurance, and higher-skill rope intervals.",
+    description: "Jump rope double unders require the rope to pass twice under the feet in one jump, demanding rhythm, timing, and reactive stiffness.",
+    setup: "Set the rope length correctly, stand tall with elbows close to the ribs, and start with enough space to swing the rope freely.",
+    execution: "Jump once with enough height and tight body position to let the rope pass twice, turning the rope from the wrists rather than the shoulders.",
+    breathing: "Stay relaxed enough to breathe rhythmically instead of bracing hard against every jump.",
+    tempo: "Keep the rope fast and compact while the jumps stay springy and efficient.",
+    stepSequence: cardioStepSequence(
+      "Set posture tall with the rope ready and establish a clean single-under rhythm first.",
+      "Jump slightly higher and speed the wrists up so the rope can clear twice under one jump.",
+      "Hold the strongest repeatable double-under rhythm you can manage without excessive piking or heel kickback.",
+      "Break the set as soon as timing slips badly, reset the rope, and restart with control."
+    ),
+    commonMistakes: ["Swinging from the shoulders", "Tucking the knees excessively", "Jumping too high and losing rhythm", "Letting missed reps turn into rushed flailing"],
+    safetyNotes: ["Build this from solid single-under rhythm first.", "Use shorter rounds if calves or Achilles tissues are not conditioned for repeated contacts yet."],
+    modifications: ["Single-under jump rope", "Alternating single-single-double practice", "Low-volume double-under sets"],
+    cues: ["Wrists stay fast", "Jump compactly", "Keep the rhythm tight"]
+  }),
+  "battle rope slams": createCardioOverride({
+    equipment: ["Battle ropes"],
+    primaryMuscles: ["Conditioning", "Lats", "Core"],
+    secondaryMuscles: ["Shoulders", "Glutes", "Quadriceps"],
+    difficulty: "intermediate",
+    jointStress: "moderate",
+    movementPattern: "Explosive rope slam",
+    trainingUse: "Short power-conditioning bursts, trunk-braced upper-body output, and aggressive but controlled intervals.",
+    description: "Battle rope slams combine a fast overhead lift with a sharp downward strike, producing a powerful cardio interval that also trains full-body coordination.",
+    setup: "Stand in an athletic stance holding one rope end in each hand, with enough distance from the anchor for visible rope movement.",
+    execution: "Lift the hands overhead with the trunk braced, then slam the ropes down hard by driving the arms and torso together while keeping the knees soft.",
+    breathing: "Exhale sharply on each slam and take quick recovery breaths between waves of effort.",
+    tempo: "Attack each slam hard, then reset just enough to make the next rep crisp instead of muscling a slow rope drop.",
+    stepSequence: cardioStepSequence(
+      "Set the athletic stance, grip the rope ends firmly, and brace before the first overhead lift.",
+      "Raise the ropes overhead while the ribs stay stacked and the hips stay loaded.",
+      "Drive the ropes down explosively, using the trunk and arms together to create a sharp slam.",
+      "Recoil into the next rep under control and stop the set before posture collapses."
+    ),
+    commonMistakes: ["Arching the low back overhead", "Slamming with straight locked knees", "Letting the ropes drift with no clear finish", "Using only the arms with no trunk control"],
+    safetyNotes: ["Keep enough room from the anchor so the ropes can move freely.", "Back off if low-back fatigue replaces powerful trunk bracing."],
+    modifications: ["Alternating battle rope waves", "Half-kneeling rope slams", "Shorter slam intervals"],
+    cues: ["Brace before the lift", "Slam with the whole body", "Reset each rep cleanly"]
+  })
+};
+
 const EXERCISE_LIBRARY_CONTENT_OVERRIDES = {
+  ...CARDIO_LIBRARY_CONTENT_OVERRIDES,
   "goblet squat": {
     category: "Legs",
     equipment: ["Dumbbell or kettlebell"],

@@ -9,6 +9,7 @@ import { chromium } from "playwright-core";
 import { listDeclaredExerciseModelMedia } from "../shared/mediaReviewCatalog.js";
 import { getGuideStatusLabel, getMovementMedia, resolveExerciseMedia } from "../shared/exerciseCatalog.js";
 import { buildMobilityModule } from "../server/data/stretchLibrary.js";
+import { getExerciseLibraryCatalog } from "../server/data/workoutLibrary.js";
 
 const projectRoot = process.cwd();
 const artifactsDir = path.join(projectRoot, "artifacts");
@@ -383,6 +384,67 @@ function verifyRehabGuideRecord(entry) {
   requireStepSequence(entry);
 }
 
+function verifyCardioGuideRecord(entry) {
+  verifyDetailRecord(entry);
+  if (String(entry.category || "") !== "Conditioning") {
+    fail(entry?.name || "(unknown)", "category", `Expected Conditioning but found "${entry.category}".`);
+  }
+}
+
+function runCardioLibraryAudit() {
+  const catalog = getExerciseLibraryCatalog();
+  const cardioEntries = Array.isArray(catalog?.entries)
+    ? catalog.entries.filter((entry) => entry.category === "Conditioning")
+    : [];
+  const generalMobilityModule = buildMobilityModule({
+    goalType: "general_fitness",
+    injuryStatus: "none",
+    restrictedAreas: [],
+    lowRecovery: false,
+    trainingEnvironment: "hybrid"
+  });
+  const rehabMobilityModule = buildMobilityModule({
+    goalType: "injury_recovery",
+    injuryStatus: "minor",
+    restrictedAreas: ["shoulder"],
+    lowRecovery: false,
+    trainingEnvironment: "hybrid"
+  });
+  const generalLibrary = Array.isArray(generalMobilityModule?.library) ? generalMobilityModule.library : [];
+  const rehabLibrary = Array.isArray(rehabMobilityModule?.library) ? rehabMobilityModule.library : [];
+  const excludedEntries = [
+    ...generalLibrary.filter((entry) => ["mobility_production", "stretch_production", "yoga_production"].includes(entry.sourceType)),
+    ...rehabLibrary.filter((entry) => entry.sourceType === "rehab_production")
+  ];
+
+  if (cardioEntries.length !== 30) {
+    fail("cardio", "count", `Expected 30 cardio entries but found ${cardioEntries.length}.`);
+  }
+
+  const cardioIdMap = new Map();
+  const cardioDetailIdMap = new Map();
+  const excludedIds = new Set(excludedEntries.map((entry) => entry.id));
+  const excludedDetailIds = new Set(excludedEntries.map((entry) => entry.detailId));
+  const excludedNames = new Set(excludedEntries.map((entry) => entry.name));
+
+  cardioEntries.forEach((entry) => {
+    if (cardioIdMap.has(entry.id)) {
+      fail(entry.name, "id", `Duplicate cardio id also used by ${cardioIdMap.get(entry.id)}.`);
+    } else {
+      cardioIdMap.set(entry.id, entry.name);
+    }
+    if (cardioDetailIdMap.has(entry.detailId)) {
+      fail(entry.name, "detailId", `Duplicate cardio detailId also used by ${cardioDetailIdMap.get(entry.detailId)}.`);
+    } else {
+      cardioDetailIdMap.set(entry.detailId, entry.name);
+    }
+    if (excludedIds.has(entry.id) || excludedDetailIds.has(entry.detailId) || excludedNames.has(entry.name)) {
+      fail(entry.name, "categorySeparation", "Cardio entry overlaps with mobility, stretch, rehab, or yoga content.");
+    }
+    verifyCardioGuideRecord(entry);
+  });
+}
+
 function runMobilityLibraryAudit() {
   const mobilityModule = buildMobilityModule({
     goalType: "mobility",
@@ -714,6 +776,22 @@ async function runBrowserVerification(token) {
     await page.goto(`${baseUrl}/exercise-library`, { waitUntil: "networkidle" });
     await page.getByRole("heading", { name: /browse every movement used by pulsepeak workouts/i }).waitFor({ timeout: 15000 });
 
+    const conditioningPill = page.locator(".exercise-library-category-pill").filter({ hasText: "Conditioning" }).first();
+    await conditioningPill.click();
+    const conditioningCards = page.locator(".exercise-library-card");
+    if (await conditioningCards.count() !== 30) {
+      fail("Conditioning", "visibleCount", `Expected 30 conditioning cards but found ${await conditioningCards.count()}.`);
+    }
+
+    const searchInput = page.locator('input[type="search"]').first();
+    await searchInput.fill("treadmill");
+    await page.waitForTimeout(150);
+    if (await conditioningCards.count() !== 3) {
+      fail("Conditioning", "search", `Expected 3 treadmill conditioning results but found ${await conditioningCards.count()}.`);
+    }
+    await searchInput.fill("");
+    await page.locator(".exercise-library-category-pill").filter({ hasText: "All" }).first().click();
+
     await openGuideAndAssert(page, "Goblet squat", []);
     report.browserVerified.push("Goblet squat");
 
@@ -767,6 +845,9 @@ async function runBrowserVerification(token) {
 
     await openGuideAndAssert(page, "Lat pulldown", ["Lat pulldown"], { expectVisualFull: true });
     report.browserVerified.push("Lat pulldown");
+
+    await openGuideAndAssert(page, "Treadmill walk", [], { expectTextOnly: true });
+    report.browserVerified.push("Treadmill walk");
 
     await page.screenshot({ path: path.join(artifactsDir, "exercise-library-modal-verification.png"), fullPage: true });
 
@@ -875,6 +956,7 @@ try {
     })
   });
 
+  runCardioLibraryAudit();
   runMobilityLibraryAudit();
   runStretchLibraryAudit();
   runRehabLibraryAudit();
