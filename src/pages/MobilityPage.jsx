@@ -2,15 +2,22 @@ import React, { useMemo, useState } from "react";
 import Panel from "../components/Panel";
 import MovementDetailModal from "../components/MovementDetailModal";
 import { useDashboardData } from "../hooks/useDashboardData";
-import { getMovementMedia } from "../../shared/exerciseCatalog";
+import { useAuth } from "../state/AuthContext";
+import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "../../shared/exerciseCatalog";
+import { getCurrentPlanFocus } from "../../shared/profileState";
+import { getModuleContinuityContext, getRecoveryBias } from "../../shared/workoutEngine";
 import { MOBILITY_SORT_OPTIONS } from "../../shared/libraryTaxonomy.js";
 
 export default function MobilityPage() {
   const { data, summary, loading, error } = useDashboardData();
+  const { workoutMemory, workoutMomentum } = useAuth();
   const [selectedMovement, setSelectedMovement] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedArea, setSelectedArea] = useState("all");
   const [selectedTime, setSelectedTime] = useState("10");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("all");
+  const [selectedEquipment, setSelectedEquipment] = useState("all");
   const [selectedRecovery, setSelectedRecovery] = useState("all");
   const [selectedFlowType, setSelectedFlowType] = useState("all");
   const [selectedIntensity, setSelectedIntensity] = useState("all");
@@ -23,6 +30,32 @@ export default function MobilityPage() {
   const effectiveEnvironment = data?.profile?.trainingEnvironment || "hybrid";
   const guidanceLevel = data?.profile?.exerciseGuidanceLevel || "standard";
   const routines = mobilityModule?.library || [];
+  const openMovementGuide = (target) => setSelectedMovement(buildGuideTarget(target));
+  const currentPlanFocus = useMemo(
+    () =>
+      getCurrentPlanFocus({
+        profile: data?.profile,
+        planSummary: summary?.planSummary,
+        workoutEngine: summary?.workoutEngine
+      }),
+    [data?.profile, summary?.planSummary, summary?.workoutEngine]
+  );
+  const recoveryBias = useMemo(() => getRecoveryBias(workoutMemory), [workoutMemory]);
+  const continuityContext = useMemo(
+    () =>
+      getModuleContinuityContext({
+        module: "mobility",
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        workoutMomentum,
+        recoveryBias,
+        weeklyStructure: summary?.planSummary?.suggestedWorkoutMix
+          ? { days: (summary.planSummary.suggestedWorkoutMix.split || []).map((item, index) => ({ day: index + 1, type: String(item).toLowerCase().includes("recovery") ? "recovery" : "training" })) }
+          : null,
+        nutritionMode: data?.profile?.nutritionMode
+      }),
+    [currentPlanFocus, data?.profile?.nutritionMode, recoveryBias, summary?.planSummary?.suggestedWorkoutMix, workoutMemory, workoutMomentum]
+  );
 
   const flowTypeOptions = useMemo(
     () => [
@@ -60,6 +93,7 @@ export default function MobilityPage() {
   }, [mobilityModule?.filterOptions?.injurySupportOptions, routines]);
 
   const filteredRoutines = useMemo(() => {
+    const normalizedQuery = searchQuery.trim().toLowerCase();
     const normalizeSupportTopic = (value) => {
       const map = {
         wrist: "carpal_tunnel",
@@ -77,11 +111,51 @@ export default function MobilityPage() {
       if (!routine.supportTypes.includes(effectiveCategory)) {
         return false;
       }
+      if (effectiveCategory === "mobility" && routine.sourceType !== "mobility_production") {
+        return false;
+      }
+      if (effectiveCategory === "yoga" && routine.sourceType !== "yoga_production") {
+        return false;
+      }
       if (Number(selectedTime) && routine.minutes > Number(selectedTime)) {
         return false;
       }
       if (effectiveEnvironment !== "hybrid" && !routine.environments.includes(effectiveEnvironment) && !routine.environments.includes("hybrid")) {
         return false;
+      }
+
+      if (effectiveCategory === "mobility") {
+        const searchHaystack = [
+          routine.name,
+          routine.displayName,
+          routine.benefit,
+          routine.primaryFocus,
+          routine.secondaryFocus,
+          ...(routine.bodyAreas || []),
+          ...(routine.restrictedAreas || []),
+          ...(routine.supportTopics || [])
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        if (normalizedQuery && !searchHaystack.includes(normalizedQuery)) {
+          return false;
+        }
+        if (
+          selectedArea !== "all" &&
+          !(routine.bodyAreas || []).includes(selectedArea) &&
+          !(routine.restrictedAreas || []).includes(selectedArea) &&
+          !(routine.supportTopics || []).includes(normalizeSupportTopic(selectedArea))
+        ) {
+          return false;
+        }
+        if (selectedDifficulty !== "all" && String(routine.difficulty || "").toLowerCase() !== selectedDifficulty) {
+          return false;
+        }
+        if (selectedEquipment !== "all" && String(routine.equipmentProfile || "").toLowerCase() !== selectedEquipment) {
+          return false;
+        }
+        return true;
       }
 
       if (effectiveCategory === "yoga") {
@@ -96,12 +170,37 @@ export default function MobilityPage() {
       }
 
       if (effectiveCategory === "stretching") {
+        const searchHaystack = [
+          routine.name,
+          routine.displayName,
+          routine.benefit,
+          routine.primaryFocus,
+          routine.secondaryFocus,
+          ...(routine.bodyAreas || []),
+          ...(routine.restrictedAreas || []),
+          ...(routine.supportTopics || [])
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        if (normalizedQuery && !searchHaystack.includes(normalizedQuery)) {
+          return false;
+        }
+        if (routine.sourceType !== "stretch_production") {
+          return false;
+        }
         if (
           selectedArea !== "all" &&
           !(routine.bodyAreas || []).includes(selectedArea) &&
           !(routine.restrictedAreas || []).includes(selectedArea) &&
           !(routine.supportTopics || []).includes(normalizeSupportTopic(selectedArea))
         ) {
+          return false;
+        }
+        if (selectedDifficulty !== "all" && String(routine.difficulty || "").toLowerCase() !== selectedDifficulty) {
+          return false;
+        }
+        if (selectedEquipment !== "all" && String(routine.equipmentProfile || "").toLowerCase() !== selectedEquipment) {
           return false;
         }
         return true;
@@ -160,7 +259,7 @@ export default function MobilityPage() {
           return 0;
       }
     });
-  }, [effectiveCategory, effectiveEnvironment, routines, selectedArea, selectedFlowType, selectedInjurySupport, selectedIntensity, selectedRecovery, selectedSort, selectedTime]);
+  }, [effectiveCategory, effectiveEnvironment, routines, searchQuery, selectedArea, selectedDifficulty, selectedEquipment, selectedFlowType, selectedInjurySupport, selectedIntensity, selectedRecovery, selectedSort, selectedTime]);
 
   const suggestedRoutines = useMemo(() => {
     const direct = filteredRoutines.slice(0, 4);
@@ -199,6 +298,7 @@ export default function MobilityPage() {
           <p className="badge">Mobility</p>
           <h2>{mobilityModule?.title || "Guided movement support that fits today"}</h2>
           <p className="lead-copy">{getModeLeadCopy(effectiveCategory)}</p>
+          <p className="support-copy recommendation-context-note">{continuityContext.title}</p>
         </div>
       </section>
 
@@ -215,7 +315,10 @@ export default function MobilityPage() {
               type="button"
               onClick={() => {
                 setSelectedCategory(category.id);
+                setSearchQuery("");
                 setSelectedArea("all");
+                setSelectedDifficulty("all");
+                setSelectedEquipment("all");
                 setSelectedRecovery("all");
                 setSelectedFlowType("all");
                 setSelectedIntensity("all");
@@ -229,6 +332,60 @@ export default function MobilityPage() {
         </div>
 
         <div className="filter-bar discovery-filter-bar">
+          {effectiveCategory === "mobility" ? (
+            <>
+              <label>
+                Search
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  placeholder="Search hip, ankle, thoracic..."
+                />
+              </label>
+              <label>
+                Body area
+                <select value={selectedArea} onChange={(event) => setSelectedArea(event.target.value)}>
+                  {(mobilityModule?.filterOptions?.areaOptions || []).map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Difficulty
+                <select value={selectedDifficulty} onChange={(event) => setSelectedDifficulty(event.target.value)}>
+                  {(mobilityModule?.filterOptions?.difficultyOptions || []).map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Equipment
+                <select value={selectedEquipment} onChange={(event) => setSelectedEquipment(event.target.value)}>
+                  {(mobilityModule?.filterOptions?.equipmentOptions || []).map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Time
+                <select value={selectedTime} onChange={(event) => setSelectedTime(event.target.value)}>
+                  {(mobilityModule?.filterOptions?.timeOptions || []).map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </>
+          ) : null}
+
           {effectiveCategory === "yoga" ? (
             <>
               <label>
@@ -267,9 +424,38 @@ export default function MobilityPage() {
           {effectiveCategory === "stretching" ? (
             <>
               <label>
+                Search
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  placeholder="Search hamstring, shoulder, wrist..."
+                />
+              </label>
+              <label>
                 Body area
                 <select value={selectedArea} onChange={(event) => setSelectedArea(event.target.value)}>
                   {(mobilityModule?.filterOptions?.areaOptions || []).map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Difficulty
+                <select value={selectedDifficulty} onChange={(event) => setSelectedDifficulty(event.target.value)}>
+                  {(mobilityModule?.filterOptions?.difficultyOptions || []).map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Equipment
+                <select value={selectedEquipment} onChange={(event) => setSelectedEquipment(event.target.value)}>
+                  {(mobilityModule?.filterOptions?.equipmentOptions || []).map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
@@ -414,11 +600,11 @@ export default function MobilityPage() {
                 key={`suggested-${routine.name}`}
                 role="button"
                 tabIndex={0}
-                onClick={() => setSelectedMovement(currentRoutine.movement || currentRoutine)}
+                onClick={() => openMovementGuide(currentRoutine.movement || currentRoutine)}
                 onKeyDown={(event) => {
                   if (event.key === "Enter" || event.key === " ") {
                     event.preventDefault();
-                    setSelectedMovement(currentRoutine.movement || currentRoutine);
+                    openMovementGuide(currentRoutine.movement || currentRoutine);
                   }
                 }}
               >
@@ -429,7 +615,7 @@ export default function MobilityPage() {
                   {renderMobilityPreview(currentRoutine)}
                   <div className="library-card-hero-copy">
                     <span className="library-depth-note">{currentRoutine.recoveryFit === "high" ? "Recovery-focused" : "Matches your current need"}</span>
-                    <span className="library-depth-note">{swapOptions.length ? `+ ${swapOptions.length} more in this flow` : "Guide ready"}</span>
+                      <span className="library-depth-note">{swapOptions.length ? `+ ${swapOptions.length} more in this flow` : getGuideStatusLabel(currentRoutine.movement || currentRoutine)}</span>
                   </div>
                 </div>
                 <h4>{currentRoutine.name}</h4>
@@ -463,7 +649,7 @@ export default function MobilityPage() {
                     </select>
                   </label>
                 ) : null}
-                <button className="ghost-button" type="button" onClick={(event) => { event.stopPropagation(); setSelectedMovement(currentRoutine.movement || currentRoutine); }}>
+                <button className="ghost-button" type="button" onClick={(event) => { event.stopPropagation(); openMovementGuide(currentRoutine.movement || currentRoutine); }}>
                   Open guide
                 </button>
               </article>
@@ -473,8 +659,8 @@ export default function MobilityPage() {
 
         <Panel eyebrow="Why this matters" title="Keep the support work useful">
           <div className="module-note">
-            <strong>{summary.planSummary?.mobilityBlock?.weeklyTarget || "Use mobility to improve the next training session, not just fill time."}</strong>
-            <p className="support-copy">{summary.planSummary?.mobilityBlock?.reason || mobilityModule?.description}</p>
+            <strong>{continuityContext.title || summary.planSummary?.mobilityBlock?.weeklyTarget || "Use mobility to improve the next training session, not just fill time."}</strong>
+            <p className="support-copy">{continuityContext.detail || summary.planSummary?.mobilityBlock?.reason || mobilityModule?.description}</p>
           </div>
         </Panel>
       </div>
@@ -491,11 +677,11 @@ export default function MobilityPage() {
                   key={`${routine.name}-${routine.phase}`}
                   role="button"
                   tabIndex={0}
-                  onClick={() => setSelectedMovement(currentRoutine.movement || currentRoutine)}
+                  onClick={() => openMovementGuide(currentRoutine.movement || currentRoutine)}
                   onKeyDown={(event) => {
                     if (event.key === "Enter" || event.key === " ") {
                       event.preventDefault();
-                      setSelectedMovement(currentRoutine.movement || currentRoutine);
+                      openMovementGuide(currentRoutine.movement || currentRoutine);
                     }
                   }}
                 >
@@ -506,7 +692,7 @@ export default function MobilityPage() {
                     {renderMobilityPreview(currentRoutine)}
                     <div className="library-card-hero-copy">
                       <span className="library-depth-note">{currentRoutine.recoveryFit === "high" ? "Recovery-focused" : "Movement support ready"}</span>
-                      <span className="library-depth-note">{swapOptions.length ? `+ ${swapOptions.length} alternatives` : "Guide ready"}</span>
+                      <span className="library-depth-note">{swapOptions.length ? `+ ${swapOptions.length} alternatives` : getGuideStatusLabel(currentRoutine.movement || currentRoutine)}</span>
                     </div>
                   </div>
                   <h4>{currentRoutine.name}</h4>
@@ -540,7 +726,7 @@ export default function MobilityPage() {
                       </select>
                     </label>
                   ) : null}
-                  <button className="ghost-button" type="button" onClick={(event) => { event.stopPropagation(); setSelectedMovement(currentRoutine.movement || currentRoutine); }}>
+                  <button className="ghost-button" type="button" onClick={(event) => { event.stopPropagation(); openMovementGuide(currentRoutine.movement || currentRoutine); }}>
                     Open guide
                   </button>
                 </article>
@@ -552,7 +738,12 @@ export default function MobilityPage() {
         )}
       </Panel>
 
-      <MovementDetailModal guidanceLevel={guidanceLevel} movement={selectedMovement} onClose={() => setSelectedMovement(null)} />
+      <MovementDetailModal
+        guidanceLevel={guidanceLevel}
+        movement={selectedMovement}
+        movementId={selectedMovement?.detailId || selectedMovement?.guideTargetId || selectedMovement?.id}
+        onClose={() => setSelectedMovement(null)}
+      />
     </div>
   );
 }
@@ -580,6 +771,9 @@ function formatSupportTopic(value) {
 }
 
 function getModeLeadCopy(category) {
+  if (category === "mobility") {
+    return "Use mobility for dynamic range-of-motion drills that improve hips, ankles, shoulders, and thoracic control without turning the session into yoga or rehab.";
+  }
   if (category === "yoga") {
     return "Use yoga for flow-based movement sessions built from core poses, linked sequences, and deeper variations when you want a fuller movement practice.";
   }
@@ -596,6 +790,9 @@ function getModeLeadCopy(category) {
 }
 
 function getModeSupportCopy(category) {
+  if (category === "mobility") {
+    return "Mobility stays drill-focused: search by body area, narrow by difficulty or equipment, and open the exact range-of-motion pattern you need.";
+  }
   if (category === "yoga") {
     return "Yoga uses flow type, time, and intensity because it should feel like a real flow system with base poses, sequence options, and deeper variations, not targeted therapy.";
   }
@@ -612,6 +809,9 @@ function getModeSupportCopy(category) {
 }
 
 function getGuidedBlockSupportCopy(category) {
+  if (category === "mobility") {
+    return "These drills are meant to be mixed and matched, so the top cards surface the best matches while the full library keeps all 30 mobility options visible.";
+  }
   if (category === "yoga") {
     return "These flows are built to move together as a sequence, so the top four cards all surface real session options immediately while the deeper pool handles variations and swap depth.";
   }
@@ -628,14 +828,14 @@ function getGuidedBlockSupportCopy(category) {
 }
 
 function renderMobilityPreview(routine) {
-  const mediaView = getMovementMedia(routine.movement || routine);
-  if (mediaView.thumbnail) {
-    return <img alt={`${routine.name} preview`} className="library-card-thumb" src={mediaView.thumbnail} />;
+  const visual = resolveMovementVisual(routine.movement || routine);
+  if (visual.mode === "image") {
+    return <img alt={visual.alt} className="library-card-thumb" src={visual.src} />;
   }
   return (
-    <div className="library-card-thumb library-card-thumb-placeholder">
-      <span>{mediaView.placeholderInitials}</span>
-      <small>{mediaView.placeholderLabel}</small>
+    <div className="library-card-thumb library-card-thumb-placeholder movement-image-fallback">
+      <span>{visual.initials}</span>
+      <small>{visual.label}</small>
     </div>
   );
 }

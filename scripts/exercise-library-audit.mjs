@@ -8,6 +8,7 @@ import { pathToFileURL } from "node:url";
 import { chromium } from "playwright-core";
 import { listDeclaredExerciseModelMedia } from "../shared/mediaReviewCatalog.js";
 import { getGuideStatusLabel, getMovementMedia, resolveExerciseMedia } from "../shared/exerciseCatalog.js";
+import { buildMobilityModule } from "../server/data/stretchLibrary.js";
 
 const projectRoot = process.cwd();
 const artifactsDir = path.join(projectRoot, "artifacts");
@@ -143,6 +144,31 @@ function requireStepSequence(entry) {
       fail(entry?.name || "(unknown)", `stepSequence[${index}].title`, "Missing step title.");
     } else if (title !== expectedTitles[index]) {
       fail(entry?.name || "(unknown)", `stepSequence[${index}].title`, `Expected ${expectedTitles[index]} but found ${title}.`);
+    }
+    if (!description) {
+      fail(entry?.name || "(unknown)", `stepSequence[${index}].description`, "Missing step description.");
+    } else if (GENERIC_PATTERNS.some((pattern) => pattern.test(description))) {
+      fail(entry?.name || "(unknown)", `stepSequence[${index}].description`, "Step description still uses generic or fallback copy.");
+    }
+  });
+  return steps;
+}
+
+function requireStepSequenceRange(entry, minimum = 1, maximum = 3) {
+  const steps = Array.isArray(entry?.stepByStep)
+    ? entry.stepByStep
+    : Array.isArray(entry?.stepSequence)
+      ? entry.stepSequence
+      : [];
+  if (steps.length < minimum || steps.length > maximum) {
+    fail(entry?.name || "(unknown)", "stepSequence", `Expected ${minimum}-${maximum} sequence steps but found ${steps.length}.`);
+    return steps;
+  }
+  steps.forEach((step, index) => {
+    const title = String(step?.title || "").trim();
+    const description = String(step?.description || "").trim();
+    if (!title) {
+      fail(entry?.name || "(unknown)", `stepSequence[${index}].title`, "Missing step title.");
     }
     if (!description) {
       fail(entry?.name || "(unknown)", `stepSequence[${index}].description`, "Missing step description.");
@@ -304,6 +330,152 @@ function verifyDetailRecord(entry) {
   if (!allowedStatuses.includes(entry.mediaStatus)) {
     fail(entry.name, "mediaStatus", `Unexpected media status "${entry.mediaStatus}".`);
   }
+}
+
+function verifyMobilityGuideRecord(entry) {
+  requireText(entry, "detailId");
+  requireText(entry, "name");
+  requireText(entry, "whatThisExerciseIs");
+  requireText(entry, "trainingUse");
+  requireArray(entry, "primaryMuscles", 1);
+  requireArray(entry, "secondaryMuscles", 1);
+  requireText(entry, "setup");
+  requireText(entry, "howToPerform");
+  requireText(entry, "breathing");
+  requireText(entry, "tempo");
+  requireArray(entry, "commonMistakes", 2);
+  requireArray(entry, "safetyNotes", 1);
+  requireGuideModifications(entry, 1);
+  requireStepSequence(entry);
+}
+
+function verifyStretchGuideRecord(entry) {
+  requireText(entry, "detailId");
+  requireText(entry, "name");
+  requireText(entry, "whatThisExerciseIs");
+  requireText(entry, "trainingUse");
+  requireArray(entry, "primaryMuscles", 1);
+  requireArray(entry, "secondaryMuscles", 1);
+  requireText(entry, "setup");
+  requireText(entry, "howToPerform");
+  requireText(entry, "breathing");
+  requireText(entry, "tempo");
+  requireArray(entry, "commonMistakes", 2);
+  requireArray(entry, "safetyNotes", 1);
+  requireGuideModifications(entry, 1);
+  requireStepSequenceRange(entry, 1, 3);
+}
+
+function runMobilityLibraryAudit() {
+  const mobilityModule = buildMobilityModule({
+    goalType: "mobility",
+    injuryStatus: "none",
+    restrictedAreas: [],
+    lowRecovery: false,
+    trainingEnvironment: "hybrid"
+  });
+  const library = Array.isArray(mobilityModule?.library) ? mobilityModule.library : [];
+  const mobilityEntries = library.filter((entry) => entry.sourceType === "mobility_production" && entry.supportTypes.includes("mobility"));
+  const yogaEntries = library.filter((entry) => entry.sourceType === "yoga_production" && entry.supportTypes.includes("yoga"));
+
+  if (mobilityEntries.length !== 30) {
+    fail("mobility", "count", `Expected 30 non-yoga mobility entries but found ${mobilityEntries.length}.`);
+  }
+  if (yogaEntries.length !== 50) {
+    fail("yoga", "count", `Expected 50 yoga entries but found ${yogaEntries.length}.`);
+  }
+
+  const mobilityIdMap = new Map();
+  const mobilityDetailIdMap = new Map();
+  const yogaIdSet = new Set(yogaEntries.map((entry) => entry.id));
+
+  mobilityEntries.forEach((entry) => {
+    if (mobilityIdMap.has(entry.id)) {
+      fail(entry.name, "id", `Duplicate mobility id also used by ${mobilityIdMap.get(entry.id)}.`);
+    } else {
+      mobilityIdMap.set(entry.id, entry.name);
+    }
+    if (mobilityDetailIdMap.has(entry.detailId)) {
+      fail(entry.name, "detailId", `Duplicate mobility detailId also used by ${mobilityDetailIdMap.get(entry.detailId)}.`);
+    } else {
+      mobilityDetailIdMap.set(entry.detailId, entry.name);
+    }
+    if (entry.supportTypes.includes("yoga")) {
+      fail(entry.name, "supportTypes", "Mobility production entry is still tagged as yoga.");
+    }
+    if (yogaIdSet.has(entry.id)) {
+      fail(entry.name, "categorySeparation", "Movement appears in both yoga and mobility production lists.");
+    }
+    if (String(entry.visualCategory || "").toLowerCase() !== "mobility") {
+      fail(entry.name, "visualCategory", `Expected visualCategory mobility but found "${entry.visualCategory}".`);
+    }
+    if (String(entry.movementType || "").toLowerCase() !== "dynamic mobility") {
+      fail(entry.name, "movementType", `Expected dynamic mobility but found "${entry.movementType}".`);
+    }
+    if (!["none", "light"].includes(String(entry.equipmentProfile || "").toLowerCase())) {
+      fail(entry.name, "equipmentProfile", `Unexpected mobility equipment profile "${entry.equipmentProfile}".`);
+    }
+    verifyMobilityGuideRecord(entry.movement || entry);
+  });
+}
+
+function runStretchLibraryAudit() {
+  const mobilityModule = buildMobilityModule({
+    goalType: "general_fitness",
+    injuryStatus: "none",
+    restrictedAreas: [],
+    lowRecovery: false,
+    trainingEnvironment: "hybrid"
+  });
+  const library = Array.isArray(mobilityModule?.library) ? mobilityModule.library : [];
+  const stretchEntries = library.filter((entry) => entry.sourceType === "stretch_production" && entry.supportTypes.includes("stretching"));
+  const mobilityEntries = library.filter((entry) => entry.sourceType === "mobility_production" && entry.supportTypes.includes("mobility"));
+  const yogaEntries = library.filter((entry) => entry.sourceType === "yoga_production" && entry.supportTypes.includes("yoga"));
+
+  if (stretchEntries.length !== 40) {
+    fail("stretch", "count", `Expected 40 stretch entries but found ${stretchEntries.length}.`);
+  }
+
+  const stretchIdMap = new Map();
+  const stretchDetailIdMap = new Map();
+  const mobilityIds = new Set(mobilityEntries.map((entry) => entry.id));
+  const mobilityDetailIds = new Set(mobilityEntries.map((entry) => entry.detailId));
+  const mobilityNames = new Set(mobilityEntries.map((entry) => entry.name));
+  const yogaIds = new Set(yogaEntries.map((entry) => entry.id));
+  const yogaDetailIds = new Set(yogaEntries.map((entry) => entry.detailId));
+  const yogaNames = new Set(yogaEntries.map((entry) => entry.name));
+
+  stretchEntries.forEach((entry) => {
+    if (stretchIdMap.has(entry.id)) {
+      fail(entry.name, "id", `Duplicate stretch id also used by ${stretchIdMap.get(entry.id)}.`);
+    } else {
+      stretchIdMap.set(entry.id, entry.name);
+    }
+    if (stretchDetailIdMap.has(entry.detailId)) {
+      fail(entry.name, "detailId", `Duplicate stretch detailId also used by ${stretchDetailIdMap.get(entry.detailId)}.`);
+    } else {
+      stretchDetailIdMap.set(entry.detailId, entry.name);
+    }
+    if (mobilityIds.has(entry.id) || mobilityDetailIds.has(entry.detailId) || mobilityNames.has(entry.name)) {
+      fail(entry.name, "categorySeparation", "Stretch entry overlaps with the mobility production library.");
+    }
+    if (yogaIds.has(entry.id) || yogaDetailIds.has(entry.detailId) || yogaNames.has(entry.name)) {
+      fail(entry.name, "categorySeparation", "Stretch entry overlaps with the yoga production library.");
+    }
+    if (entry.supportTypes.includes("mobility") || entry.supportTypes.includes("yoga")) {
+      fail(entry.name, "supportTypes", "Stretch production entry is still tagged as mobility or yoga.");
+    }
+    if (String(entry.visualCategory || "").toLowerCase() !== "stretch") {
+      fail(entry.name, "visualCategory", `Expected visualCategory stretch but found "${entry.visualCategory}".`);
+    }
+    if (String(entry.movementType || "").toLowerCase() !== "static stretch") {
+      fail(entry.name, "movementType", `Expected static stretch but found "${entry.movementType}".`);
+    }
+    if (!["none", "light"].includes(String(entry.equipmentProfile || "").toLowerCase())) {
+      fail(entry.name, "equipmentProfile", `Unexpected stretch equipment profile "${entry.equipmentProfile}".`);
+    }
+    verifyStretchGuideRecord(entry.movement || entry);
+  });
 }
 
 function mediaUrlToLocalPath(urlPath) {
@@ -620,6 +792,8 @@ try {
     })
   });
 
+  runMobilityLibraryAudit();
+  runStretchLibraryAudit();
   await runApiAudit(login.token);
   runDeclaredModelMediaAudit();
   await runBrowserVerification(login.token);

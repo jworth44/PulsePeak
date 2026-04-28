@@ -11,7 +11,95 @@ const YOGA_PRODUCTION_LIST = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, "../../artifacts/pulsepeak-yoga-production-list.json"), "utf8")
 );
 
+const MOBILITY_PRODUCTION_NAMES = new Set([
+  "Cat-cow",
+  "Walking spiderman reach",
+  "World's greatest stretch",
+  "90/90 hip flow",
+  "Wall slide",
+  "Open book rotation",
+  "Foam roller thoracic extension",
+  "Adductor rock-back",
+  "Hip airplane support",
+  "Calf wall stretch",
+  "Ankle circle control",
+  "90/90 switch",
+  "Ankle dorsiflexion rock",
+  "Hip CARs",
+  "Hip flexor pulses",
+  "Cossack squat mobility",
+  "Scapular CARs",
+  "Banded shoulder dislocates",
+  "Shoulder CARs",
+  "Neck CARs",
+  "Hamstring sweeps",
+  "Leg swings front back",
+  "Leg swings side to side",
+  "Glute activation bridge pulses",
+  "Quadruped hip circles",
+  "Prone press-ups",
+  "Deep squat hold mobility",
+  "Ankle knee over toe drives",
+  "T-spine reach through",
+  "Standing hip flexion drives"
+]);
+
+const STRETCH_PRODUCTION_NAMES = new Set([
+  "Hamstring stretch",
+  "Hip flexor stretch",
+  "Figure-four glute stretch",
+  "Sleeper stretch",
+  "Bench thoracic opener",
+  "Standing quad stretch",
+  "Seated adductor stretch",
+  "Overhead lat stretch",
+  "Doorway pec stretch",
+  "Neck side stretch",
+  "Overhead triceps stretch",
+  "Knees-to-chest stretch",
+  "Piriformis stretch",
+  "IT band stretch",
+  "Cross-body shoulder stretch",
+  "Wrist flexor stretch",
+  "Wrist extensor stretch",
+  "Seated butterfly stretch",
+  "Supine hamstring strap stretch",
+  "Half-kneeling quad stretch",
+  "Soleus wall stretch",
+  "Seated straddle stretch",
+  "Prone quad stretch",
+  "Seated chest opener stretch",
+  "Wall pec minor stretch",
+  "Upper trap stretch",
+  "Levator scapulae stretch",
+  "Seated glute stretch",
+  "Frog adductor stretch",
+  "Standing hamstring stretch",
+  "Towel lat stretch",
+  "Overhead side bend stretch",
+  "Lying groin stretch",
+  "Kneeling shin stretch",
+  "Seated forearm flexor stretch",
+  "Seated forearm extensor stretch",
+  "Bench-assisted lat stretch",
+  "Doorframe biceps stretch",
+  "Posterior capsule stretch",
+  "Standing side-body reach stretch"
+]);
+
+const MOBILITY_SOURCE_TYPES = {
+  production: "mobility_production",
+  library: "mobility_library"
+};
+
+const STRETCH_SOURCE_TYPE = "stretch_production";
+
 const MOBILITY_CATEGORIES = [
+  {
+    id: "mobility",
+    label: "Mobility",
+    description: "Dynamic range-of-motion drills for hips, ankles, shoulders, and thoracic control without yoga flow styling."
+  },
   {
     id: "yoga",
     label: "Yoga",
@@ -80,7 +168,7 @@ const SUPPORT_TOPIC_EQUIVALENTS = {
 const BASE_MOBILITY_LIBRARY = [
   routine({
     name: "Cat-cow",
-    supportTypes: ["yoga", "recovery"],
+    supportTypes: ["mobility", "recovery"],
     restrictedAreas: ["back"],
     bodyAreas: ["back", "full_body"],
     supportTopics: ["lower_back"],
@@ -93,7 +181,7 @@ const BASE_MOBILITY_LIBRARY = [
   }),
   routine({
     name: "Child's pose with side reach",
-    supportTypes: ["yoga", "recovery"],
+    supportTypes: ["stretching", "recovery"],
     restrictedAreas: ["back", "shoulder"],
     bodyAreas: ["back", "shoulder", "full_body"],
     supportTopics: ["lower_back", "shoulder_irritation"],
@@ -106,7 +194,7 @@ const BASE_MOBILITY_LIBRARY = [
   }),
   routine({
     name: "Thoracic rotation",
-    supportTypes: ["yoga", "recovery", "injury_specific"],
+    supportTypes: ["recovery", "injury_specific"],
     restrictedAreas: ["back", "shoulder"],
     bodyAreas: ["back", "shoulder", "full_body"],
     supportTopics: ["shoulder_irritation", "lower_back"],
@@ -119,7 +207,7 @@ const BASE_MOBILITY_LIBRARY = [
   }),
   routine({
     name: "Walking spiderman reach",
-    supportTypes: ["yoga", "stretching"],
+    supportTypes: ["mobility", "stretching"],
     restrictedAreas: ["hip", "shoulder"],
     bodyAreas: ["hip", "shoulder", "full_body"],
     supportTopics: ["hip_tightness", "shoulder_irritation"],
@@ -132,7 +220,7 @@ const BASE_MOBILITY_LIBRARY = [
   }),
   routine({
     name: "World's greatest stretch",
-    supportTypes: ["stretching", "recovery"],
+    supportTypes: ["mobility", "stretching", "recovery"],
     restrictedAreas: ["hip", "ankle"],
     bodyAreas: ["hip", "ankle", "full_body"],
     supportTopics: ["hip_tightness", "ankle_stiffness"],
@@ -145,7 +233,7 @@ const BASE_MOBILITY_LIBRARY = [
   }),
   routine({
     name: "90/90 hip flow",
-    supportTypes: ["stretching", "recovery", "injury_specific"],
+    supportTypes: ["mobility", "recovery", "injury_specific"],
     restrictedAreas: ["hip", "back"],
     bodyAreas: ["hip", "back"],
     supportTopics: ["hip_tightness", "lower_back"],
@@ -210,7 +298,7 @@ const BASE_MOBILITY_LIBRARY = [
   }),
   routine({
     name: "Wall slide",
-    supportTypes: ["physiotherapy", "injury_specific"],
+    supportTypes: ["mobility", "physiotherapy", "injury_specific"],
     restrictedAreas: ["shoulder"],
     bodyAreas: ["shoulder"],
     supportTopics: ["shoulder_irritation"],
@@ -296,8 +384,8 @@ const EXPANDED_MOBILITY_LIBRARY = [
     { name: "Bench thoracic opener", supportTypes: ["stretching", "recovery"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "release", benefit: "Restore extension through the upper back so overhead work feels cleaner.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" }
   ]),
   ...routineFamily("thoracic_spine_family", [
-    { name: "Open book rotation", supportTypes: ["stretching", "recovery"], restrictedAreas: ["back", "shoulder"], bodyAreas: ["back", "shoulder"], supportTopics: ["lower_back", "shoulder_irritation"], phase: "mobility", benefit: "Restore upper-back rotation so the torso moves better without forcing the lower back.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness", "active_aging"], recoveryFit: "high" },
-    { name: "Foam roller thoracic extension", supportTypes: ["recovery", "stretching"], restrictedAreas: ["back", "shoulder"], bodyAreas: ["back", "shoulder"], supportTopics: ["lower_back", "shoulder_irritation"], phase: "release", benefit: "Open upper-back extension after long sitting or pressing volume.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "bodybuilding", "general_fitness"], recoveryFit: "high" },
+    { name: "Open book rotation", supportTypes: ["mobility", "stretching", "recovery"], restrictedAreas: ["back", "shoulder"], bodyAreas: ["back", "shoulder"], supportTopics: ["lower_back", "shoulder_irritation"], phase: "mobility", benefit: "Restore upper-back rotation so the torso moves better without forcing the lower back.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness", "active_aging"], recoveryFit: "high" },
+    { name: "Foam roller thoracic extension", supportTypes: ["mobility", "recovery", "stretching"], restrictedAreas: ["back", "shoulder"], bodyAreas: ["back", "shoulder"], supportTopics: ["lower_back", "shoulder_irritation"], phase: "release", benefit: "Open upper-back extension after long sitting or pressing volume.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "bodybuilding", "general_fitness"], recoveryFit: "high" },
     { name: "Quadruped T-spine reach", supportTypes: ["physiotherapy", "recovery"], restrictedAreas: ["back", "shoulder"], bodyAreas: ["back", "shoulder"], supportTopics: ["lower_back", "shoulder_irritation"], phase: "control", benefit: "Create cleaner rotation and control through a supported position.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "mobility"], recoveryFit: "high" }
   ]),
   ...routineFamily("wrist_elbow_family", [
@@ -307,8 +395,8 @@ const EXPANDED_MOBILITY_LIBRARY = [
   ]),
   ...routineFamily("hip_recovery_family", [
     { name: "Figure-four glute stretch", supportTypes: ["stretching", "recovery"], restrictedAreas: ["hip", "back"], bodyAreas: ["hip", "back"], supportTopics: ["hip_tightness", "lower_back"], phase: "release", benefit: "Reduce glute and hip stiffness after lower-body work or long sitting.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "fat_loss", "general_fitness"], recoveryFit: "high" },
-    { name: "Adductor rock-back", supportTypes: ["stretching", "recovery"], restrictedAreas: ["hip", "knee"], bodyAreas: ["hip", "knee"], supportTopics: ["hip_tightness", "knee_support"], phase: "mobility", benefit: "Open the inner thigh and make squat depth feel less sticky.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["strength", "mobility", "active_aging"], recoveryFit: "medium" },
-    { name: "Hip airplane support", supportTypes: ["physiotherapy", "injury_specific"], restrictedAreas: ["hip", "knee"], bodyAreas: ["hip", "knee"], supportTopics: ["hip_tightness", "knee_support"], phase: "control", benefit: "Improve hip stability and balance before single-leg work.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "athletic_performance"], recoveryFit: "medium" }
+    { name: "Adductor rock-back", supportTypes: ["mobility", "stretching", "recovery"], restrictedAreas: ["hip", "knee"], bodyAreas: ["hip", "knee"], supportTopics: ["hip_tightness", "knee_support"], phase: "mobility", benefit: "Open the inner thigh and make squat depth feel less sticky.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["strength", "mobility", "active_aging"], recoveryFit: "medium" },
+    { name: "Hip airplane support", supportTypes: ["mobility", "physiotherapy", "injury_specific"], restrictedAreas: ["hip", "knee"], bodyAreas: ["hip", "knee"], supportTopics: ["hip_tightness", "knee_support"], phase: "control", benefit: "Improve hip stability and balance before single-leg work.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "athletic_performance"], recoveryFit: "medium" }
   ]),
   ...routineFamily("knee_support_family", [
     { name: "Spanish squat hold", supportTypes: ["physiotherapy", "injury_specific"], restrictedAreas: ["knee"], bodyAreas: ["knee"], supportTopics: ["knee_support"], phase: "control", benefit: "Build quad tension in a knee-friendly way when squats feel sharp or unstable.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "medium" },
@@ -316,9 +404,9 @@ const EXPANDED_MOBILITY_LIBRARY = [
     { name: "Supported step-down", supportTypes: ["physiotherapy", "injury_specific"], restrictedAreas: ["knee", "hip"], bodyAreas: ["knee", "hip"], supportTopics: ["knee_support", "hip_tightness"], phase: "control", benefit: "Practice knee tracking with more control than a free-moving lunge.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "medium" }
   ]),
   ...routineFamily("ankle_reset_family", [
-    { name: "Calf wall stretch", supportTypes: ["stretching", "recovery"], restrictedAreas: ["ankle"], bodyAreas: ["ankle"], supportTopics: ["ankle_stiffness"], phase: "release", benefit: "Restore calf length and make knee travel smoother in squats and lunges.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" },
+    { name: "Calf wall stretch", supportTypes: ["mobility", "stretching", "recovery"], restrictedAreas: ["ankle"], bodyAreas: ["ankle"], supportTopics: ["ankle_stiffness"], phase: "release", benefit: "Restore calf length and make knee travel smoother in squats and lunges.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" },
     { name: "Tibialis raise", supportTypes: ["physiotherapy", "recovery"], restrictedAreas: ["ankle", "knee"], bodyAreas: ["ankle", "knee"], supportTopics: ["ankle_stiffness", "knee_support"], phase: "activation", benefit: "Build lower-leg support for better deceleration and shin comfort.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["athletic_performance", "injury_recovery"], recoveryFit: "medium" },
-    { name: "Ankle circle control", supportTypes: ["recovery", "stretching"], restrictedAreas: ["ankle"], bodyAreas: ["ankle"], supportTopics: ["ankle_stiffness"], phase: "mobility", benefit: "Smooth out ankle motion before cardio, jumping, or leg training.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" }
+    { name: "Ankle circle control", supportTypes: ["mobility", "recovery", "stretching"], restrictedAreas: ["ankle"], bodyAreas: ["ankle"], supportTopics: ["ankle_stiffness"], phase: "mobility", benefit: "Smooth out ankle motion before cardio, jumping, or leg training.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" }
   ]),
   ...routineFamily("neck_posture_family", [
     { name: "Chin tuck reset", supportTypes: ["recovery", "physiotherapy"], restrictedAreas: ["back", "shoulder"], bodyAreas: ["full_body"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "activation", benefit: "Bring posture back online after screen-heavy days without adding strain.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["active_aging", "mobility"], recoveryFit: "high" },
@@ -326,14 +414,106 @@ const EXPANDED_MOBILITY_LIBRARY = [
   ]),
   ...routineFamily("full_body_recovery_family", [
     { name: "Crocodile breathing", supportTypes: ["recovery", "physiotherapy"], restrictedAreas: ["back", "full_body"], bodyAreas: ["full_body", "back"], supportTopics: ["lower_back"], phase: "release", benefit: "Downshift tension so your mobility work actually sticks instead of feeling rushed.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["recovery", "mobility", "active_aging"], recoveryFit: "high" },
-    { name: "Standing reach flow", supportTypes: ["yoga", "recovery"], restrictedAreas: ["full_body", "back"], bodyAreas: ["full_body", "back"], supportTopics: ["lower_back"], phase: "mobility", benefit: "Move the whole body through a simple recovery pattern when you feel stiff everywhere.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" },
-    { name: "Supine twist reset", supportTypes: ["yoga", "recovery"], restrictedAreas: ["back", "hip"], bodyAreas: ["back", "hip", "full_body"], supportTopics: ["lower_back", "hip_tightness"], phase: "release", benefit: "Finish the session with a lower-intensity reset for the trunk and hips.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["recovery", "mobility", "active_aging"], recoveryFit: "high" }
+    { name: "Standing reach flow", supportTypes: ["recovery"], restrictedAreas: ["full_body", "back"], bodyAreas: ["full_body", "back"], supportTopics: ["lower_back"], phase: "mobility", benefit: "Move the whole body through a simple recovery pattern when you feel stiff everywhere.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" },
+    { name: "Supine twist reset", supportTypes: ["recovery"], restrictedAreas: ["back", "hip"], bodyAreas: ["back", "hip", "full_body"], supportTopics: ["lower_back", "hip_tightness"], phase: "release", benefit: "Finish the session with a lower-intensity reset for the trunk and hips.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["recovery", "mobility", "active_aging"], recoveryFit: "high" }
+  ])
+];
+
+const MOBILITY_PRODUCTION_LIBRARY = [
+  ...routineFamily("hip_mobility_rotation_family", [
+    { name: "90/90 switch", supportTypes: ["mobility"], restrictedAreas: ["hip", "back"], bodyAreas: ["hip", "back"], supportTopics: ["hip_tightness", "lower_back"], phase: "mobility", benefit: "Switch hip rotation under control so seated and squat positions feel less sticky.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness", "active_aging"], recoveryFit: "medium" },
+    { name: "Hip CARs", supportTypes: ["mobility"], restrictedAreas: ["hip"], bodyAreas: ["hip"], supportTopics: ["hip_tightness"], phase: "control", benefit: "Use controlled hip circles to improve active range without turning the drill into a stretch contest.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "athletic_performance", "general_fitness"], recoveryFit: "medium" },
+    { name: "Hip flexor pulses", supportTypes: ["mobility"], restrictedAreas: ["hip", "back"], bodyAreas: ["hip", "back"], supportTopics: ["hip_tightness", "lower_back"], phase: "mobility", benefit: "Open the front of the hip with short controlled pulses instead of a long passive hold.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "medium" },
+    { name: "Cossack squat mobility", supportTypes: ["mobility"], restrictedAreas: ["hip", "ankle", "knee"], bodyAreas: ["hip", "ankle", "knee"], supportTopics: ["hip_tightness", "ankle_stiffness", "knee_support"], phase: "mobility", benefit: "Build lateral hip and ankle range so side-to-side patterns feel smoother and more stable.", minutes: 6, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "athletic_performance"], recoveryFit: "medium" },
+    { name: "Quadruped hip circles", supportTypes: ["mobility"], restrictedAreas: ["hip", "back"], bodyAreas: ["hip", "back"], supportTopics: ["hip_tightness", "lower_back"], phase: "control", benefit: "Create cleaner hip motion from a supported position when standing drills feel rushed or unstable.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "injury_recovery", "general_fitness"], recoveryFit: "medium" },
+    { name: "Standing hip flexion drives", supportTypes: ["mobility"], restrictedAreas: ["hip"], bodyAreas: ["hip"], supportTopics: ["hip_tightness"], phase: "activation", benefit: "Drive the hip through a tall active range so running, marching, and lower-body warmups feel sharper.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "athletic_performance"], recoveryFit: "medium" }
+  ]),
+  ...routineFamily("ankle_mobility_family", [
+    { name: "Ankle dorsiflexion rock", supportTypes: ["mobility"], restrictedAreas: ["ankle", "knee"], bodyAreas: ["ankle", "knee"], supportTopics: ["ankle_stiffness", "knee_support"], phase: "mobility", benefit: "Improve knee-over-toe range without forcing the heel up or turning the drill into a bounce.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "strength", "general_fitness"], recoveryFit: "high" },
+    { name: "Ankle knee over toe drives", supportTypes: ["mobility"], restrictedAreas: ["ankle", "knee"], bodyAreas: ["ankle", "knee"], supportTopics: ["ankle_stiffness", "knee_support"], phase: "control", benefit: "Own loaded ankle range so squats, lunges, and split-stance work feel more stable.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "strength", "athletic_performance"], recoveryFit: "medium" }
+  ]),
+  ...routineFamily("shoulder_mobility_production_family", [
+    { name: "Scapular CARs", supportTypes: ["mobility"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "control", benefit: "Improve shoulder blade motion so pressing and pulling start from a cleaner base position.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "strength", "general_fitness"], recoveryFit: "high" },
+    { name: "Banded shoulder dislocates", supportTypes: ["mobility"], restrictedAreas: ["shoulder"], bodyAreas: ["shoulder"], supportTopics: ["shoulder_irritation"], phase: "mobility", benefit: "Move the shoulders through a larger pain-free arc with light band assistance and controlled ribs.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "bodybuilding", "general_fitness"], recoveryFit: "medium" },
+    { name: "Shoulder CARs", supportTypes: ["mobility"], restrictedAreas: ["shoulder"], bodyAreas: ["shoulder"], supportTopics: ["shoulder_irritation"], phase: "control", benefit: "Build active end-range shoulder control one circle at a time instead of forcing speed or momentum.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "injury_recovery", "general_fitness"], recoveryFit: "medium" }
+  ]),
+  ...routineFamily("spine_mobility_production_family", [
+    { name: "T-spine reach through", supportTypes: ["mobility"], restrictedAreas: ["back", "shoulder"], bodyAreas: ["back", "shoulder"], supportTopics: ["lower_back", "shoulder_irritation"], phase: "mobility", benefit: "Pair thoracic rotation and reach so the upper back opens without turning the lower back into the driver.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "medium" },
+    { name: "Prone press-ups", supportTypes: ["mobility"], restrictedAreas: ["back", "hip"], bodyAreas: ["back", "hip"], supportTopics: ["lower_back", "hip_tightness"], phase: "mobility", benefit: "Use a gentle spinal extension drill to reduce stiffness when too much sitting leaves the front of the body locked up.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "recovery", "active_aging"], recoveryFit: "high" }
+  ]),
+  ...routineFamily("leg_mobility_swing_family", [
+    { name: "Hamstring sweeps", supportTypes: ["mobility"], restrictedAreas: ["hip", "back"], bodyAreas: ["hip", "back"], supportTopics: ["hip_tightness", "lower_back"], phase: "activation", benefit: "Sweep through the hamstrings dynamically before sprinting, hinging, or lower-body volume.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "athletic_performance", "general_fitness"], recoveryFit: "medium" },
+    { name: "Leg swings front back", supportTypes: ["mobility"], restrictedAreas: ["hip"], bodyAreas: ["hip"], supportTopics: ["hip_tightness"], phase: "activation", benefit: "Open hip flexion and extension with a simple swing pattern that wakes up the whole stride.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "athletic_performance"], recoveryFit: "medium" },
+    { name: "Leg swings side to side", supportTypes: ["mobility"], restrictedAreas: ["hip"], bodyAreas: ["hip"], supportTopics: ["hip_tightness"], phase: "activation", benefit: "Prepare frontal-plane hip range before lateral movement, lunges, or field sessions.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "athletic_performance"], recoveryFit: "medium" }
+  ]),
+  ...routineFamily("glute_activation_mobility_family", [
+    { name: "Glute activation bridge pulses", supportTypes: ["mobility"], restrictedAreas: ["hip", "back"], bodyAreas: ["hip", "back"], supportTopics: ["hip_tightness", "lower_back"], phase: "activation", benefit: "Pair glute tension with clean hip extension before hinging, sprinting, or lower-body strength work.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "strength", "general_fitness"], recoveryFit: "medium" },
+    { name: "Deep squat hold mobility", supportTypes: ["mobility"], restrictedAreas: ["hip", "ankle", "back"], bodyAreas: ["hip", "ankle", "back"], supportTopics: ["hip_tightness", "ankle_stiffness", "lower_back"], phase: "control", benefit: "Own the bottom squat position with breath and support instead of collapsing or bouncing for depth.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "strength", "active_aging"], recoveryFit: "medium" }
+  ]),
+  ...routineFamily("neck_mobility_family", [
+    { name: "Neck CARs", supportTypes: ["mobility"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "control", benefit: "Use slow neck circles to restore motion without letting the shoulders shrug or the ribcage chase the movement.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "recovery", "active_aging"], recoveryFit: "high" }
+  ])
+];
+
+const STRETCH_PRODUCTION_LIBRARY = [
+  ...routineFamily("posterior_chain_stretch_family", [
+    { name: "Standing hamstring stretch", supportTypes: ["stretching"], restrictedAreas: ["hip", "back"], bodyAreas: ["hip", "back"], supportTopics: ["hip_tightness", "lower_back"], phase: "release", benefit: "Lengthen the back of the thigh without turning the position into a rushed toe-touch.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" },
+    { name: "Supine hamstring strap stretch", supportTypes: ["stretching"], restrictedAreas: ["hip", "back"], bodyAreas: ["hip", "back"], supportTopics: ["hip_tightness", "lower_back"], phase: "release", benefit: "Use a strap to open the hamstring with less compensation through the lower back.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "active_aging"], recoveryFit: "high" },
+    { name: "Seated straddle stretch", supportTypes: ["stretching"], restrictedAreas: ["hip"], bodyAreas: ["hip"], supportTopics: ["hip_tightness"], phase: "release", benefit: "Open the hamstrings and inner thighs from a stable floor position you can hold and breathe through.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" }
+  ]),
+  ...routineFamily("quad_hip_stretch_family", [
+    { name: "Standing quad stretch", supportTypes: ["stretching"], restrictedAreas: ["hip", "knee"], bodyAreas: ["hip", "knee"], supportTopics: ["hip_tightness", "knee_support"], phase: "release", benefit: "Reduce front-of-thigh tension before it turns into a tug on the knee or low back.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" },
+    { name: "Half-kneeling quad stretch", supportTypes: ["stretching"], restrictedAreas: ["hip", "knee"], bodyAreas: ["hip", "knee"], supportTopics: ["hip_tightness", "knee_support"], phase: "release", benefit: "Bias the quad and front hip together when standing holds feel too easy to cheat.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "active_aging"], recoveryFit: "high" },
+    { name: "Prone quad stretch", supportTypes: ["stretching"], restrictedAreas: ["hip", "knee"], bodyAreas: ["hip", "knee"], supportTopics: ["hip_tightness", "knee_support"], phase: "release", benefit: "Open the quad from a supported floor position so you can keep the pelvis calmer during the hold.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "recovery"], recoveryFit: "high" }
+  ]),
+  ...routineFamily("hip_rotation_stretch_family", [
+    { name: "Piriformis stretch", supportTypes: ["stretching"], restrictedAreas: ["hip", "back"], bodyAreas: ["hip", "back"], supportTopics: ["hip_tightness", "lower_back"], phase: "release", benefit: "Target the deep glute and piriformis so sitting and hinging feel less pinched.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" },
+    { name: "Seated glute stretch", supportTypes: ["stretching"], restrictedAreas: ["hip", "back"], bodyAreas: ["hip", "back"], supportTopics: ["hip_tightness", "lower_back"], phase: "release", benefit: "Use a seated setup to stretch the glute without needing to manage balance or floor transitions.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "active_aging"], recoveryFit: "high" },
+    { name: "Lying groin stretch", supportTypes: ["stretching"], restrictedAreas: ["hip"], bodyAreas: ["hip"], supportTopics: ["hip_tightness"], phase: "release", benefit: "Let the hips relax into a supported groin stretch when seated positions feel too aggressive.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "recovery"], recoveryFit: "high" },
+    { name: "Frog adductor stretch", supportTypes: ["stretching"], restrictedAreas: ["hip", "knee"], bodyAreas: ["hip", "knee"], supportTopics: ["hip_tightness", "knee_support"], phase: "release", benefit: "Open the adductors with a broad-knee stretch that favors stillness over rocking or forcing range.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" },
+    { name: "Seated adductor stretch", supportTypes: ["stretching"], restrictedAreas: ["hip"], bodyAreas: ["hip"], supportTopics: ["hip_tightness"], phase: "release", benefit: "Target the inner thigh directly so wide-stance work and squat depth feel less restricted.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" },
+    { name: "Seated butterfly stretch", supportTypes: ["stretching"], restrictedAreas: ["hip"], bodyAreas: ["hip"], supportTopics: ["hip_tightness"], phase: "release", benefit: "Use a simple butterfly hold to ease inner-thigh tension without adding spinal strain.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "active_aging"], recoveryFit: "high" }
+  ]),
+  ...routineFamily("shoulder_chest_stretch_family", [
+    { name: "Doorway pec stretch", supportTypes: ["stretching"], restrictedAreas: ["shoulder"], bodyAreas: ["shoulder"], supportTopics: ["shoulder_irritation"], phase: "release", benefit: "Open the chest and front shoulder so pressing posture and arm swing feel less rounded forward.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" },
+    { name: "Wall pec minor stretch", supportTypes: ["stretching"], restrictedAreas: ["shoulder"], bodyAreas: ["shoulder"], supportTopics: ["shoulder_irritation"], phase: "release", benefit: "Bias the pec minor and front shoulder in a tighter angle than a standard doorway hold.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "bodybuilding"], recoveryFit: "high" },
+    { name: "Cross-body shoulder stretch", supportTypes: ["stretching"], restrictedAreas: ["shoulder"], bodyAreas: ["shoulder"], supportTopics: ["shoulder_irritation"], phase: "release", benefit: "Reduce back-of-shoulder tightness with a stable cross-body hold you can control easily.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" },
+    { name: "Posterior capsule stretch", supportTypes: ["stretching"], restrictedAreas: ["shoulder"], bodyAreas: ["shoulder"], supportTopics: ["shoulder_irritation"], phase: "release", benefit: "Target the posterior capsule gently when internal rotation and reach-behind positions feel sticky.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "injury_recovery"], recoveryFit: "high" },
+    { name: "Overhead triceps stretch", supportTypes: ["stretching"], restrictedAreas: ["shoulder", "elbow"], bodyAreas: ["shoulder", "elbow"], supportTopics: ["shoulder_irritation", "tennis_elbow"], phase: "release", benefit: "Open the triceps and long head connection through the shoulder without turning the ribs up.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" },
+    { name: "Doorframe biceps stretch", supportTypes: ["stretching"], restrictedAreas: ["shoulder", "elbow"], bodyAreas: ["shoulder", "elbow"], supportTopics: ["shoulder_irritation", "tennis_elbow"], phase: "release", benefit: "Lengthen the biceps and front shoulder together when repeated pulling leaves the arm feeling bound up.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "bodybuilding"], recoveryFit: "high" }
+  ]),
+  ...routineFamily("lat_sidebody_stretch_family", [
+    { name: "Overhead lat stretch", supportTypes: ["stretching"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "release", benefit: "Open the lats overhead so reaching and front-rack positions stop pulling the torso off line.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" },
+    { name: "Towel lat stretch", supportTypes: ["stretching"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "release", benefit: "Use a towel anchor to create a cleaner lat stretch without letting the ribs flare or the lower back take over.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "recovery"], recoveryFit: "high" },
+    { name: "Bench-assisted lat stretch", supportTypes: ["stretching"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "release", benefit: "Support the torso on a bench so the lats can lengthen without the position getting sloppy.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "bodybuilding"], recoveryFit: "high" },
+    { name: "Overhead side bend stretch", supportTypes: ["stretching"], restrictedAreas: ["back", "shoulder"], bodyAreas: ["back", "shoulder"], supportTopics: ["lower_back", "shoulder_irritation"], phase: "release", benefit: "Lengthen the side body and lats with a calmer overhead line than a dynamic reach drill.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "general_fitness"], recoveryFit: "high" },
+    { name: "Standing side-body reach stretch", supportTypes: ["stretching"], restrictedAreas: ["back", "shoulder"], bodyAreas: ["back", "shoulder"], supportTopics: ["lower_back", "shoulder_irritation"], phase: "release", benefit: "Use a tall standing reach to open the side body when you want a simple reset between training blocks.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "active_aging"], recoveryFit: "high" }
+  ]),
+  ...routineFamily("neck_upper_back_stretch_family", [
+    { name: "Neck side stretch", supportTypes: ["stretching"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "release", benefit: "Reduce side-neck tension from screens and shrugging before it spreads into the upper trap.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "recovery"], recoveryFit: "high" },
+    { name: "Upper trap stretch", supportTypes: ["stretching"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "release", benefit: "Calm the upper trap with a still hold that does not ask the shoulder to do extra work.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "recovery"], recoveryFit: "high" },
+    { name: "Levator scapulae stretch", supportTypes: ["stretching"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "release", benefit: "Open the back of the neck and shoulder blade line when turning the head or setting posture feels stiff.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "recovery"], recoveryFit: "high" }
+  ]),
+  ...routineFamily("forearm_wrist_stretch_family", [
+    { name: "Wrist flexor stretch", supportTypes: ["stretching"], restrictedAreas: ["wrist", "elbow"], bodyAreas: ["wrist", "elbow"], supportTopics: ["carpal_tunnel", "tennis_elbow"], phase: "release", benefit: "Lengthen the palm-side forearm tissues after gripping, typing, or repeated pressing.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "recovery"], recoveryFit: "high" },
+    { name: "Wrist extensor stretch", supportTypes: ["stretching"], restrictedAreas: ["wrist", "elbow"], bodyAreas: ["wrist", "elbow"], supportTopics: ["carpal_tunnel", "tennis_elbow"], phase: "release", benefit: "Open the top of the forearm when repeated pulling or mouse work leaves the wrist feeling locked up.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "recovery"], recoveryFit: "high" },
+    { name: "Seated forearm flexor stretch", supportTypes: ["stretching"], restrictedAreas: ["wrist", "elbow"], bodyAreas: ["wrist", "elbow"], supportTopics: ["carpal_tunnel", "tennis_elbow"], phase: "release", benefit: "Use a seated support position to stretch the wrist flexors with less body tension.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "active_aging"], recoveryFit: "high" },
+    { name: "Seated forearm extensor stretch", supportTypes: ["stretching"], restrictedAreas: ["wrist", "elbow"], bodyAreas: ["wrist", "elbow"], supportTopics: ["carpal_tunnel", "tennis_elbow"], phase: "release", benefit: "Target the extensor side of the forearm from a calm seated hold that is easy to repeat often.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "active_aging"], recoveryFit: "high" }
+  ]),
+  ...routineFamily("lower_body_accessory_stretch_family", [
+    { name: "Knees-to-chest stretch", supportTypes: ["stretching"], restrictedAreas: ["back", "hip"], bodyAreas: ["back", "hip"], supportTopics: ["lower_back", "hip_tightness"], phase: "release", benefit: "Relax the lower back and hips with a supported hold that is easy to use after hard sessions.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "recovery"], recoveryFit: "high" },
+    { name: "IT band stretch", supportTypes: ["stretching"], restrictedAreas: ["hip", "knee"], bodyAreas: ["hip", "knee"], supportTopics: ["hip_tightness", "knee_support"], phase: "release", benefit: "Lengthen the outer hip and side thigh line when lateral work or running leaves that chain feeling dense.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "athletic_performance"], recoveryFit: "high" },
+    { name: "Soleus wall stretch", supportTypes: ["stretching"], restrictedAreas: ["ankle", "knee"], bodyAreas: ["ankle", "knee"], supportTopics: ["ankle_stiffness", "knee_support"], phase: "release", benefit: "Bias the lower calf with a bent-knee wall stretch that helps loaded ankle travel feel smoother.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "strength"], recoveryFit: "high" },
+    { name: "Kneeling shin stretch", supportTypes: ["stretching"], restrictedAreas: ["ankle", "knee"], bodyAreas: ["ankle", "knee"], supportTopics: ["ankle_stiffness", "knee_support"], phase: "release", benefit: "Open the front of the ankle and shin when toe-pointed positions feel cramped or stiff.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "active_aging"], recoveryFit: "high" }
+  ]),
+  ...routineFamily("posture_opening_stretch_family", [
+    { name: "Seated chest opener stretch", supportTypes: ["stretching"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "release", benefit: "Open the chest from a seated base when standing posture drills feel too unstable or rushed.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["mobility", "active_aging"], recoveryFit: "high" }
   ])
 ];
 
 const YOGA_PRODUCTION_LIBRARY = YOGA_PRODUCTION_LIST.map((pose) => createYogaProductionRoutine(pose));
 
-const RAW_MOBILITY_LIBRARY = [...BASE_MOBILITY_LIBRARY, ...EXPANDED_MOBILITY_LIBRARY, ...YOGA_PRODUCTION_LIBRARY];
+const RAW_MOBILITY_LIBRARY = [...BASE_MOBILITY_LIBRARY, ...EXPANDED_MOBILITY_LIBRARY, ...MOBILITY_PRODUCTION_LIBRARY, ...STRETCH_PRODUCTION_LIBRARY, ...YOGA_PRODUCTION_LIBRARY];
 const MOBILITY_LIBRARY = validateLibraryEntries(RAW_MOBILITY_LIBRARY, "mobility catalog").map((entry) => {
   const rawEntry = RAW_MOBILITY_LIBRARY.find((candidate) => candidate.id === entry.id);
   return {
@@ -347,7 +527,7 @@ export function buildMobilityPlan({ goalType, injuryStatus, restrictedAreas, low
     injuryStatus !== "none"
       ? "physiotherapy"
       : goalType === "mobility"
-        ? "yoga"
+        ? "mobility"
         : lowRecovery
           ? "recovery"
           : "stretching";
@@ -413,7 +593,7 @@ export function buildMobilityModule({ goalType, injuryStatus, restrictedAreas, l
     injuryStatus !== "none"
       ? "physiotherapy"
       : goalType === "mobility"
-        ? "yoga"
+        ? "mobility"
         : lowRecovery
           ? "recovery"
           : "stretching";
@@ -433,8 +613,8 @@ export function buildMobilityModule({ goalType, injuryStatus, restrictedAreas, l
     title: planContext?.weeklyFocus ? `${planContext.weeklyFocus} support` : "Guided mobility support",
     description:
       planContext?.mobilityTarget
-        ? `${planContext.mobilityTarget} Choose yoga, stretching, physiotherapy-style drills, or recovery mobility based on how you feel and what part of the body needs support.`
-        : "Choose yoga, stretching, physiotherapy-style drills, or recovery mobility based on how you feel and what part of the body needs support.",
+        ? `${planContext.mobilityTarget} Choose dynamic mobility, yoga, stretching, physiotherapy-style drills, or recovery mobility based on how you feel and what part of the body needs support.`
+        : "Choose dynamic mobility, yoga, stretching, physiotherapy-style drills, or recovery mobility based on how you feel and what part of the body needs support.",
     suggestedCategory,
     sessionName: sessionSet.sessionName,
     categories: MOBILITY_CATEGORIES,
@@ -444,6 +624,16 @@ export function buildMobilityModule({ goalType, injuryStatus, restrictedAreas, l
     filterOptions: {
       areaOptions: AREA_OPTIONS,
       injurySupportOptions: INJURY_SUPPORT_OPTIONS,
+      difficultyOptions: [
+        { value: "all", label: "Any difficulty" },
+        { value: "beginner", label: "Beginner" },
+        { value: "intermediate", label: "Intermediate" }
+      ],
+      equipmentOptions: [
+        { value: "all", label: "Any equipment" },
+        { value: "none", label: "No equipment" },
+        { value: "light", label: "Light equipment" }
+      ],
       timeOptions: [
         { value: "5", label: "5 min" },
         { value: "10", label: "10 min" },
@@ -502,7 +692,7 @@ export function buildMobilitySessionSet({
 }
 
 export function filterMobilityLibrary({
-  category = "stretching",
+  category = "mobility",
   injuryArea = "all",
   goalType = "general_fitness",
   timeCap = 15,
@@ -517,6 +707,12 @@ export function filterMobilityLibrary({
   return dedupeByName(
     MOBILITY_LIBRARY.filter((item) => {
       if (!item.supportTypes.includes(category)) {
+        return false;
+      }
+      if (category === "mobility" && item.sourceType !== MOBILITY_SOURCE_TYPES.production) {
+        return false;
+      }
+      if (category === "stretching" && item.sourceType !== STRETCH_SOURCE_TYPE) {
         return false;
       }
       if (category === "yoga" && item.sourceType !== "yoga_production") {
@@ -559,10 +755,31 @@ function routineFamily(familyId, entries) {
   return entries.map((entry) => routine({ ...entry, familyId }));
 }
 
-function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics, phase, benefit, minutes, environments, goalTags, recoveryFit, familyId = null, sourceType = "mobility_library" }) {
+function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics, phase, benefit, minutes, environments, goalTags, recoveryFit, familyId = null, sourceType = null }) {
   const movement = findMovementForName(name);
   const entryId = name.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-");
+  const resolvedSourceType =
+    sourceType ||
+    (STRETCH_PRODUCTION_NAMES.has(name)
+      ? STRETCH_SOURCE_TYPE
+      : MOBILITY_PRODUCTION_NAMES.has(name)
+        ? MOBILITY_SOURCE_TYPES.production
+        : MOBILITY_SOURCE_TYPES.library);
   const mediaMovementId = movement?.id || entryId;
+  const visualCategory = supportTypes.includes("yoga") ? "yoga" : supportTypes.includes("mobility") ? "mobility" : "stretch";
+  const movementType = resolvedSourceType === STRETCH_SOURCE_TYPE ? "static stretch" : "dynamic mobility";
+  const difficulty =
+    resolvedSourceType === STRETCH_SOURCE_TYPE
+      ? recoveryFit === "high"
+        ? "beginner"
+        : "intermediate"
+      : recoveryFit === "high"
+        ? "beginner"
+        : "intermediate";
+  const equipmentProfile =
+    (movement?.equipment || []).length && !movement.equipment.includes("bodyweight")
+      ? "light"
+      : inferSupportEquipmentProfile(entryId, resolvedSourceType);
   const group =
     phase === "warmup" || phase === "activation"
       ? "activation"
@@ -573,7 +790,10 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
           : "mobility";
   const resolvedFamilyId = familyId || supportTopics[0] || bodyAreas[0] || "general";
   const resolvedSupportTopics = expandSupportTopics(supportTopics);
-  const content = buildMobilityContentStandard({ name, bodyAreas, supportTopics, benefit, group });
+  const content =
+    resolvedSourceType === STRETCH_SOURCE_TYPE
+      ? buildStretchContentStandard({ name, bodyAreas, supportTopics, benefit })
+      : buildMobilityContentStandard({ name, bodyAreas, supportTopics, benefit, group });
   const media = createMediaPayload(
     buildExerciseMediaSpec({
       id: mediaMovementId,
@@ -593,7 +813,7 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
     secondaryMuscleGroups: bodyAreas.slice(1),
     movementPattern: group,
     equipmentRequirements: movement?.equipment || ["bodyweight"],
-    difficultyLevel: recoveryFit === "high" ? "beginner" : "standard",
+    difficultyLevel: difficulty,
     trainingGoals: goalTags,
     jointStressLevel: recoveryFit === "high" ? "low" : "moderate",
     rehabSafe: supportTypes.includes("physiotherapy") || supportTypes.includes("injury_specific"),
@@ -622,7 +842,14 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
       goalTags,
       recoveryFit,
       movementId: mediaMovementId,
-      sourceType,
+      sourceType: resolvedSourceType,
+      displayName: name,
+      visualCategory,
+      movementType,
+      difficulty,
+      equipmentProfile,
+      primaryFocus: bodyAreas[0] || "full_body",
+      secondaryFocus: bodyAreas[1] || null,
       contentStandard: "v1",
       description: content.description,
       trainingUse: content.trainingUse,
@@ -661,8 +888,16 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
     }
   });
 
+  const resolvedDetailId = entry.detailId || entryId;
+  entry.detailId = resolvedDetailId;
+
+  if (entry.extra?.movement) {
+    entry.extra.movement.detailId = resolvedDetailId;
+  }
+
   return {
     ...entry,
+    detailId: resolvedDetailId,
     supportTypes,
     restrictedAreas,
     bodyAreas,
@@ -674,16 +909,25 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
     goalTags,
     recoveryFit,
     movementId: mediaMovementId,
-    sourceType
+    sourceType: resolvedSourceType,
+    displayName: name,
+    visualCategory,
+    movementType,
+    difficulty,
+    equipmentProfile,
+    primaryFocus: bodyAreas[0] || "full_body",
+    secondaryFocus: bodyAreas[1] || null
   };
 }
 
 function buildMobilityMovementGuide(option, baseMovement = null) {
+  const fallbackPrimaryMuscles = (option.bodyAreas?.length ? option.bodyAreas : ["full_body"]).map(mapMobilityAreaToGuideLabel);
+  const fallbackSecondaryMuscles = deriveMobilitySecondaryGuideLabels(option.bodyAreas || []);
   const standardizedGuideFields = buildStructuredGuideFields({
     description: option.description,
     trainingUse: option.trainingUse,
-    primaryMuscles: baseMovement?.primaryMuscles?.length ? baseMovement.primaryMuscles : option.bodyAreas || ["full_body"],
-    secondaryMuscles: baseMovement?.secondaryMuscles?.length ? baseMovement.secondaryMuscles : option.bodyAreas?.slice(1) || [],
+    primaryMuscles: baseMovement?.primaryMuscles?.length ? baseMovement.primaryMuscles : fallbackPrimaryMuscles,
+    secondaryMuscles: baseMovement?.secondaryMuscles?.length ? baseMovement.secondaryMuscles : fallbackSecondaryMuscles,
     setup: option.setup,
     execution: option.execution,
     stepSequence: option.stepSequence || [],
@@ -698,6 +942,7 @@ function buildMobilityMovementGuide(option, baseMovement = null) {
   return {
     ...(baseMovement || {}),
     id: baseMovement?.id || option.id,
+    detailId: baseMovement?.detailId || option.detailId || option.id,
     name: baseMovement?.name || option.name,
     category: baseMovement?.category || option.category,
     difficulty: baseMovement?.difficulty || "Beginner",
@@ -788,6 +1033,51 @@ function buildMobilityContentStandard({ name, bodyAreas, supportTopics, benefit,
   };
 }
 
+function buildStretchContentStandard({ name, bodyAreas, supportTopics, benefit }) {
+  const stepSequence = buildStretchStepSequence(name);
+  const modifications = [
+    "Reduce the stretch depth until you can keep the area relaxed and the breath steady.",
+    "Use a wall, bench, towel, or strap for support if you need a cleaner hold.",
+    "Shorten the hold and repeat more rounds instead of forcing one long position."
+  ];
+  return {
+    instructions: [
+      `Set up for ${name} slowly and stop at the first clear stretch that still feels sustainable.`,
+      "Hold the position without bouncing, twisting, or chasing more range every second.",
+      "Ease out of the stretch gradually before resetting the next side or rep."
+    ],
+    cues: [
+      "Let the target area lengthen while the rest of the body stays quiet.",
+      bodyAreas?.length ? `Keep the stretch centered on ${bodyAreas.join(" / ")}.` : "Keep the stretch centered on the target area.",
+      benefit || "Use the hold to reduce stiffness and restore cleaner positions."
+    ],
+    mistakes: [
+      "Pulling deeper every few seconds instead of settling into a repeatable stretch.",
+      "Holding the breath or bracing harder as the position gets more intense.",
+      supportTopics?.length
+        ? `Letting tension shift away from the intended area: ${supportTopics.map((topic) => formatSupportTopic(topic).toLowerCase()).join(", ")}.`
+        : "Turning a stretch into a max-effort position."
+    ],
+    safetyNotes: [
+      "Stay below sharp, pinchy, or numb sensations.",
+      "Come out of the hold sooner if posture breaks or breathing gets strained."
+    ],
+    modifications,
+    regressions: modifications.slice(0, 2),
+    progressions: [
+      "Add a second round before adding more stretch depth.",
+      "Increase the hold length only if the position stays calm and repeatable."
+    ],
+    description: benefit || `${name} is a static stretch used to reduce stiffness and restore cleaner range without forcing motion.`,
+    trainingUse: "Use after training, between harder sessions, or anytime the target area feels short and guarded.",
+    setup: `Set up for ${name} in a stable position so you can hold the stretch without compensating through other joints.`,
+    execution: "Move into the first clear stretch, hold with steady breathing, and leave the position as smoothly as you entered it.",
+    breathing: "Take a full inhale to reset, then exhale slowly as you settle into the hold. Keep easy breaths for the full stretch.",
+    tempo: "Ease into the stretch over 2-3 seconds, hold 20-30 seconds, then return to neutral under control.",
+    stepSequence
+  };
+}
+
 function buildMobilityStepSequence(name, group) {
   return [
     {
@@ -811,6 +1101,23 @@ function buildMobilityStepSequence(name, group) {
     {
       title: "Finish",
       description: "Return to the start with the same control and reset before repeating the next rep or side."
+    }
+  ];
+}
+
+function buildStretchStepSequence(name) {
+  return [
+    {
+      title: "Start",
+      description: `Set up for ${name} and move only until you feel a clear stretch in the target area.`
+    },
+    {
+      title: "Hold",
+      description: "Stay still, breathe normally, and let the area soften into the position without bouncing or forcing more range."
+    },
+    {
+      title: "Finish",
+      description: "Ease out of the hold slowly, reset your posture, and repeat only if the stretch still feels clean."
     }
   ];
 }
@@ -849,6 +1156,47 @@ function buildStructuredGuideFields({
       progressions
     }
   };
+}
+
+function mapMobilityAreaToGuideLabel(value) {
+  const map = {
+    full_body: "Full body",
+    shoulder: "Shoulders",
+    back: "Thoracic spine",
+    hip: "Hips",
+    knee: "Knees",
+    ankle: "Ankles",
+    elbow: "Elbows",
+    wrist: "Wrists"
+  };
+  return map[value] || formatAreaLabel(value);
+}
+
+function deriveMobilitySecondaryGuideLabels(bodyAreas = []) {
+  const areas = Array.isArray(bodyAreas) ? bodyAreas : [];
+  const [primaryArea] = areas;
+  const fallbackMap = {
+    hip: ["Core"],
+    ankle: ["Calves"],
+    shoulder: ["Upper back"],
+    back: ["Shoulders"],
+    knee: ["Hips"],
+    wrist: ["Forearms"],
+    elbow: ["Forearms"],
+    full_body: ["Core"]
+  };
+  const explicit = areas.slice(1).map(mapMobilityAreaToGuideLabel);
+  if (explicit.length) {
+    return explicit;
+  }
+  return fallbackMap[primaryArea] || ["Core"];
+}
+
+function inferSupportEquipmentProfile(entryId, sourceType) {
+  if (sourceType === STRETCH_SOURCE_TYPE) {
+    return /(wall|doorway|bench|strap|towel)/.test(entryId) ? "light" : "none";
+  }
+  return ["banded-shoulder-dislocates", "foam-roller-thoracic-extension"].includes(entryId) ? "light" : "none";
 }
 
 function createYogaProductionRoutine(pose) {
