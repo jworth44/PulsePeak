@@ -87,12 +87,71 @@ const STRETCH_PRODUCTION_NAMES = new Set([
   "Standing side-body reach stretch"
 ]);
 
+const REHAB_PRODUCTION_NAMES = new Set([
+  "Band pull-apart corrective",
+  "Banded shoulder external rotation rehab",
+  "Sidelying shoulder external rotation rehab",
+  "Isometric shoulder external rotation hold",
+  "Scapular wall slide reach",
+  "Serratus wall press",
+  "Supported shoulder flexion slide",
+  "Prone Y raise rehab",
+  "Shoulder internal rotation isometric",
+  "Scaption raise rehab",
+  "Quad set",
+  "Straight-leg raise rehab",
+  "Heel slide rehab",
+  "Short-arc quad",
+  "Terminal knee extension rehab",
+  "Spanish squat hold rehab",
+  "Supported step-down rehab",
+  "Supported sit-to-stand rehab",
+  "Clamshell rehab",
+  "Sidelying hip abduction rehab",
+  "Glute med wall press",
+  "Bridge march rehab",
+  "Supported hip airplane hold",
+  "Banded hip abduction hold",
+  "Seated hip internal rotation rehab",
+  "Standing hip extension rehab",
+  "Heel-to-toe rocker",
+  "Ankle alphabet control",
+  "Banded ankle eversion",
+  "Banded ankle inversion",
+  "Single-leg balance reach rehab",
+  "Seated calf raise rehab",
+  "Tibialis raise rehab",
+  "Low box calf lowering rehab",
+  "Dead bug breathing rehab",
+  "Crocodile breathing rehab",
+  "Quadruped rock-back rehab",
+  "Bird-dog hold rehab",
+  "McGill curl-up",
+  "Bent-knee fallout",
+  "Supine march bracing",
+  "Side plank from knees",
+  "Tall-kneeling anti-rotation hold",
+  "Heel tap dead bug",
+  "Pallof press rehab",
+  "Chin tuck reset rehab",
+  "Seated chin nod",
+  "Wall posture hold",
+  "Cervical rotation isometric",
+  "Seated thoracic extension support",
+  "Wrist extension rock rehab",
+  "Forearm pronation-supination rehab",
+  "Finger extension spread rehab",
+  "Towel grip isometric",
+  "Wrist radial deviation rehab"
+]);
+
 const MOBILITY_SOURCE_TYPES = {
   production: "mobility_production",
   library: "mobility_library"
 };
 
 const STRETCH_SOURCE_TYPE = "stretch_production";
+const REHAB_SOURCE_TYPE = "rehab_production";
 
 const MOBILITY_CATEGORIES = [
   {
@@ -511,9 +570,83 @@ const STRETCH_PRODUCTION_LIBRARY = [
   ])
 ];
 
+const REHAB_PRODUCTION_LIBRARY = [
+  ...routineFamily("shoulder_rehab_family", [
+    { name: "Band pull-apart corrective", supportTypes: ["physiotherapy"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "activation", benefit: "Use a light pull-apart to reconnect posture, scapular control, and shoulder-friendly pulling without heavy strain.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "high" },
+    { name: "Banded shoulder external rotation rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["shoulder", "elbow"], bodyAreas: ["shoulder", "elbow"], supportTopics: ["shoulder_irritation", "tennis_elbow"], phase: "activation", benefit: "Build cleaner cuff activation before pressing or overhead work with a low-load band pattern.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "mobility"], recoveryFit: "high" },
+    { name: "Sidelying shoulder external rotation rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["shoulder"], bodyAreas: ["shoulder"], supportTopics: ["shoulder_irritation"], phase: "control", benefit: "Train the rotator cuff in a supported sidelying setup so motion stays precise and low risk.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "high" },
+    { name: "Isometric shoulder external rotation hold", supportTypes: ["physiotherapy"], restrictedAreas: ["shoulder"], bodyAreas: ["shoulder"], supportTopics: ["shoulder_irritation"], phase: "control", benefit: "Use a low-motion cuff isometric when the shoulder needs tension tolerance without repeated reps.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Scapular wall slide reach", supportTypes: ["physiotherapy"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "control", benefit: "Teach upward rotation and reach with the ribs under control so the shoulder blade can move cleanly.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "mobility"], recoveryFit: "high" },
+    { name: "Serratus wall press", supportTypes: ["physiotherapy"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "activation", benefit: "Target serratus function with a quiet wall press instead of asking the shoulder to stabilize under bodyweight.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Supported shoulder flexion slide", supportTypes: ["physiotherapy"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "mobility", benefit: "Restore overhead reach through a low-friction slide that keeps the trunk and shoulder aligned.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "high" },
+    { name: "Prone Y raise rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "activation", benefit: "Wake up lower-trap support in a controlled prone setup before asking the shoulder to handle bigger ranges.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "medium" },
+    { name: "Shoulder internal rotation isometric", supportTypes: ["physiotherapy"], restrictedAreas: ["shoulder"], bodyAreas: ["shoulder"], supportTopics: ["shoulder_irritation"], phase: "control", benefit: "Build pain-free cuff tension on the internal rotation side without needing a large movement arc.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Scaption raise rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["shoulder"], bodyAreas: ["shoulder"], supportTopics: ["shoulder_irritation"], phase: "control", benefit: "Train the shoulder in the scapular plane with a light corrective raise that favors alignment over load.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "medium" }
+  ]),
+  ...routineFamily("knee_rehab_family", [
+    { name: "Quad set", supportTypes: ["physiotherapy"], restrictedAreas: ["knee"], bodyAreas: ["knee"], supportTopics: ["knee_support"], phase: "activation", benefit: "Rebuild quad awareness around the knee joint when higher-load extension work is not ready yet.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "high" },
+    { name: "Straight-leg raise rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["knee", "hip"], bodyAreas: ["knee", "hip"], supportTopics: ["knee_support", "hip_tightness"], phase: "control", benefit: "Train hip flexion and quad tension together without asking the knee to manage deep flexion.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Heel slide rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["knee", "hip"], bodyAreas: ["knee", "hip"], supportTopics: ["knee_support", "hip_tightness"], phase: "mobility", benefit: "Recover gentle knee flexion range through a supported heel slide that stays easy to control.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Short-arc quad", supportTypes: ["physiotherapy"], restrictedAreas: ["knee"], bodyAreas: ["knee"], supportTopics: ["knee_support"], phase: "activation", benefit: "Strengthen the terminal part of knee extension without loading the joint through a large range.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Terminal knee extension rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["knee"], bodyAreas: ["knee"], supportTopics: ["knee_support"], phase: "activation", benefit: "Use a band-assisted finish to knee extension when the final range still feels uncertain or weak.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "mobility"], recoveryFit: "high" },
+    { name: "Spanish squat hold rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["knee"], bodyAreas: ["knee"], supportTopics: ["knee_support"], phase: "control", benefit: "Build quad tolerance in a supported squat hold that limits shear and keeps the torso upright.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "medium" },
+    { name: "Supported step-down rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["knee", "hip"], bodyAreas: ["knee", "hip"], supportTopics: ["knee_support", "hip_tightness"], phase: "control", benefit: "Practice knee tracking and controlled lowering with support so the pattern stays pain-aware.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "medium" },
+    { name: "Supported sit-to-stand rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["knee", "hip"], bodyAreas: ["knee", "hip"], supportTopics: ["knee_support", "hip_tightness"], phase: "control", benefit: "Rehearse a daily-life squat pattern with just enough assistance to keep the movement confident and repeatable.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "high" }
+  ]),
+  ...routineFamily("hip_rehab_family", [
+    { name: "Clamshell rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["hip", "knee"], bodyAreas: ["hip", "knee"], supportTopics: ["hip_tightness", "knee_support"], phase: "activation", benefit: "Target lateral hip support when single-leg control breaks down or the knee drifts inward.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Sidelying hip abduction rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["hip", "knee"], bodyAreas: ["hip", "knee"], supportTopics: ["hip_tightness", "knee_support"], phase: "control", benefit: "Build glute med strength in a supported position before progressing to standing balance demands.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Glute med wall press", supportTypes: ["physiotherapy"], restrictedAreas: ["hip", "knee"], bodyAreas: ["hip", "knee"], supportTopics: ["hip_tightness", "knee_support"], phase: "activation", benefit: "Create lateral hip tension in standing without forcing a long or unstable balance drill.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "high" },
+    { name: "Bridge march rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["hip", "back"], bodyAreas: ["hip", "back"], supportTopics: ["hip_tightness", "lower_back"], phase: "control", benefit: "Challenge pelvic control one leg at a time while keeping the load low and the range small.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "medium" },
+    { name: "Supported hip airplane hold", supportTypes: ["physiotherapy"], restrictedAreas: ["hip", "knee"], bodyAreas: ["hip", "knee"], supportTopics: ["hip_tightness", "knee_support"], phase: "control", benefit: "Use a supported hip airplane to rebuild rotational control without asking for a big balance demand.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "medium" },
+    { name: "Banded hip abduction hold", supportTypes: ["physiotherapy"], restrictedAreas: ["hip", "knee"], bodyAreas: ["hip", "knee"], supportTopics: ["hip_tightness", "knee_support"], phase: "activation", benefit: "Use a low-load band hold to wake up the outer hip before gait, stairs, or single-leg work.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Seated hip internal rotation rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["hip"], bodyAreas: ["hip"], supportTopics: ["hip_tightness"], phase: "mobility", benefit: "Restore active hip internal rotation in a seated setup that limits compensation through the spine.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "mobility"], recoveryFit: "high" },
+    { name: "Standing hip extension rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["hip", "back"], bodyAreas: ["hip", "back"], supportTopics: ["hip_tightness", "lower_back"], phase: "control", benefit: "Train hip extension in standing while keeping the lower back quiet and the movement small.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "high" }
+  ]),
+  ...routineFamily("ankle_rehab_family", [
+    { name: "Heel-to-toe rocker", supportTypes: ["physiotherapy"], restrictedAreas: ["ankle"], bodyAreas: ["ankle"], supportTopics: ["ankle_stiffness"], phase: "mobility", benefit: "Restore smooth weight transfer through the foot before longer walks, stairs, or gait drills.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "high" },
+    { name: "Ankle alphabet control", supportTypes: ["physiotherapy"], restrictedAreas: ["ankle"], bodyAreas: ["ankle"], supportTopics: ["ankle_stiffness"], phase: "control", benefit: "Use controlled ankle tracing to rebuild small-range awareness after stiffness or a mild sprain history.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Banded ankle eversion", supportTypes: ["physiotherapy"], restrictedAreas: ["ankle"], bodyAreas: ["ankle"], supportTopics: ["ankle_stiffness"], phase: "activation", benefit: "Train the outer ankle gently so side-to-side support improves without impact or instability.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Banded ankle inversion", supportTypes: ["physiotherapy"], restrictedAreas: ["ankle"], bodyAreas: ["ankle"], supportTopics: ["ankle_stiffness"], phase: "activation", benefit: "Build medial ankle control with a light band when the foot still feels shaky or underpowered.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Single-leg balance reach rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["ankle", "knee"], bodyAreas: ["ankle", "knee"], supportTopics: ["ankle_stiffness", "knee_support"], phase: "control", benefit: "Rebuild balance and foot control with a low-amplitude reach pattern that stays slower than athletic balance drills.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "medium" },
+    { name: "Seated calf raise rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["ankle"], bodyAreas: ["ankle"], supportTopics: ["ankle_stiffness"], phase: "activation", benefit: "Use a seated calf raise to reintroduce plantarflexion work without full bodyweight loading.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "medium" },
+    { name: "Tibialis raise rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["ankle", "knee"], bodyAreas: ["ankle", "knee"], supportTopics: ["ankle_stiffness", "knee_support"], phase: "activation", benefit: "Build front-shin support so gait and deceleration mechanics feel steadier without impact.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "medium" },
+    { name: "Low box calf lowering rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["ankle", "knee"], bodyAreas: ["ankle", "knee"], supportTopics: ["ankle_stiffness", "knee_support"], phase: "control", benefit: "Use a small eccentric calf lower to rebuild tendon tolerance with a conservative step height.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "medium" }
+  ]),
+  ...routineFamily("low_back_rehab_family", [
+    { name: "Dead bug breathing rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["back", "full_body"], bodyAreas: ["back", "full_body"], supportTopics: ["lower_back"], phase: "control", benefit: "Pair abdominal bracing and breathing so the trunk learns support without rigid gripping.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "high" },
+    { name: "Crocodile breathing rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["back", "full_body"], bodyAreas: ["back", "full_body"], supportTopics: ["lower_back"], phase: "release", benefit: "Use low-stress breathing to calm guarding through the trunk before you ask for more movement.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "recovery"], recoveryFit: "high" },
+    { name: "Quadruped rock-back rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["back", "hip"], bodyAreas: ["back", "hip"], supportTopics: ["lower_back", "hip_tightness"], phase: "mobility", benefit: "Restore hip-dominant folding without loading the lower back into end range too quickly.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "mobility"], recoveryFit: "high" },
+    { name: "Bird-dog hold rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["back", "full_body"], bodyAreas: ["back", "full_body"], supportTopics: ["lower_back"], phase: "control", benefit: "Train anti-rotation trunk control with slower holds instead of high-rep limb movement.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "McGill curl-up", supportTypes: ["physiotherapy"], restrictedAreas: ["back", "full_body"], bodyAreas: ["back", "full_body"], supportTopics: ["lower_back"], phase: "control", benefit: "Build low-load anterior trunk endurance without repeated spinal flexion volume.", minutes: 5, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Bent-knee fallout", supportTypes: ["physiotherapy"], restrictedAreas: ["back", "hip"], bodyAreas: ["back", "hip"], supportTopics: ["lower_back", "hip_tightness"], phase: "control", benefit: "Use a small hip opening pattern to train pelvic control while the lower back stays quiet.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Supine march bracing", supportTypes: ["physiotherapy"], restrictedAreas: ["back", "full_body"], bodyAreas: ["back", "full_body"], supportTopics: ["lower_back"], phase: "control", benefit: "Rehearse marching under abdominal brace so gait and trunk control connect without speed.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "high" },
+    { name: "Side plank from knees", supportTypes: ["physiotherapy"], restrictedAreas: ["back", "hip"], bodyAreas: ["back", "hip"], supportTopics: ["lower_back", "hip_tightness"], phase: "control", benefit: "Build lateral trunk support from a lower-risk side plank that shortens the lever and keeps alignment cleaner.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "medium" }
+  ]),
+  ...routineFamily("posture_cervical_rehab_family", [
+    { name: "Chin tuck reset rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "activation", benefit: "Use a simple chin tuck to restore stacked head posture before neck tension spreads downward.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "high" },
+    { name: "Seated chin nod", supportTypes: ["physiotherapy"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "control", benefit: "Train deep neck flexor control with a tiny nod instead of a larger head movement.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Wall posture hold", supportTypes: ["physiotherapy"], restrictedAreas: ["shoulder", "back", "full_body"], bodyAreas: ["shoulder", "back", "full_body"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "control", benefit: "Rebuild stacked posture awareness against the wall so ribs, head, and pelvis learn a calmer starting position.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "high" },
+    { name: "Cervical rotation isometric", supportTypes: ["physiotherapy"], restrictedAreas: ["shoulder", "back"], bodyAreas: ["shoulder", "back"], supportTopics: ["shoulder_irritation", "lower_back"], phase: "control", benefit: "Use low-force rotational resistance when turning the head needs tolerance more than extra range.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Seated thoracic extension support", supportTypes: ["physiotherapy"], restrictedAreas: ["back", "shoulder"], bodyAreas: ["back", "shoulder"], supportTopics: ["lower_back", "shoulder_irritation"], phase: "mobility", benefit: "Create supported thoracic extension so upper-back motion improves without pushing the lower back into the job.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "mobility"], recoveryFit: "high" }
+  ]),
+  ...routineFamily("wrist_elbow_rehab_family", [
+    { name: "Wrist extension rock rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["wrist", "elbow"], bodyAreas: ["wrist", "elbow"], supportTopics: ["carpal_tunnel", "tennis_elbow"], phase: "mobility", benefit: "Load wrist extension lightly so pressing positions stop feeling abrupt or fragile.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Forearm pronation-supination rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["wrist", "elbow"], bodyAreas: ["wrist", "elbow"], supportTopics: ["carpal_tunnel", "tennis_elbow"], phase: "control", benefit: "Restore forearm rotation through a small-range drill that keeps the wrist and elbow calm.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery", "active_aging"], recoveryFit: "high" },
+    { name: "Finger extension spread rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["wrist", "elbow"], bodyAreas: ["wrist", "elbow"], supportTopics: ["carpal_tunnel", "tennis_elbow"], phase: "activation", benefit: "Offset repeated gripping with controlled finger opening so the hand and forearm do not stay locked down all day.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Towel grip isometric", supportTypes: ["physiotherapy"], restrictedAreas: ["wrist", "elbow"], bodyAreas: ["wrist", "elbow"], supportTopics: ["carpal_tunnel", "tennis_elbow"], phase: "control", benefit: "Build low-threat grip tolerance with an isometric towel squeeze instead of heavy carries or curls.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Wrist radial deviation rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["wrist", "elbow"], bodyAreas: ["wrist", "elbow"], supportTopics: ["carpal_tunnel", "tennis_elbow"], phase: "control", benefit: "Train controlled side-to-side wrist support when gripping and reaching still feel uncertain.", minutes: 3, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" }
+  ]),
+  ...routineFamily("core_stability_rehab_family", [
+    { name: "Tall-kneeling anti-rotation hold", supportTypes: ["physiotherapy"], restrictedAreas: ["back", "full_body"], bodyAreas: ["back", "full_body"], supportTopics: ["lower_back"], phase: "control", benefit: "Train trunk stiffness and posture in tall kneeling without the momentum of standing resistance work.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "medium" },
+    { name: "Heel tap dead bug", supportTypes: ["physiotherapy"], restrictedAreas: ["back", "full_body"], bodyAreas: ["back", "full_body"], supportTopics: ["lower_back"], phase: "control", benefit: "Use a lighter dead-bug progression when full leg extension still breaks your brace or flares symptoms.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "high" },
+    { name: "Pallof press rehab", supportTypes: ["physiotherapy"], restrictedAreas: ["back", "full_body"], bodyAreas: ["back", "full_body"], supportTopics: ["lower_back"], phase: "control", benefit: "Build anti-rotation control with a slow press instead of a heavy resistance movement that invites compensation.", minutes: 4, environments: ["home", "gym", "hybrid"], goalTags: ["injury_recovery"], recoveryFit: "medium" }
+  ])
+];
+
 const YOGA_PRODUCTION_LIBRARY = YOGA_PRODUCTION_LIST.map((pose) => createYogaProductionRoutine(pose));
 
-const RAW_MOBILITY_LIBRARY = [...BASE_MOBILITY_LIBRARY, ...EXPANDED_MOBILITY_LIBRARY, ...MOBILITY_PRODUCTION_LIBRARY, ...STRETCH_PRODUCTION_LIBRARY, ...YOGA_PRODUCTION_LIBRARY];
+const RAW_MOBILITY_LIBRARY = [...BASE_MOBILITY_LIBRARY, ...EXPANDED_MOBILITY_LIBRARY, ...MOBILITY_PRODUCTION_LIBRARY, ...STRETCH_PRODUCTION_LIBRARY, ...REHAB_PRODUCTION_LIBRARY, ...YOGA_PRODUCTION_LIBRARY];
 const MOBILITY_LIBRARY = validateLibraryEntries(RAW_MOBILITY_LIBRARY, "mobility catalog").map((entry) => {
   const rawEntry = RAW_MOBILITY_LIBRARY.find((candidate) => candidate.id === entry.id);
   return {
@@ -715,6 +848,9 @@ export function filterMobilityLibrary({
       if (category === "stretching" && item.sourceType !== STRETCH_SOURCE_TYPE) {
         return false;
       }
+      if (category === "physiotherapy" && item.sourceType !== REHAB_SOURCE_TYPE) {
+        return false;
+      }
       if (category === "yoga" && item.sourceType !== "yoga_production") {
         return false;
       }
@@ -760,16 +896,34 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
   const entryId = name.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-");
   const resolvedSourceType =
     sourceType ||
-    (STRETCH_PRODUCTION_NAMES.has(name)
-      ? STRETCH_SOURCE_TYPE
-      : MOBILITY_PRODUCTION_NAMES.has(name)
-        ? MOBILITY_SOURCE_TYPES.production
-        : MOBILITY_SOURCE_TYPES.library);
+    (REHAB_PRODUCTION_NAMES.has(name)
+      ? REHAB_SOURCE_TYPE
+      : STRETCH_PRODUCTION_NAMES.has(name)
+        ? STRETCH_SOURCE_TYPE
+        : MOBILITY_PRODUCTION_NAMES.has(name)
+          ? MOBILITY_SOURCE_TYPES.production
+          : MOBILITY_SOURCE_TYPES.library);
   const mediaMovementId = movement?.id || entryId;
-  const visualCategory = supportTypes.includes("yoga") ? "yoga" : supportTypes.includes("mobility") ? "mobility" : "stretch";
-  const movementType = resolvedSourceType === STRETCH_SOURCE_TYPE ? "static stretch" : "dynamic mobility";
+  const visualCategory =
+    resolvedSourceType === REHAB_SOURCE_TYPE
+      ? "rehab"
+      : supportTypes.includes("yoga")
+        ? "yoga"
+        : supportTypes.includes("mobility")
+          ? "mobility"
+          : "stretch";
+  const movementType =
+    resolvedSourceType === REHAB_SOURCE_TYPE
+      ? "corrective rehab"
+      : resolvedSourceType === STRETCH_SOURCE_TYPE
+        ? "static stretch"
+        : "dynamic mobility";
   const difficulty =
-    resolvedSourceType === STRETCH_SOURCE_TYPE
+    resolvedSourceType === REHAB_SOURCE_TYPE
+      ? recoveryFit === "high"
+        ? "beginner"
+        : "intermediate"
+      : resolvedSourceType === STRETCH_SOURCE_TYPE
       ? recoveryFit === "high"
         ? "beginner"
         : "intermediate"
@@ -791,9 +945,11 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
   const resolvedFamilyId = familyId || supportTopics[0] || bodyAreas[0] || "general";
   const resolvedSupportTopics = expandSupportTopics(supportTopics);
   const content =
-    resolvedSourceType === STRETCH_SOURCE_TYPE
-      ? buildStretchContentStandard({ name, bodyAreas, supportTopics, benefit })
-      : buildMobilityContentStandard({ name, bodyAreas, supportTopics, benefit, group });
+    resolvedSourceType === REHAB_SOURCE_TYPE
+      ? buildRehabContentStandard({ name, bodyAreas, supportTopics, benefit, group })
+      : resolvedSourceType === STRETCH_SOURCE_TYPE
+        ? buildStretchContentStandard({ name, bodyAreas, supportTopics, benefit })
+        : buildMobilityContentStandard({ name, bodyAreas, supportTopics, benefit, group });
   const media = createMediaPayload(
     buildExerciseMediaSpec({
       id: mediaMovementId,
@@ -1078,6 +1234,56 @@ function buildStretchContentStandard({ name, bodyAreas, supportTopics, benefit }
   };
 }
 
+function buildRehabContentStandard({ name, bodyAreas, supportTopics, benefit, group }) {
+  const stepSequence = buildRehabStepSequence(name, group);
+  const modifications = [
+    "Use the smallest pain-free range that still lets you feel the target muscles working.",
+    "Add support from a wall, bench, mat, or band setup so alignment stays clean.",
+    "Stop the set early if symptoms sharpen, radiate, or force you to compensate."
+  ];
+  return {
+    instructions: [
+      `Set up for ${name} carefully and make the first rep slower than you think you need.`,
+      "Move only through a controlled, pain-free range and keep the rest of the body quiet.",
+      "Finish the drill with the same alignment you started with instead of chasing fatigue."
+    ],
+    cues: [
+      "Keep the movement small enough that control stays obvious.",
+      bodyAreas?.length ? `Let ${bodyAreas.join(" / ")} guide the drill instead of bigger surrounding muscles.` : "Let the target area guide the drill instead of bigger surrounding muscles.",
+      benefit || "Use the drill to rebuild confidence, alignment, and repeatable low-risk control."
+    ],
+    mistakes: [
+      "Pushing into sharp pain just to complete the planned reps.",
+      "Using momentum or extra body sway to make the movement look bigger.",
+      supportTopics?.length
+        ? `Letting the intended support area drop out: ${supportTopics.map((topic) => formatSupportTopic(topic).toLowerCase()).join(", ")}.`
+        : "Rushing through the drill without actually owning the position."
+    ],
+    safetyNotes: [
+      "Stay in a pain-free or clearly tolerable range only.",
+      "Stop immediately if pain becomes sharp, radiating, or unstable."
+    ],
+    modifications,
+    regressions: modifications.slice(0, 2),
+    progressions: [
+      "Add reps or hold time before adding more resistance or range.",
+      "Progress only when the same movement stays calm and controlled on both sides."
+    ],
+    description: benefit || `${name} is a corrective rehab drill used to rebuild alignment, control, and pain-free confidence.`,
+    trainingUse: "Use during rehab, warm-up resets, or low-load corrective sessions when quality matters more than workload.",
+    setup: `Set up for ${name} with enough support that you can keep the target joints aligned from the first rep.`,
+    execution:
+      group === "activation"
+        ? "Move slowly into the working position, create gentle tension, and return before the drill turns shaky or forced."
+        : group === "control"
+          ? "Hold or move through the drill slowly enough that the target area stays organized the whole time."
+          : "Use a small, pain-free range and keep the movement smooth enough that alignment never breaks down.",
+    breathing: "Exhale through the effort or hold, inhale on the easier reset, and never brace so hard that you stop breathing.",
+    tempo: "Move into position over 2-3 seconds, pause 1-2 seconds where control is clearest, then return over 2-3 seconds.",
+    stepSequence
+  };
+}
+
 function buildMobilityStepSequence(name, group) {
   return [
     {
@@ -1118,6 +1324,30 @@ function buildStretchStepSequence(name) {
     {
       title: "Finish",
       description: "Ease out of the hold slowly, reset your posture, and repeat only if the stretch still feels clean."
+    }
+  ];
+}
+
+function buildRehabStepSequence(name, group) {
+  return [
+    {
+      title: "Start",
+      description: `Set up for ${name} with support, stacked alignment, and a range that already feels calm.`
+    },
+    {
+      title: "Mid",
+      description: "Create light tension and steady breathing before you move farther into the drill."
+    },
+    {
+      title: "Peak",
+      description:
+        group === "activation"
+          ? "Move through the working range slowly enough that the target muscles, not momentum, create the motion."
+          : "Own the key position briefly and keep the movement pain-free, quiet, and repeatable."
+    },
+    {
+      title: "Finish",
+      description: "Return to the start under control, reset your alignment, and stop early if quality fades."
     }
   ];
 }
@@ -1193,6 +1423,9 @@ function deriveMobilitySecondaryGuideLabels(bodyAreas = []) {
 }
 
 function inferSupportEquipmentProfile(entryId, sourceType) {
+  if (sourceType === REHAB_SOURCE_TYPE) {
+    return /(banded|wall|bench|mat|foam|towel|box)/.test(entryId) ? "light" : "none";
+  }
   if (sourceType === STRETCH_SOURCE_TYPE) {
     return /(wall|doorway|bench|strap|towel)/.test(entryId) ? "light" : "none";
   }

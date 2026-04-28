@@ -207,6 +207,25 @@ export default function MobilityPage() {
       }
 
       if (effectiveCategory === "physiotherapy") {
+        const searchHaystack = [
+          routine.name,
+          routine.displayName,
+          routine.benefit,
+          routine.primaryFocus,
+          routine.secondaryFocus,
+          ...(routine.bodyAreas || []),
+          ...(routine.restrictedAreas || []),
+          ...(routine.supportTopics || [])
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        if (normalizedQuery && !searchHaystack.includes(normalizedQuery)) {
+          return false;
+        }
+        if (routine.sourceType !== "rehab_production") {
+          return false;
+        }
         if (
           selectedArea !== "all" &&
           !(routine.bodyAreas || []).includes(selectedArea) &&
@@ -215,6 +234,12 @@ export default function MobilityPage() {
           return false;
         }
         if (selectedInjurySupport !== "all" && !(routine.supportTopics || []).includes(selectedInjurySupport)) {
+          return false;
+        }
+        if (selectedDifficulty !== "all" && String(routine.difficulty || "").toLowerCase() !== selectedDifficulty) {
+          return false;
+        }
+        if (selectedEquipment !== "all" && String(routine.equipmentProfile || "").toLowerCase() !== selectedEquipment) {
           return false;
         }
         return true;
@@ -478,6 +503,15 @@ export default function MobilityPage() {
           {effectiveCategory === "physiotherapy" ? (
             <>
               <label>
+                Search
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  placeholder="Search shoulder, knee, ankle..."
+                />
+              </label>
+              <label>
                 Body area
                 <select value={selectedArea} onChange={(event) => setSelectedArea(event.target.value)}>
                   {(mobilityModule?.filterOptions?.areaOptions || []).map((option) => (
@@ -491,6 +525,26 @@ export default function MobilityPage() {
                 Injury support
                 <select value={selectedInjurySupport} onChange={(event) => setSelectedInjurySupport(event.target.value)}>
                   {injurySupportOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Difficulty
+                <select value={selectedDifficulty} onChange={(event) => setSelectedDifficulty(event.target.value)}>
+                  {(mobilityModule?.filterOptions?.difficultyOptions || []).map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Equipment
+                <select value={selectedEquipment} onChange={(event) => setSelectedEquipment(event.target.value)}>
+                  {(mobilityModule?.filterOptions?.equipmentOptions || []).map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>

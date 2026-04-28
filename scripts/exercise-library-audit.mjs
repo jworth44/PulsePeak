@@ -366,6 +366,23 @@ function verifyStretchGuideRecord(entry) {
   requireStepSequenceRange(entry, 1, 3);
 }
 
+function verifyRehabGuideRecord(entry) {
+  requireText(entry, "detailId");
+  requireText(entry, "name");
+  requireText(entry, "whatThisExerciseIs");
+  requireText(entry, "trainingUse");
+  requireArray(entry, "primaryMuscles", 1);
+  requireArray(entry, "secondaryMuscles", 1);
+  requireText(entry, "setup");
+  requireText(entry, "howToPerform");
+  requireText(entry, "breathing");
+  requireText(entry, "tempo");
+  requireArray(entry, "commonMistakes", 2);
+  requireArray(entry, "safetyNotes", 1);
+  requireGuideModifications(entry, 1);
+  requireStepSequence(entry);
+}
+
 function runMobilityLibraryAudit() {
   const mobilityModule = buildMobilityModule({
     goalType: "mobility",
@@ -475,6 +492,72 @@ function runStretchLibraryAudit() {
       fail(entry.name, "equipmentProfile", `Unexpected stretch equipment profile "${entry.equipmentProfile}".`);
     }
     verifyStretchGuideRecord(entry.movement || entry);
+  });
+}
+
+function runRehabLibraryAudit() {
+  const mobilityModule = buildMobilityModule({
+    goalType: "injury_recovery",
+    injuryStatus: "minor",
+    restrictedAreas: ["shoulder"],
+    lowRecovery: false,
+    trainingEnvironment: "hybrid"
+  });
+  const library = Array.isArray(mobilityModule?.library) ? mobilityModule.library : [];
+  const rehabEntries = library.filter((entry) => entry.sourceType === "rehab_production" && entry.supportTypes.includes("physiotherapy"));
+  const mobilityEntries = library.filter((entry) => entry.sourceType === "mobility_production" && entry.supportTypes.includes("mobility"));
+  const stretchEntries = library.filter((entry) => entry.sourceType === "stretch_production" && entry.supportTypes.includes("stretching"));
+  const yogaEntries = library.filter((entry) => entry.sourceType === "yoga_production" && entry.supportTypes.includes("yoga"));
+
+  if (rehabEntries.length !== 55) {
+    fail("rehab", "count", `Expected 55 rehab entries but found ${rehabEntries.length}.`);
+  }
+
+  const rehabIdMap = new Map();
+  const rehabDetailIdMap = new Map();
+  const mobilityIds = new Set(mobilityEntries.map((entry) => entry.id));
+  const mobilityDetailIds = new Set(mobilityEntries.map((entry) => entry.detailId));
+  const mobilityNames = new Set(mobilityEntries.map((entry) => entry.name));
+  const stretchIds = new Set(stretchEntries.map((entry) => entry.id));
+  const stretchDetailIds = new Set(stretchEntries.map((entry) => entry.detailId));
+  const stretchNames = new Set(stretchEntries.map((entry) => entry.name));
+  const yogaIds = new Set(yogaEntries.map((entry) => entry.id));
+  const yogaDetailIds = new Set(yogaEntries.map((entry) => entry.detailId));
+  const yogaNames = new Set(yogaEntries.map((entry) => entry.name));
+
+  rehabEntries.forEach((entry) => {
+    if (rehabIdMap.has(entry.id)) {
+      fail(entry.name, "id", `Duplicate rehab id also used by ${rehabIdMap.get(entry.id)}.`);
+    } else {
+      rehabIdMap.set(entry.id, entry.name);
+    }
+    if (rehabDetailIdMap.has(entry.detailId)) {
+      fail(entry.name, "detailId", `Duplicate rehab detailId also used by ${rehabDetailIdMap.get(entry.detailId)}.`);
+    } else {
+      rehabDetailIdMap.set(entry.detailId, entry.name);
+    }
+    if (mobilityIds.has(entry.id) || mobilityDetailIds.has(entry.detailId) || mobilityNames.has(entry.name)) {
+      fail(entry.name, "categorySeparation", "Rehab entry overlaps with the mobility production library.");
+    }
+    if (stretchIds.has(entry.id) || stretchDetailIds.has(entry.detailId) || stretchNames.has(entry.name)) {
+      fail(entry.name, "categorySeparation", "Rehab entry overlaps with the stretch production library.");
+    }
+    if (yogaIds.has(entry.id) || yogaDetailIds.has(entry.detailId) || yogaNames.has(entry.name)) {
+      fail(entry.name, "categorySeparation", "Rehab entry overlaps with the yoga production library.");
+    }
+    if (entry.supportTypes.includes("mobility") || entry.supportTypes.includes("stretching") || entry.supportTypes.includes("yoga")) {
+      fail(entry.name, "supportTypes", "Rehab production entry is still tagged as mobility, stretch, or yoga.");
+    }
+    if (String(entry.visualCategory || "").toLowerCase() !== "rehab") {
+      fail(entry.name, "visualCategory", `Expected visualCategory rehab but found "${entry.visualCategory}".`);
+    }
+    if (String(entry.movementType || "").toLowerCase() !== "corrective rehab") {
+      fail(entry.name, "movementType", `Expected corrective rehab but found "${entry.movementType}".`);
+    }
+    if (!["none", "light"].includes(String(entry.equipmentProfile || "").toLowerCase())) {
+      fail(entry.name, "equipmentProfile", `Unexpected rehab equipment profile "${entry.equipmentProfile}".`);
+    }
+    verifyRehabGuideRecord(entry.movement || entry);
   });
 }
 
@@ -794,6 +877,7 @@ try {
 
   runMobilityLibraryAudit();
   runStretchLibraryAudit();
+  runRehabLibraryAudit();
   await runApiAudit(login.token);
   runDeclaredModelMediaAudit();
   await runBrowserVerification(login.token);
