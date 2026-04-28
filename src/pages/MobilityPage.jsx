@@ -92,6 +92,11 @@ export default function MobilityPage() {
     return [{ value: "all", label: "Any injury support" }, ...options.map((value) => ({ value, label: formatSupportTopic(value) }))];
   }, [mobilityModule?.filterOptions?.injurySupportOptions, routines]);
 
+  const isInjurySpecificReady =
+    effectiveCategory !== "injury_specific" ||
+    (selectedInjurySupport !== "all" && selectedArea !== "all");
+  const injurySpecificPrompt = "Select an injury support type and body area to see targeted movements.";
+
   const filteredRoutines = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
     const normalizeSupportTopic = (value) => {
@@ -256,13 +261,24 @@ export default function MobilityPage() {
       }
 
       if (effectiveCategory === "injury_specific") {
-        if (selectedInjurySupport !== "all" && !(routine.supportTopics || []).includes(selectedInjurySupport)) {
+        if (!isInjurySpecificReady) {
+          return false;
+        }
+        const isRehabRelevant =
+          routine.sourceType === "rehab_production" ||
+          routine.supportTypes.includes("physiotherapy") ||
+          routine.supportTypes.includes("injury_specific") ||
+          routine.supportGoal === "injury_specific_support";
+        if (!isRehabRelevant) {
+          return false;
+        }
+        if (!(routine.supportTopics || []).includes(selectedInjurySupport) && !(routine.injuryTags || []).includes(selectedInjurySupport)) {
           return false;
         }
         if (
-          selectedArea !== "all" &&
           !(routine.bodyAreas || []).includes(selectedArea) &&
-          !(routine.restrictedAreas || []).includes(selectedArea)
+          !(routine.restrictedAreas || []).includes(selectedArea) &&
+          routine.bodyArea !== selectedArea
         ) {
           return false;
         }
@@ -284,9 +300,12 @@ export default function MobilityPage() {
           return 0;
       }
     });
-  }, [effectiveCategory, effectiveEnvironment, routines, searchQuery, selectedArea, selectedDifficulty, selectedEquipment, selectedFlowType, selectedInjurySupport, selectedIntensity, selectedRecovery, selectedSort, selectedTime]);
+  }, [effectiveCategory, effectiveEnvironment, isInjurySpecificReady, routines, searchQuery, selectedArea, selectedDifficulty, selectedEquipment, selectedFlowType, selectedInjurySupport, selectedIntensity, selectedRecovery, selectedSort, selectedTime]);
 
   const suggestedRoutines = useMemo(() => {
+    if (effectiveCategory === "injury_specific" && !isInjurySpecificReady) {
+      return [];
+    }
     const direct = filteredRoutines.slice(0, 4);
     if (direct.length >= 4) {
       return direct;
@@ -295,7 +314,7 @@ export default function MobilityPage() {
       (routine) => routine.supportTypes.includes(effectiveCategory) && !direct.some((entry) => entry.name === routine.name)
     );
     return [...direct, ...fallback.slice(0, 4 - direct.length)];
-  }, [effectiveCategory, filteredRoutines, routines]);
+  }, [effectiveCategory, filteredRoutines, isInjurySpecificReady, routines]);
 
   const suggestedRoutineCards = useMemo(
     () =>
@@ -639,6 +658,10 @@ export default function MobilityPage() {
 
       <div className="content-grid">
         <Panel eyebrow="Suggested today" title="Start here first">
+          {effectiveCategory === "injury_specific" && !isInjurySpecificReady ? (
+            <p className="muted">{injurySpecificPrompt}</p>
+          ) : (
+            <>
           <div className="module-note">
             <strong>{mobilityModule?.sessionName || categories.find((category) => category.id === effectiveCategory)?.label || "Guided mobility"}</strong>
             <p className="support-copy">{getGuidedBlockSupportCopy(effectiveCategory)}</p>
@@ -709,6 +732,8 @@ export default function MobilityPage() {
               </article>
             ))}
           </div>
+            </>
+          )}
         </Panel>
 
         <Panel eyebrow="Why this matters" title="Keep the support work useful">
@@ -720,7 +745,9 @@ export default function MobilityPage() {
       </div>
 
       <Panel eyebrow="Library" title="Pick the exact flow you need">
-        {filteredRoutines.length ? (
+        {effectiveCategory === "injury_specific" && !isInjurySpecificReady ? (
+          <p className="muted">{injurySpecificPrompt}</p>
+        ) : filteredRoutines.length ? (
           <div className="module-card-grid">
             {filteredRoutines.map((routine) => {
               const swapOptions = filteredRoutines.filter((entry) => entry.name !== routine.name && entry.phase === routine.phase);
@@ -788,7 +815,11 @@ export default function MobilityPage() {
             })}
           </div>
         ) : (
-          <p className="muted">No mobility drills match that filter combination yet. Loosen one filter and try again.</p>
+          <p className="muted">
+            {effectiveCategory === "injury_specific"
+              ? "No targeted rehab movements match that injury support and body area yet."
+              : "No mobility drills match that filter combination yet. Loosen one filter and try again."}
+          </p>
         )}
       </Panel>
 

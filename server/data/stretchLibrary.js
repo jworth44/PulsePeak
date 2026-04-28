@@ -991,6 +991,13 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
       restrictedAreas,
       bodyAreas,
       supportTopics: resolvedSupportTopics,
+      injuryTags: resolvedSupportTopics,
+      bodyArea: bodyAreas[0] || null,
+      supportGoal:
+        supportTypes.includes("physiotherapy") || supportTypes.includes("injury_specific")
+          ? "injury_specific_support"
+          : supportTypes[0] || "mobility",
+      contraindicationNotes: content.safetyNotes,
       phase,
       group,
       benefit,
@@ -1058,6 +1065,13 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
     restrictedAreas,
     bodyAreas,
     supportTopics: resolvedSupportTopics,
+    injuryTags: resolvedSupportTopics,
+    bodyArea: bodyAreas[0] || null,
+    supportGoal:
+      supportTypes.includes("physiotherapy") || supportTypes.includes("injury_specific")
+        ? "injury_specific_support"
+        : supportTypes[0] || "mobility",
+    contraindicationNotes: content.safetyNotes,
     phase,
     group,
     benefit,
