@@ -2,6 +2,7 @@ import fs from "node:fs";
 import net from "node:net";
 import os from "node:os";
 import path from "node:path";
+import crypto from "node:crypto";
 import { spawn } from "node:child_process";
 import { setTimeout as delay } from "node:timers/promises";
 import { pathToFileURL } from "node:url";
@@ -16,19 +17,21 @@ const artifactsDir = path.join(projectRoot, "artifacts");
 const outputPath = path.join(artifactsDir, "exercise-library-audit.json");
 const modalPath = path.join(projectRoot, "src", "components", "MovementDetailModal.jsx");
 const chromePath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+const runId = crypto.randomUUID().slice(0, 8);
 
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "pulsepeak-exercise-library-"));
 const dbPath = path.join(tempRoot, "qa-db.json");
-const port = await findAvailablePort(43220, 80);
+const port = await findAvailablePort(43000 + crypto.randomInt(0, 15000), 400);
 const baseUrl = `http://127.0.0.1:${port}`;
 const serverEntryUrl = pathToFileURL(path.join(projectRoot, "server", "server.js")).href;
 const serverBootstrapPath = path.join(tempRoot, "exercise-library-server-bootstrap.mjs");
-const serverLogPath = path.join(artifactsDir, "exercise-library-server.log");
+const serverLogPath = path.join(artifactsDir, `exercise-library-server-${runId}.log`);
 
 process.env.PULSEPEAK_DB_PATH = dbPath;
 const { createUser, readDb, writeDb } = await import("../server/data/store.js");
 
 fs.mkdirSync(artifactsDir, { recursive: true });
+fs.writeFileSync(serverLogPath, "");
 fs.writeFileSync(
   serverBootstrapPath,
   `process.env.PORT = ${JSON.stringify(String(port))};\nprocess.env.PULSEPEAK_DB_PATH = ${JSON.stringify(dbPath)};\nawait import(${JSON.stringify(serverEntryUrl)});\n`
@@ -211,41 +214,82 @@ function startServer() {
   });
 }
 
-async function waitForHealth() {
-  for (let attempt = 0; attempt < 60; attempt += 1) {
+async function waitForHealth({ attempts = 60, delayMs = 500, throwOnTimeout = true } = {}) {
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
     try {
       const response = await fetch(`${baseUrl}/api/health`);
       if (response.ok) {
-        return;
+        return true;
       }
     } catch {
       // retry
     }
-    await delay(500);
+    await delay(delayMs);
   }
-  throw new Error("Server did not become healthy in time.");
+  if (throwOnTimeout) {
+    throw new Error("Server did not become healthy in time.");
+  }
+  return false;
 }
 
-async function api(pathname, { method = "GET", token, body, expectedStatus = 200 } = {}) {
-  const response = await fetch(`${baseUrl}${pathname}`, {
-    method,
-    headers: {
-      ...(body ? { "Content-Type": "application/json" } : {}),
-      ...(token ? { Authorization: `Bearer ${token}` } : {})
-    },
-    body
-  });
+function isTransientNetworkError(error) {
+  const code = error?.cause?.code || error?.code;
+  return ["ECONNRESET", "ECONNREFUSED", "EPIPE", "UND_ERR_SOCKET", "UND_ERR_CONNECT_TIMEOUT"].includes(code);
+}
 
-  if (response.status !== expectedStatus) {
-    const text = await response.text();
-    throw new Error(`${method} ${pathname} expected ${expectedStatus} but received ${response.status}: ${text}`);
+async function api(
+  pathname,
+  {
+    method = "GET",
+    token,
+    body,
+    expectedStatus = 200,
+    retries = 2,
+    onUnauthorized
+  } = {}
+) {
+  let attempt = 0;
+  let authToken = token;
+
+  while (attempt <= retries) {
+    try {
+      const response = await fetch(`${baseUrl}${pathname}`, {
+        method,
+        headers: {
+          ...(body ? { "Content-Type": "application/json" } : {}),
+          ...(authToken ? { Authorization: `Bearer ${authToken}` } : {})
+        },
+        body
+      });
+
+      if (response.status === 401 && typeof onUnauthorized === "function" && attempt < retries) {
+        authToken = await onUnauthorized();
+        attempt += 1;
+        continue;
+      }
+
+      if (response.status !== expectedStatus) {
+        const text = await response.text();
+        throw new Error(`${method} ${pathname} expected ${expectedStatus} but received ${response.status}: ${text}`);
+      }
+
+      if (response.status === 204) {
+        return null;
+      }
+
+      return response.json();
+    } catch (error) {
+      if (!isTransientNetworkError(error) || attempt >= retries) {
+        throw error;
+      }
+
+      attempt += 1;
+      await waitForHealth({ attempts: 12, delayMs: 250, throwOnTimeout: false });
+      await delay(200 * attempt);
+    }
   }
 
-  if (response.status === 204) {
-    return null;
-  }
-
-  return response.json();
+  throw new Error(`API request failed after retries: ${method} ${pathname}`);
 }
 
 function seedCompleteUser(email, name = "Exercise Library QA") {
@@ -694,7 +738,14 @@ function classifyVisualCoverage(entry) {
 }
 
 async function runApiAudit(token) {
-  const catalog = await api("/api/exercise-library", { token });
+  let activeToken = token;
+  const reauthenticate = async () => {
+    const session = await loginQaUser();
+    activeToken = session.token;
+    return activeToken;
+  };
+
+  const catalog = await api("/api/exercise-library", { token: activeToken, onUnauthorized: reauthenticate });
   const entries = Array.isArray(catalog?.entries) ? catalog.entries : [];
   const detailIdMap = new Map();
   const nameMap = new Map();
@@ -721,7 +772,10 @@ async function runApiAudit(token) {
       nameMap.set(normalizedName, summaryEntry.name);
     }
 
-    const detail = await api(`/api/exercise-library/${summaryEntry.detailId || summaryEntry.id}`, { token });
+    const detail = await api(`/api/exercise-library/${summaryEntry.detailId || summaryEntry.id}`, {
+      token: activeToken,
+      onUnauthorized: reauthenticate
+    });
     report.detailEndpointChecked += 1;
     verifyDetailRecord(detail);
     runResolverSafetyAudit(detail);
@@ -864,6 +918,17 @@ async function runBrowserVerification(token) {
   }
 }
 
+async function loginQaUser() {
+  return api("/api/auth/login", {
+    method: "POST",
+    body: JSON.stringify({
+      email: "exercise_library_qa@pulsepeak.local",
+      password: "Passw0rd!"
+    }),
+    retries: 3
+  });
+}
+
 async function openGuideAndAssert(page, exerciseName, expectedTexts, { expectTextOnly = false, expectVisualFull = false } = {}) {
   const card = page
     .locator(".exercise-library-card")
@@ -949,13 +1014,7 @@ server.stderr.on("data", (chunk) => fs.appendFileSync(serverLogPath, chunk));
 try {
   seedCompleteUser("exercise_library_qa@pulsepeak.local");
   await waitForHealth();
-  const login = await api("/api/auth/login", {
-    method: "POST",
-    body: JSON.stringify({
-      email: "exercise_library_qa@pulsepeak.local",
-      password: "Passw0rd!"
-    })
-  });
+  const login = await loginQaUser();
 
   runCardioLibraryAudit();
   runMobilityLibraryAudit();
