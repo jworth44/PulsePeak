@@ -345,7 +345,7 @@ export default function MobilityPage() {
   return (
     <div className="page-grid page-grid-tight">
       <section className="module-page-hero">
-        <div>
+        <div className="mobility-hero-copy">
           <p className="badge">Mobility</p>
           <h2>{mobilityModule?.title || "Guided movement support that fits today"}</h2>
           <p className="lead-copy">{getModeLeadCopy(isSearchMode ? effectiveCategory : effectiveCategory)}</p>
@@ -374,7 +374,7 @@ export default function MobilityPage() {
                   handleCategorySelect(entry.id);
                 }}
               >
-                <span className="top-level-entry-icon" aria-hidden="true">{entry.icon}</span>
+                <span className="top-level-entry-icon" aria-hidden="true">{getEntryIcon(entry.id)}</span>
                 <strong>{entry.title}</strong>
                 <span>{entry.description}</span>
               </button>
@@ -751,6 +751,18 @@ function RoutineCard({ routine, currentRoutine, categoryId, onOpen, onSwap, swap
 
 function getCardCategoryLabel(categoryId) {
   return CATEGORY_ENTRY_META[categoryId]?.title || formatLabelCase(categoryId);
+}
+
+function getEntryIcon(entryId) {
+  const iconMap = {
+    strength: "ST",
+    mobility_stretch: "MS",
+    yoga: "YG",
+    cardio: "CD",
+    injury_support: "IS",
+    recovery: "RC"
+  };
+  return iconMap[entryId] || "GO";
 }
 
 function getCardSupportLabel(categoryId, routine) {
