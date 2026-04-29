@@ -92,6 +92,21 @@ export function normalizeHiddenModules(hiddenModules) {
     : [];
 }
 
+export function getDashboardNextAction({
+  needsOnboarding = false
+} = {}) {
+  if (needsOnboarding) {
+    return {
+      eyebrow: "Setup",
+      title: "Finish your setup",
+      reason: "Complete your profile so PulsePeak can tailor the app to your goals and preferences.",
+      primaryAction: { label: "Finish setup", href: "/preferences?section=preferences" }
+    };
+  }
+
+  return null;
+}
+
 function compareModuleOrder(leftId, rightId, moduleOrder) {
   const getRank = (moduleId) => {
     if (moduleId === "weekly_plan") {
