@@ -155,9 +155,9 @@ const REHAB_SOURCE_TYPE = "rehab_production";
 
 const MOBILITY_CATEGORIES = [
   {
-    id: "mobility",
-    label: "Mobility",
-    description: "Dynamic range-of-motion drills for hips, ankles, shoulders, and thoracic control without yoga flow styling."
+    id: "mobility_stretch",
+    label: "Mobility & Stretch",
+    description: "Dynamic mobility drills and targeted stretches in one support system for tight or stiff areas."
   },
   {
     id: "yoga",
@@ -165,24 +165,14 @@ const MOBILITY_CATEGORIES = [
     description: "Longer flowing patterns that improve movement quality and help you settle down after hard training."
   },
   {
-    id: "stretching",
-    label: "Stretching",
-    description: "Simple targeted stretches for tight areas before or after training."
-  },
-  {
-    id: "physiotherapy",
-    label: "Physiotherapy / Rehab",
-    description: "Controlled drills that protect irritated areas and rebuild confidence."
-  },
-  {
     id: "recovery",
     label: "Recovery Mobility",
     description: "Low-stress movement support for days when soreness, stiffness, or fatigue need to lead."
   },
   {
-    id: "injury_specific",
-    label: "Injury-Specific",
-    description: "Educational movement support organized around the areas that feel most limited right now."
+    id: "injury_support",
+    label: "Injury Support",
+    description: "Strictly targeted corrective support based on a specific injury or ache pattern."
   }
 ];
 
@@ -214,6 +204,37 @@ const INJURY_SUPPORT_OPTIONS = [
   { value: "carpal_tunnel", label: "Carpal tunnel support" },
   { value: "hip_tightness_support", label: "Hip tightness support" },
   { value: "ankle_stiffness_support", label: "Ankle stiffness support" }
+];
+
+const INJURY_MAPPING_OPTIONS = [
+  { value: "tennis-elbow", label: "Tennis elbow", bodyArea: "elbow", supportTopics: ["tennis_elbow"] },
+  { value: "rotator-cuff", label: "Rotator cuff irritation", bodyArea: "shoulder", supportTopics: ["rotator_cuff_support", "shoulder_irritation"] },
+  { value: "acl", label: "ACL support", bodyArea: "knee", supportTopics: ["acl_mcl_support", "knee_support"] },
+  { value: "meniscus", label: "Meniscus support", bodyArea: "knee", supportTopics: ["meniscus_support", "knee_support"] },
+  { value: "patellar", label: "Patellar support", bodyArea: "knee", supportTopics: ["patellar_tracking_support", "knee_support"] },
+  { value: "lumbar-strain", label: "Lumbar strain", bodyArea: "lower-back", supportTopics: ["lumbar_strain_support", "lower_back"] },
+  { value: "disc-irritation", label: "Disc irritation", bodyArea: "lower-back", supportTopics: ["disc_irritation_support", "lower_back"] },
+  { value: "shoulder-impingement", label: "Shoulder impingement", bodyArea: "shoulder", supportTopics: ["shoulder_impingement_support", "shoulder_irritation"] },
+  { value: "carpal-tunnel", label: "Carpal tunnel", bodyArea: "wrist", supportTopics: ["carpal_tunnel"] },
+  { value: "ankle-stiffness", label: "Ankle stiffness", bodyArea: "ankle", supportTopics: ["ankle_stiffness_support", "ankle_stiffness"] }
+];
+
+const ACHE_BODY_AREA_OPTIONS = [
+  { value: "lower-back", label: "Lower back" },
+  { value: "calves", label: "Calves" },
+  { value: "shoulders", label: "Shoulders" },
+  { value: "hips", label: "Hips" },
+  { value: "knees", label: "Knees" },
+  { value: "ankles", label: "Ankles" },
+  { value: "neck", label: "Neck" },
+  { value: "wrists", label: "Wrists" }
+];
+
+const SYMPTOM_TYPE_OPTIONS = [
+  { value: "stiffness", label: "Stiffness" },
+  { value: "soreness", label: "Soreness" },
+  { value: "tightness", label: "Tightness" },
+  { value: "fatigue", label: "Fatigue" }
 ];
 
 const SUPPORT_TOPIC_EQUIVALENTS = {
@@ -658,14 +679,20 @@ const MOBILITY_LIBRARY = validateLibraryEntries(RAW_MOBILITY_LIBRARY, "mobility 
 export function buildMobilityPlan({ goalType, injuryStatus, restrictedAreas, lowRecovery, workoutEnvironment }) {
   const selectedCategory =
     injuryStatus !== "none"
-      ? "physiotherapy"
+      ? "injury_support"
       : goalType === "mobility"
-        ? "mobility"
+        ? "mobility_stretch"
         : lowRecovery
           ? "recovery"
-          : "stretching";
+          : "mobility_stretch";
+  const sessionCategory =
+    selectedCategory === "injury_support"
+      ? "physiotherapy"
+      : selectedCategory === "mobility_stretch"
+        ? "mobility"
+        : selectedCategory;
   const library = buildMobilitySessionSet({
-    category: selectedCategory,
+    category: sessionCategory,
     injuryArea: restrictedAreas?.[0] || "all",
     goalType,
     timeCap: lowRecovery ? 10 : 15,
@@ -693,12 +720,12 @@ export function buildMobilityPlan({ goalType, injuryStatus, restrictedAreas, low
   return {
     title:
       injuryStatus === "active_injury"
-        ? "Use a physiotherapy-style recovery flow that respects the areas you need to protect"
+        ? "Use injury support that respects the areas you need to protect"
         : goalType === "mobility"
           ? "Use guided movement as a real part of the training week"
           : lowRecovery
             ? "Lean on recovery mobility instead of forcing more load"
-            : "Use targeted stretching and movement prep to make training feel better this week",
+            : "Use targeted mobility and stretching support to make training feel better this week",
     reason:
       injuryStatus === "active_injury"
         ? "The mobility block stays supportive and educational so you can keep moving without pretending everything is fine."
@@ -724,15 +751,21 @@ export function buildMobilityPlan({ goalType, injuryStatus, restrictedAreas, low
 export function buildMobilityModule({ goalType, injuryStatus, restrictedAreas, lowRecovery, trainingEnvironment, planContext = null }) {
   const suggestedCategory =
     injuryStatus !== "none"
-      ? "physiotherapy"
+      ? "injury_support"
       : goalType === "mobility"
-        ? "mobility"
+        ? "mobility_stretch"
         : lowRecovery
           ? "recovery"
-          : "stretching";
+          : "mobility_stretch";
+  const sessionCategory =
+    suggestedCategory === "injury_support"
+      ? "physiotherapy"
+      : suggestedCategory === "mobility_stretch"
+        ? "mobility"
+        : suggestedCategory;
 
   const sessionSet = buildMobilitySessionSet({
-    category: suggestedCategory,
+    category: sessionCategory,
     injuryArea: restrictedAreas?.[0] || "all",
     goalType,
     timeCap: lowRecovery ? 10 : 15,
@@ -746,8 +779,8 @@ export function buildMobilityModule({ goalType, injuryStatus, restrictedAreas, l
     title: planContext?.weeklyFocus ? `${planContext.weeklyFocus} support` : "Guided mobility support",
     description:
       planContext?.mobilityTarget
-        ? `${planContext.mobilityTarget} Choose dynamic mobility, yoga, stretching, physiotherapy-style drills, or recovery mobility based on how you feel and what part of the body needs support.`
-        : "Choose dynamic mobility, yoga, stretching, physiotherapy-style drills, or recovery mobility based on how you feel and what part of the body needs support.",
+        ? `${planContext.mobilityTarget} Choose between mobility and stretch support, yoga, recovery, or stricter injury support based on how you feel and what part of the body needs support.`
+        : "Choose between mobility and stretch support, yoga, recovery, or stricter injury support based on how you feel and what part of the body needs support.",
     suggestedCategory,
     sessionName: sessionSet.sessionName,
     categories: MOBILITY_CATEGORIES,
@@ -757,6 +790,9 @@ export function buildMobilityModule({ goalType, injuryStatus, restrictedAreas, l
     filterOptions: {
       areaOptions: AREA_OPTIONS,
       injurySupportOptions: INJURY_SUPPORT_OPTIONS,
+      injuryMappingOptions: INJURY_MAPPING_OPTIONS,
+      acheBodyAreaOptions: ACHE_BODY_AREA_OPTIONS,
+      symptomTypeOptions: SYMPTOM_TYPE_OPTIONS,
       difficultyOptions: [
         { value: "all", label: "Any difficulty" },
         { value: "beginner", label: "Beginner" },
@@ -783,7 +819,7 @@ export function buildMobilityModule({ goalType, injuryStatus, restrictedAreas, l
 }
 
 export function buildMobilitySessionSet({
-  category = "stretching",
+  category = "mobility",
   injuryArea = "all",
   goalType = "general_fitness",
   timeCap = 15,
@@ -944,6 +980,23 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
           : "mobility";
   const resolvedFamilyId = familyId || supportTopics[0] || bodyAreas[0] || "general";
   const resolvedSupportTopics = expandSupportTopics(supportTopics);
+  const injuryTags = dedupeStringList([...resolvedSupportTopics, ...deriveInjuryAliases(resolvedSupportTopics)]);
+  const bodyAreaAliases = deriveBodyAreaAliases({ name, bodyAreas, supportTopics: resolvedSupportTopics });
+  const symptomTags = deriveSymptomTags({
+    name,
+    bodyAreas,
+    supportTypes,
+    supportTopics: resolvedSupportTopics,
+    sourceType: resolvedSourceType,
+    recoveryFit
+  });
+  const supportGoal =
+    resolvedSourceType === REHAB_SOURCE_TYPE
+      ? "rehab"
+      : resolvedSourceType === STRETCH_SOURCE_TYPE
+        ? "stretch"
+        : "mobility";
+  const lightRehab = resolvedSourceType === REHAB_SOURCE_TYPE && recoveryFit === "high";
   const content =
     resolvedSourceType === REHAB_SOURCE_TYPE
       ? buildRehabContentStandard({ name, bodyAreas, supportTopics, benefit, group })
@@ -991,12 +1044,12 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
       restrictedAreas,
       bodyAreas,
       supportTopics: resolvedSupportTopics,
-      injuryTags: resolvedSupportTopics,
+      injuryTags,
       bodyArea: bodyAreas[0] || null,
-      supportGoal:
-        supportTypes.includes("physiotherapy") || supportTypes.includes("injury_specific")
-          ? "injury_specific_support"
-          : supportTypes[0] || "mobility",
+      bodyAreaAliases,
+      supportGoal,
+      symptomTags,
+      lightRehab,
       contraindicationNotes: content.safetyNotes,
       phase,
       group,
@@ -1065,12 +1118,12 @@ function routine({ name, supportTypes, restrictedAreas, bodyAreas, supportTopics
     restrictedAreas,
     bodyAreas,
     supportTopics: resolvedSupportTopics,
-    injuryTags: resolvedSupportTopics,
+    injuryTags,
     bodyArea: bodyAreas[0] || null,
-    supportGoal:
-      supportTypes.includes("physiotherapy") || supportTypes.includes("injury_specific")
-        ? "injury_specific_support"
-        : supportTypes[0] || "mobility",
+    bodyAreaAliases,
+    supportGoal,
+    symptomTags,
+    lightRehab,
     contraindicationNotes: content.safetyNotes,
     phase,
     group,
@@ -1587,12 +1640,6 @@ function buildMobilitySessionName(category, injuryArea, recoveryStatus) {
   if (category === "recovery") {
     return recoveryStatus === "low" ? "Post-training reset" : "Recovery support flow";
   }
-  if (category === "stretching") {
-    return injuryArea !== "all" ? `${formatAreaLabel(injuryArea)} stretching flow` : "Targeted stretching flow";
-  }
-  if (category === "injury_specific") {
-    return injuryArea !== "all" ? `${formatAreaLabel(injuryArea)} injury-support sequence` : "Injury-support sequence";
-  }
   return injuryArea !== "all" ? `${formatAreaLabel(injuryArea)} recovery flow` : "Full-body recovery flow";
 }
 
@@ -1634,6 +1681,125 @@ function formatSupportTopic(value) {
   };
 
   return map[value] || String(value || "").replaceAll("_", " ");
+}
+
+function deriveInjuryAliases(topics = []) {
+  const aliases = [];
+  topics.forEach((topic) => {
+    const normalized = String(topic || "").trim();
+    switch (normalized) {
+      case "tennis_elbow":
+        aliases.push("tennis-elbow");
+        break;
+      case "carpal_tunnel":
+        aliases.push("carpal-tunnel");
+        break;
+      case "rotator_cuff_support":
+      case "shoulder_irritation":
+        aliases.push("rotator-cuff");
+        break;
+      case "shoulder_impingement_support":
+        aliases.push("shoulder-impingement");
+        break;
+      case "meniscus_support":
+        aliases.push("meniscus");
+        break;
+      case "acl_mcl_support":
+        aliases.push("acl");
+        break;
+      case "patellar_tracking_support":
+        aliases.push("patellar");
+        break;
+      case "lumbar_strain_support":
+        aliases.push("lumbar-strain");
+        break;
+      case "disc_irritation_support":
+        aliases.push("disc-irritation");
+        break;
+      case "ankle_stiffness_support":
+      case "ankle_stiffness":
+        aliases.push("ankle-stiffness");
+        break;
+      default:
+        break;
+    }
+  });
+  return aliases;
+}
+
+function deriveBodyAreaAliases({ name, bodyAreas = [], supportTopics = [] }) {
+  const aliases = new Set();
+  const normalizedName = String(name || "").toLowerCase();
+  bodyAreas.forEach((area) => {
+    switch (area) {
+      case "back":
+        aliases.add("lower-back");
+        break;
+      case "shoulder":
+        aliases.add("shoulders");
+        break;
+      case "hip":
+        aliases.add("hips");
+        break;
+      case "knee":
+        aliases.add("knees");
+        break;
+      case "ankle":
+        aliases.add("ankles");
+        break;
+      case "wrist":
+      case "elbow":
+        aliases.add("wrists");
+        break;
+      default:
+        break;
+    }
+  });
+  if (normalizedName.includes("calf") || normalizedName.includes("soleus") || normalizedName.includes("tibialis")) {
+    aliases.add("calves");
+  }
+  if (
+    normalizedName.includes("neck") ||
+    normalizedName.includes("cervical") ||
+    normalizedName.includes("chin tuck") ||
+    normalizedName.includes("chin nod") ||
+    normalizedName.includes("upper trap") ||
+    normalizedName.includes("levator")
+  ) {
+    aliases.add("neck");
+  }
+  if (supportTopics.includes("lower_back")) {
+    aliases.add("lower-back");
+  }
+  return Array.from(aliases);
+}
+
+function deriveSymptomTags({ name, bodyAreas = [], supportTypes = [], sourceType, recoveryFit }) {
+  const tags = new Set();
+  const normalizedName = String(name || "").toLowerCase();
+  if (sourceType === STRETCH_SOURCE_TYPE) {
+    tags.add("tightness");
+    tags.add("stiffness");
+  }
+  if (sourceType === MOBILITY_SOURCE_TYPES.production) {
+    tags.add("stiffness");
+    tags.add("tightness");
+  }
+  if (sourceType === REHAB_SOURCE_TYPE) {
+    tags.add(recoveryFit === "high" ? "soreness" : "fatigue");
+    tags.add("stiffness");
+  }
+  if (supportTypes.includes("recovery")) {
+    tags.add("fatigue");
+    tags.add("soreness");
+  }
+  if (normalizedName.includes("stretch") || normalizedName.includes("release")) {
+    tags.add("tightness");
+  }
+  if (bodyAreas.includes("full_body")) {
+    tags.add("fatigue");
+  }
+  return Array.from(tags);
 }
 
 function expandSupportTopics(topics = []) {
