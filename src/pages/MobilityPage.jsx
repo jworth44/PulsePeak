@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Panel from "../components/Panel";
 import MovementDetailModal from "../components/MovementDetailModal";
 import { useDashboardData } from "../hooks/useDashboardData";
@@ -6,7 +6,8 @@ import { useAuth } from "../state/AuthContext";
 import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "../../shared/exerciseCatalog";
 import { getCurrentPlanFocus } from "../../shared/profileState";
 import { getModuleContinuityContext, getRecoveryBias } from "../../shared/workoutEngine";
-import { MOBILITY_SORT_OPTIONS } from "../../shared/libraryTaxonomy.js";
+
+const INITIAL_VISIBLE_COUNT = 8;
 
 export default function MobilityPage() {
   const { data, summary, loading, error } = useDashboardData();
@@ -18,21 +19,19 @@ export default function MobilityPage() {
   const [selectedIssueType, setSelectedIssueType] = useState("none");
   const [selectedInjury, setSelectedInjury] = useState("none");
   const [selectedSymptomType, setSelectedSymptomType] = useState("none");
-  const [selectedTime, setSelectedTime] = useState("10");
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
   const [selectedEquipment, setSelectedEquipment] = useState("all");
-  const [selectedRecovery, setSelectedRecovery] = useState("all");
-  const [selectedFlowType, setSelectedFlowType] = useState("all");
-  const [selectedIntensity, setSelectedIntensity] = useState("all");
-  const [selectedSort, setSelectedSort] = useState("recommended");
   const [selectedSwaps, setSelectedSwaps] = useState({});
   const [showFilters, setShowFilters] = useState(false);
+  const [visibleCounts, setVisibleCounts] = useState({});
   const mobilityModule = summary?.mobilityModule || null;
   const categories = mobilityModule?.categories || [];
   const effectiveCategory = selectedCategory || mobilityModule?.suggestedCategory || categories[0]?.id || "mobility_stretch";
   const effectiveEnvironment = data?.profile?.trainingEnvironment || "hybrid";
   const guidanceLevel = data?.profile?.exerciseGuidanceLevel || "standard";
   const routines = mobilityModule?.library || [];
+  const normalizedSearchQuery = searchQuery.trim().toLowerCase();
+  const isSearchMode = Boolean(normalizedSearchQuery);
   const openMovementGuide = (target) => setSelectedMovement(buildGuideTarget(target));
   const currentPlanFocus = useMemo(
     () =>
@@ -53,57 +52,30 @@ export default function MobilityPage() {
         workoutMomentum,
         recoveryBias,
         weeklyStructure: summary?.planSummary?.suggestedWorkoutMix
-          ? { days: (summary.planSummary.suggestedWorkoutMix.split || []).map((item, index) => ({ day: index + 1, type: String(item).toLowerCase().includes("recovery") ? "recovery" : "training" })) }
+          ? {
+              days: (summary.planSummary.suggestedWorkoutMix.split || []).map((item, index) => ({
+                day: index + 1,
+                type: String(item).toLowerCase().includes("recovery") ? "recovery" : "training"
+              }))
+            }
           : null,
         nutritionMode: data?.profile?.nutritionMode
       }),
     [currentPlanFocus, data?.profile?.nutritionMode, recoveryBias, summary?.planSummary?.suggestedWorkoutMix, workoutMemory, workoutMomentum]
   );
 
-  const flowTypeOptions = useMemo(
-    () => [
-      { value: "all", label: "Any flow type" },
-      { value: "full_body", label: "Full-body flow" },
-      { value: "upper_body", label: "Upper-body flow" },
-      { value: "lower_body", label: "Lower-body flow" },
-      { value: "reset", label: "Reset flow" }
-    ],
-    []
-  );
-  const intensityOptions = useMemo(
-    () => [
-      { value: "all", label: "Any intensity" },
-      { value: "low", label: "Low" },
-      { value: "medium", label: "Moderate" },
-      { value: "high", label: "Strong" }
-    ],
-    []
-  );
   const injuryMappingOptions = useMemo(() => {
     const configuredOptions = mobilityModule?.filterOptions?.injuryMappingOptions;
-    if (Array.isArray(configuredOptions) && configuredOptions.length) {
-      return configuredOptions;
-    }
-    return [];
+    return Array.isArray(configuredOptions) ? configuredOptions : [];
   }, [mobilityModule?.filterOptions?.injuryMappingOptions]);
   const acheBodyAreaOptions = useMemo(() => {
     const configuredOptions = mobilityModule?.filterOptions?.acheBodyAreaOptions;
-    if (Array.isArray(configuredOptions) && configuredOptions.length) {
-      return configuredOptions;
-    }
-    return [];
+    return Array.isArray(configuredOptions) ? configuredOptions : [];
   }, [mobilityModule?.filterOptions?.acheBodyAreaOptions]);
   const symptomTypeOptions = useMemo(() => {
     const configuredOptions = mobilityModule?.filterOptions?.symptomTypeOptions;
-    if (Array.isArray(configuredOptions) && configuredOptions.length) {
-      return configuredOptions;
-    }
-    return [];
+    return Array.isArray(configuredOptions) ? configuredOptions : [];
   }, [mobilityModule?.filterOptions?.symptomTypeOptions]);
-  const mergedAreaOptions = useMemo(
-    () => [{ value: "all", label: "All body areas" }, ...acheBodyAreaOptions],
-    [acheBodyAreaOptions]
-  );
   const selectedInjuryMapping = useMemo(
     () => injuryMappingOptions.find((option) => option.value === selectedInjury) || null,
     [injuryMappingOptions, selectedInjury]
@@ -120,26 +92,18 @@ export default function MobilityPage() {
         ? selectedArea !== "all" && selectedSymptomType !== "none"
         : false);
 
-  const filteredRoutines = useMemo(() => {
-    const normalizedQuery = searchQuery.trim().toLowerCase();
+  useEffect(() => {
+    setVisibleCounts({});
+  }, [effectiveCategory, normalizedSearchQuery, selectedDifficulty, selectedEquipment, selectedArea, selectedIssueType, selectedInjury, selectedSymptomType]);
 
-    const filtered = routines.filter((routine) => {
-      if (Number(selectedTime) && routine.minutes > Number(selectedTime)) {
-        return false;
-      }
-      if (effectiveEnvironment !== "hybrid" && !routine.environments.includes(effectiveEnvironment) && !routine.environments.includes("hybrid")) {
-        return false;
-      }
+  const browseRoutines = useMemo(() => {
+    if (isSearchMode) {
+      return [];
+    }
 
-      if (effectiveCategory === "mobility_stretch") {
-        if (!["mobility_production", "stretch_production"].includes(routine.sourceType)) {
-          return false;
-        }
-        const searchHaystack = buildRoutineSearchHaystack(routine);
-        if (normalizedQuery && !searchHaystack.includes(normalizedQuery)) {
-          return false;
-        }
-        if (!matchesSelectedBodyArea(routine, selectedArea)) {
+    return routines
+      .filter((routine) => {
+        if (effectiveEnvironment !== "hybrid" && !routine.environments.includes(effectiveEnvironment) && !routine.environments.includes("hybrid")) {
           return false;
         }
         if (selectedDifficulty !== "all" && String(routine.difficulty || "").toLowerCase() !== selectedDifficulty) {
@@ -148,74 +112,107 @@ export default function MobilityPage() {
         if (selectedEquipment !== "all" && String(routine.equipmentProfile || "").toLowerCase() !== selectedEquipment) {
           return false;
         }
-        return true;
-      }
 
-      if (effectiveCategory === "yoga") {
-        if (routine.sourceType !== "yoga_production") {
-          return false;
+        if (effectiveCategory === "mobility_stretch") {
+          return ["mobility_production", "stretch_production"].includes(routine.sourceType);
         }
-        const flowType = getRoutineFlowType(routine);
-        if (selectedFlowType !== "all" && flowType !== selectedFlowType) {
-          return false;
-        }
-        if (selectedIntensity !== "all" && String(routine.recoveryFit || "").toLowerCase() !== selectedIntensity) {
-          return false;
-        }
-        return true;
-      }
 
-      if (effectiveCategory === "recovery") {
-        if (!routine.supportTypes.includes("recovery")) {
-          return false;
+        if (effectiveCategory === "yoga") {
+          return routine.sourceType === "yoga_production";
         }
-        if (selectedRecovery === "low" && routine.recoveryFit === "low") {
-          return false;
-        }
-        if (selectedRecovery === "steady" && routine.recoveryFit === "high" && routine.phase === "recovery") {
-          return false;
-        }
-        return true;
-      }
 
-      if (effectiveCategory === "injury_support") {
-        if (!isInjurySupportReady) {
+        if (effectiveCategory === "recovery") {
+          return routine.supportTypes.includes("recovery");
+        }
+
+        if (effectiveCategory === "injury_support") {
+          if (!isInjurySupportReady) {
+            return false;
+          }
+          if (selectedIssueType === "injury") {
+            return matchesInjurySupportRoutine(routine, selectedInjuryMapping);
+          }
+          if (selectedIssueType === "ache") {
+            return matchesAcheSupportRoutine(routine, selectedArea, selectedSymptomType);
+          }
           return false;
         }
-        if (selectedIssueType === "injury") {
-          return matchesInjurySupportRoutine(routine, selectedInjuryMapping);
-        }
-        if (selectedIssueType === "ache") {
-          return matchesAcheSupportRoutine(routine, selectedArea, selectedSymptomType);
-        }
+
         return false;
-      }
+      })
+      .sort((left, right) => left.name.localeCompare(right.name));
+  }, [
+    effectiveCategory,
+    effectiveEnvironment,
+    isInjurySupportReady,
+    isSearchMode,
+    routines,
+    selectedArea,
+    selectedDifficulty,
+    selectedEquipment,
+    selectedInjuryMapping,
+    selectedIssueType,
+    selectedSymptomType
+  ]);
 
-      return true;
-    });
-
-    return [...filtered].sort((left, right) => {
-      switch (selectedSort) {
-        case "shortest":
-          return (left.minutes || 0) - (right.minutes || 0);
-        case "easiest":
-          return rankRecoveryFit(left.recoveryFit) - rankRecoveryFit(right.recoveryFit);
-        case "recovery_friendly":
-          return rankRecoveryFit(right.recoveryFit) - rankRecoveryFit(left.recoveryFit);
-        default:
-          return 0;
-      }
-    });
-  }, [effectiveCategory, effectiveEnvironment, isInjurySupportReady, routines, searchQuery, selectedArea, selectedDifficulty, selectedEquipment, selectedFlowType, selectedInjuryMapping, selectedIntensity, selectedIssueType, selectedRecovery, selectedSort, selectedSymptomType, selectedTime]);
-
-  const suggestedRoutines = useMemo(() => {
-    if (effectiveCategory === "injury_support" && !isInjurySupportReady) {
+  const searchResults = useMemo(() => {
+    if (!isSearchMode) {
       return [];
     }
-    const direct = filteredRoutines.slice(0, 4);
+
+    return routines
+      .filter((routine) => {
+        if (effectiveEnvironment !== "hybrid" && !routine.environments.includes(effectiveEnvironment) && !routine.environments.includes("hybrid")) {
+          return false;
+        }
+        if (selectedDifficulty !== "all" && String(routine.difficulty || "").toLowerCase() !== selectedDifficulty) {
+          return false;
+        }
+        if (selectedEquipment !== "all" && String(routine.equipmentProfile || "").toLowerCase() !== selectedEquipment) {
+          return false;
+        }
+        if (!buildRoutineSearchHaystack(routine).includes(normalizedSearchQuery)) {
+          return false;
+        }
+        return Boolean(getSearchCategoryId(routine));
+      })
+      .sort((left, right) => left.name.localeCompare(right.name));
+  }, [effectiveEnvironment, isSearchMode, normalizedSearchQuery, routines, selectedDifficulty, selectedEquipment]);
+
+  const searchGroups = useMemo(() => {
+    if (!isSearchMode) {
+      return [];
+    }
+
+    const grouped = new Map();
+    searchResults.forEach((routine) => {
+      const categoryId = getSearchCategoryId(routine);
+      if (!categoryId) {
+        return;
+      }
+      const entries = grouped.get(categoryId) || [];
+      entries.push(routine);
+      grouped.set(categoryId, entries);
+    });
+
+    return categories
+      .map((category) => ({
+        category,
+        routines: grouped.get(category.id) || []
+      }))
+      .filter((group) => group.routines.length);
+  }, [categories, isSearchMode, searchResults]);
+
+  const suggestedRoutines = useMemo(() => {
+    if (isSearchMode || (effectiveCategory === "injury_support" && !isInjurySupportReady)) {
+      return [];
+    }
+
+    const direct = browseRoutines.slice(0, 4);
     if (direct.length >= 4) {
       return direct;
     }
+
     const fallback = routines.filter((routine) => {
       if (direct.some((entry) => entry.name === routine.name)) {
         return false;
@@ -226,24 +223,31 @@ export default function MobilityPage() {
       if (effectiveCategory === "yoga") {
         return routine.sourceType === "yoga_production";
       }
-      if (effectiveCategory === "injury_support") {
-        return false;
+      if (effectiveCategory === "recovery") {
+        return routine.supportTypes.includes("recovery");
       }
-      return routine.supportTypes.includes(effectiveCategory);
+      return false;
     });
+
     return [...direct, ...fallback.slice(0, 4 - direct.length)];
-  }, [effectiveCategory, filteredRoutines, isInjurySupportReady, routines]);
+  }, [browseRoutines, effectiveCategory, isInjurySupportReady, isSearchMode, routines]);
 
   const suggestedRoutineCards = useMemo(
     () =>
       suggestedRoutines.map((routine) => ({
         routine,
         currentRoutine: selectedSwaps[routine.name] || routine,
-        swapOptions: filteredRoutines.filter((entry) => entry.name !== routine.name && entry.phase === routine.phase)
+        swapOptions: browseRoutines.filter((entry) => entry.name !== routine.name && entry.phase === routine.phase)
       })),
-    [filteredRoutines, selectedSwaps, suggestedRoutines]
+    [browseRoutines, selectedSwaps, suggestedRoutines]
   );
+
   const totalSuggestedMinutes = suggestedRoutines.reduce((total, routine) => total + (routine.minutes || 0), 0);
+  const visibleLibraryRoutines = browseRoutines.slice(0, getVisibleCount(visibleCounts, effectiveCategory));
+  const visibleSearchGroups = searchGroups.map((group) => ({
+    ...group,
+    visibleRoutines: group.routines.slice(0, getVisibleCount(visibleCounts, `search-${group.category.id}`))
+  }));
 
   if (loading) {
     return <div className="screen-center">Loading mobility guidance...</div>;
@@ -259,16 +263,29 @@ export default function MobilityPage() {
         <div>
           <p className="badge">Mobility</p>
           <h2>{mobilityModule?.title || "Guided movement support that fits today"}</h2>
-          <p className="lead-copy">{getModeLeadCopy(effectiveCategory)}</p>
+          <p className="lead-copy">{getModeLeadCopy(isSearchMode ? effectiveCategory : effectiveCategory)}</p>
           <p className="support-copy recommendation-context-note">{continuityContext.title}</p>
         </div>
       </section>
 
-      <Panel eyebrow="Choose your mode" title="Guided mobility categories">
+      <Panel eyebrow="Choose your mode" title="Browse one support mode at a time">
         <div className="section-context">
-          <span className="section-context-label">Today&apos;s support</span>
-          <p>{getModeSupportCopy(effectiveCategory)}</p>
+          <span className="section-context-label">{isSearchMode ? "Search results" : "Today&apos;s support"}</span>
+          <p>{isSearchMode ? "Search spans every support family and groups the matches below so you can jump directly into the right category." : getModeSupportCopy(effectiveCategory)}</p>
         </div>
+
+        <div className="mobility-search-row">
+          <label className="mobility-search-input">
+            Search movements
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Search hip, shoulder, ankle, chest, run..."
+            />
+          </label>
+        </div>
+
         <div className="selector-row">
           {categories.map((category) => (
             <button
@@ -284,10 +301,6 @@ export default function MobilityPage() {
                 setSelectedSymptomType("none");
                 setSelectedDifficulty("all");
                 setSelectedEquipment("all");
-                setSelectedRecovery("all");
-                setSelectedFlowType("all");
-                setSelectedIntensity("all");
-                setSelectedSort("recommended");
                 setShowFilters(false);
               }}
             >
@@ -297,225 +310,117 @@ export default function MobilityPage() {
           ))}
         </div>
 
-        <div className="module-note">
+        <div className="module-note module-note-inline">
           <button className="ghost-button" type="button" onClick={() => setShowFilters((current) => !current)}>
             {showFilters ? "Hide filters" : "Show filters"}
           </button>
         </div>
 
         {showFilters ? (
-        <div className="filter-bar discovery-filter-bar">
-          {effectiveCategory === "mobility_stretch" ? (
-            <>
-              <label>
-                Search
-                <input
-                  type="search"
-                  value={searchQuery}
-                  onChange={(event) => setSearchQuery(event.target.value)}
-                  placeholder="Search hip, ankle, hamstring..."
-                />
-              </label>
-              <label>
-                Body area
-                <select value={selectedArea} onChange={(event) => setSelectedArea(event.target.value)}>
-                  {mergedAreaOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Difficulty
-                <select value={selectedDifficulty} onChange={(event) => setSelectedDifficulty(event.target.value)}>
-                  {(mobilityModule?.filterOptions?.difficultyOptions || []).map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Equipment
-                <select value={selectedEquipment} onChange={(event) => setSelectedEquipment(event.target.value)}>
-                  {(mobilityModule?.filterOptions?.equipmentOptions || []).map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Time
-                <select value={selectedTime} onChange={(event) => setSelectedTime(event.target.value)}>
-                  {(mobilityModule?.filterOptions?.timeOptions || []).map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </>
-          ) : null}
-
-          {effectiveCategory === "yoga" ? (
-            <>
-              <label>
-                Flow type
-                <select value={selectedFlowType} onChange={(event) => setSelectedFlowType(event.target.value)}>
-                  {flowTypeOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Time
-                <select value={selectedTime} onChange={(event) => setSelectedTime(event.target.value)}>
-                  {(mobilityModule?.filterOptions?.timeOptions || []).map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Intensity
-                <select value={selectedIntensity} onChange={(event) => setSelectedIntensity(event.target.value)}>
-                  {intensityOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </>
-          ) : null}
-
-          {effectiveCategory === "recovery" ? (
-            <>
-              <label>
-                Recovery state
-                <select value={selectedRecovery} onChange={(event) => setSelectedRecovery(event.target.value)}>
-                  {(mobilityModule?.filterOptions?.recoveryOptions || []).map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Time
-                <select value={selectedTime} onChange={(event) => setSelectedTime(event.target.value)}>
-                  {(mobilityModule?.filterOptions?.timeOptions || []).map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </>
-          ) : null}
-
-          {effectiveCategory === "injury_support" ? (
-            <>
-              <label>
-                Issue type
-                <select value={selectedIssueType} onChange={(event) => {
-                  setSelectedIssueType(event.target.value);
-                  setSelectedArea("all");
-                  setSelectedInjury("none");
-                  setSelectedSymptomType("none");
-                }}>
-                  <option value="none">Select issue type</option>
-                  <option value="injury">Injury</option>
-                  <option value="ache">Ache / Tightness</option>
-                </select>
-              </label>
-
-              {selectedIssueType === "injury" ? (
+          <div className="filter-bar discovery-filter-bar">
+            {effectiveCategory !== "injury_support" ? (
+              <>
                 <label>
-                  Injury
-                  <select value={selectedInjury} onChange={(event) => setSelectedInjury(event.target.value)}>
-                    <option value="none">Select injury</option>
-                    {injuryMappingOptions.map((option) => (
+                  Difficulty
+                  <select value={selectedDifficulty} onChange={(event) => setSelectedDifficulty(event.target.value)}>
+                    {(mobilityModule?.filterOptions?.difficultyOptions || []).map((option) => (
                       <option key={option.value} value={option.value}>
                         {option.label}
                       </option>
                     ))}
                   </select>
                 </label>
-              ) : null}
-
-              {selectedIssueType === "injury" && selectedInjuryMapping ? (
                 <label>
-                  Body area
-                  <select value={selectedInjuryBodyArea} disabled>
-                    <option value={selectedInjuryBodyArea}>{formatBodyAreaLabel(selectedInjuryBodyArea)}</option>
-                  </select>
-                </label>
-              ) : null}
-
-              {selectedIssueType === "ache" ? (
-                <label>
-                  Body area
-                  <select value={selectedArea} onChange={(event) => setSelectedArea(event.target.value)}>
-                    <option value="all">Select body area</option>
-                    {acheBodyAreaOptions.map((option) => (
+                  Equipment
+                  <select value={selectedEquipment} onChange={(event) => setSelectedEquipment(event.target.value)}>
+                    {(mobilityModule?.filterOptions?.equipmentOptions || []).map((option) => (
                       <option key={option.value} value={option.value}>
                         {option.label}
                       </option>
                     ))}
                   </select>
                 </label>
-              ) : null}
-
-              {selectedIssueType === "ache" ? (
+              </>
+            ) : (
+              <>
                 <label>
-                  Symptom
-                  <select value={selectedSymptomType} onChange={(event) => setSelectedSymptomType(event.target.value)}>
-                    <option value="none">Select symptom</option>
-                    {symptomTypeOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
+                  Issue type
+                  <select
+                    value={selectedIssueType}
+                    onChange={(event) => {
+                      setSelectedIssueType(event.target.value);
+                      setSelectedArea("all");
+                      setSelectedInjury("none");
+                      setSelectedSymptomType("none");
+                    }}
+                  >
+                    <option value="none">Select issue type</option>
+                    <option value="injury">Injury</option>
+                    <option value="ache">Ache / Tightness</option>
                   </select>
                 </label>
-              ) : null}
 
-              <label>
-                Time
-                <select value={selectedTime} onChange={(event) => setSelectedTime(event.target.value)}>
-                  {(mobilityModule?.filterOptions?.timeOptions || []).map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </>
-          ) : null}
+                {selectedIssueType === "injury" ? (
+                  <label>
+                    Injury
+                    <select value={selectedInjury} onChange={(event) => setSelectedInjury(event.target.value)}>
+                      <option value="none">Select injury</option>
+                      {injuryMappingOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                ) : null}
 
-          <label>
-            Sort
-            <select value={selectedSort} onChange={(event) => setSelectedSort(event.target.value)}>
-              {MOBILITY_SORT_OPTIONS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
+                {selectedIssueType === "injury" && selectedInjuryMapping ? (
+                  <label>
+                    Body area
+                    <select value={selectedInjuryBodyArea} disabled>
+                      <option value={selectedInjuryBodyArea}>{formatBodyAreaLabel(selectedInjuryBodyArea)}</option>
+                    </select>
+                  </label>
+                ) : null}
+
+                {selectedIssueType === "ache" ? (
+                  <label>
+                    Body area
+                    <select value={selectedArea} onChange={(event) => setSelectedArea(event.target.value)}>
+                      <option value="all">Select body area</option>
+                      {acheBodyAreaOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                ) : null}
+
+                {selectedIssueType === "ache" ? (
+                  <label>
+                    Symptom
+                    <select value={selectedSymptomType} onChange={(event) => setSelectedSymptomType(event.target.value)}>
+                      <option value="none">Select symptom</option>
+                      {symptomTypeOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                ) : null}
+              </>
+            )}
+          </div>
         ) : null}
       </Panel>
 
       <div className="content-grid">
         <Panel eyebrow="Suggested today" title="Start here first">
-          {effectiveCategory === "injury_support" && !isInjurySupportReady ? (
+          {isSearchMode ? (
+            <p className="muted">Search is active. Results are grouped by category below so you can move straight into the right support library.</p>
+          ) : effectiveCategory === "injury_support" && !isInjurySupportReady ? (
             <p className="muted">
               {selectedIssueType === "none"
                 ? issueTypePrompt
@@ -525,76 +430,27 @@ export default function MobilityPage() {
             </p>
           ) : (
             <>
-          <div className="module-note">
-            <strong>{mobilityModule?.sessionName || categories.find((category) => category.id === effectiveCategory)?.label || "Guided mobility"}</strong>
-            <p className="support-copy">{getGuidedBlockSupportCopy(effectiveCategory)}</p>
-            <p className="support-copy">Total session time: about {totalSuggestedMinutes} minutes.</p>
-            {filteredRoutines.length > suggestedRoutines.length ? (
-              <p className="support-copy">{filteredRoutines.length - suggestedRoutines.length} more drills are available in this support family if you want to swap or expand.</p>
-            ) : null}
-          </div>
-          <div className="module-card-grid mobility-guided-grid">
-            {suggestedRoutineCards.map(({ routine, currentRoutine, swapOptions }) => (
-              <article
-                className="module-card module-card-clickable"
-                key={`suggested-${routine.name}`}
-                role="button"
-                tabIndex={0}
-                onClick={() => openMovementGuide(currentRoutine.movement || currentRoutine)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    openMovementGuide(currentRoutine.movement || currentRoutine);
-                  }
-                }}
-              >
-                <p className="section-label">
-                  {currentRoutine.group} · {currentRoutine.minutes} min
-                </p>
-                <div className="library-card-hero">
-                  {renderMobilityPreview(currentRoutine)}
-                  <div className="library-card-hero-copy">
-                    <span className="library-depth-note">{currentRoutine.recoveryFit === "high" ? "Recovery-focused" : "Matches your current need"}</span>
-                      <span className="library-depth-note">{swapOptions.length ? `+ ${swapOptions.length} more in this flow` : getGuideStatusLabel(currentRoutine.movement || currentRoutine)}</span>
-                  </div>
-                </div>
-                <h4>{currentRoutine.name}</h4>
-                <p className="support-copy">{currentRoutine.benefit}</p>
-                <p className="support-copy">{effectiveCategory === "yoga" ? "Run this flow as the next step in your movement session." : "Open the guide, then run this drill with the same calm pace."}</p>
-                <p className="support-copy">
-                  {(currentRoutine.bodyAreas || []).length
-                    ? `Best for: ${currentRoutine.bodyAreas.join(", ")}`
-                    : currentRoutine.restrictedAreas.length
-                      ? `Best for: ${currentRoutine.restrictedAreas.join(", ")}`
-                      : "General recovery support"}
-                </p>
-                {swapOptions.length ? (
-                  <label className="exercise-swap-picker" onClick={(event) => event.stopPropagation()}>
-                    Swap drill
-                    <select
-                      value={currentRoutine.name}
-                      onChange={(event) => {
-                        const nextRoutine = [routine, ...swapOptions].find((entry) => entry.name === event.target.value) || routine;
-                        setSelectedSwaps((current) => ({
-                          ...current,
-                          [routine.name]: nextRoutine
-                        }));
-                      }}
-                    >
-                      {[routine, ...swapOptions].map((option) => (
-                        <option key={`${routine.name}-${option.name}`} value={option.name}>
-                          {option.name}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
+              <div className="module-note">
+                <strong>{categories.find((category) => category.id === effectiveCategory)?.label || "Guided movement support"}</strong>
+                <p className="support-copy">{getGuidedBlockSupportCopy(effectiveCategory)}</p>
+                <p className="support-copy">Total session time: about {totalSuggestedMinutes} minutes.</p>
+                {browseRoutines.length > suggestedRoutines.length ? (
+                  <p className="support-copy">{browseRoutines.length - suggestedRoutines.length} more options are available below if you want to expand or swap.</p>
                 ) : null}
-                <button className="ghost-button" type="button" onClick={(event) => { event.stopPropagation(); openMovementGuide(currentRoutine.movement || currentRoutine); }}>
-                  Open guide
-                </button>
-              </article>
-            ))}
-          </div>
+              </div>
+              <div className="module-card-grid mobility-guided-grid">
+                {suggestedRoutineCards.map(({ routine, currentRoutine, swapOptions }) => (
+                  <RoutineCard
+                    key={`suggested-${routine.name}`}
+                    routine={routine}
+                    currentRoutine={currentRoutine}
+                    categoryId={effectiveCategory}
+                    onOpen={openMovementGuide}
+                    onSwap={setSelectedSwaps}
+                    swapOptions={swapOptions}
+                  />
+                ))}
+              </div>
             </>
           )}
         </Panel>
@@ -607,89 +463,100 @@ export default function MobilityPage() {
         </Panel>
       </div>
 
-      <Panel eyebrow="Library" title="Pick the exact flow you need">
-        {effectiveCategory === "injury_support" && !isInjurySupportReady ? (
+      <Panel eyebrow={isSearchMode ? "Search results" : "Library"} title={isSearchMode ? "Find the best match quickly" : "Pick the exact flow you need"}>
+        {isSearchMode ? (
+          visibleSearchGroups.length ? (
+            <div className="library-category-groups">
+              {visibleSearchGroups.map((group) => (
+                <section className="library-category-group" key={group.category.id}>
+                  <div className="section-context compact-section-context">
+                    <span className="section-context-label">{group.category.label}</span>
+                    <p>{group.category.description}</p>
+                  </div>
+                  <div className="module-card-grid">
+                    {group.visibleRoutines.map((routine) => (
+                      <RoutineCard
+                        key={`search-${group.category.id}-${routine.name}-${routine.phase}`}
+                        routine={routine}
+                        currentRoutine={selectedSwaps[routine.name] || routine}
+                        categoryId={group.category.id}
+                        onOpen={openMovementGuide}
+                        searchQuery={searchQuery}
+                      />
+                    ))}
+                  </div>
+                  {group.routines.length > group.visibleRoutines.length ? (
+                    <div className="module-card-actions">
+                      <button
+                        className="ghost-button"
+                        type="button"
+                        onClick={() =>
+                          setVisibleCounts((current) => ({
+                            ...current,
+                            [`search-${group.category.id}`]: getVisibleCount(current, `search-${group.category.id}`) + INITIAL_VISIBLE_COUNT
+                          }))
+                        }
+                      >
+                        Load more {group.category.label.toLowerCase()}
+                      </button>
+                    </div>
+                  ) : null}
+                </section>
+              ))}
+            </div>
+          ) : (
+            <p className="muted">No movement results matched that search yet. Try a broader keyword or clear one filter.</p>
+          )
+        ) : effectiveCategory === "injury_support" && !isInjurySupportReady ? (
           <p className="muted">
             {selectedIssueType === "none"
-              ? issueTypePrompt
+              ? "Select your issue to see targeted movements."
               : selectedIssueType === "injury"
                 ? injurySupportPrompt
                 : acheSupportPrompt}
           </p>
-        ) : filteredRoutines.length ? (
-          <div className="module-card-grid">
-            {filteredRoutines.map((routine) => {
-              const swapOptions = filteredRoutines.filter((entry) => entry.name !== routine.name && entry.phase === routine.phase);
-              const currentRoutine = selectedSwaps[routine.name] || routine;
-              return (
-                <article
-                  className="module-card module-card-clickable"
-                  key={`${routine.name}-${routine.phase}`}
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => openMovementGuide(currentRoutine.movement || currentRoutine)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault();
-                      openMovementGuide(currentRoutine.movement || currentRoutine);
-                    }
-                  }}
+        ) : browseRoutines.length ? (
+          <>
+            <div className="module-card-grid">
+              {visibleLibraryRoutines.map((routine) => {
+                const swapOptions = browseRoutines.filter((entry) => entry.name !== routine.name && entry.phase === routine.phase);
+                return (
+                  <RoutineCard
+                    key={`${routine.name}-${routine.phase}`}
+                    routine={routine}
+                    currentRoutine={selectedSwaps[routine.name] || routine}
+                    categoryId={effectiveCategory}
+                    onOpen={openMovementGuide}
+                    onSwap={setSelectedSwaps}
+                    swapOptions={swapOptions}
+                  />
+                );
+              })}
+            </div>
+            {browseRoutines.length > visibleLibraryRoutines.length ? (
+              <div className="module-card-actions">
+                <button
+                  className="ghost-button"
+                  type="button"
+                  onClick={() =>
+                    setVisibleCounts((current) => ({
+                      ...current,
+                      [effectiveCategory]: getVisibleCount(current, effectiveCategory) + INITIAL_VISIBLE_COUNT
+                    }))
+                  }
                 >
-                  <p className="section-label">
-                    {currentRoutine.group} · {currentRoutine.minutes} min
-                  </p>
-                  <div className="library-card-hero">
-                    {renderMobilityPreview(currentRoutine)}
-                    <div className="library-card-hero-copy">
-                      <span className="library-depth-note">{currentRoutine.recoveryFit === "high" ? "Recovery-focused" : "Movement support ready"}</span>
-                      <span className="library-depth-note">{swapOptions.length ? `+ ${swapOptions.length} alternatives` : getGuideStatusLabel(currentRoutine.movement || currentRoutine)}</span>
-                    </div>
-                  </div>
-                  <h4>{currentRoutine.name}</h4>
-                  <p className="support-copy">{currentRoutine.benefit}</p>
-                  <p className="support-copy">{effectiveCategory === "yoga" ? "Follow this flow as a movement sequence." : "Start with this sequence and keep the tempo controlled."}</p>
-                  <p className="support-copy">
-                    {(currentRoutine.bodyAreas || []).length
-                      ? `Best for: ${currentRoutine.bodyAreas.join(", ")}`
-                      : currentRoutine.restrictedAreas.length
-                        ? `Best for: ${currentRoutine.restrictedAreas.join(", ")}`
-                        : "General recovery support"}
-                  </p>
-                  {swapOptions.length ? (
-                    <label className="exercise-swap-picker" onClick={(event) => event.stopPropagation()}>
-                      Swap drill
-                      <select
-                        value={currentRoutine.name}
-                        onChange={(event) => {
-                          const nextRoutine = [routine, ...swapOptions].find((entry) => entry.name === event.target.value) || routine;
-                          setSelectedSwaps((current) => ({
-                            ...current,
-                            [routine.name]: nextRoutine
-                          }));
-                        }}
-                      >
-                        {[routine, ...swapOptions].map((option) => (
-                          <option key={`${routine.name}-${option.name}`} value={option.name}>
-                            {option.name}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                  ) : null}
-                  <button className="ghost-button" type="button" onClick={(event) => { event.stopPropagation(); openMovementGuide(currentRoutine.movement || currentRoutine); }}>
-                    Open guide
-                  </button>
-                </article>
-              );
-            })}
-          </div>
+                  Load more
+                </button>
+              </div>
+            ) : null}
+          </>
         ) : (
           <p className="muted">
             {effectiveCategory === "injury_support"
               ? selectedIssueType === "injury"
                 ? "No rehab movements match that injury mapping yet."
                 : "No mobility, stretch, or light rehab movements match that ache pattern yet."
-              : "No mobility drills match that filter combination yet. Loosen one filter and try again."}
+              : "No movements match that filter combination yet. Clear one filter and try again."}
           </p>
         )}
       </Panel>
@@ -704,63 +571,132 @@ export default function MobilityPage() {
   );
 }
 
-function rankRecoveryFit(value) {
-  const map = { low: 1, medium: 2, high: 3 };
-  return map[String(value || "").toLowerCase()] || 2;
+function RoutineCard({ routine, currentRoutine, categoryId, onOpen, onSwap, swapOptions = [], searchQuery = "" }) {
+  const highlightedName = searchQuery ? highlightMatch(currentRoutine.name, searchQuery) : currentRoutine.name;
+  const highlightedBenefit = searchQuery ? highlightMatch(currentRoutine.benefit, searchQuery) : currentRoutine.benefit;
+
+  return (
+    <article
+      className="module-card module-card-clickable"
+      role="button"
+      tabIndex={0}
+      onClick={() => onOpen(currentRoutine.movement || currentRoutine)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onOpen(currentRoutine.movement || currentRoutine);
+        }
+      }}
+    >
+      <p className="section-label">
+        {currentRoutine.group} · {currentRoutine.minutes} min
+      </p>
+      <div className="library-card-hero">
+        {renderMobilityPreview(currentRoutine)}
+        <div className="library-card-hero-copy">
+          <span className="library-depth-note">{getCardSupportLabel(categoryId, currentRoutine)}</span>
+          <span className="library-depth-note">{swapOptions.length ? `+ ${swapOptions.length} alternatives` : getGuideStatusLabel(currentRoutine.movement || currentRoutine)}</span>
+        </div>
+      </div>
+      <h4>{highlightedName}</h4>
+      <p className="support-copy">{highlightedBenefit}</p>
+      <p className="support-copy">{getRoutineSupportLine(categoryId)}</p>
+      {swapOptions.length && onSwap ? (
+        <label className="exercise-swap-picker" onClick={(event) => event.stopPropagation()}>
+          Swap drill
+          <select
+            value={currentRoutine.name}
+            onChange={(event) => {
+              const nextRoutine = [routine, ...swapOptions].find((entry) => entry.name === event.target.value) || routine;
+              onSwap((current) => ({
+                ...current,
+                [routine.name]: nextRoutine
+              }));
+            }}
+          >
+            {[routine, ...swapOptions].map((option) => (
+              <option key={`${routine.name}-${option.name}`} value={option.name}>
+                {option.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      ) : null}
+      <button
+        className="ghost-button"
+        type="button"
+        onClick={(event) => {
+          event.stopPropagation();
+          onOpen(currentRoutine.movement || currentRoutine);
+        }}
+      >
+        Open guide
+      </button>
+    </article>
+  );
 }
 
-function getRoutineFlowType(routine) {
-  if ((routine.bodyAreas || []).includes("full_body")) {
-    return "full_body";
+function getCardSupportLabel(categoryId, routine) {
+  if (categoryId === "yoga") {
+    return "Yoga flow";
   }
-  if ((routine.bodyAreas || []).some((area) => ["shoulder", "back", "wrist", "elbow"].includes(area))) {
-    return "upper_body";
+  if (categoryId === "injury_support") {
+    return "Targeted support";
   }
-  if ((routine.bodyAreas || []).some((area) => ["hip", "knee", "ankle"].includes(area))) {
-    return "lower_body";
+  if (categoryId === "recovery") {
+    return routine.recoveryFit === "high" ? "Recovery-focused" : "Recovery support";
   }
-  return "reset";
+  return routine.recoveryFit === "high" ? "Recovery-focused" : "Movement support ready";
 }
 
-function formatSupportTopic(value) {
-  return String(value || "").replaceAll("_", " ").replace(/\b\w/g, (match) => match.toUpperCase());
+function getRoutineSupportLine(categoryId) {
+  if (categoryId === "yoga") {
+    return "Follow this flow as a movement sequence and keep the pace calm.";
+  }
+  if (categoryId === "injury_support") {
+    return "Use the guide exactly as written and stay inside the intended support path.";
+  }
+  if (categoryId === "recovery") {
+    return "Use this when you need a calmer reset without forcing strict body targeting.";
+  }
+  return "Start with this movement and keep the tempo controlled from rep to rep.";
 }
 
 function getModeLeadCopy(category) {
   if (category === "mobility_stretch") {
-    return "Use Mobility & Stretch for dynamic drills and static stretches when tight or stiff areas need focused support without drifting into rehab-only rules.";
+    return "Use Mobility & Stretch for practical drills and static stretches when tight or stiff areas need direct support without drifting into rehab-only rules.";
   }
   if (category === "yoga") {
-    return "Use yoga for flow-based movement sessions built from core poses, linked sequences, and deeper variations when you want a fuller movement practice.";
+    return "Use yoga for fuller flow-based movement sessions built from core poses, connected sequences, and deeper variations.";
   }
   if (category === "recovery") {
-    return "Use recovery for system-level support when soreness, fatigue, stiffness, or stress should drive the session.";
+    return "Use recovery for broader system-level support when fatigue, soreness, or stress should drive the session instead of one joint.";
   }
   return "Use Injury Support when you need stricter filtering around a known injury or a specific ache pattern instead of broad movement browsing.";
 }
 
 function getModeSupportCopy(category) {
   if (category === "mobility_stretch") {
-    return "Mobility & Stretch stays practical: search by area, narrow by difficulty or equipment, and choose the exact drill or stretch that fits the day.";
+    return "Mobility & Stretch keeps browsing simple: one support list, a clean header, and only the essential filters when you need them.";
   }
   if (category === "yoga") {
-    return "Yoga uses flow type, time, and intensity because it should feel like a real flow system with base poses, sequence options, and deeper variations, not targeted therapy.";
+    return "Yoga stays focused on flow-based movement so you can browse the full library without extra category clutter.";
   }
   if (category === "recovery") {
-    return "Recovery is system-level. Choose how you feel and how much time you have instead of forcing strict body targeting.";
+    return "Recovery keeps the view broad and low-friction when you need lighter movement support.";
   }
-  return "Injury Support stays strict: choose the issue type first, then only the inputs that matter for that support path.";
+  return "Injury Support stays guided: choose the issue type first, then only the inputs that matter for that support path.";
 }
 
 function getGuidedBlockSupportCopy(category) {
   if (category === "mobility_stretch") {
-    return "These mobility drills and stretches are meant to be mixed and matched, so the top cards surface the best matches while the full library keeps both systems visible together.";
+    return "These top options surface the clearest starting points first, while the library below keeps the full movement pool easy to expand.";
   }
   if (category === "yoga") {
-    return "These flows are built to move together as a sequence, so the top four cards all surface real session options immediately while the deeper pool handles variations and swap depth.";
+    return "These flow options are meant to feel like a real movement session, not a scattered pose list.";
   }
   if (category === "recovery") {
-    return "These recovery drills help reduce fatigue and stiffness without pretending every session has to target one joint.";
+    return "These recovery options help reduce fatigue and stiffness without overwhelming the page.";
   }
   return "These support drills stay organized around the exact issue you selected so the session feels focused, relevant, and safer to use.";
 }
@@ -855,12 +791,50 @@ function matchesStrictInjuryBodyArea(routine, selectedArea, injuryKey) {
     return primaryArea === "back" || (routine.bodyAreaAliases || []).includes("lower-back");
   }
   if (selectedArea === "elbow") {
-    return (
-      primaryArea === "elbow" ||
-      (primaryArea === "wrist" && (routine.injuryTags || []).includes(injuryKey))
-    );
+    return primaryArea === "elbow" || (primaryArea === "wrist" && (routine.injuryTags || []).includes(injuryKey));
   }
   return primaryArea === selectedArea;
+}
+
+function getSearchCategoryId(routine) {
+  if (routine.sourceType === "yoga_production") {
+    return "yoga";
+  }
+  if (String(routine.visualCategory || "").toLowerCase() === "rehab" || String(routine.supportGoal || "").toLowerCase() === "rehab") {
+    return "injury_support";
+  }
+  if (["mobility_production", "stretch_production"].includes(routine.sourceType)) {
+    return "mobility_stretch";
+  }
+  if ((routine.supportTypes || []).includes("recovery")) {
+    return "recovery";
+  }
+  return "";
+}
+
+function getVisibleCount(visibleCounts, key) {
+  return visibleCounts[key] || INITIAL_VISIBLE_COUNT;
+}
+
+function highlightMatch(text, query) {
+  const value = String(text || "");
+  const needle = String(query || "").trim();
+  if (!value || !needle) {
+    return value;
+  }
+  const lowerValue = value.toLowerCase();
+  const lowerNeedle = needle.toLowerCase();
+  const matchIndex = lowerValue.indexOf(lowerNeedle);
+  if (matchIndex < 0) {
+    return value;
+  }
+  return (
+    <>
+      {value.slice(0, matchIndex)}
+      <mark>{value.slice(matchIndex, matchIndex + needle.length)}</mark>
+      {value.slice(matchIndex + needle.length)}
+    </>
+  );
 }
 
 function renderMobilityPreview(routine) {

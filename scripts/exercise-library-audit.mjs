@@ -884,11 +884,12 @@ async function openGuideAndAssert(page, exerciseName, expectedTexts, { expectTex
     fail(exerciseName, "modal", `Card title did not match modal title. Opened "${openedTitle}".`);
   }
 
-  for (const requiredSection of ["What this exercise is", "Setup", "How to perform", "Step-by-step"]) {
+  for (const requiredSection of ["Overview", "How to Perform", "Key Tips", "Mistakes", "Modifications", "Safety"]) {
     await dialog.getByText(requiredSection, { exact: false }).first().waitFor({ timeout: 15000 });
   }
-  await dialog.getByText("Muscles worked", { exact: false }).first().waitFor({ timeout: 15000 });
-  await dialog.getByText("Primary muscles", { exact: false }).first().waitFor({ timeout: 15000 });
+  for (const requiredDetail of ["What this exercise is", "Setup", "Muscles worked", "Primary muscles"]) {
+    await dialog.getByText(requiredDetail, { exact: false }).first().waitFor({ timeout: 15000 });
+  }
   for (const stepTitle of ["Start", "Mid", "Peak", "Finish"]) {
     await dialog.getByText(stepTitle, { exact: true }).first().waitFor({ timeout: 15000 });
   }

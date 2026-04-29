@@ -132,9 +132,9 @@ export default function MovementDetailModal({ movement, movementId, visualModelP
   }, [exercise?.id, exercise?.name, requestedId, requiredFieldGaps]);
 
   const visibleSteps = stepSequence.slice(0, 5);
-  const hasMuscleData = primaryMuscles.length || secondaryMuscles.length;
   const hasModificationData =
     modificationGroups.adjustments.length || modificationGroups.easierOptions.length || modificationGroups.progressions.length;
+  const hasKeyTips = primaryMuscles.length || secondaryMuscles.length || breathing || tempo || movementPattern;
   const hasUsableGuideContent = Boolean(description || setup || execution || primaryMuscles.length || visibleSteps.length);
 
   if (!hasGuideRequest) {
@@ -197,15 +197,16 @@ export default function MovementDetailModal({ movement, movementId, visualModelP
 
           <section className="movement-hero-summary-row">
             <article className="movement-detail-block movement-hero-summary-main">
+              <p className="section-label">Overview</p>
               {description ? (
                 <div className="movement-hero-summary-section">
-                  <p className="section-label">What this exercise is</p>
+                  <strong>What this exercise is</strong>
                   <p className="support-copy">{description}</p>
                 </div>
               ) : null}
               {trainingUse ? (
                 <div className="movement-hero-summary-section">
-                  <p className="section-label">Training use</p>
+                  <strong>Training use</strong>
                   <p className="support-copy">{trainingUse}</p>
                 </div>
               ) : null}
@@ -241,7 +242,7 @@ export default function MovementDetailModal({ movement, movementId, visualModelP
                 <div className="movement-text-guide-panel movement-text-guide-panel-large">
                   <small>Text coaching guide</small>
                   <strong>Full exercise coaching is available</strong>
-                  <p>{trainingUse || movementPattern || "Use the setup, execution, and four-step guide below."}</p>
+                  <p>{trainingUse || movementPattern || "Use the setup, execution, and step-by-step guide below."}</p>
                   {primaryMuscles.length ? (
                     <div className="movement-text-guide-pills">
                       {primaryMuscles.slice(0, 3).map((muscle) => (
@@ -256,158 +257,173 @@ export default function MovementDetailModal({ movement, movementId, visualModelP
             </article>
           </section>
 
-          {hasMuscleData ? (
-            <article className="movement-detail-block movement-muscles-block">
-              <p className="section-label">Muscles worked</p>
-              <div className="movement-muscles-grid">
-                {primaryMuscles.length ? (
-                  <div className="movement-muscles-primary">
-                    <span className="movement-muscles-label">Primary muscles</span>
-                    <ul className="plan-list movement-muscles-list movement-muscles-primary-text">
-                      {primaryMuscles.map((muscle) => (
-                        <li key={muscle}>{muscle}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-                {secondaryMuscles.length ? (
-                  <div className="movement-muscles-secondary">
-                    <span className="movement-muscles-label">Secondary muscles</span>
-                    <ul className="plan-list movement-muscles-list">
-                      {secondaryMuscles.map((muscle) => (
-                        <li key={muscle}>{muscle}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-              </div>
-            </article>
-          ) : null}
-
-          {setup ? (
-            <article className="movement-detail-block">
-              <p className="section-label">Setup</p>
-              <p className="support-copy">{setup}</p>
-            </article>
-          ) : null}
-
-          {execution ? (
+          {(setup || execution || visibleSteps.length) ? (
             <article className="movement-detail-block movement-perform-block">
-              <p className="section-label">How to perform</p>
-              <p className="support-copy">{execution}</p>
+              <p className="section-label">How to Perform</p>
+              {setup ? (
+                <div className="movement-hero-summary-section">
+                  <strong>Setup</strong>
+                  <p className="support-copy">{setup}</p>
+                </div>
+              ) : null}
+              {execution ? (
+                <div className="movement-hero-summary-section">
+                  <strong>Execution</strong>
+                  <p className="support-copy">{execution}</p>
+                </div>
+              ) : null}
+              {visibleSteps.length ? (
+                <div className="movement-step-sequence-block">
+                  <div className="movement-step-header">
+                    <div>
+                      <p className="section-label">Step-by-step</p>
+                      <strong>{textFirstGuide ? "Four coaching checkpoints" : "Visual sequence with coaching cues"}</strong>
+                    </div>
+                  </div>
+
+                  <div className={`movement-sequence-grid ${textFirstGuide ? "movement-sequence-grid-text" : ""}`}>
+                    {visibleSteps.map((step, index) => {
+                      const sequenceItem = mediaView.sequence[index];
+                      return (
+                        <div
+                          className={`movement-sequence-step ${textFirstGuide ? "movement-sequence-step-text" : "movement-sequence-step-visual"}`}
+                          key={`${step.title}-${index}`}
+                        >
+                          <div className="movement-sequence-labels">
+                            <span className="focus-step">{textFirstGuide ? `Step ${index + 1}` : sequenceItem.label}</span>
+                            <strong>{step.title}</strong>
+                          </div>
+                          {!textFirstGuide && sequenceItem.src ? (
+                            <img alt={`${exercise.name} ${step.title.toLowerCase()}`} className="movement-sequence-image" src={sequenceItem.src} />
+                          ) : null}
+                          <div className="movement-sequence-text-body">
+                            {textFirstGuide ? <span className="movement-sequence-index">{step.title}</span> : null}
+                            <p className="support-copy">{step.description}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : null}
             </article>
           ) : null}
 
-          {visibleSteps.length ? (
+          {hasKeyTips ? (
             <article className="movement-detail-block">
-              <div className="movement-step-header">
-                <div>
-                  <p className="section-label">Step-by-step</p>
-                  <strong>{textFirstGuide ? "Four coaching checkpoints" : "Visual sequence with coaching cues"}</strong>
-                </div>
-              </div>
-
-              <div className={`movement-sequence-grid ${textFirstGuide ? "movement-sequence-grid-text" : ""}`}>
-                {visibleSteps.map((step, index) => {
-                  const sequenceItem = mediaView.sequence[index];
-                  return (
-                    <div
-                      className={`movement-sequence-step ${textFirstGuide ? "movement-sequence-step-text" : "movement-sequence-step-visual"}`}
-                      key={`${step.title}-${index}`}
-                    >
-                      <div className="movement-sequence-labels">
-                        <span className="focus-step">{textFirstGuide ? `Step ${index + 1}` : sequenceItem.label}</span>
-                        <strong>{step.title}</strong>
-                      </div>
-                      {!textFirstGuide && sequenceItem.src ? (
-                        <img alt={`${exercise.name} ${step.title.toLowerCase()}`} className="movement-sequence-image" src={sequenceItem.src} />
+              <p className="section-label">Key Tips</p>
+              <div className="movement-detail-grid movement-detail-grid-secondary">
+                {primaryMuscles.length || secondaryMuscles.length ? (
+                  <div>
+                    <strong>Muscles worked</strong>
+                    <div className="movement-muscles-grid">
+                      {primaryMuscles.length ? (
+                        <div className="movement-muscles-primary">
+                          <span className="movement-muscles-label">Primary muscles</span>
+                          <ul className="plan-list movement-muscles-list movement-muscles-primary-text">
+                            {primaryMuscles.map((muscle) => (
+                              <li key={muscle}>{muscle}</li>
+                            ))}
+                          </ul>
+                        </div>
                       ) : null}
-                      <div className="movement-sequence-text-body">
-                        {textFirstGuide ? <span className="movement-sequence-index">{step.title}</span> : null}
-                        <p className="support-copy">{step.description}</p>
-                      </div>
+                      {secondaryMuscles.length ? (
+                        <div className="movement-muscles-secondary">
+                          <span className="movement-muscles-label">Secondary muscles</span>
+                          <ul className="plan-list movement-muscles-list">
+                            {secondaryMuscles.map((muscle) => (
+                              <li key={muscle}>{muscle}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : null}
                     </div>
-                  );
-                })}
+                  </div>
+                ) : null}
+
+                {breathing ? (
+                  <div>
+                    <strong>Breathing</strong>
+                    <p className="support-copy">{breathing}</p>
+                  </div>
+                ) : null}
+
+                {tempo ? (
+                  <div>
+                    <strong>Tempo</strong>
+                    <p className="support-copy">{tempo}</p>
+                  </div>
+                ) : null}
+
+                {movementPattern ? (
+                  <div>
+                    <strong>Movement pattern</strong>
+                    <p className="support-copy">{movementPattern}</p>
+                  </div>
+                ) : null}
               </div>
             </article>
           ) : null}
 
-          <div className="movement-detail-grid movement-detail-grid-secondary">
-            {breathing ? (
-              <article className="movement-detail-block">
-                <p className="section-label">Breathing</p>
-                <p className="support-copy">{breathing}</p>
-              </article>
-            ) : null}
+          {commonMistakes.length ? (
+            <article className="movement-detail-block">
+              <p className="section-label">Mistakes</p>
+              <ul className="plan-list">
+                {commonMistakes.map((mistake) => (
+                  <li key={mistake}>{mistake}</li>
+                ))}
+              </ul>
+            </article>
+          ) : null}
 
-            {tempo ? (
-              <article className="movement-detail-block">
-                <p className="section-label">Tempo</p>
-                <p className="support-copy">{tempo}</p>
-              </article>
-            ) : null}
+          {hasModificationData ? (
+            <article className="movement-detail-block">
+              <p className="section-label">Modifications</p>
+              <div className="movement-modification-groups">
+                {modificationGroups.adjustments.length ? (
+                  <div>
+                    <span className="movement-muscles-label">Adjustments</span>
+                    <ul className="plan-list">
+                      {modificationGroups.adjustments.map((modification) => (
+                        <li key={modification}>{modification}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+                {modificationGroups.easierOptions.length ? (
+                  <div>
+                    <span className="movement-muscles-label">Easier options</span>
+                    <ul className="plan-list">
+                      {modificationGroups.easierOptions.map((regression) => (
+                        <li key={regression}>{regression}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+                {modificationGroups.progressions.length ? (
+                  <div>
+                    <span className="movement-muscles-label">Progressions</span>
+                    <ul className="plan-list">
+                      {modificationGroups.progressions.map((progression) => (
+                        <li key={progression}>{progression}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
+            </article>
+          ) : null}
 
-            {commonMistakes.length ? (
-              <article className="movement-detail-block">
-                <p className="section-label">Common mistakes</p>
-                <ul className="plan-list">
-                  {commonMistakes.map((mistake) => (
-                    <li key={mistake}>{mistake}</li>
-                  ))}
-                </ul>
-              </article>
-            ) : null}
-
-            {safetyNotes.length ? (
-              <article className="movement-detail-block">
-                <p className="section-label">Safety notes</p>
-                <ul className="plan-list">
-                  {safetyNotes.map((note) => (
-                    <li key={note}>{note}</li>
-                  ))}
-                </ul>
-              </article>
-            ) : null}
-
-            {hasModificationData ? (
-              <article className="movement-detail-block">
-                <p className="section-label">Modifications</p>
-                <div className="movement-modification-groups">
-                  {modificationGroups.adjustments.length ? (
-                    <div>
-                      <span className="movement-muscles-label">Adjustments</span>
-                      <ul className="plan-list">
-                        {modificationGroups.adjustments.map((modification) => (
-                          <li key={modification}>{modification}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : null}
-                  {modificationGroups.easierOptions.length ? (
-                    <div>
-                      <span className="movement-muscles-label">Easier options</span>
-                      <ul className="plan-list">
-                        {modificationGroups.easierOptions.map((regression) => (
-                          <li key={regression}>{regression}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : null}
-                  {modificationGroups.progressions.length ? (
-                    <div>
-                      <span className="movement-muscles-label">Progressions</span>
-                      <ul className="plan-list">
-                        {modificationGroups.progressions.map((progression) => (
-                          <li key={progression}>{progression}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : null}
-                </div>
-              </article>
-            ) : null}
-          </div>
+          {safetyNotes.length ? (
+            <article className="movement-detail-block">
+              <p className="section-label">Safety</p>
+              <ul className="plan-list">
+                {safetyNotes.map((note) => (
+                  <li key={note}>{note}</li>
+                ))}
+              </ul>
+            </article>
+          ) : null}
         </div>
       </div>
     </div>
