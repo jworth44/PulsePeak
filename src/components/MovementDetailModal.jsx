@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { apiRequest } from "../api/client";
 import { useAuth } from "../state/AuthContext";
 import { getGuideStatusLabel, getMovementMedia, resolveMovementVisual } from "../../shared/exerciseCatalog";
@@ -8,6 +8,7 @@ export default function MovementDetailModal({ movement, movementId, visualModelP
   const [fullExerciseRecord, setFullExerciseRecord] = useState(null);
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState("");
+  const contentRef = useRef(null);
   const hasGuideRequest = Boolean(movement || movementId);
   const expectedName = String(movement?.expectedName || movement?.name || "").trim();
   const requestedIds = useMemo(
@@ -131,6 +132,12 @@ export default function MovementDetailModal({ movement, movementId, visualModelP
     }
   }, [exercise?.id, exercise?.name, requestedId, requiredFieldGaps]);
 
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollTo({ top: 0, behavior: "auto" });
+    }
+  }, [exercise?.name, movementId]);
+
   const visibleSteps = stepSequence.slice(0, 5);
   const hasModificationData =
     modificationGroups.adjustments.length || modificationGroups.easierOptions.length || modificationGroups.progressions.length;
@@ -180,7 +187,7 @@ export default function MovementDetailModal({ movement, movementId, visualModelP
           </button>
         </div>
 
-        <div className="movement-detail-stack">
+        <div className="movement-detail-stack" ref={contentRef}>
           {loading ? (
             <article className="movement-detail-block">
               <p className="section-label">Guide status</p>

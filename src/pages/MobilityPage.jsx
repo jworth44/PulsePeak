@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Panel from "../components/Panel";
 import MovementDetailModal from "../components/MovementDetailModal";
 import { useDashboardData } from "../hooks/useDashboardData";
@@ -8,10 +9,72 @@ import { getCurrentPlanFocus } from "../../shared/profileState";
 import { getModuleContinuityContext, getRecoveryBias } from "../../shared/workoutEngine";
 
 const INITIAL_VISIBLE_COUNT = 8;
+const CATEGORY_ENTRY_META = {
+  mobility_stretch: {
+    icon: "◐",
+    title: "Mobility & Stretch",
+    description: "Drills and stretches for stiff areas that need direct support."
+  },
+  yoga: {
+    icon: "△",
+    title: "Yoga",
+    description: "Flow-based movement sessions for breathing, range, and control."
+  },
+  recovery: {
+    icon: "○",
+    title: "Recovery",
+    description: "Low-friction movement support for fatigue, stress, and soreness."
+  },
+  injury_support: {
+    icon: "+",
+    title: "Injury Support",
+    description: "Guided rehab and ache support with strict targeted filtering."
+  }
+};
+const TOP_LEVEL_ENTRY_CARDS = [
+  {
+    id: "strength",
+    icon: "◆",
+    title: "Strength",
+    description: "Open the full strength movement library and workout path.",
+    type: "route",
+    to: "/exercise-library"
+  },
+  {
+    id: "mobility_stretch",
+    icon: CATEGORY_ENTRY_META.mobility_stretch.icon,
+    title: CATEGORY_ENTRY_META.mobility_stretch.title,
+    description: CATEGORY_ENTRY_META.mobility_stretch.description,
+    type: "category"
+  },
+  {
+    id: "yoga",
+    icon: CATEGORY_ENTRY_META.yoga.icon,
+    title: CATEGORY_ENTRY_META.yoga.title,
+    description: CATEGORY_ENTRY_META.yoga.description,
+    type: "category"
+  },
+  {
+    id: "cardio",
+    icon: "↗",
+    title: "Cardio",
+    description: "Jump into conditioning and cardio-focused movement options.",
+    type: "route",
+    to: "/exercise-library"
+  },
+  {
+    id: "injury_support",
+    icon: CATEGORY_ENTRY_META.injury_support.icon,
+    title: CATEGORY_ENTRY_META.injury_support.title,
+    description: CATEGORY_ENTRY_META.injury_support.description,
+    type: "category"
+  }
+];
 
 export default function MobilityPage() {
   const { data, summary, loading, error } = useDashboardData();
   const { workoutMemory, workoutMomentum } = useAuth();
+  const navigate = useNavigate();
   const [selectedMovement, setSelectedMovement] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,6 +87,7 @@ export default function MobilityPage() {
   const [selectedSwaps, setSelectedSwaps] = useState({});
   const [showFilters, setShowFilters] = useState(false);
   const [visibleCounts, setVisibleCounts] = useState({});
+  const [loadingMoreKey, setLoadingMoreKey] = useState("");
   const mobilityModule = summary?.mobilityModule || null;
   const categories = mobilityModule?.categories || [];
   const effectiveCategory = selectedCategory || mobilityModule?.suggestedCategory || categories[0]?.id || "mobility_stretch";
@@ -257,6 +321,27 @@ export default function MobilityPage() {
     return <div className="screen-center">{error || "Unable to load mobility guidance."}</div>;
   }
 
+  const handleLoadMore = (key) => {
+    setLoadingMoreKey(key);
+    setVisibleCounts((current) => ({
+      ...current,
+      [key]: getVisibleCount(current, key) + INITIAL_VISIBLE_COUNT
+    }));
+    window.setTimeout(() => setLoadingMoreKey((current) => (current === key ? "" : current)), 320);
+  };
+
+  const handleCategorySelect = (categoryId) => {
+    setSelectedCategory(categoryId);
+    setSearchQuery("");
+    setSelectedArea("all");
+    setSelectedIssueType("none");
+    setSelectedInjury("none");
+    setSelectedSymptomType("none");
+    setSelectedDifficulty("all");
+    setSelectedEquipment("all");
+    setShowFilters(false);
+  };
+
   return (
     <div className="page-grid page-grid-tight">
       <section className="module-page-hero">
@@ -267,6 +352,36 @@ export default function MobilityPage() {
           <p className="support-copy recommendation-context-note">{continuityContext.title}</p>
         </div>
       </section>
+
+      <Panel eyebrow="Top-level categories" title="Choose your training path">
+        <div className="section-context">
+          <span className="section-context-label">Start with the path that matches your goal</span>
+          <p>Strength and Cardio stay easy to reach, while the guided movement-support modes stay available below for more targeted work.</p>
+        </div>
+        <div className="top-level-entry-grid">
+          {TOP_LEVEL_ENTRY_CARDS.map((entry) => {
+            const active = entry.type === "category" && effectiveCategory === entry.id && !isSearchMode;
+            return (
+              <button
+                key={entry.id}
+                className={`top-level-entry-card ${active ? "top-level-entry-card-active" : ""}`}
+                type="button"
+                onClick={() => {
+                  if (entry.type === "route") {
+                    navigate(entry.to);
+                    return;
+                  }
+                  handleCategorySelect(entry.id);
+                }}
+              >
+                <span className="top-level-entry-icon" aria-hidden="true">{entry.icon}</span>
+                <strong>{entry.title}</strong>
+                <span>{entry.description}</span>
+              </button>
+            );
+          })}
+        </div>
+      </Panel>
 
       <Panel eyebrow="Choose your mode" title="Browse one support mode at a time">
         <div className="section-context">
@@ -281,31 +396,24 @@ export default function MobilityPage() {
               type="search"
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="Search hip, shoulder, ankle, chest, run..."
+              placeholder="Search movements, muscles, or goals"
             />
           </label>
         </div>
 
-        <div className="selector-row">
+        <div className="selector-row selector-row-entry">
           {categories.map((category) => (
             <button
               key={category.id}
               className={`selector-pill ${effectiveCategory === category.id ? "selector-pill-active" : ""}`}
               type="button"
-              onClick={() => {
-                setSelectedCategory(category.id);
-                setSearchQuery("");
-                setSelectedArea("all");
-                setSelectedIssueType("none");
-                setSelectedInjury("none");
-                setSelectedSymptomType("none");
-                setSelectedDifficulty("all");
-                setSelectedEquipment("all");
-                setShowFilters(false);
-              }}
+              onClick={() => handleCategorySelect(category.id)}
             >
-              <strong>{category.label}</strong>
-              <span>{category.description}</span>
+              <span className="selector-pill-icon" aria-hidden="true">
+                {CATEGORY_ENTRY_META[category.id]?.icon || "•"}
+              </span>
+              <strong>{CATEGORY_ENTRY_META[category.id]?.title || category.label}</strong>
+              <span>{CATEGORY_ENTRY_META[category.id]?.description || category.description}</span>
             </button>
           ))}
         </div>
@@ -343,6 +451,14 @@ export default function MobilityPage() {
               </>
             ) : (
               <>
+                <div className="injury-support-guide">
+                  <div className="injury-support-steps">
+                    <span className={`injury-step-pill ${selectedIssueType !== "none" ? "injury-step-pill-active" : ""}`}>Step 1 · Issue Type</span>
+                    <span className={`injury-step-pill ${selectedIssueType === "injury" ? "injury-step-pill-active" : selectedIssueType === "ache" && selectedArea !== "all" ? "injury-step-pill-active" : ""}`}>Step 2 · Body Area / Injury</span>
+                    <span className={`injury-step-pill ${isInjurySupportReady ? "injury-step-pill-active" : ""}`}>Step 3 · Results</span>
+                  </div>
+                  <p className="support-copy">We&apos;ll tailor movements based on your selection.</p>
+                </div>
                 <label>
                   Issue type
                   <select
@@ -416,17 +532,20 @@ export default function MobilityPage() {
         ) : null}
       </Panel>
 
-      <div className="content-grid">
+      <div className={`content-grid category-transition-shell ${isSearchMode ? "category-transition-shell-search" : ""}`} key={isSearchMode ? `search-${normalizedSearchQuery}` : effectiveCategory}>
         <Panel eyebrow="Suggested today" title="Start here first">
           {isSearchMode ? (
-            <p className="muted">Search is active. Results are grouped by category below so you can move straight into the right support library.</p>
+            <div className="search-mode-state">
+              <strong>Search results are shown separately from browsing mode.</strong>
+              <p className="support-copy">Matches are grouped by category below so you can move straight into the right support library.</p>
+            </div>
           ) : effectiveCategory === "injury_support" && !isInjurySupportReady ? (
             <p className="muted">
               {selectedIssueType === "none"
-                ? issueTypePrompt
+                ? "Select your issue to see targeted movements."
                 : selectedIssueType === "injury"
-                  ? injurySupportPrompt
-                  : acheSupportPrompt}
+                  ? "Choose the injury first, then we&apos;ll lock the correct body area automatically."
+                  : "Choose a body area and symptom so we can narrow the support options."}
             </p>
           ) : (
             <>
@@ -490,14 +609,9 @@ export default function MobilityPage() {
                       <button
                         className="ghost-button"
                         type="button"
-                        onClick={() =>
-                          setVisibleCounts((current) => ({
-                            ...current,
-                            [`search-${group.category.id}`]: getVisibleCount(current, `search-${group.category.id}`) + INITIAL_VISIBLE_COUNT
-                          }))
-                        }
+                        onClick={() => handleLoadMore(`search-${group.category.id}`)}
                       >
-                        Load more {group.category.label.toLowerCase()}
+                        {loadingMoreKey === `search-${group.category.id}` ? "Loading more…" : "Show more movements"}
                       </button>
                     </div>
                   ) : null}
@@ -505,7 +619,7 @@ export default function MobilityPage() {
               ))}
             </div>
           ) : (
-            <p className="muted">No movement results matched that search yet. Try a broader keyword or clear one filter.</p>
+            <p className="muted">No results found — try a different keyword.</p>
           )
         ) : effectiveCategory === "injury_support" && !isInjurySupportReady ? (
           <p className="muted">
@@ -538,14 +652,9 @@ export default function MobilityPage() {
                 <button
                   className="ghost-button"
                   type="button"
-                  onClick={() =>
-                    setVisibleCounts((current) => ({
-                      ...current,
-                      [effectiveCategory]: getVisibleCount(current, effectiveCategory) + INITIAL_VISIBLE_COUNT
-                    }))
-                  }
+                  onClick={() => handleLoadMore(effectiveCategory)}
                 >
-                  Load more
+                  {loadingMoreKey === effectiveCategory ? "Loading more…" : "Show more movements"}
                 </button>
               </div>
             ) : null}
@@ -588,6 +697,10 @@ function RoutineCard({ routine, currentRoutine, categoryId, onOpen, onSwap, swap
         }
       }}
     >
+      <div className="movement-card-topline">
+        <span className="movement-card-category-tag">{getCardCategoryLabel(categoryId)}</span>
+        {currentRoutine.difficulty ? <span className="movement-card-difficulty-badge">{formatLabelCase(currentRoutine.difficulty)}</span> : null}
+      </div>
       <p className="section-label">
         {currentRoutine.group} · {currentRoutine.minutes} min
       </p>
@@ -634,6 +747,10 @@ function RoutineCard({ routine, currentRoutine, categoryId, onOpen, onSwap, swap
       </button>
     </article>
   );
+}
+
+function getCardCategoryLabel(categoryId) {
+  return CATEGORY_ENTRY_META[categoryId]?.title || formatLabelCase(categoryId);
 }
 
 function getCardSupportLabel(categoryId, routine) {
@@ -814,6 +931,12 @@ function getSearchCategoryId(routine) {
 
 function getVisibleCount(visibleCounts, key) {
   return visibleCounts[key] || INITIAL_VISIBLE_COUNT;
+}
+
+function formatLabelCase(value) {
+  return String(value || "")
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (match) => match.toUpperCase());
 }
 
 function highlightMatch(text, query) {
