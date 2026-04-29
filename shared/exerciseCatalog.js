@@ -1,4 +1,8 @@
+import { getDeclaredExerciseModelMedia } from "./mediaReviewCatalog.js";
+
 const MEDIA_STATUS = ["none", "basic", "full"];
+const MAX_SEQUENCE_STEPS = 4;
+const MIN_SEQUENCE_STEPS = 2;
 
 export function buildMediaAssetPath(...segments) {
   return segments
@@ -22,19 +26,22 @@ export function createMediaPayload({
   const normalizedSteps = Array.isArray(steps) ? steps.filter(Boolean) : [];
   const resolvedImages = normalizedSteps.length ? normalizedSteps : normalizedImages;
   const safeThumbnail = thumbnail || resolvedImages[0] || fallbackImage || null;
+  const normalizedSequence = normalizeMediaSequence(resolvedImages.length ? resolvedImages : safeThumbnail ? [safeThumbnail] : []);
   const derivedStatus =
     mediaStatus && MEDIA_STATUS.includes(mediaStatus)
       ? mediaStatus
       : videoUrl
         ? "full"
-        : safeThumbnail || resolvedImages.length
-          ? "basic"
-          : "none";
+        : normalizedSequence.length >= MAX_SEQUENCE_STEPS
+          ? "full"
+          : safeThumbnail || normalizedSequence.length
+            ? "basic"
+            : "none";
 
   return {
     status: derivedStatus,
-    images: resolvedImages.length ? resolvedImages : fallbackImage ? [fallbackImage] : [],
-    steps: resolvedImages.length ? resolvedImages : fallbackImage ? [fallbackImage] : [],
+    images: normalizedSequence,
+    steps: normalizedSequence,
     videoUrl: videoUrl || null,
     thumbnail: safeThumbnail,
     assetPath: assetPath || null,
@@ -42,35 +49,150 @@ export function createMediaPayload({
   };
 }
 
-export function getMovementMedia(entry = {}) {
-  const media = entry.media?.status
-    ? entry.media
+function normalizeMediaSequence(images) {
+  const filtered = Array.isArray(images) ? images.filter(Boolean) : [];
+  if (!filtered.length) {
+    return [];
+  }
+  return filtered.slice(0, MAX_SEQUENCE_STEPS);
+}
+
+export function resolveExerciseMedia({ exerciseDetailId, media, visualModelPreference = "default", fallbackImage = null } = {}) {
+  const normalizedPreference = String(visualModelPreference || "default")
+    .trim()
+    .toLowerCase();
+  const normalizedDetailId = String(exerciseDetailId || "").trim();
+
+  if ((normalizedPreference === "male" || normalizedPreference === "female") && normalizedDetailId) {
+    const declaredModelMedia = getDeclaredExerciseModelMedia(normalizedDetailId, normalizedPreference);
+    if (declaredModelMedia?.complete && declaredModelMedia?.approved) {
+      return {
+        media: createMediaPayload({
+          thumbnail: declaredModelMedia.thumbnail,
+          steps: declaredModelMedia.steps,
+          mediaStatus: "full",
+          assetPath: `/media/exercises/${normalizedDetailId}/${normalizedPreference}`,
+          generation: {
+            modelKey: normalizedPreference,
+            reviewSource: declaredModelMedia.reviewSource
+          }
+        }),
+        guideLabel: `${normalizedPreference[0].toUpperCase()}${normalizedPreference.slice(1)} model visual ready`,
+        selectedModel: normalizedPreference,
+        source: "controlled-model"
+      };
+    }
+  }
+
+  const resolvedMedia = media?.status
+    ? media
     : createMediaPayload({
-        images: entry.media?.images || [],
-        steps: entry.media?.steps || [],
-        videoUrl: entry.media?.videoUrl || null,
-        thumbnail: entry.media?.thumbnail || null,
-        fallbackImage: entry.image || null,
-        mediaStatus: entry.mediaStatus || null,
-        assetPath: entry.media?.assetPath || null,
-        generation: entry.media?.generation || null
+        images: media?.images || [],
+        steps: media?.steps || [],
+        videoUrl: media?.videoUrl || null,
+        thumbnail: media?.thumbnail || null,
+        fallbackImage,
+        mediaStatus: media?.status || null,
+        assetPath: media?.assetPath || null,
+        generation: media?.generation || null
       });
+
+  return {
+    media: resolvedMedia,
+    guideLabel: resolvedMedia.status === "full" ? "Visual guide" : "Text coaching guide",
+    selectedModel: null,
+    source: "reviewed-or-text"
+  };
+}
+
+export function getGuideStatusLabel(entry = {}, options = {}) {
+  const mediaView = getMovementMedia(entry, options);
+  if (mediaView.selectedModel && mediaView.mediaStatus === "full") {
+    return `${mediaView.selectedModel[0].toUpperCase()}${mediaView.selectedModel.slice(1)} model visual ready`;
+  }
+  return mediaView.visualLevel === "full" ? "Visual guide" : "Text coaching guide";
+}
+
+export function getMovementMedia(entry = {}, options = {}) {
+  const resolvedExerciseMedia = resolveExerciseMedia({
+    exerciseDetailId: entry.detailId || entry.exerciseDetailId || entry.id || "",
+    media: entry.media,
+    visualModelPreference: options.visualModelPreference || entry.visualModelPreference || "default",
+    fallbackImage: entry.image || entry.thumbnail || null
+  });
+  const media = resolvedExerciseMedia.media;
   const sequenceLabels = ["Step 1", "Step 2", "Step 3", "Step 4"];
+  const distinctSequence = Array.from(new Set((media.steps?.length ? media.steps : media.images || []).filter(Boolean))).slice(0, MAX_SEQUENCE_STEPS);
+  const hasPhasedSequence = distinctSequence.length >= MIN_SEQUENCE_STEPS;
   const sequence = sequenceLabels.map((label, index) => ({
     label,
-    src: media.images?.[index] || media.images?.[media.images.length - 1] || null
+    src: hasPhasedSequence ? distinctSequence[index] || null : null
   }));
+  const effectiveStatus =
+    media.status === "full" && !hasPhasedSequence
+      ? "basic"
+      : media.status || "none";
+  const visualLevel = hasPhasedSequence ? "full" : media.thumbnail || media.videoUrl ? "preview" : "none";
 
   return {
     media,
     thumbnail: media.thumbnail || null,
     sequence,
+    hasPhasedSequence,
     hasVideo: Boolean(media.videoUrl),
     hasThumbnail: Boolean(media.thumbnail),
-    mediaStatus: media.status || "none",
+    mediaStatus: effectiveStatus,
+    visualLevel,
     generation: media.generation || null,
+    guideLabel: resolvedExerciseMedia.guideLabel,
+    selectedModel: resolvedExerciseMedia.selectedModel,
+    mediaSource: resolvedExerciseMedia.source,
     placeholderInitials: buildMovementInitials(entry.name || entry.title || "Move"),
-    placeholderLabel: "Movement preview"
+    placeholderLabel: resolvedExerciseMedia.guideLabel
+  };
+}
+
+export function resolveMovementVisual(movementOrMedia = {}, options = {}) {
+  const mediaView =
+    movementOrMedia?.media?.status || movementOrMedia?.mediaStatus || movementOrMedia?.image || movementOrMedia?.thumbnail || movementOrMedia?.name
+      ? getMovementMedia(movementOrMedia, options)
+      : getMovementMedia({ media: movementOrMedia }, options);
+  const basicSource = mediaView.thumbnail || mediaView.media?.images?.[0] || mediaView.media?.steps?.[0] || null;
+
+  return {
+    mode: basicSource ? "image" : "fallback",
+    src: basicSource,
+    alt: movementOrMedia?.imageAlt || `${movementOrMedia?.name || movementOrMedia?.title || "Movement"} preview`,
+    status: mediaView.mediaStatus || "none",
+    initials: mediaView.placeholderInitials,
+    label: mediaView.placeholderLabel,
+    guideLabel: mediaView.guideLabel,
+    visualLevel: mediaView.visualLevel
+  };
+}
+
+export function buildGuideTarget(target = {}) {
+  if (!target || typeof target !== "object") {
+    return null;
+  }
+
+  const movement = target.movement && typeof target.movement === "object" ? target.movement : target;
+  const detailId = String(target.detailId || movement.detailId || "").trim();
+  const guideTargetId = String(target.guideTargetId || movement.guideTargetId || detailId || "").trim();
+  const movementId = String(target.movementId || movement.movementId || "").trim();
+  const id = String(movement.id || target.id || "").trim();
+  const resolvedName = String(movement.name || target.name || target.title || "Exercise guide").trim();
+
+  return {
+    ...target,
+    ...movement,
+    name: resolvedName,
+    expectedName: String(target.expectedName || movement.expectedName || resolvedName).trim(),
+    detailId,
+    guideTargetId,
+    movementId,
+    id,
+    visualLevel: getMovementMedia(movement).visualLevel
   };
 }
 

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useAuth } from "../state/AuthContext";
 
+const BRAND_LOGO = "/brand/pulsepeak-main-logo.png";
+
 export default function AuthPage() {
   const { authenticate } = useAuth();
   const [mode, setMode] = useState("login");
@@ -25,6 +27,9 @@ export default function AuthPage() {
   return (
     <div className="auth-shell">
       <section className="auth-hero">
+        <div className="auth-brand">
+          <img className="auth-brand-logo" src={BRAND_LOGO} alt="PulsePeak" />
+        </div>
         <p className="badge">Real accounts, synced data, coaching</p>
         <h1>Build better health momentum with a fitness workspace that remembers you.</h1>
         <p className="hero-text">

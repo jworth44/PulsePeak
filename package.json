@@ -10,7 +10,11 @@
     "dev:server": "node server/server.js",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "media:batch": "node scripts/build-media-batch.mjs"
+    "media:batch": "node scripts/build-media-batch.mjs",
+    "media:pilot-top5": "node scripts/build-top5-visual-pilot.mjs",
+    "qa:exercise-library": "node scripts/exercise-library-audit.mjs",
+    "qa:launch": "node scripts/launch-readiness.mjs",
+    "qa:workout-guide-regression": "node scripts/workout-guide-regression.mjs"
   },
   "dependencies": {
     "@stripe/stripe-js": "^9.2.0",

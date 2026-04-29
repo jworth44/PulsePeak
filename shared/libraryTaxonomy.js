@@ -96,9 +96,40 @@ export const PLAN_LIBRARY = [
 export const WORKOUT_SORT_OPTIONS = [
   { value: "recommended", label: "Recommended" },
   { value: "shortest", label: "Shortest" },
+  { value: "longest", label: "Longest" },
   { value: "easiest", label: "Easiest" },
+  { value: "highest_intensity", label: "Highest intensity" },
+  { value: "alphabetical", label: "Alphabetical" },
   { value: "recovery_friendly", label: "Most recovery-friendly" },
   { value: "equipment_efficient", label: "Most equipment-efficient" }
+];
+
+export const WORKOUT_FILTER_PRESETS = [
+  {
+    id: "quick_session",
+    label: "Quick session",
+    values: { selectedDuration: "short", selectedSort: "shortest" }
+  },
+  {
+    id: "lower_joint_stress",
+    label: "Lower joint stress",
+    values: { selectedJointStress: "low", selectedSort: "recovery_friendly" }
+  },
+  {
+    id: "strength_focus",
+    label: "Strength focus",
+    values: { selectedTrainingStyle: "strength", selectedSort: "recommended" }
+  },
+  {
+    id: "home_equipment",
+    label: "Home equipment",
+    values: { workoutEnvironment: "home" }
+  },
+  {
+    id: "recovery_day",
+    label: "Recovery day",
+    values: { selectedCategory: "recovery_day", workoutFocus: "mobility_recovery", selectedJointStress: "low" }
+  }
 ];
 
 export const MOBILITY_SORT_OPTIONS = [

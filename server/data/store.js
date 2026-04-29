@@ -11,7 +11,7 @@ import {
   normalizeModuleOrder,
   normalizeNutritionMode
 } from "../../shared/dashboardModules.js";
-import { hasCompletedOnboarding, isProfileComplete } from "../../shared/profileState.js";
+import { hasCompletedOnboarding, isProfileComplete, normalizeVisualModelPreference } from "../../shared/profileState.js";
 import { formatHydration, formatWeight, normalizeUnitPreference } from "../../shared/unitSystem.js";
 import {
   ACCESS_TIERS,
@@ -34,6 +34,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DEFAULT_DB_PATH = path.join(__dirname, "db.json");
 const DB_PATH = path.resolve(process.env.PULSEPEAK_DB_PATH || DEFAULT_DB_PATH);
+const PUBLIC_PATH = path.resolve(__dirname, "../../public");
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const SESSION_DURATION_MS = 30 * DAY_MS;
@@ -122,47 +123,49 @@ function normalizeStoredUser(user) {
 }
 
 export function normalizeWellnessData(data = {}) {
+  const sanitizedData = normalizeLegacyMovementAssetRefs(data);
   const normalizedGoals = {
-    calories: Number(data.goals?.calories || 2200),
-    protein: Number(data.goals?.protein || 150),
-    water: Number(data.goals?.water || 2.8),
-    sleep: Number(data.goals?.sleep || 8),
-    workoutMinutes: Number(data.goals?.workoutMinutes || 55)
+    calories: Number(sanitizedData.goals?.calories || 2200),
+    protein: Number(sanitizedData.goals?.protein || 150),
+    water: Number(sanitizedData.goals?.water || 2.8),
+    sleep: Number(sanitizedData.goals?.sleep || 8),
+    workoutMinutes: Number(sanitizedData.goals?.workoutMinutes || 55)
   };
   const normalizedProfile = {
-    goalType: GOAL_TYPES.includes(data.profile?.goalType) ? data.profile.goalType : "general_fitness",
-    ageGroup: AGE_GROUPS.includes(data.profile?.ageGroup) ? data.profile.ageGroup : "30-39",
-    birthdate: typeof data.profile?.birthdate === "string" ? data.profile.birthdate : "",
-    experienceLevel: EXPERIENCE_LEVELS.includes(data.profile?.experienceLevel) ? data.profile.experienceLevel : "beginner",
-    trainingEnvironment: TRAINING_ENVIRONMENTS.includes(data.profile?.trainingEnvironment)
-      ? data.profile.trainingEnvironment
+    goalType: GOAL_TYPES.includes(sanitizedData.profile?.goalType) ? sanitizedData.profile.goalType : "general_fitness",
+    ageGroup: AGE_GROUPS.includes(sanitizedData.profile?.ageGroup) ? sanitizedData.profile.ageGroup : "30-39",
+    birthdate: typeof sanitizedData.profile?.birthdate === "string" ? sanitizedData.profile.birthdate : "",
+    experienceLevel: EXPERIENCE_LEVELS.includes(sanitizedData.profile?.experienceLevel) ? sanitizedData.profile.experienceLevel : "beginner",
+    trainingEnvironment: TRAINING_ENVIRONMENTS.includes(sanitizedData.profile?.trainingEnvironment)
+      ? sanitizedData.profile.trainingEnvironment
       : "hybrid",
-    equipmentProfile: normalizeEquipmentProfile(data.profile?.equipmentProfile, data.profile?.trainingEnvironment),
-    equipmentSelections: normalizeEquipmentSelections(data.profile?.equipmentSelections, data.profile?.trainingEnvironment),
-    injuryStatus: INJURY_STATUSES.includes(data.profile?.injuryStatus) ? data.profile.injuryStatus : "none",
-    sex: SEX_OPTIONS.includes(data.profile?.sex) ? data.profile.sex : "",
-    heightCm: Number.isFinite(Number(data.profile?.heightCm)) ? Number(data.profile.heightCm) : null,
-    currentWeight: Number.isFinite(Number(data.profile?.currentWeight)) ? Number(data.profile.currentWeight) : null,
-    targetWeight: Number.isFinite(Number(data.profile?.targetWeight)) ? Number(data.profile.targetWeight) : null,
-    unitPreference: normalizeUnitPreference(data.profile?.unitPreference),
-    nutritionMode: NUTRITION_MODES.includes(data.profile?.nutritionMode)
-      ? data.profile.nutritionMode
+    equipmentProfile: normalizeEquipmentProfile(sanitizedData.profile?.equipmentProfile, sanitizedData.profile?.trainingEnvironment),
+    equipmentSelections: normalizeEquipmentSelections(sanitizedData.profile?.equipmentSelections, sanitizedData.profile?.trainingEnvironment),
+    injuryStatus: INJURY_STATUSES.includes(sanitizedData.profile?.injuryStatus) ? sanitizedData.profile.injuryStatus : "none",
+    sex: SEX_OPTIONS.includes(sanitizedData.profile?.sex) ? sanitizedData.profile.sex : "",
+    heightCm: Number.isFinite(Number(sanitizedData.profile?.heightCm)) ? Number(sanitizedData.profile.heightCm) : null,
+    currentWeight: Number.isFinite(Number(sanitizedData.profile?.currentWeight)) ? Number(sanitizedData.profile.currentWeight) : null,
+    targetWeight: Number.isFinite(Number(sanitizedData.profile?.targetWeight)) ? Number(sanitizedData.profile.targetWeight) : null,
+    unitPreference: normalizeUnitPreference(sanitizedData.profile?.unitPreference),
+    nutritionMode: NUTRITION_MODES.includes(sanitizedData.profile?.nutritionMode)
+      ? sanitizedData.profile.nutritionMode
       : normalizeNutritionMode(
-          GOAL_TYPES.includes(data.profile?.goalType) ? data.profile.goalType : "general_fitness",
-          data.profile?.nutritionMode
+          GOAL_TYPES.includes(sanitizedData.profile?.goalType) ? sanitizedData.profile.goalType : "general_fitness",
+          sanitizedData.profile?.nutritionMode
         ),
-    appMode: normalizeAppMode(data.profile?.appMode),
-    moduleOrder: normalizeModuleOrder(data.profile?.moduleOrder),
-    hiddenModules: normalizeHiddenModules(data.profile?.hiddenModules),
-    exerciseGuidanceLevel: ["full", "standard", "minimal"].includes(data.profile?.exerciseGuidanceLevel)
-      ? data.profile.exerciseGuidanceLevel
+    appMode: normalizeAppMode(sanitizedData.profile?.appMode),
+    moduleOrder: normalizeModuleOrder(sanitizedData.profile?.moduleOrder),
+    hiddenModules: normalizeHiddenModules(sanitizedData.profile?.hiddenModules),
+    exerciseGuidanceLevel: ["full", "standard", "minimal"].includes(sanitizedData.profile?.exerciseGuidanceLevel)
+      ? sanitizedData.profile.exerciseGuidanceLevel
       : "standard",
-    showWarmup: typeof data.profile?.showWarmup === "boolean" ? data.profile.showWarmup : true,
-    showCooldown: typeof data.profile?.showCooldown === "boolean" ? data.profile.showCooldown : true,
+    visualModelPreference: normalizeVisualModelPreference(sanitizedData.profile?.visualModelPreference),
+    showWarmup: typeof sanitizedData.profile?.showWarmup === "boolean" ? sanitizedData.profile.showWarmup : true,
+    showCooldown: typeof sanitizedData.profile?.showCooldown === "boolean" ? sanitizedData.profile.showCooldown : true,
     onboardingCompleted:
-      typeof data.profile?.onboardingCompleted === "boolean" ? data.profile.onboardingCompleted : true,
-    restrictedAreas: Array.isArray(data.profile?.restrictedAreas)
-      ? data.profile.restrictedAreas.filter((area) => RESTRICTED_AREAS.includes(area))
+      typeof sanitizedData.profile?.onboardingCompleted === "boolean" ? sanitizedData.profile.onboardingCompleted : true,
+    restrictedAreas: Array.isArray(sanitizedData.profile?.restrictedAreas)
+      ? sanitizedData.profile.restrictedAreas.filter((area) => RESTRICTED_AREAS.includes(area))
       : []
   };
   if (normalizedProfile.birthdate) {
@@ -174,21 +177,48 @@ export function normalizeWellnessData(data = {}) {
   );
 
   return {
-    ...data,
+    ...sanitizedData,
     goals: normalizedGoals,
     profile: normalizedProfile,
-    waterIntake: Number(data.waterIntake || 0),
-    sleepHours: Number(data.sleepHours || normalizedGoals.sleep),
-    energyLevel: ["Low", "Steady", "High"].includes(data.energyLevel) ? data.energyLevel : "Steady",
-    meals: Array.isArray(data.meals) ? data.meals : [],
-    workouts: Array.isArray(data.workouts) ? data.workouts.map(normalizeWorkout) : [],
-    savedWorkouts: Array.isArray(data.savedWorkouts) ? data.savedWorkouts.map(normalizeSavedWorkout).filter(Boolean) : [],
-    habits: Array.isArray(data.habits) ? data.habits : [],
-    weeklyHistory: Array.isArray(data.weeklyHistory) ? data.weeklyHistory : [],
-    weeklyCheckIns: Array.isArray(data.weeklyCheckIns) ? data.weeklyCheckIns.map(normalizeWeeklyCheckIn).filter(Boolean) : [],
-    weightHistory: Array.isArray(data.weightHistory) ? data.weightHistory : [],
-    notes: Array.isArray(data.notes) ? data.notes : []
+    waterIntake: Number(sanitizedData.waterIntake || 0),
+    sleepHours: Number(sanitizedData.sleepHours || normalizedGoals.sleep),
+    energyLevel: ["Low", "Steady", "High"].includes(sanitizedData.energyLevel) ? sanitizedData.energyLevel : "Steady",
+    meals: Array.isArray(sanitizedData.meals) ? sanitizedData.meals : [],
+    workouts: Array.isArray(sanitizedData.workouts) ? sanitizedData.workouts.map(normalizeWorkout) : [],
+    savedWorkouts: Array.isArray(sanitizedData.savedWorkouts) ? sanitizedData.savedWorkouts.map(normalizeSavedWorkout).filter(Boolean) : [],
+    habits: Array.isArray(sanitizedData.habits) ? sanitizedData.habits : [],
+    weeklyHistory: Array.isArray(sanitizedData.weeklyHistory) ? sanitizedData.weeklyHistory : [],
+    weeklyCheckIns: Array.isArray(sanitizedData.weeklyCheckIns) ? sanitizedData.weeklyCheckIns.map(normalizeWeeklyCheckIn).filter(Boolean) : [],
+    weightHistory: Array.isArray(sanitizedData.weightHistory) ? sanitizedData.weightHistory : [],
+    notes: Array.isArray(sanitizedData.notes) ? sanitizedData.notes : []
   };
+}
+
+function normalizeLegacyMovementAssetRefs(value) {
+  if (Array.isArray(value)) {
+    return value.map((item) => normalizeLegacyMovementAssetRefs(item));
+  }
+
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, entryValue]) => [key, normalizeLegacyMovementAssetRefs(entryValue)])
+    );
+  }
+
+  if (typeof value !== "string") {
+    return value;
+  }
+
+  const legacyMatch = value.match(/^\/movements\/([a-z0-9-]+)\.svg$/i);
+  if (!legacyMatch) {
+    return value;
+  }
+
+  const exerciseId = legacyMatch[1].toLowerCase();
+  const photoAssetPath = `/movements/${exerciseId}-photo.png`;
+  const absolutePhotoAssetPath = path.join(PUBLIC_PATH, photoAssetPath.replace(/^\//, "").replaceAll("/", path.sep));
+
+  return fs.existsSync(absolutePhotoAssetPath) ? photoAssetPath : value;
 }
 
 export function hasProcessedWebhookEvent(eventId) {
@@ -273,7 +303,8 @@ export function findUserByToken(token) {
 
 export function createUser({ name, email, password }) {
   const db = readDb();
-  const normalizedName = name.trim();
+  const safeName = String(name || "").trim();
+  const normalizedName = safeName || String(email || "").trim().split("@")[0] || "PulsePeak User";
   const normalizedEmail = email.trim().toLowerCase();
 
   if (db.users.some((user) => user.email === normalizedEmail)) {
@@ -2623,6 +2654,7 @@ function createDefaultWellnessData(name) {
       moduleOrder: CUSTOMIZABLE_MODULE_IDS,
       hiddenModules: [],
       exerciseGuidanceLevel: "standard",
+      visualModelPreference: "default",
       showWarmup: true,
       showCooldown: true,
       onboardingCompleted: false,

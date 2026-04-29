@@ -1,11 +1,12 @@
 import React from "react";
+import { buildGuideTarget, resolveMovementVisual } from "../../shared/exerciseCatalog";
 
 export default function MovementReference({ movement, onClick, compact = false, prefix }) {
   if (!movement) {
     return null;
   }
 
-  const imageSrc = movement.thumbnail || movement.image;
+  const visual = resolveMovementVisual(movement);
   const classes = ["movement-reference"];
   if (compact) {
     classes.push("movement-reference-compact");
@@ -17,11 +18,12 @@ export default function MovementReference({ movement, onClick, compact = false, 
   const content = (
     <>
       <div className="movement-reference-media" aria-hidden="true">
-        {imageSrc ? (
-          <img alt="" className="movement-reference-thumb" src={imageSrc} />
+        {visual.mode === "image" ? (
+          <img alt="" className="movement-reference-thumb" src={visual.src} />
         ) : (
-          <div className="movement-reference-fallback">
-            <span>{movement.name.slice(0, 2).toUpperCase()}</span>
+          <div className="movement-reference-fallback movement-image-fallback">
+            <span>{visual.initials}</span>
+            <small>{visual.label}</small>
           </div>
         )}
       </div>
@@ -34,7 +36,7 @@ export default function MovementReference({ movement, onClick, compact = false, 
 
   if (onClick) {
     return (
-      <button className={classes.join(" ")} type="button" onClick={() => onClick(movement)}>
+      <button className={classes.join(" ")} type="button" onClick={() => onClick(buildGuideTarget(movement))}>
         {content}
       </button>
     );

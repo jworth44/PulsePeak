@@ -9,6 +9,8 @@ import { apiRequest } from "../api/client";
 import { useUpgradeCheckout } from "../hooks/useUpgradeCheckout";
 import { THEME_OPTIONS, applyThemePreference, getStoredThemePreference } from "../config/themes";
 import { APP_MODE_OPTIONS } from "../../shared/appModes.js";
+import { getActivePreferenceInfluence, getCurrentPlanFocus, VISUAL_MODEL_PREFERENCE_OPTIONS } from "../../shared/profileState";
+import { getRecoveryBias } from "../../shared/workoutEngine";
 
 export default function PreferencesPage() {
   const navigate = useNavigate();
@@ -22,6 +24,18 @@ export default function PreferencesPage() {
   const [billingError, setBillingError] = React.useState("");
   const { busy: upgradeBusy, startUpgradeCheckout } = useUpgradeCheckout();
   const profile = data?.profile || {};
+  const currentPlanFocus = getCurrentPlanFocus({
+    profile,
+    planSummary: summary?.planSummary,
+    workoutEngine: summary?.workoutEngine
+  });
+  const preferenceInfluence = getActivePreferenceInfluence({
+    profile,
+    currentPlanFocus,
+    recoveryBias: getRecoveryBias({
+      completionRecords: summary?.recentWorkouts || []
+    })
+  });
 
   const openSection = (section) => {
     setSearchParams({ section });
@@ -116,6 +130,10 @@ export default function PreferencesPage() {
             </Panel>
 
             <Panel eyebrow="Training preferences" title="Control how much guidance you see in each session">
+              <div className="module-note">
+                <strong>{preferenceInfluence.primary}</strong>
+                <p className="support-copy">{preferenceInfluence.summary}</p>
+              </div>
               <div className="goal-card-grid">
                 {[
                   ["full", "Full guidance", "Show full instructions, mistakes, safety notes, and movement imagery."],
@@ -151,6 +169,20 @@ export default function PreferencesPage() {
                 >
                   <strong>{profile.showCooldown === false ? "Cooldown hidden" : "Show cooldown"}</strong>
                 </button>
+              </div>
+              <div className="form-field">
+                <span>Exercise visual model</span>
+                <select
+                  value={profile.visualModelPreference || "default"}
+                  onChange={(event) => updateProfilePreference({ visualModelPreference: event.target.value }, "visual-model")}
+                  disabled={saving === "visual-model"}
+                >
+                  {VISUAL_MODEL_PREFERENCE_OPTIONS.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
               </div>
             </Panel>
 

@@ -726,37 +726,105 @@ const MOVEMENT_NAME_ALIASES = new Map(
     ["incline dumbbell press", "dumbbell-press"],
     ["bench press", "dumbbell-press"],
     ["dumbbell floor press", "dumbbell-press"],
+    ["dumbbell press", "dumbbell-press"],
+    ["flat dumbbell bench press", "dumbbell-press"],
+    ["machine chest press", "dumbbell-press"],
+    ["incline machine press", "dumbbell-press"],
+    ["band chest press", "dumbbell-press"],
     ["seated shoulder press", "overhead-press"],
     ["dumbbell shoulder press", "overhead-press"],
     ["overhead press", "overhead-press"],
+    ["arnold press", "overhead-press"],
+    ["band overhead press", "overhead-press"],
+    ["half-kneeling dumbbell press", "overhead-press"],
+    ["landmine press", "overhead-press"],
+    ["z-press", "overhead-press"],
+    ["pike push-up", "overhead-press"],
+    ["dumbbell thruster", "overhead-press"],
+    ["goblet squat to press", "overhead-press"],
+    ["band thruster", "overhead-press"],
+    ["man maker", "overhead-press"],
     ["cable lateral raise", "lateral-raise"],
+    ["dumbbell lateral raise", "lateral-raise"],
+    ["band lateral raise", "lateral-raise"],
+    ["lean-away lateral raise", "lateral-raise"],
     ["triceps pushdown", "triceps-pushdown"],
+    ["band pressdown", "triceps-pushdown"],
+    ["bench dip", "triceps-pushdown"],
+    ["overhead dumbbell extension", "triceps-pushdown"],
+    ["rope overhead extension", "triceps-pushdown"],
+    ["skull crusher", "triceps-pushdown"],
     ["lat pulldown", "lat-pulldown"],
+    ["assisted pull-up", "lat-pulldown"],
+    ["band pulldown", "lat-pulldown"],
+    ["neutral-grip lat pulldown", "lat-pulldown"],
+    ["chin-up", "lat-pulldown"],
+    ["pull-up negative", "lat-pulldown"],
+    ["back widow", "lat-pulldown"],
+    ["straight-arm band pulldown", "lat-pulldown"],
     ["chest-supported row", "row"],
     ["single-arm dumbbell row", "row"],
     ["cable row", "row"],
+    ["band row", "row"],
+    ["seated cable row", "row"],
+    ["doorframe row", "row"],
+    ["inverted row", "row"],
+    ["tripod row", "row"],
+    ["t-bar row", "row"],
+    ["machine row", "row"],
+    ["renegade row", "row"],
+    ["band row to squat", "row"],
+    ["bear crawl drag", "row"],
     ["cable face pull", "band-pull-apart"],
+    ["reverse fly", "band-pull-apart"],
+    ["reverse snow angel", "band-pull-apart"],
     ["ez-bar curl", "biceps-curl"],
     ["hammer curl", "biceps-curl"],
+    ["band curl", "biceps-curl"],
+    ["concentration curl", "biceps-curl"],
+    ["incline dumbbell curl", "biceps-curl"],
+    ["preacher curl", "biceps-curl"],
+    ["rope hammer curl", "biceps-curl"],
+    ["reverse curl", "biceps-curl"],
+    ["towel curl isometric", "biceps-curl"],
     ["back squat", "squat"],
     ["front squat", "squat"],
     ["bodyweight squat", "squat"],
     ["goblet squat", "squat"],
     ["jump squat", "squat"],
+    ["banded squat", "squat"],
+    ["front-foot elevated squat", "squat"],
+    ["leg press", "squat"],
     ["supported box squat pattern", "wall-squat"],
     ["romanian deadlift", "deadlift"],
     ["dumbbell romanian deadlift", "deadlift"],
-    ["leg press", "squat"],
+    ["band hip hinge", "deadlift"],
+    ["hip hinge reach", "deadlift"],
+    ["banded good morning", "deadlift"],
+    ["kettlebell deadlift", "deadlift"],
+    ["trap-bar deadlift", "deadlift"],
     ["walking lunge", "lunge"],
     ["reverse lunge", "lunge"],
+    ["banded reverse lunge", "lunge"],
+    ["rear-foot elevated split squat", "lunge"],
+    ["step-up", "lunge"],
+    ["step-up to knee drive", "lunge"],
     ["bulgarian split squat", "supported-split-squat"],
     ["supported split squat", "supported-split-squat"],
     ["standing calf raise", "calf-raise"],
     ["seated calf raise", "calf-raise"],
+    ["single-leg calf raise", "calf-raise"],
+    ["band calf raise", "calf-raise"],
     ["hip thrust", "hip-thrust"],
+    ["cable pull-through", "hip-thrust"],
     ["leg curl", "deadlift"],
     ["push-up", "push-up"],
+    ["close-grip push-up", "push-up"],
+    ["deficit push-up", "push-up"],
+    ["push-up to down dog", "push-up"],
     ["glute bridge", "glute-bridge"],
+    ["banded glute bridge", "glute-bridge"],
+    ["dumbbell glute bridge", "glute-bridge"],
     ["plank", "plank"],
     ["plank shoulder tap", "plank"],
     ["dead bug", "dead-bug"],
@@ -769,6 +837,9 @@ const MOVEMENT_NAME_ALIASES = new Map(
     ["mountain climber", "mountain-climber"],
     ["high knees", "high-knees"],
     ["burpee", "burpee"],
+    ["band power step", "high-knees"],
+    ["bike sprint", "high-knees"],
+    ["jump rope", "high-knees"],
     ["band shoulder opener", "shoulder-mobility"],
     ["thread the needle", "thoracic-rotation"],
     ["thoracic rotation", "thoracic-rotation"],
@@ -795,8 +866,16 @@ export function findMovementForName(name) {
     return null;
   }
 
-  const directId = MOVEMENT_NAME_ALIASES.get(normalizedName) || normalizedName;
-  return getMovementById(directId);
+  const slugId = normalizedName
+    .replaceAll("'", "")
+    .replaceAll("/", " ")
+    .replaceAll(/\s+/g, "-");
+  const directId = MOVEMENT_NAME_ALIASES.get(normalizedName) || MOVEMENT_NAME_ALIASES.get(slugId) || normalizedName || slugId;
+  const directMatch = getMovementById(directId) || getMovementById(slugId);
+  if (directMatch) {
+    return directMatch;
+  }
+  return MOVEMENT_LIBRARY.find((entry) => entry.name.toLowerCase() === normalizedName) ? cloneMovement(MOVEMENT_LIBRARY.find((entry) => entry.name.toLowerCase() === normalizedName)) : null;
 }
 
 export function attachMovementToExercise(exercise) {
@@ -951,17 +1030,24 @@ function resolveMovementMedia(image, name) {
   }
 
   if (image?.type === "media-ref") {
-    const mapped = MOVEMENT_MEDIA[image.key] || null;
+    const mapped = MOVEMENT_MEDIA[image.key] || buildMovementMedia(image.key, image.alt || `${name} movement guide`);
+    const resolvedImages = Array.isArray(mapped?.images) ? mapped.images.filter(Boolean) : [];
+    const resolvedStatus =
+      resolvedImages.length >= 4 || mapped?.videoUrl
+        ? "full"
+        : mapped?.thumbnail || resolvedImages.length
+          ? "basic"
+          : "none";
     return {
       image: mapped?.image || null,
       imageAlt: mapped?.imageAlt || image.alt || `${name} movement guide`,
       thumbnail: mapped?.thumbnail || null,
       media: mapped
         ? {
-            status: mapped.images?.length ? "basic" : mapped.thumbnail ? "basic" : "none",
+            status: resolvedStatus,
             thumbnail: mapped.thumbnail || null,
-            images: Array.isArray(mapped.images) ? mapped.images : [],
-            steps: Array.isArray(mapped.images) ? mapped.images : [],
+            images: resolvedImages,
+            steps: resolvedImages,
             videoUrl: mapped.videoUrl || null
           }
         : null,

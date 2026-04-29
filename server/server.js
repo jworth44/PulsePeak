@@ -33,7 +33,7 @@ import {
   validateUser
 } from "./data/store.js";
 import { getMovementLibrary } from "./data/movementLibrary.js";
-import { createWorkoutFromPreset, findWorkoutPresetForProfile, getWorkoutLibraryForProfile, getWorkoutLibraryMeta } from "./data/workoutLibrary.js";
+import { createWorkoutFromPreset, findWorkoutPresetForProfile, getExerciseLibraryCatalog, getExerciseLibraryRecordById, getWorkoutLibraryForProfile, getWorkoutLibraryMeta } from "./data/workoutLibrary.js";
 import { applyStripeWebhookEvent } from "./stripeBilling.js";
 import { CUSTOMIZABLE_MODULE_IDS } from "../shared/dashboardModules.js";
 import { normalizeUnitPreference } from "../shared/unitSystem.js";
@@ -44,6 +44,7 @@ import {
   normalizeEquipmentSelections
 } from "../shared/workoutEngine.js";
 import { APP_MODES, getHiddenModulesForAppMode, normalizeAppMode } from "../shared/appModes.js";
+import { normalizeVisualModelPreference } from "../shared/profileState.js";
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -107,7 +108,7 @@ function handleStripeWebhook(request, response) {
 app.post(PRIMARY_WEBHOOK_PATH, express.raw({ type: "application/json" }), handleStripeWebhook);
 app.post(LEGACY_WEBHOOK_PATH, express.raw({ type: "application/json" }), handleStripeWebhook);
 
-app.use(express.json());
+app.use(express.json({ limit: "1mb" }));
 
 app.get("/api/health", (_request, response) => {
   response.json({ ok: true });
@@ -210,8 +211,21 @@ app.get("/api/workout-library", requireAuth, (request, response) => {
     focus,
     workouts,
       meta: getWorkoutLibraryMeta(filters, request.user.data.profile, workouts, recentWorkouts, accessTier)
-    });
   });
+});
+
+app.get("/api/exercise-library", requireAuth, (_request, response) => {
+  response.json(getExerciseLibraryCatalog());
+});
+
+app.get("/api/exercise-library/:id", requireAuth, (request, response) => {
+  const record = getExerciseLibraryRecordById(request.params.id);
+  if (!record) {
+    return response.status(404).json({ message: "Exercise not found." });
+  }
+
+  return response.json(record);
+});
 
 app.get("/api/movements", requireAuth, (_request, response) => {
   response.json({
@@ -292,6 +306,9 @@ app.patch("/api/profile", requireAuth, (request, response) => {
       ...(request.body.hiddenModules !== undefined ? { hiddenModules: parseHiddenModules(request.body.hiddenModules) } : {}),
       ...(request.body.exerciseGuidanceLevel !== undefined
         ? { exerciseGuidanceLevel: parseExerciseGuidanceLevel(request.body.exerciseGuidanceLevel) }
+        : {}),
+      ...(request.body.visualModelPreference !== undefined
+        ? { visualModelPreference: parseVisualModelPreference(request.body.visualModelPreference) }
         : {}),
       ...(request.body.showWarmup !== undefined ? { showWarmup: parseBooleanSetting(request.body.showWarmup) } : {}),
       ...(request.body.showCooldown !== undefined ? { showCooldown: parseBooleanSetting(request.body.showCooldown) } : {}),
@@ -1298,6 +1315,15 @@ function parseBooleanSetting(value) {
   }
 
   return value;
+}
+
+function parseVisualModelPreference(value) {
+  const normalized = normalizeVisualModelPreference(value);
+  if (!normalized) {
+    throw new Error("Choose a valid exercise visual model.");
+  }
+
+  return normalized;
 }
 
 function parseRestrictedAreas(value) {
