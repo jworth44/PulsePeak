@@ -5,7 +5,6 @@ import MovementDetailModal from "../components/MovementDetailModal";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { useAuth } from "../state/AuthContext";
 import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "../../shared/exerciseCatalog";
-import { getModuleContinuityContext, getRecoveryBias } from "../../shared/workoutEngine";
 
 const INITIAL_VISIBLE_COUNT = 8;
 const CATEGORY_ENTRY_META = {
@@ -96,28 +95,10 @@ export default function MobilityPage() {
   const normalizedSearchQuery = searchQuery.trim().toLowerCase();
   const isSearchMode = Boolean(normalizedSearchQuery);
   const openMovementGuide = (target) => setSelectedMovement(buildGuideTarget(target));
-  const currentPlanFocus = null;
-  const recoveryBias = useMemo(() => getRecoveryBias(workoutMemory), [workoutMemory]);
-  const continuityContext = useMemo(
-    () =>
-      getModuleContinuityContext({
-        module: "mobility",
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        workoutMomentum,
-        recoveryBias,
-        weeklyStructure: summary?.planSummary?.suggestedWorkoutMix
-          ? {
-              days: (summary.planSummary.suggestedWorkoutMix.split || []).map((item, index) => ({
-                day: index + 1,
-                type: String(item).toLowerCase().includes("recovery") ? "recovery" : "training"
-              }))
-            }
-          : null,
-        nutritionMode: data?.profile?.nutritionMode
-      }),
-    [currentPlanFocus, data?.profile?.nutritionMode, recoveryBias, summary?.planSummary?.suggestedWorkoutMix, workoutMemory, workoutMomentum]
-  );
+  const continuityContext = {
+    title: "Stay consistent with targeted support",
+    detail: "Use the guided movement categories to keep support work organized without extra coaching overlays."
+  };
 
   const injuryMappingOptions = useMemo(() => {
     const configuredOptions = mobilityModule?.filterOptions?.injuryMappingOptions;

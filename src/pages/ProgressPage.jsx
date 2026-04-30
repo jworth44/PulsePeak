@@ -7,20 +7,6 @@ import { useDashboardData } from "../hooks/useDashboardData";
 import { useUpgradeCheckout } from "../hooks/useUpgradeCheckout";
 import { useAuth } from "../state/AuthContext";
 import { getPremiumCapabilitySummary, getPremiumComparisonSummary, getPremiumOutcomeLayer, hasFullWorkoutAccess } from "../../shared/entitlements";
-import {
-  getCheckpoints,
-  getIdentitySignal,
-  getImprovementSignals,
-  getNextWeekAdjustment,
-  getPerformanceSignals,
-  getProgramPhase,
-  getProgressInsights,
-  getPrimarySignalHighlight,
-  getResultSignals,
-  getSystemConfidenceSignal,
-  getSystemTrustCue,
-  getWhyThisMattersNotes
-} from "../../shared/workoutEngine";
 
 export default function ProgressPage() {
   const { user, accessTier, workoutMemory, workoutMomentum, workoutMilestones } = useAuth();
@@ -47,67 +33,38 @@ export default function ProgressPage() {
   const weeklyCheckIn = summary.weeklyCheckIn;
   const latestCheckIn = weeklyCheckIn?.latestCheckIn;
   const hasProgressAccess = hasFullWorkoutAccess(accessTier);
-  const currentPlanFocus = null;
-  const progressInsights = getProgressInsights({
-    memoryState: workoutMemory,
-    currentPlanFocus
-  });
-  const improvementSignals = getImprovementSignals({
-    completionRecords: workoutMemory.completionRecords,
-    memoryState: workoutMemory,
-    currentPlanFocus
-  });
-  const resultSignals = getResultSignals({
-    completionRecords: workoutMemory.completionRecords,
-    workoutMomentum
-  });
-  const performanceSignals = getPerformanceSignals({
-    completionRecords: workoutMemory.completionRecords
-  });
-  const checkpoint = getCheckpoints({
-    completionRecords: workoutMemory.completionRecords,
-    workoutMomentum
-  });
-  const identitySignal = getIdentitySignal({
-    completionRecords: workoutMemory.completionRecords,
-    workoutMomentum
-  });
-  const programPhase = getProgramPhase({
-    completionRecords: workoutMemory.completionRecords,
-    currentPlanFocus,
-    workoutMomentum
-  });
-  const nextWeekAdjustment = getNextWeekAdjustment({
-    completionRecords: workoutMemory.completionRecords,
-    currentPlanFocus,
-    workoutMomentum,
-    accessTier
-  });
-  const whyThisMattersNotes = getWhyThisMattersNotes({
-    currentPlanFocus,
-    memoryState: workoutMemory,
-    phase: programPhase
-  });
+  const progressInsights = [];
+  const improvementSignals = {
+    consistency: {
+      label: "Consistency builds from completed sessions",
+      detail: "Keep logging workouts and the progress view will fill in stronger trend signals over time."
+    },
+    variety: {
+      label: "Variety is not being interpreted yet",
+      detail: "Advanced variety analysis is deferred for now."
+    },
+    loadTolerance: {
+      label: "Load tolerance is not being interpreted yet",
+      detail: "Advanced load-tolerance analysis is deferred for now."
+    }
+  };
+  const resultSignals = [];
+  const performanceSignals = {
+    summaryLine: "Performance interpretation is temporarily simplified",
+    sessionLengthTrend: null,
+    intensityTrend: null,
+    frequencyTrend: null
+  };
+  const checkpoint = null;
+  const identitySignal = null;
+  const programPhase = null;
+  const nextWeekAdjustment = null;
+  const whyThisMattersNotes = [];
   const premiumOutcomeLayer = getPremiumOutcomeLayer(accessTier, { surface: "progress" });
   const premiumComparison = getPremiumComparisonSummary(accessTier, { surface: "progress" });
-  const systemConfidenceSignal = getSystemConfidenceSignal({
-    completionRecords: workoutMemory.completionRecords,
-    memoryState: workoutMemory,
-    workoutMomentum,
-    currentPlanFocus
-  });
-  const trustCue = getSystemTrustCue({
-    currentPlanFocus,
-    memoryState: workoutMemory,
-    resultSignals
-  });
-  const primarySignal = getPrimarySignalHighlight({
-    checkpoint,
-    milestone: workoutMilestones?.fresh || workoutMilestones?.latest || null,
-    identitySignal,
-    performanceSignals,
-    resultSignals
-  });
+  const systemConfidenceSignal = null;
+  const trustCue = null;
+  const primarySignal = null;
   const visibleMilestone = checkpoint || workoutMilestones?.fresh || workoutMilestones?.latest || null;
   const progressUpgradePrompt = hasProgressAccess
     ? null

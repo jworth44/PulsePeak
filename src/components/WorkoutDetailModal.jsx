@@ -1,5 +1,8 @@
 import React from "react";
-import { getMovementMedia } from "../../shared/exerciseCatalog";
+import { buildGuideTarget, resolveMovementVisual } from "../../shared/exerciseCatalog";
+import { hasFullWorkoutAccess } from "../../shared/entitlements";
+import { getWorkoutLoadBand } from "../../shared/workoutEngine";
+import { useAuth } from "../state/AuthContext";
 
 export default function WorkoutDetailModal({
   workout,
@@ -20,6 +23,9 @@ export default function WorkoutDetailModal({
   isFavorite = false,
   onToggleFavorite
 }) {
+  const { workoutMemory } = useAuth();
+  const workoutExercises = Array.isArray(workout?.exercises) ? workout.exercises : [];
+  const currentWorkoutFocus = workout?.focus || workout?.focusLabel || workout?.type || "training";
   const [selectedBySlot, setSelectedBySlot] = React.useState({});
   const [completedMap, setCompletedMap] = React.useState({});
   const [exerciseState, setExerciseState] = React.useState({});
@@ -41,7 +47,7 @@ export default function WorkoutDetailModal({
 
     const selected = {};
     const state = {};
-    workout.exercises.forEach((exercise) => {
+    workoutExercises.forEach((exercise) => {
       const slotKey = exercise.slotId || exercise.name;
       selected[slotKey] = exercise.name;
       state[slotKey] = {
@@ -58,7 +64,7 @@ export default function WorkoutDetailModal({
     setCompletionError("");
     setTransitionMessage("");
     setSwapCount(0);
-  }, [workout]);
+  }, [workout, workoutExercises]);
 
   React.useEffect(
     () => () => {
@@ -69,11 +75,7 @@ export default function WorkoutDetailModal({
     []
   );
 
-  if (!workout) {
-    return null;
-  }
-
-  const selectedExercises = workout.exercises.map((exercise) => {
+  const selectedExercises = workoutExercises.map((exercise) => {
     const slotKey = exercise.slotId || exercise.name;
     const options = [exercise, ...(exercise.swapOptions || [])];
     const selected = options.find((option) => option.name === selectedBySlot[slotKey]) || exercise;
@@ -84,7 +86,7 @@ export default function WorkoutDetailModal({
       notes: exerciseState[slotKey]?.notes || ""
     };
   });
-  const phaseSections = buildPhaseSections(selectedExercises, workout.focus);
+  const phaseSections = buildPhaseSections(selectedExercises, workout?.focus);
   const totalExercises = selectedExercises.length;
   const completedExercises = Object.values(completedMap).filter(Boolean).length;
   const allExercisesComplete = totalExercises > 0 && completedExercises === totalExercises;
@@ -93,14 +95,42 @@ export default function WorkoutDetailModal({
   const nextExercise = !sessionComplete ? selectedExercises[currentExerciseIndex + 1] || null : null;
   const progressLabel = sessionComplete ? "Session complete" : `Exercise ${Math.min(currentExerciseIndex + 1, totalExercises)} of ${totalExercises}`;
   const progressDetail = sessionComplete
-    ? `${totalExercises} exercises finished | ${workout.duration} mins planned`
+    ? `${totalExercises} exercises finished | ${workout?.duration || 0} mins planned`
     : `${completedExercises} completed | ${Math.max(totalExercises - completedExercises, 0)} left`;
-  const canReplayAndLog = !workout.loggedAt || Boolean(workout.presetId);
+  const canReplayAndLog = !workout?.loggedAt || Boolean(workout?.presetId);
   const projectedWeeklyCount = completionLogged ? weeklyWorkoutCount + 1 : weeklyWorkoutCount;
-  const showFirstSuccessTrigger = completionLogged && accessTier === "free" && canStartTrial && weeklyWorkoutCount === 0;
-  const showUsedTrialTrigger = completionLogged && accessTier === "free" && !canStartTrial;
-  const showSwapIntentPrompt = accessTier === "free" && swapCount >= 2 && !sessionComplete;
-  const activeMedia = activeExercise ? getMovementMedia(activeExercise.movement || activeExercise) : null;
+  const hasFullAccess = hasFullWorkoutAccess(accessTier);
+  const showFirstSuccessTrigger = completionLogged && !hasFullAccess && canStartTrial && weeklyWorkoutCount === 0;
+  const showUsedTrialTrigger = completionLogged && !hasFullAccess && !canStartTrial;
+  const showSwapIntentPrompt = !hasFullAccess && swapCount >= 2 && !sessionComplete;
+  const activeVisual = activeExercise ? resolveMovementVisual(activeExercise.movement || activeExercise) : null;
+  const completionSignals = {};
+  const resultSignals = null;
+  const checkpoint = null;
+  const performanceSignals = null;
+  const identitySignal = null;
+  const programPhase = null;
+  const nextWeekAdjustment = null;
+  const recoveryBias = null;
+  const whyThisMattersNotes = [];
+  const completionMilestone = null;
+  const completionLoadBand = getWorkoutLoadBand(workout);
+  const completionReinforcement = buildCompletionReinforcement({
+    completionSignals,
+    programPhase,
+    projectedWeeklyCount,
+    workoutMomentum: null
+  });
+  const nextStepSuggestion = buildNextStepSuggestion({
+    completionLoadBand,
+    recoveryBias,
+    nextWeekAdjustment
+  });
+  const primaryCompletionSignal = null;
+
+  if (!workout) {
+    return null;
+  }
 
   const updateExerciseState = (slotKey, key, value) => {
     setExerciseState((current) => ({
@@ -176,7 +206,7 @@ export default function WorkoutDetailModal({
           <div className="module-card-actions">
             {onToggleFavorite ? (
               <button className="ghost-button" type="button" onClick={(event) => onToggleFavorite(workout, event)}>
-                {isFavorite ? "Saved workout" : "Save workout"}
+                {isFavorite ? "Remove saved" : "Save workout"}
               </button>
             ) : null}
             <button aria-label="Close workout session" className="icon-button" type="button" onClick={onClose}>
@@ -253,12 +283,12 @@ export default function WorkoutDetailModal({
             </div>
             <div className="workout-current-step-visual-panel">
               <div className="exercise-visual-thumb exercise-visual-thumb-large">
-                {activeMedia?.thumbnail ? (
-                  <img alt={`${activeExercise.name} preview`} className="exercise-visual-thumb-image" src={activeMedia.thumbnail} />
+                {activeVisual?.mode === "image" ? (
+                  <img alt={activeVisual.alt} className="exercise-visual-thumb-image" src={activeVisual.src} />
                 ) : (
-                  <div className="exercise-visual-thumb-placeholder exercise-visual-thumb-placeholder-large">
-                    <span>{activeMedia?.placeholderInitials || "MV"}</span>
-                    <small>{activeMedia?.placeholderLabel || "Movement preview"}</small>
+                  <div className="exercise-visual-thumb-placeholder exercise-visual-thumb-placeholder-large movement-image-fallback">
+                    <span>{activeVisual?.initials || "MV"}</span>
+                    <small>{activeVisual?.label || "Movement preview"}</small>
                   </div>
                 )}
               </div>
@@ -284,7 +314,7 @@ export default function WorkoutDetailModal({
                   const slotKey = exercise.slotId || exercise.name;
                   const isCompleted = Boolean(completedMap[slotKey]) || sessionComplete;
                   const isActive = !sessionComplete && activeExercise && (activeExercise.slotId || activeExercise.name) === slotKey;
-                  const movementMedia = getMovementMedia(exercise.movement || exercise);
+                  const movementVisual = resolveMovementVisual(exercise.movement || exercise);
                   const swapOptions = [exercise, ...(exercise.swapOptions || [])].filter(
                     (option) =>
                       option.name === selectedBySlot[slotKey] ||
@@ -299,11 +329,11 @@ export default function WorkoutDetailModal({
                       key={slotKey}
                       role="button"
                       tabIndex={0}
-                      onClick={() => exercise.movement && onOpenMovement?.(exercise.movement)}
+                      onClick={() => exercise.movement && onOpenMovement?.(buildGuideTarget(exercise.movement || exercise))}
                       onKeyDown={(event) => {
                         if ((event.key === "Enter" || event.key === " ") && exercise.movement) {
                           event.preventDefault();
-                          onOpenMovement?.(exercise.movement);
+                          onOpenMovement?.(buildGuideTarget(exercise.movement || exercise));
                         }
                       }}
                     >
@@ -321,12 +351,12 @@ export default function WorkoutDetailModal({
 
                       <div className="exercise-step-header">
                         <div className={`exercise-visual-thumb ${isActive ? "exercise-visual-thumb-active" : ""}`}>
-                          {movementMedia.thumbnail ? (
-                            <img alt={`${exercise.name} preview`} className="exercise-visual-thumb-image" src={movementMedia.thumbnail} />
+                          {movementVisual.mode === "image" ? (
+                            <img alt={movementVisual.alt} className="exercise-visual-thumb-image" src={movementVisual.src} />
                           ) : (
-                            <div className="exercise-visual-thumb-placeholder">
-                              <span>{movementMedia.placeholderInitials}</span>
-                              <small>{movementMedia.placeholderLabel}</small>
+                            <div className="exercise-visual-thumb-placeholder movement-image-fallback">
+                              <span>{movementVisual.initials}</span>
+                              <small>{movementVisual.label}</small>
                             </div>
                           )}
                         </div>
@@ -439,18 +469,26 @@ export default function WorkoutDetailModal({
                     ? "This completed session stays available here as a review."
                     : completionError || "Finalizing your workout now."}
             </p>
-            <p className="muted">
-              {completionLogged
-                ? projectedWeeklyCount > 1
-                  ? `You have trained ${projectedWeeklyCount} times in the last 7 days.`
-                  : "You are building consistency with a real completed session."
-                : workoutStreak > 0
-                  ? `Your ${workoutStreak}-day streak is still moving.`
-                  : "Next session is ready when you are."}
-            </p>
+            <p className="muted">{completionReinforcement}</p>
             <p className="muted">
               You have completed {projectedWeeklyCount} of {weeklyTarget} sessions this week. Next session keeps your week on track.
             </p>
+            {primaryCompletionSignal ? (
+              <div className="module-note">
+                <strong>{primaryCompletionSignal.title}</strong>
+                <p className="support-copy">{primaryCompletionSignal.detail}</p>
+              </div>
+            ) : null}
+            {nextStepSuggestion ? (
+              <div className="module-note">
+                <strong>{nextStepSuggestion.title}</strong>
+                <p className="support-copy">{nextStepSuggestion.detail}</p>
+              </div>
+            ) : null}
+            {primaryCompletionSignal?.kind !== "performance" && resultSignals?.shortMessage ? <p className="support-copy">{resultSignals.shortMessage}</p> : null}
+            {whyThisMattersNotes.length ? (
+              <p className="support-copy">{whyThisMattersNotes[0]}</p>
+            ) : null}
             {showFirstSuccessTrigger ? (
               <div className="module-note">
                 <strong>You completed your first session. Unlock the full system for the next 7 days.</strong>
@@ -613,4 +651,38 @@ function getExercisePurpose(exercise) {
     return "Open the movement pattern before the next harder block.";
   }
   return "Keep this slot clean so the whole workout flows well.";
+}
+
+function buildCompletionReinforcement({ completionSignals, programPhase, projectedWeeklyCount, workoutMomentum }) {
+  if (completionSignals?.consistency?.status === "up") {
+    return completionSignals.consistency.detail;
+  }
+  if (projectedWeeklyCount >= 3) {
+    return "You kept this week moving with another real completed session.";
+  }
+  if (workoutMomentum?.currentStreakDays >= 2) {
+    return "That keeps your recent momentum alive without forcing the next step.";
+  }
+  return programPhase?.detail || "You turned the plan into a real completed session.";
+}
+
+function buildNextStepSuggestion({ completionLoadBand, recoveryBias, nextWeekAdjustment }) {
+  if (completionLoadBand === "hard" || recoveryBias?.level === "high") {
+    return {
+      title: "A lighter recovery session would fit well next",
+      detail: "Use mobility or a lower-joint-stress session next so the recent load stays sustainable."
+    };
+  }
+
+  if (nextWeekAdjustment?.detail) {
+    return {
+      title: nextWeekAdjustment.label,
+      detail: nextWeekAdjustment.detail
+    };
+  }
+
+  return {
+    title: "Review your next session later this week",
+    detail: "The next recommendation will stay cleaner if you let the week build one session at a time."
+  };
 }

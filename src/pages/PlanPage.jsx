@@ -11,26 +11,6 @@ import { useUpgradeCheckout } from "../hooks/useUpgradeCheckout";
 import { getUpgradePrompt } from "../config/upgradePrompts";
 import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "../../shared/exerciseCatalog";
 import { getPremiumCapabilitySummary, getPremiumComparisonSummary, getPremiumOutcomeLayer, getUpgradeMoment, hasFullWorkoutAccess } from "../../shared/entitlements";
-import {
-  getCheckpoints,
-  getIdentitySignal,
-  getImprovementSignals,
-  getModuleContinuityContext,
-  getNextWeekAdjustment,
-  getPerformanceSignals,
-  getProgramPhase,
-  getPrimarySignalHighlight,
-  getRecommendedCompanionAction,
-  getResultSignals,
-  getSmartRotationStatus,
-  getSystemTrustCue,
-  getTodaysRecommendedWorkout,
-  getWeeklyTrainingOutline,
-  getWhyThisMattersNotes,
-  getWorkoutRecommendationExplanation,
-  getRecoveryBias,
-  getSystemConfidenceSignal
-} from "../../shared/workoutEngine";
 import { PLAN_DISCOVERY_CATEGORIES, PLAN_LIBRARY, TOOL_CATEGORIES, TOOL_LIBRARY } from "../../shared/libraryTaxonomy.js";
 
 export default function PlanPage() {
@@ -81,102 +61,19 @@ export default function PlanPage() {
       })),
     []
   );
-  const weeklyStructure = useMemo(
-    () =>
-      getWeeklyTrainingOutline({
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        accessTier,
-        workouts: recommendedWorkoutPool
-      }),
-    [accessTier, currentPlanFocus, recommendedWorkoutPool, workoutMemory]
-  );
-  const recommendationExplanation = useMemo(
-    () =>
-      getWorkoutRecommendationExplanation(recommendedWorkout, {
-        accessTier,
-        currentPlanFocus,
-        goalType: safeProfile.goalType,
-        memoryState: workoutMemory,
-        filters: {
-          workoutEnvironment: safeProfile.trainingEnvironment === "hybrid" ? "both" : safeProfile.trainingEnvironment,
-          equipmentSelections: safeProfile.equipmentSelections || []
-        }
-      }),
-    [accessTier, currentPlanFocus, recommendedWorkout, safeProfile.equipmentSelections, safeProfile.goalType, safeProfile.trainingEnvironment, workoutMemory]
-  );
-  const improvementSignals = useMemo(
-    () =>
-      getImprovementSignals({
-        completionRecords: workoutMemory.completionRecords,
-        memoryState: workoutMemory,
-        currentPlanFocus
-      }),
-    [currentPlanFocus, workoutMemory]
-  );
-  const resultSignals = useMemo(
-    () =>
-      getResultSignals({
-        completionRecords: workoutMemory.completionRecords,
-        workoutMomentum
-      }),
-    [workoutMemory.completionRecords, workoutMomentum]
-  );
-  const performanceSignals = useMemo(
-    () =>
-      getPerformanceSignals({
-        completionRecords: workoutMemory.completionRecords
-      }),
-    [workoutMemory.completionRecords]
-  );
-  const checkpoint = useMemo(
-    () =>
-      getCheckpoints({
-        completionRecords: workoutMemory.completionRecords,
-        workoutMomentum
-      }),
-    [workoutMemory.completionRecords, workoutMomentum]
-  );
-  const identitySignal = useMemo(
-    () =>
-      getIdentitySignal({
-        completionRecords: workoutMemory.completionRecords,
-        workoutMomentum
-      }),
-    [workoutMemory.completionRecords, workoutMomentum]
-  );
-  const programPhase = useMemo(
-    () =>
-      getProgramPhase({
-        completionRecords: workoutMemory.completionRecords,
-        currentPlanFocus,
-        workoutMomentum
-      }),
-    [currentPlanFocus, workoutMemory.completionRecords, workoutMomentum]
-  );
-  const nextWeekAdjustment = useMemo(
-    () =>
-      getNextWeekAdjustment({
-        completionRecords: workoutMemory.completionRecords,
-        currentPlanFocus,
-        workoutMomentum,
-        accessTier
-      }),
-    [accessTier, currentPlanFocus, workoutMemory.completionRecords, workoutMomentum]
-  );
-  const recoveryBias = useMemo(() => getRecoveryBias(workoutMemory), [workoutMemory]);
+  const weeklyStructure = null;
+  const recommendationExplanation = null;
+  const improvementSignals = [];
+  const resultSignals = [];
+  const performanceSignals = [];
+  const checkpoint = [];
+  const identitySignal = null;
+  const programPhase = null;
+  const nextWeekAdjustment = null;
+  const recoveryBias = null;
   const launchContext = null;
   const preferenceInfluence = null;
-  const whyThisMattersNotes = useMemo(
-    () =>
-      getWhyThisMattersNotes({
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        phase: programPhase,
-        recoveryBias
-      }),
-    [currentPlanFocus, programPhase, recoveryBias, workoutMemory]
-  );
+  const whyThisMattersNotes = [];
   const premiumOutcomeLayer = useMemo(
     () => getPremiumOutcomeLayer(accessTier, { surface: "plan" }),
     [accessTier]
@@ -201,67 +98,15 @@ export default function PlanPage() {
       }),
     [accessTier, upgradeMoment]
   );
-  const companionAction = useMemo(
-    () =>
-      getRecommendedCompanionAction({
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        workoutMomentum,
-        recoveryBias,
-        weeklyStructure,
-        nutritionMode: safeProfile.nutritionMode,
-        hasMobilityModule: (safeSummary.activeModules || []).includes("mobility"),
-        hasNutritionModule: (safeSummary.activeModules || []).includes("nutrition")
-      }),
-    [currentPlanFocus, recoveryBias, safeProfile.nutritionMode, safeSummary.activeModules, weeklyStructure, workoutMemory, workoutMomentum]
-  );
-  const continuityContext = useMemo(
-    () =>
-      getModuleContinuityContext({
-        module: "plan",
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        workoutMomentum,
-        recoveryBias,
-        weeklyStructure,
-        nutritionMode: safeProfile.nutritionMode
-      }),
-    [currentPlanFocus, recoveryBias, safeProfile.nutritionMode, weeklyStructure, workoutMemory, workoutMomentum]
-  );
-  const trustCue = useMemo(
-    () =>
-      getSystemTrustCue({
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        weeklyStructure,
-        resultSignals
-      }),
-    [currentPlanFocus, resultSignals, weeklyStructure, workoutMemory]
-  );
-  const smartRotationStatus = useMemo(
-    () => getSmartRotationStatus({ recommendedWorkout }),
-    [recommendedWorkout]
-  );
-  const systemConfidenceSignal = useMemo(
-    () =>
-      getSystemConfidenceSignal({
-        completionRecords: workoutMemory.completionRecords,
-        memoryState: workoutMemory,
-        workoutMomentum,
-        currentPlanFocus
-      }),
-    [currentPlanFocus, workoutMemory, workoutMomentum]
-  );
-  const primarySignal = useMemo(
-    () =>
-      getPrimarySignalHighlight({
-        checkpoint,
-        identitySignal,
-        performanceSignals,
-        resultSignals
-      }),
-    [checkpoint, identitySignal, performanceSignals, resultSignals]
-  );
+  const companionAction = null;
+  const continuityContext = {
+    title: "Stay consistent this week",
+    detail: "Use the plan page to keep the week organized without layered coaching prompts."
+  };
+  const trustCue = null;
+  const smartRotationStatus = null;
+  const systemConfidenceSignal = null;
+  const primarySignal = null;
 
   React.useEffect(() => {
     if (!token || !safeProfile.trainingEnvironment) {
@@ -281,16 +126,7 @@ export default function PlanPage() {
     apiRequest(`/workout-library?${params.toString()}`, {}, token)
       .then((payload) => {
         setRecommendedWorkoutPool(payload.workouts || []);
-        setRecommendedWorkout(
-          getTodaysRecommendedWorkout({
-            workouts: payload.workouts || [],
-            currentPlanFocus,
-            memoryState: workoutMemory,
-            accessTier,
-            filters: { workoutEnvironment: preferredEnvironment, equipmentSelections: safeProfile.equipmentSelections || [] },
-            goalType: safeProfile.goalType
-          })
-        );
+        setRecommendedWorkout(null);
       })
       .catch(() => {
         setRecommendedWorkoutPool([]);
@@ -392,8 +228,8 @@ export default function PlanPage() {
             </div>
           ) : null}
           <div className="module-note">
-            <strong>Current phase: {programPhase.label}</strong>
-            <p className="support-copy">{programPhase.detail}</p>
+            <strong>Current phase: Weekly overview</strong>
+            <p className="support-copy">{programPhase?.detail || "Your plan stays visible here without progression overlays."}</p>
           </div>
           <div className="module-note">
             <strong>{weeklyStructure?.summary || continuityContext.title}</strong>
@@ -405,7 +241,7 @@ export default function PlanPage() {
           </div>
           <div className="module-note">
             <strong>Next week likely emphasis</strong>
-            <p className="support-copy">{nextWeekAdjustment.detail}</p>
+            <p className="support-copy">{nextWeekAdjustment?.detail || "Use the weekly check-in before changing your next block."}</p>
           </div>
           {performanceSignals?.summaryLine ? (
             <div className="module-note">
@@ -522,8 +358,8 @@ export default function PlanPage() {
             <p className="support-copy">{summary.whyThisWorks?.body}</p>
           </div>
           <div className="module-note">
-            <strong>Current phase: {programPhase.label}</strong>
-            <p className="support-copy">{programPhase.detail}</p>
+            <strong>Current phase: Weekly overview</strong>
+            <p className="support-copy">{programPhase?.detail || "Plan details stay accessible here without extra coaching signals."}</p>
           </div>
           {summary.resultProjection ? (
             <div className="module-note">

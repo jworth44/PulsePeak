@@ -10,17 +10,7 @@ import { useUpgradeCheckout } from "../hooks/useUpgradeCheckout";
 import { getUpgradePrompt } from "../config/upgradePrompts";
 import {
   formatEquipmentSelections,
-  getModuleContinuityContext,
-  getRecommendedCompanionAction,
-  getProgressionReason,
-  getRecoveryBias,
-  getSmartRotationStatus,
-  getSystemTrustCue,
-  getWeeklyTrainingOutline,
-  formatWorkoutFocus,
-  getTodaysRecommendedWorkout,
-  getWorkoutRecommendationExplanation,
-  getWorkoutRecommendationScore
+  formatWorkoutFocus
 } from "../../shared/workoutEngine";
 import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "../../shared/exerciseCatalog";
 import { getVisibleLockedWorkoutMessage, hasFullWorkoutAccess } from "../../shared/entitlements";
@@ -60,17 +50,8 @@ export default function WorkoutsPage() {
   const focusOptions = libraryMeta?.focusOptions || [];
   const hasFullAccess = hasFullWorkoutAccess(accessTier);
   const currentPlanFocus = null;
-  const weeklyStructure = useMemo(
-    () =>
-      getWeeklyTrainingOutline({
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        accessTier,
-        workouts: workoutLibrary
-      }),
-    [accessTier, currentPlanFocus, workoutLibrary, workoutMemory]
-  );
-  const recoveryBias = useMemo(() => getRecoveryBias(workoutMemory), [workoutMemory]);
+  const weeklyStructure = null;
+  const recoveryBias = null;
 
   const filterState = useMemo(
     () => ({
@@ -156,18 +137,7 @@ export default function WorkoutsPage() {
   );
   const isUsingFilterRecovery = strictDisplayedWorkouts.length === 0 && fallbackDisplayedWorkouts.length > 0;
   const displayedWorkouts = isUsingFilterRecovery ? fallbackDisplayedWorkouts : strictDisplayedWorkouts;
-  const globalRecommendedWorkout = useMemo(
-    () =>
-      getTodaysRecommendedWorkout({
-        workouts: workoutLibrary,
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        accessTier,
-        filters: { workoutEnvironment, equipmentSelections },
-        goalType: safeProfile.goalType
-      }),
-    [accessTier, currentPlanFocus, equipmentSelections, safeProfile.goalType, workoutEnvironment, workoutLibrary, workoutMemory]
-  );
+  const globalRecommendedWorkout = null;
   const savedWorkoutKeys = useMemo(
     () => new Set((safeSummary.savedWorkouts || []).map((workout) => String(workout.presetId || workout.id || "").trim()).filter(Boolean)),
     [safeSummary.savedWorkouts]
@@ -188,86 +158,18 @@ export default function WorkoutsPage() {
       ? displayedWorkouts.find((workout) => workout.id === globalRecommendedWorkout.id) || displayedWorkouts[0] || null
       : displayedWorkouts[0] || null;
   const alternativeWorkouts = displayedWorkouts.filter((workout) => String(workout.id) !== String(topWorkout?.id)).slice(0, 4);
-  const recommendationExplanation = useMemo(
-    () =>
-      getWorkoutRecommendationExplanation(topWorkout, {
-        accessTier,
-        currentPlanFocus,
-        goalType: safeProfile.goalType,
-        memoryState: workoutMemory,
-        filters: {
-          workoutEnvironment,
-          equipmentSelections
-        }
-      }),
-    [accessTier, currentPlanFocus, equipmentSelections, safeProfile.goalType, topWorkout, workoutEnvironment, workoutMemory]
-  );
-  const progressionReason = useMemo(
-    () =>
-      getProgressionReason(topWorkout, {
-        accessTier,
-        currentPlanFocus,
-        goalType: safeProfile.goalType,
-        memoryState: workoutMemory,
-        filters: {
-          workoutEnvironment,
-          equipmentSelections
-        }
-      }),
-    [accessTier, currentPlanFocus, equipmentSelections, safeProfile.goalType, topWorkout, workoutEnvironment, workoutMemory]
-  );
+  const recommendationExplanation = null;
+  const progressionReason = null;
   const preferenceInfluence = null;
   const primaryFocusLabel = "";
   const secondaryFocusLabel = "";
-  const companionAction = useMemo(
-    () =>
-      getRecommendedCompanionAction({
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        workoutMomentum: {
-          weeklyCompletionCount: safeSummary.recentWorkouts?.length || 0,
-          lastActiveDate: workoutMemory?.lastCompletedAt
-        },
-        recoveryBias,
-        weeklyStructure,
-        nutritionMode: safeProfile.nutritionMode,
-        hasMobilityModule: (safeSummary.activeModules || []).includes("mobility"),
-        hasNutritionModule: (safeSummary.activeModules || []).includes("nutrition")
-      }),
-    [currentPlanFocus, recoveryBias, safeProfile.nutritionMode, safeSummary.activeModules, safeSummary.recentWorkouts?.length, weeklyStructure, workoutMemory]
-  );
-  const continuityContext = useMemo(
-    () =>
-      getModuleContinuityContext({
-        module: "workouts",
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        workoutMomentum: {
-          weeklyCompletionCount: safeSummary.recentWorkouts?.length || 0,
-          lastActiveDate: workoutMemory?.lastCompletedAt
-        },
-        recoveryBias,
-        weeklyStructure,
-        nutritionMode: safeProfile.nutritionMode
-      }),
-    [currentPlanFocus, recoveryBias, safeProfile.nutritionMode, safeSummary.recentWorkouts?.length, weeklyStructure, workoutMemory]
-  );
-  const trustCue = useMemo(
-    () =>
-      getSystemTrustCue({
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        weeklyStructure,
-        resultSignals: {
-          momentum: workoutMemory?.completionRecords?.length ? "increasing" : "stable"
-        }
-      }),
-    [currentPlanFocus, weeklyStructure, workoutMemory]
-  );
-  const smartRotationStatus = useMemo(
-    () => getSmartRotationStatus({ recommendedWorkout: topWorkout }),
-    [topWorkout]
-  );
+  const companionAction = null;
+  const continuityContext = {
+    title: "Keep the week moving",
+    detail: "Use the workout library to choose a session that fits your setup without layered coaching prompts."
+  };
+  const trustCue = null;
+  const smartRotationStatus = null;
   const exercisePreview = useMemo(() => {
     const entries = libraryMeta?.exerciseLibraryPreview?.entries || [];
     return selectedExerciseCategory === "all"
@@ -1341,8 +1243,8 @@ function sortWorkouts(workouts, selectedSort, recommendationContext = {}) {
     default:
       return sorted.sort(
         (left, right) =>
-          getWorkoutRecommendationScore(right, recommendationContext) - getWorkoutRecommendationScore(left, recommendationContext) ||
-          String(left.name || "").localeCompare(String(right.name || ""))
+          String(left.name || "").localeCompare(String(right.name || "")) ||
+          left.duration - right.duration
       );
   }
 }

@@ -14,26 +14,6 @@ import { useUpgradeCheckout } from "../hooks/useUpgradeCheckout";
 import { getUpgradePrompt } from "../config/upgradePrompts";
 import { buildGuideTarget } from "../../shared/exerciseCatalog";
 import { ACCESS_TIERS, getPremiumComparisonSummary, getPremiumOutcomeLayer, getUpgradeMoment, hasFullWorkoutAccess } from "../../shared/entitlements";
-import {
-  getCheckpoints,
-  getIdentitySignal,
-  getImprovementSignals,
-  getNextWeekAdjustment,
-  getPerformanceSignals,
-  getProgramPhase,
-  getPrimarySignalHighlight,
-  getRecommendedCompanionAction,
-  getResultSignals,
-  getSmartRotationStatus,
-  getSystemTrustCue,
-  getTodaysRecommendedWorkout,
-  getWeeklyTrainingOutline,
-  getWhyThisMattersNotes,
-  getWorkoutRecommendationExplanation,
-  getRecoveryBias,
-  getModuleContinuityContext,
-  getSystemConfidenceSignal
-} from "../../shared/workoutEngine";
 import { getDashboardNextAction } from "../../shared/dashboardModules";
 
 export default function DashboardPage() {
@@ -87,19 +67,7 @@ export default function DashboardPage() {
     )
       .then((payload) => {
         setRecommendedWorkoutPool(payload.workouts || []);
-        setRecommendedWorkout(
-          getTodaysRecommendedWorkout({
-            workouts: payload.workouts || [],
-            currentPlanFocus,
-            memoryState: workoutMemory,
-            accessTier,
-            filters: {
-              workoutEnvironment: preferredEnvironment,
-              equipmentSelections: data.profile.equipmentSelections || []
-            },
-            goalType: data.profile.goalType
-          })
-        );
+        setRecommendedWorkout(null);
       })
       .catch(() => {
         setRecommendedWorkoutPool([]);
@@ -165,157 +133,28 @@ export default function DashboardPage() {
     }
     return "Continue training with the next session that fits today.";
   }, [todayFocus?.actions, todayFocus?.whyThisMatters, recommendedWorkout, returnGapDays, workoutAccess?.locked]);
-  const recommendationExplanation = useMemo(
-    () =>
-      getWorkoutRecommendationExplanation(recommendedWorkout, {
-        accessTier,
-        currentPlanFocus,
-        goalType: data?.profile?.goalType,
-        memoryState: workoutMemory,
-        filters: {
-          workoutEnvironment: data?.profile?.trainingEnvironment === "hybrid" ? "both" : data?.profile?.trainingEnvironment,
-          equipmentSelections: data?.profile?.equipmentSelections || []
-        }
-      }),
-    [accessTier, currentPlanFocus, data?.profile?.equipmentSelections, data?.profile?.goalType, data?.profile?.trainingEnvironment, recommendedWorkout, workoutMemory]
-  );
-  const weeklyStructure = useMemo(
-    () =>
-      getWeeklyTrainingOutline({
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        accessTier,
-        workouts: recommendedWorkoutPool
-      }),
-    [accessTier, currentPlanFocus, recommendedWorkoutPool, workoutMemory]
-  );
-  const recoveryBias = useMemo(() => getRecoveryBias(workoutMemory), [workoutMemory]);
+  const recommendationExplanation = null;
+  const weeklyStructure = null;
+  const recoveryBias = null;
   const launchContext = null;
   const preferenceInfluence = null;
-  const improvementSignals = useMemo(
-    () =>
-      getImprovementSignals({
-        completionRecords: workoutMemory.completionRecords,
-        memoryState: workoutMemory,
-        currentPlanFocus
-      }),
-    [currentPlanFocus, workoutMemory]
-  );
-  const resultSignals = useMemo(
-    () =>
-      getResultSignals({
-        completionRecords: workoutMemory.completionRecords,
-        workoutMomentum
-      }),
-    [workoutMemory.completionRecords, workoutMomentum]
-  );
-  const performanceSignals = useMemo(
-    () =>
-      getPerformanceSignals({
-        completionRecords: workoutMemory.completionRecords
-      }),
-    [workoutMemory.completionRecords]
-  );
-  const checkpoint = useMemo(
-    () =>
-      getCheckpoints({
-        completionRecords: workoutMemory.completionRecords,
-        workoutMomentum
-      }),
-    [workoutMemory.completionRecords, workoutMomentum]
-  );
-  const identitySignal = useMemo(
-    () =>
-      getIdentitySignal({
-        completionRecords: workoutMemory.completionRecords,
-        workoutMomentum
-      }),
-    [workoutMemory.completionRecords, workoutMomentum]
-  );
-  const programPhase = useMemo(
-    () =>
-      getProgramPhase({
-        completionRecords: workoutMemory.completionRecords,
-        currentPlanFocus,
-        workoutMomentum
-      }),
-    [currentPlanFocus, workoutMemory.completionRecords, workoutMomentum]
-  );
-  const systemConfidenceSignal = useMemo(
-    () =>
-      getSystemConfidenceSignal({
-        completionRecords: workoutMemory.completionRecords,
-        memoryState: workoutMemory,
-        workoutMomentum,
-        currentPlanFocus
-      }),
-    [currentPlanFocus, workoutMemory, workoutMomentum]
-  );
-  const nextWeekAdjustment = useMemo(
-    () =>
-      getNextWeekAdjustment({
-        completionRecords: workoutMemory.completionRecords,
-        currentPlanFocus,
-        workoutMomentum,
-        accessTier
-      }),
-    [accessTier, currentPlanFocus, workoutMemory.completionRecords, workoutMomentum]
-  );
-  const whyThisMattersNotes = useMemo(
-    () =>
-      getWhyThisMattersNotes({
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        phase: programPhase,
-        recoveryBias
-      }),
-    [currentPlanFocus, programPhase, recoveryBias, workoutMemory]
-  );
+  const improvementSignals = [];
+  const resultSignals = null;
+  const performanceSignals = null;
+  const checkpoint = null;
+  const identitySignal = null;
+  const programPhase = null;
+  const systemConfidenceSignal = null;
+  const nextWeekAdjustment = null;
+  const whyThisMattersNotes = [];
   const premiumOutcomeLayer = useMemo(
     () => getPremiumOutcomeLayer(accessTier, { surface: "dashboard" }),
     [accessTier]
   );
-  const companionAction = useMemo(
-    () =>
-      getRecommendedCompanionAction({
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        workoutMomentum,
-        recoveryBias,
-        weeklyStructure,
-        nutritionMode: data?.profile?.nutritionMode,
-        hasMobilityModule: showMobilityDashboard,
-        hasNutritionModule: (summary?.activeModules || []).includes("nutrition")
-      }),
-    [currentPlanFocus, data?.profile?.nutritionMode, recoveryBias, showMobilityDashboard, summary?.activeModules, weeklyStructure, workoutMemory, workoutMomentum]
-  );
-  const continuityContext = useMemo(
-    () =>
-      getModuleContinuityContext({
-        module: "dashboard",
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        workoutMomentum,
-        recoveryBias,
-        weeklyStructure,
-        nutritionMode: data?.profile?.nutritionMode
-      }),
-    [currentPlanFocus, data?.profile?.nutritionMode, recoveryBias, weeklyStructure, workoutMemory, workoutMomentum]
-  );
-  const trustCue = useMemo(
-    () =>
-      getSystemTrustCue({
-        currentPlanFocus,
-        memoryState: workoutMemory,
-        weeklyStructure,
-        resultSignals
-      }),
-    [currentPlanFocus, resultSignals, weeklyStructure, workoutMemory]
-  );
-  const smartRotationStatus = useMemo(
-    () => getSmartRotationStatus({ recommendedWorkout }),
-    [recommendedWorkout]
-  );
+  const companionAction = null;
+  const continuityContext = null;
+  const trustCue = null;
+  const smartRotationStatus = null;
   const upgradeMoment = useMemo(
     () =>
       getUpgradeMoment({
@@ -355,17 +194,7 @@ export default function DashboardPage() {
       }),
     [hasFullAccess, needsOnboarding, nextWeekAdjustment, programPhase, recommendedWorkout, recommendationExplanation, recoveryBias, showMobilityDashboard, summary?.activeModules, weeklyStructure, workoutAccess, workoutMemory, workoutMomentum]
   );
-  const primarySignal = useMemo(
-    () =>
-      getPrimarySignalHighlight({
-        checkpoint,
-        milestone: workoutMilestones?.fresh || workoutMilestones?.latest || null,
-        identitySignal,
-        performanceSignals,
-        resultSignals
-      }),
-    [checkpoint, identitySignal, performanceSignals, resultSignals, workoutMilestones]
-  );
+  const primarySignal = null;
   const trialReminder = useMemo(() => {
     if (!isTrial) {
       return null;
@@ -664,7 +493,7 @@ export default function DashboardPage() {
         >
           <div className="section-context">
             <span className="section-context-label">Today</span>
-            <p>{workoutEngine?.recommendationReason || continuityContext.detail || "This is the highest-impact move for the next few hours, pulled from the larger weekly system below."}</p>
+            <p>{workoutEngine?.recommendationReason || continuityContext?.detail || "This is the highest-impact move for the next few hours, pulled from the larger weekly system below."}</p>
           </div>
           {trustCue ? <p className="support-copy recommendation-context-note">{trustCue}</p> : null}
           {recommendationExplanation?.shortLabel ? (
@@ -691,10 +520,17 @@ export default function DashboardPage() {
               <p className="support-copy">{systemConfidenceSignal}</p>
             </div>
           ) : null}
-          <div className="module-note">
-            <strong>{programPhase.label}</strong>
-            <p className="support-copy">{programPhase.detail}</p>
-          </div>
+          {programPhase ? (
+            <div className="module-note">
+              <strong>{programPhase.label}</strong>
+              <p className="support-copy">{programPhase.detail}</p>
+            </div>
+          ) : (
+            <div className="module-note">
+              <strong>Today is ready</strong>
+              <p className="support-copy">Use the next session when you are ready to continue the week.</p>
+            </div>
+          )}
           {workoutEngine?.continuityNote ? (
             <div className="module-note">
               <strong>{workoutEngine.continuityNote}</strong>
@@ -780,12 +616,12 @@ export default function DashboardPage() {
               <p className="support-copy">
                 {recommendedWorkout ? `Today points toward ${recommendedWorkout.name} so the week starts from a clear next action.` : "Open the workout engine to lock in the next session from this weekly structure."}
               </p>
-              <p className="support-copy">{nextWeekAdjustment.detail}</p>
+              <p className="support-copy">{nextWeekAdjustment?.detail || "Open the workout engine when you want to choose the next step from this weekly structure."}</p>
             </div>
           ) : (
             <div className="module-note">
-              <strong>{continuityContext.title}</strong>
-              <p className="support-copy">{continuityContext.detail}</p>
+              <strong>{continuityContext?.title || "Keep the next move simple"}</strong>
+              <p className="support-copy">{continuityContext?.detail || "Open the workout engine to choose a session that fits today."}</p>
             </div>
           )}
           <div className="today-sequence">

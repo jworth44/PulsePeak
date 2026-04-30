@@ -5,7 +5,6 @@ import ActivityList from "../components/ActivityList";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { useAuth } from "../state/AuthContext";
 import { getNutritionTemplateMedia } from "../../shared/nutritionMedia";
-import { getModuleContinuityContext, getRecoveryBias } from "../../shared/workoutEngine";
 import {
   convertHydrationToStored,
   formatHydration,
@@ -40,16 +39,11 @@ export default function NutritionPage() {
   const todayDirectionSteps = isPremium
     ? [...(guidance?.todayDirection?.freeSteps || []), ...(guidance?.todayDirection?.premiumSteps || [])]
     : guidance?.todayDirection?.freeSteps || [];
-  const currentPlanFocus = null;
-  const recoveryBias = getRecoveryBias(workoutMemory);
-  const continuityContext = getModuleContinuityContext({
-    module: "nutrition",
-    currentPlanFocus,
-    memoryState: workoutMemory,
-    workoutMomentum,
-    recoveryBias,
-    nutritionMode
-  });
+  const recoveryBias = null;
+  const continuityContext = {
+    title: "Keep nutrition practical",
+    detail: "Use the nutrition layer for clear daily direction without extra recovery or coaching overlays."
+  };
 
   const addMeal = async (event) => {
     event.preventDefault();
