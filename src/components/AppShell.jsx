@@ -22,6 +22,7 @@ export default function AppShell({ children }) {
         items: [
           { type: "link", to: "/workouts", label: "Workouts" },
           { type: "link", to: "/plan", label: "Plan" },
+          { type: "link", to: "/exercise-library", label: "Exercise Library" },
           !hiddenModules.includes("mobility") ? { type: "link", to: "/mobility", label: "Mobility" } : null,
           !hiddenModules.includes("nutrition") ? { type: "link", to: "/nutrition", label: "Nutrition" } : null
         ].filter(Boolean)
