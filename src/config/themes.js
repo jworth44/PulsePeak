@@ -1,9 +1,9 @@
 export const THEME_OPTIONS = [
   {
     value: "solar-crest",
-    label: "Solar Crest",
-    mood: "Bold daylight energy",
-    chips: ["#d92b31", "#144bc7", "#f2c14a"]
+    label: "PulsePeak Core",
+    mood: "Signature red, black, and white",
+    chips: ["#ef202d", "#050505", "#f5f5f5"]
   },
   {
     value: "gamma-forge",
@@ -38,7 +38,7 @@ export const THEME_OPTIONS = [
 ];
 
 export const THEME_STORAGE_KEY = "pulsepeak-theme";
-export const FALLBACK_THEME = "gamma-forge";
+export const FALLBACK_THEME = "solar-crest";
 
 export function normalizeThemePreference(value) {
   return THEME_OPTIONS.some((option) => option.value === value) ? value : FALLBACK_THEME;
