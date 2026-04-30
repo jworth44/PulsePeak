@@ -8,12 +8,26 @@ import { useDashboardData } from "../hooks/useDashboardData";
 import { useAuth } from "../state/AuthContext";
 import { useUpgradeCheckout } from "../hooks/useUpgradeCheckout";
 import { getUpgradePrompt } from "../config/upgradePrompts";
-import { formatEquipmentSelections, formatWorkoutFocus } from "../../shared/workoutEngine";
-import { getMovementMedia } from "../../shared/exerciseCatalog";
-import { WORKOUT_DISCOVERY_CATEGORIES, WORKOUT_SORT_OPTIONS } from "../../shared/libraryTaxonomy.js";
+import {
+  formatEquipmentSelections,
+  getModuleContinuityContext,
+  getRecommendedCompanionAction,
+  getProgressionReason,
+  getRecoveryBias,
+  getSmartRotationStatus,
+  getSystemTrustCue,
+  getWeeklyTrainingOutline,
+  formatWorkoutFocus,
+  getTodaysRecommendedWorkout,
+  getWorkoutRecommendationExplanation,
+  getWorkoutRecommendationScore
+} from "../../shared/workoutEngine";
+import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "../../shared/exerciseCatalog";
+import { getVisibleLockedWorkoutMessage, hasFullWorkoutAccess } from "../../shared/entitlements";
+import { WORKOUT_DISCOVERY_CATEGORIES, WORKOUT_FILTER_PRESETS, WORKOUT_SORT_OPTIONS } from "../../shared/libraryTaxonomy.js";
 
 export default function WorkoutsPage() {
-  const { token, isPremium, accessTier } = useAuth();
+  const { token, accessTier, workoutMemory, recordWorkoutCompletion } = useAuth();
   const { data, summary, loading, error, mutate } = useDashboardData();
   const [workoutEnvironment, setWorkoutEnvironment] = useState("both");
   const [equipmentSelections, setEquipmentSelections] = useState([]);
@@ -34,53 +48,226 @@ export default function WorkoutsPage() {
   const [favoriteSavingId, setFavoriteSavingId] = useState("");
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [selectedMovement, setSelectedMovement] = useState(null);
+  const openMovementGuide = (target) => setSelectedMovement(buildGuideTarget(target));
   const { busy: checkoutBusy, startUpgradeCheckout: startUpgradeCheckoutFlow } = useUpgradeCheckout();
   const safeProfile = data?.profile || {};
   const safeSummary = summary || {};
   const safeWorkoutAccess = safeSummary.workoutAccess || {};
   const safePlanSummary = safeSummary.planSummary || {};
   const safeWorkoutEngine = safeSummary.workoutEngine || {};
+  const visualModelPreference = safeProfile.visualModelPreference || "default";
   const categoryOptions = libraryMeta?.categoryOptions || WORKOUT_DISCOVERY_CATEGORIES;
   const focusOptions = libraryMeta?.focusOptions || [];
+  const hasFullAccess = hasFullWorkoutAccess(accessTier);
+  const currentPlanFocus = null;
+  const weeklyStructure = useMemo(
+    () =>
+      getWeeklyTrainingOutline({
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        accessTier,
+        workouts: workoutLibrary
+      }),
+    [accessTier, currentPlanFocus, workoutLibrary, workoutMemory]
+  );
+  const recoveryBias = useMemo(() => getRecoveryBias(workoutMemory), [workoutMemory]);
 
-  const displayedWorkouts = useMemo(() => {
-    const filtered = workoutLibrary.filter((workout) => {
-      const categoryMatch =
-        selectedCategory === "all" ||
-        (workout.categoryTags || []).some((tag) => slugifyDiscoveryTag(tag) === selectedCategory);
-      const durationMatch =
-        selectedDuration === "all" ||
-        (selectedDuration === "short" ? workout.duration <= 35 : selectedDuration === "medium" ? workout.duration <= 50 : workout.duration > 50);
-      const intensityMatch = selectedIntensity === "all" || String(workout.intensity || "").toLowerCase() === selectedIntensity;
-      const jointStressMatch = selectedJointStress === "all" || String(workout.jointStressProfile || "").toLowerCase() === selectedJointStress;
-      const trainingStyleMatch =
-        selectedTrainingStyle === "all" ||
-        (workout.trainingStyleTags || []).some((tag) => slugifyDiscoveryTag(tag) === selectedTrainingStyle);
-      return categoryMatch && durationMatch && intensityMatch && jointStressMatch && trainingStyleMatch;
-    });
+  const filterState = useMemo(
+    () => ({
+      workoutEnvironment,
+      workoutFocus,
+      selectedCategory,
+      selectedDuration,
+      selectedIntensity,
+      selectedJointStress,
+      selectedTrainingStyle,
+      selectedSort
+    }),
+    [selectedCategory, selectedDuration, selectedIntensity, selectedJointStress, selectedSort, selectedTrainingStyle, workoutEnvironment, workoutFocus]
+  );
 
-    return [...filtered].sort((left, right) => {
-      switch (selectedSort) {
-        case "shortest":
-          return left.duration - right.duration;
-        case "easiest":
-          return rankDifficulty(left.difficultyTag) - rankDifficulty(right.difficultyTag);
-        case "recovery_friendly":
-          return rankJointStress(left.jointStressProfile) - rankJointStress(right.jointStressProfile);
-        case "equipment_efficient":
-          return countEquipmentWords(left.equipmentSummary) - countEquipmentWords(right.equipmentSummary);
-        default:
-          return (right.recommendationScore || 0) - (left.recommendationScore || 0);
+  const activePresetId = useMemo(
+    () =>
+      WORKOUT_FILTER_PRESETS.find((preset) =>
+        Object.entries(preset.values).every(([key, value]) => filterState[key] === value)
+      )?.id || null,
+    [filterState]
+  );
+
+  const strictDisplayedWorkouts = useMemo(() => {
+    const mappedFocus = resolveCategoryToFocus(selectedCategory, focusOptions);
+    const effectiveFocus = workoutFocus === "recommended" ? mappedFocus : workoutFocus;
+    const filtered = workoutLibrary
+      .filter((workout) => matchesWorkoutEnvironment(workout, workoutEnvironment))
+      .filter((workout) => matchesWorkoutEquipment(workout, equipmentSelections))
+      .filter((workout) => matchesWorkoutFocus(workout, effectiveFocus))
+      .filter((workout) => matchesWorkoutCategory(workout, selectedCategory))
+      .filter((workout) => matchesWorkoutDuration(workout, selectedDuration))
+      .filter((workout) => matchesWorkoutIntensity(workout, selectedIntensity))
+      .filter((workout) => matchesWorkoutJointStress(workout, selectedJointStress))
+      .filter((workout) => matchesWorkoutTrainingStyle(workout, selectedTrainingStyle));
+
+    return sortWorkouts(filtered, selectedSort, {
+      accessTier,
+      currentPlanFocus,
+      goalType: safeProfile.goalType,
+      memoryState: workoutMemory,
+      filters: {
+        workoutEnvironment,
+        equipmentSelections
       }
     });
-  }, [workoutLibrary, selectedCategory, selectedDuration, selectedIntensity, selectedJointStress, selectedTrainingStyle, selectedSort]);
-  const topWorkout = displayedWorkouts[0] || null;
-  const alternativeWorkouts = displayedWorkouts.slice(1, 4);
+  }, [
+    accessTier,
+    currentPlanFocus,
+    equipmentSelections,
+    focusOptions,
+    safeProfile.goalType,
+    selectedCategory,
+    selectedDuration,
+    selectedIntensity,
+    selectedJointStress,
+    selectedSort,
+    selectedTrainingStyle,
+    workoutEnvironment,
+    workoutFocus,
+    workoutLibrary,
+    workoutMemory
+  ]);
+  const fallbackDisplayedWorkouts = useMemo(
+    () =>
+      sortWorkouts(
+        workoutLibrary
+          .filter((workout) => matchesWorkoutEnvironment(workout, workoutEnvironment))
+          .filter((workout) => matchesWorkoutEquipment(workout, equipmentSelections)),
+        "recommended",
+        {
+          accessTier,
+          currentPlanFocus,
+          goalType: safeProfile.goalType,
+          memoryState: workoutMemory,
+          filters: {
+            workoutEnvironment,
+            equipmentSelections
+          }
+        }
+      ),
+    [accessTier, currentPlanFocus, equipmentSelections, safeProfile.goalType, workoutEnvironment, workoutLibrary, workoutMemory]
+  );
+  const isUsingFilterRecovery = strictDisplayedWorkouts.length === 0 && fallbackDisplayedWorkouts.length > 0;
+  const displayedWorkouts = isUsingFilterRecovery ? fallbackDisplayedWorkouts : strictDisplayedWorkouts;
+  const globalRecommendedWorkout = useMemo(
+    () =>
+      getTodaysRecommendedWorkout({
+        workouts: workoutLibrary,
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        accessTier,
+        filters: { workoutEnvironment, equipmentSelections },
+        goalType: safeProfile.goalType
+      }),
+    [accessTier, currentPlanFocus, equipmentSelections, safeProfile.goalType, workoutEnvironment, workoutLibrary, workoutMemory]
+  );
   const savedWorkoutKeys = useMemo(
     () => new Set((safeSummary.savedWorkouts || []).map((workout) => String(workout.presetId || workout.id || "").trim()).filter(Boolean)),
     [safeSummary.savedWorkouts]
   );
   const selectedCategoryMeta = categoryOptions.find((category) => category.id === selectedCategory) || categoryOptions[0];
+  const hasRestrictiveOverrides = Boolean(
+    selectedCategory !== "all" ||
+      selectedDuration !== "all" ||
+      selectedIntensity !== "all" ||
+      selectedJointStress !== "all" ||
+      selectedTrainingStyle !== "all" ||
+      workoutFocus !== "recommended"
+  );
+  const topWorkout =
+    (!hasRestrictiveOverrides || isUsingFilterRecovery) &&
+    globalRecommendedWorkout &&
+    displayedWorkouts.some((workout) => workout.id === globalRecommendedWorkout.id)
+      ? displayedWorkouts.find((workout) => workout.id === globalRecommendedWorkout.id) || displayedWorkouts[0] || null
+      : displayedWorkouts[0] || null;
+  const alternativeWorkouts = displayedWorkouts.filter((workout) => String(workout.id) !== String(topWorkout?.id)).slice(0, 4);
+  const recommendationExplanation = useMemo(
+    () =>
+      getWorkoutRecommendationExplanation(topWorkout, {
+        accessTier,
+        currentPlanFocus,
+        goalType: safeProfile.goalType,
+        memoryState: workoutMemory,
+        filters: {
+          workoutEnvironment,
+          equipmentSelections
+        }
+      }),
+    [accessTier, currentPlanFocus, equipmentSelections, safeProfile.goalType, topWorkout, workoutEnvironment, workoutMemory]
+  );
+  const progressionReason = useMemo(
+    () =>
+      getProgressionReason(topWorkout, {
+        accessTier,
+        currentPlanFocus,
+        goalType: safeProfile.goalType,
+        memoryState: workoutMemory,
+        filters: {
+          workoutEnvironment,
+          equipmentSelections
+        }
+      }),
+    [accessTier, currentPlanFocus, equipmentSelections, safeProfile.goalType, topWorkout, workoutEnvironment, workoutMemory]
+  );
+  const preferenceInfluence = null;
+  const primaryFocusLabel = "";
+  const secondaryFocusLabel = "";
+  const companionAction = useMemo(
+    () =>
+      getRecommendedCompanionAction({
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        workoutMomentum: {
+          weeklyCompletionCount: safeSummary.recentWorkouts?.length || 0,
+          lastActiveDate: workoutMemory?.lastCompletedAt
+        },
+        recoveryBias,
+        weeklyStructure,
+        nutritionMode: safeProfile.nutritionMode,
+        hasMobilityModule: (safeSummary.activeModules || []).includes("mobility"),
+        hasNutritionModule: (safeSummary.activeModules || []).includes("nutrition")
+      }),
+    [currentPlanFocus, recoveryBias, safeProfile.nutritionMode, safeSummary.activeModules, safeSummary.recentWorkouts?.length, weeklyStructure, workoutMemory]
+  );
+  const continuityContext = useMemo(
+    () =>
+      getModuleContinuityContext({
+        module: "workouts",
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        workoutMomentum: {
+          weeklyCompletionCount: safeSummary.recentWorkouts?.length || 0,
+          lastActiveDate: workoutMemory?.lastCompletedAt
+        },
+        recoveryBias,
+        weeklyStructure,
+        nutritionMode: safeProfile.nutritionMode
+      }),
+    [currentPlanFocus, recoveryBias, safeProfile.nutritionMode, safeSummary.recentWorkouts?.length, weeklyStructure, workoutMemory]
+  );
+  const trustCue = useMemo(
+    () =>
+      getSystemTrustCue({
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        weeklyStructure,
+        resultSignals: {
+          momentum: workoutMemory?.completionRecords?.length ? "increasing" : "stable"
+        }
+      }),
+    [currentPlanFocus, weeklyStructure, workoutMemory]
+  );
+  const smartRotationStatus = useMemo(
+    () => getSmartRotationStatus({ recommendedWorkout: topWorkout }),
+    [topWorkout]
+  );
   const exercisePreview = useMemo(() => {
     const entries = libraryMeta?.exerciseLibraryPreview?.entries || [];
     return selectedExerciseCategory === "all"
@@ -154,7 +341,7 @@ export default function WorkoutsPage() {
   }
 
   const workoutAccess = safeWorkoutAccess;
-  const workoutPrompt = isPremium
+  const workoutPrompt = hasFullAccess
     ? null
     : getUpgradePrompt({
         surface: "workouts",
@@ -169,7 +356,7 @@ export default function WorkoutsPage() {
   const selectedFocusOption = focusOptions.find((option) => option.value === workoutFocus);
   const equipmentSummary = formatEquipmentSelections(equipmentSelections);
   const sortOptions = libraryMeta?.sortOptions?.length ? libraryMeta.sortOptions : WORKOUT_SORT_OPTIONS;
-  const loadedWorkoutMessage = buildLoadedWorkoutMessage(topWorkout, selectedCategoryMeta, selectedFocusLabel);
+  const loadedWorkoutMessage = buildLoadedWorkoutMessage(topWorkout, selectedCategoryMeta, selectedFocusLabel, isUsingFilterRecovery);
   const coachReasoning = buildCoachReasoning({
     topWorkout,
     selectedCategoryMeta,
@@ -220,6 +407,7 @@ export default function WorkoutsPage() {
             : undefined
         })
       });
+      recordWorkoutCompletion(workoutContext || { id: workoutId, name: workoutContext?.name || "Workout", focus: workoutContext?.focus || workoutFocus, duration: workoutContext?.duration });
       setFeedback(successMessage);
       if (closeOnSuccess) {
         setSelectedWorkout(null);
@@ -235,7 +423,7 @@ export default function WorkoutsPage() {
   const toggleFavoriteWorkout = async (workout, event) => {
     event?.stopPropagation?.();
     const workoutId = String(workout?.presetId || workout?.id || "").trim();
-    if (!workoutId) {
+    if (!workoutId || favoriteSavingId) {
       return;
     }
 
@@ -244,7 +432,7 @@ export default function WorkoutsPage() {
     try {
       const payload = await mutate("/workouts/saved", {
         method: "POST",
-        body: JSON.stringify({ workout })
+        body: JSON.stringify({ workout: buildSavedWorkoutPayload(workout) })
       });
       setFeedback(payload.saved ? "Workout saved." : "Workout removed from saved workouts.");
     } catch (loadError) {
@@ -271,6 +459,60 @@ export default function WorkoutsPage() {
     }
   };
 
+  const applyWorkoutPreset = (preset) => {
+    setSelectedCategory("all");
+    setSelectedDuration("all");
+    setSelectedIntensity("all");
+    setSelectedJointStress("all");
+    setSelectedTrainingStyle("all");
+    setSelectedSort("recommended");
+    setWorkoutFocus("recommended");
+    setWorkoutEnvironment(safeProfile.trainingEnvironment === "hybrid" ? "both" : safeProfile.trainingEnvironment || "both");
+
+    Object.entries(preset.values).forEach(([key, value]) => {
+      switch (key) {
+        case "selectedCategory":
+          setSelectedCategory(value);
+          break;
+        case "selectedDuration":
+          setSelectedDuration(value);
+          break;
+        case "selectedIntensity":
+          setSelectedIntensity(value);
+          break;
+        case "selectedJointStress":
+          setSelectedJointStress(value);
+          break;
+        case "selectedTrainingStyle":
+          setSelectedTrainingStyle(value);
+          break;
+        case "selectedSort":
+          setSelectedSort(value);
+          break;
+        case "workoutEnvironment":
+          setWorkoutEnvironment(value);
+          break;
+        case "workoutFocus":
+          setWorkoutFocus(value);
+          break;
+        default:
+          break;
+      }
+    });
+  };
+
+  const resetWorkoutFilters = () => {
+    setSelectedCategory("all");
+    setSelectedDuration("all");
+    setSelectedIntensity("all");
+    setSelectedJointStress("all");
+    setSelectedTrainingStyle("all");
+    setSelectedSort("recommended");
+    setWorkoutFocus(safeWorkoutEngine.recommendedFocus || "recommended");
+    setWorkoutEnvironment(safeProfile.trainingEnvironment === "hybrid" ? "both" : safeProfile.trainingEnvironment || "both");
+    setEquipmentSelections(safeProfile.equipmentSelections || []);
+  };
+
   return (
     <div className="page-grid page-grid-tight">
       <section className="module-page-hero">
@@ -282,6 +524,12 @@ export default function WorkoutsPage() {
       </section>
 
       {feedback ? <div className="status-banner">{feedback}</div> : null}
+
+      <div className="module-note">
+        <strong>{continuityContext.title}</strong>
+        <p className="support-copy">{continuityContext.detail}</p>
+        {preferenceInfluence?.summary ? <p className="support-copy">{preferenceInfluence.summary}</p> : null}
+      </div>
 
       <div className={`cap-banner ${workoutAccess?.locked ? "cap-banner-locked" : ""}`}>
         <div>
@@ -304,7 +552,7 @@ export default function WorkoutsPage() {
                   : `You still have ${workoutAccess?.remaining} workout log${workoutAccess?.remaining === 1 ? "" : "s"} left before the weekly reset on ${workoutAccess?.resetLabel}.`}
           </p>
         </div>
-        {!isPremium && workoutAccess?.locked && workoutPrompt ? (
+        {!hasFullAccess && workoutAccess?.locked && workoutPrompt ? (
           <UpgradePrompt compact prompt={workoutPrompt} busy={checkoutBusy} onUpgrade={startUpgradeCheckout} />
         ) : null}
       </div>
@@ -314,6 +562,7 @@ export default function WorkoutsPage() {
           <span className="section-context-label">Workout setup</span>
           <p>Choose where you are training, tap the equipment you have today, and then pick the split you want to run.</p>
         </div>
+        {trustCue ? <p className="support-copy recommendation-context-note">{trustCue}</p> : null}
         {!libraryMeta?.fullLibraryAccess && libraryMeta?.lockedLibraryMessage ? (
           <div className="module-note premium-locked">
             <strong>You are only seeing a smaller free preview of PulsePeak.</strong>
@@ -334,9 +583,9 @@ export default function WorkoutsPage() {
             <select value={workoutFocus} onChange={(event) => setWorkoutFocus(event.target.value)}>
               <option value="recommended">Recommended for today</option>
               {focusOptions.map((option) => (
-                <option key={option.value} disabled={Boolean(option.locked && !isPremium)} value={option.value}>
+                <option key={option.value} disabled={Boolean(option.locked && !hasFullAccess)} value={option.value}>
                   {option.label}
-                  {option.locked && !isPremium ? " (Locked on Free)" : ""}
+                  {option.locked && !hasFullAccess ? " (Locked on Free)" : ""}
                 </option>
               ))}
             </select>
@@ -356,13 +605,26 @@ export default function WorkoutsPage() {
           ))}
         </div>
 
+        <div className="preset-chip-row">
+          {WORKOUT_FILTER_PRESETS.map((preset) => (
+            <button
+              key={preset.id}
+              className={`selector-pill selector-pill-compact ${activePresetId === preset.id ? "selector-pill-active" : ""}`}
+              type="button"
+              onClick={() => applyWorkoutPreset(preset)}
+            >
+              <strong>{preset.label}</strong>
+            </button>
+          ))}
+        </div>
+
         <div className="content-grid">
           <div className="module-note">
             <strong>{libraryMeta?.recommendationTitle || "Pick the split that fits today."}</strong>
             <p className="support-copy">{libraryMeta?.recommendationReason}</p>
             {libraryMeta?.continuityReason ? <p className="support-copy">{libraryMeta.continuityReason}</p> : null}
             <p className="support-copy">Current setup: {equipmentSummary}</p>
-            {selectedFocusOption?.locked && !isPremium ? <p className="support-copy">Locked on Free. Included in Trial + Premium.</p> : null}
+            {selectedFocusOption?.locked && !hasFullAccess ? <p className="support-copy">Locked on Free. Included in Trial + Premium.</p> : null}
           </div>
           <div className="module-note">
             <strong>{workoutFocus === "recommended" ? "Good alternatives" : "Helpful companion splits"}</strong>
@@ -435,6 +697,11 @@ export default function WorkoutsPage() {
               ))}
             </select>
           </label>
+          <div className="filter-action-group">
+            <button className="ghost-button" type="button" onClick={resetWorkoutFilters}>
+              Reset all filters
+            </button>
+          </div>
         </div>
       </Panel>
 
@@ -442,15 +709,28 @@ export default function WorkoutsPage() {
         {libraryLoading ? (
           <p className="support-copy">Building the best workout for today...</p>
         ) : libraryError ? (
-          <p className="support-copy">{libraryError}</p>
-        ) : topWorkout ? (
+          <div className="module-note">
+            <strong>Workout recommendations are temporarily unavailable.</strong>
+            <p className="support-copy">{libraryError}</p>
+            <p className="support-copy">Reset the filters or reload the page to rebuild the session cleanly.</p>
+          </div>
+        ) : isUsingFilterRecovery ? (
+          <div className="module-note">
+            <strong>PulsePeak widened the filters to keep a usable workout ready.</strong>
+            <p className="support-copy">That exact filter combination returned zero matches, so the session below falls back to your broader environment and equipment setup.</p>
+            <button className="ghost-button" type="button" onClick={resetWorkoutFilters}>
+              Return to recommended path
+            </button>
+          </div>
+        ) : null}
+        {topWorkout ? (
           <div className="loaded-workout-shell">
             <div className="module-card loaded-workout-summary">
               <p className="section-label">
                 {topWorkout.focusLabel} · {topWorkout.environment} · {topWorkout.equipmentSummary || topWorkout.equipmentProfile.replaceAll("_", " ")}
               </p>
               <div className="library-card-hero">
-                {renderMovementPreview(topWorkout.exercises[0], topWorkout.name)}
+                {renderMovementPreview(topWorkout.previewExercise || topWorkout.exercises?.[0], topWorkout.name, visualModelPreference)}
                 <div className="library-card-hero-copy">
                   <span className="library-depth-note">Built from {Math.max(topWorkout.exercises.reduce((total, exercise) => total + (exercise.availableSwapCount || 1), 0), 6)}+ variations</span>
                   <span className="library-depth-note">{topWorkout.jointStressProfile === "low" ? "Joint-friendly option" : "Matches your setup"}</span>
@@ -458,10 +738,15 @@ export default function WorkoutsPage() {
               </div>
               <h4>{topWorkout.name}</h4>
               <p className="loaded-workout-cta">{loadedWorkoutMessage}</p>
+              {trustCue ? <p className="support-copy recommendation-context-note">{trustCue}</p> : null}
+              {smartRotationStatus ? <p className="support-copy recommendation-context-note">{smartRotationStatus.label}</p> : null}
+              {recommendationExplanation?.shortLabel ? <p className="support-copy recommendation-context-note">{recommendationExplanation.shortLabel}</p> : null}
+              {recommendationExplanation?.supportingReason ? <p className="support-copy">{recommendationExplanation.supportingReason}</p> : null}
               <p className="support-copy">{topWorkout.summary}</p>
               {topWorkout.continuityNote ? <p className="support-copy">{topWorkout.continuityNote}</p> : null}
               {topWorkout.varietyNote ? <p className="support-copy">{topWorkout.varietyNote}</p> : null}
               {topWorkout.lockedReason ? <p className="support-copy">{topWorkout.lockedReason}</p> : null}
+              {preferenceInfluence?.summary ? <p className="support-copy">{preferenceInfluence.summary}</p> : null}
               <p className="support-copy">{topWorkout.duration} mins · {topWorkout.intensity} · {topWorkout.primaryMuscles.join(", ")}</p>
               <div className="module-card-actions">
                 <button
@@ -472,8 +757,8 @@ export default function WorkoutsPage() {
                 >
                   {topWorkout.lockedForAccess ? "Locked on Free" : "Start workout"}
                 </button>
-                <button className="ghost-button" disabled={Boolean(topWorkout.lockedForAccess)} type="button" onClick={() => setSelectedWorkout(topWorkout)}>
-                  {topWorkout.lockedForAccess ? "Locked preview" : "View details"}
+                <button className="ghost-button" type="button" onClick={() => setSelectedWorkout(topWorkout)}>
+                  {topWorkout.lockedForAccess ? "Locked preview" : "Review workout"}
                 </button>
                 <button
                   className="secondary-button"
@@ -481,7 +766,7 @@ export default function WorkoutsPage() {
                   onClick={(event) => toggleFavoriteWorkout(topWorkout, event)}
                   disabled={favoriteSavingId === String(topWorkout.presetId || topWorkout.id || "")}
                 >
-                  {savedWorkoutKeys.has(String(topWorkout.presetId || topWorkout.id || "").trim()) ? "Saved workout" : "Save workout"}
+                  {savedWorkoutKeys.has(String(topWorkout.presetId || topWorkout.id || "").trim()) ? "Remove saved" : "Save workout"}
                 </button>
               </div>
             </div>
@@ -490,6 +775,15 @@ export default function WorkoutsPage() {
               <p className="section-label">Why this is loaded</p>
               <h4>Coach direction</h4>
               <p className="support-copy">{coachReasoning}</p>
+              <p className="support-copy">{progressionReason}</p>
+              {smartRotationStatus ? <p className="support-copy">{smartRotationStatus.detail}</p> : null}
+              <p className="support-copy">{continuityContext.detail}</p>
+              {weeklyStructure?.days?.length && primaryFocusLabel && secondaryFocusLabel ? (
+                <p className="support-copy">
+                  This week is anchored by {primaryFocusLabel.toLowerCase()}, with {secondaryFocusLabel.toLowerCase()} layered in to keep the split balanced.
+                </p>
+              ) : null}
+              {companionAction ? <p className="support-copy">{companionAction.title}: {companionAction.detail}</p> : null}
               <p className="support-copy">
                 Companion splits: {companionSplits.length ? companionSplits.join(" · ") : "Stay with this session and keep the week moving."}
               </p>
@@ -510,15 +804,15 @@ export default function WorkoutsPage() {
                     key={`${topWorkout.id}-${exercise.slotId || exercise.name}`}
                     role="button"
                     tabIndex={0}
-                    onClick={() => exercise.movement && setSelectedMovement(exercise.movement)}
+                    onClick={() => exercise.movement && openMovementGuide(exercise.movement || exercise)}
                     onKeyDown={(event) => {
                       if ((event.key === "Enter" || event.key === " ") && exercise.movement) {
                         event.preventDefault();
-                        setSelectedMovement(exercise.movement);
+                        openMovementGuide(exercise.movement || exercise);
                       }
                     }}
                   >
-                    <div className="loaded-workout-exercise-media">{renderMovementPreview(exercise, exercise.name)}</div>
+                    <div className="loaded-workout-exercise-media">{renderMovementPreview(exercise, exercise.name, visualModelPreference)}</div>
                     <div className="loaded-workout-exercise-copy">
                       <strong>{exercise.slotLabel ? `${exercise.slotLabel}: ` : ""}{exercise.name}</strong>
                       <p className="support-copy">{getLoadedWorkoutPrescription(exercise)}</p>
@@ -534,7 +828,7 @@ export default function WorkoutsPage() {
                       onClick={(event) => {
                         event.stopPropagation();
                         if (exercise.movement) {
-                          setSelectedMovement(exercise.movement);
+                          openMovementGuide(exercise.movement || exercise);
                         }
                       }}
                     >
@@ -546,7 +840,14 @@ export default function WorkoutsPage() {
             </div>
           </div>
         ) : (
-          <p className="support-copy">No workout matches that combination yet. Loosen the split or equipment filter and try again.</p>
+          <div className="empty-state-card">
+            <strong>No workouts match that combination yet.</strong>
+            <p className="support-copy">Loosen the split or equipment filters and PulsePeak will reload a broader session pool.</p>
+            <p className="support-copy">{continuityContext.detail}</p>
+            <button className="ghost-button" type="button" onClick={resetWorkoutFilters}>
+              Reset filters
+            </button>
+          </div>
         )}
       </Panel>
 
@@ -554,7 +855,10 @@ export default function WorkoutsPage() {
         {!libraryLoading ? (
           <div className="section-context compact-section-context">
             <span className="section-context-label">Visible results</span>
-            <p>{displayedWorkouts.length} workout option{displayedWorkouts.length === 1 ? "" : "s"} match the category and filter choices above.</p>
+            <p>
+              {displayedWorkouts.length} workout option{displayedWorkouts.length === 1 ? "" : "s"}{" "}
+              {isUsingFilterRecovery ? "fit your broader setup after filter recovery kicked in." : "match the category and filter choices above."}
+            </p>
           </div>
         ) : null}
         {libraryLoading ? <p className="support-copy">Loading workout library...</p> : null}
@@ -582,7 +886,7 @@ export default function WorkoutsPage() {
                   {workout.focusLabel} · {workout.environment}
                 </p>
                 <div className="library-card-hero">
-                  {renderMovementPreview(workout.exercises[0], workout.name)}
+                  {renderMovementPreview(workout.exercises[0], workout.name, visualModelPreference)}
                   <div className="library-card-hero-copy">
                     <span className="library-depth-note">Built from {Math.max(workout.exercises.reduce((total, exercise) => total + (exercise.availableSwapCount || 1), 0), 6)}+ variations</span>
                     <span className="library-depth-note">{workout.jointStressProfile === "low" ? "Recovery-friendly option" : "Built for your current setup"}</span>
@@ -609,17 +913,42 @@ export default function WorkoutsPage() {
                   >
                     {savedWorkoutKeys.has(String(workout.presetId || workout.id || "").trim()) ? "Saved workout" : "Save workout"}
                   </button>
-                  <button className="ghost-button" disabled={Boolean(workout.lockedForAccess)} type="button" onClick={() => setSelectedWorkout(workout)}>
-                    {workout.lockedForAccess ? "Locked preview" : "View details"}
+                  <button
+                    className="ghost-button"
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setSelectedWorkout(workout);
+                    }}
+                  >
+                    {workout.lockedForAccess ? "Locked preview" : "Review workout"}
                   </button>
-                  <button className="primary-button" disabled={Boolean(workout.lockedForAccess)} type="button" onClick={() => startWorkoutSession(workout)}>
+                  <button
+                    className="primary-button"
+                    disabled={Boolean(workout.lockedForAccess)}
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      startWorkoutSession(workout);
+                    }}
+                  >
                     {workout.lockedForAccess ? "Locked on Free" : "Start workout"}
                   </button>
                 </div>
               </article>
             ))}
           </div>
-        ) : null}
+        ) : (
+          <div className="empty-state-card">
+            <strong>No workout alternatives match the current filter set.</strong>
+            <p className="support-copy">
+              {hasFullAccess ? "Broaden the filters and PulsePeak will bring the larger workout pool back into view." : getVisibleLockedWorkoutMessage()}
+            </p>
+            <button className="ghost-button" type="button" onClick={resetWorkoutFilters}>
+              Reset filters
+            </button>
+          </div>
+        )}
       </Panel>
 
       <Panel eyebrow="Exercise library" title="Browse the movement pool behind the workout engine">
@@ -660,14 +989,14 @@ export default function WorkoutsPage() {
                   {group.entries.map((entry) => (
                     <article
                       className="module-card module-card-clickable"
-                      key={entry.id}
+                      key={entry.detailId || entry.id}
                       role="button"
                       tabIndex={0}
-                      onClick={() => setSelectedMovement(buildPreviewMovement(entry))}
+                      onClick={() => openMovementGuide(buildPreviewMovement(entry))}
                       onKeyDown={(event) => {
                         if (event.key === "Enter" || event.key === " ") {
                           event.preventDefault();
-                          setSelectedMovement(buildPreviewMovement(entry));
+                          openMovementGuide(buildPreviewMovement(entry));
                         }
                       }}
                     >
@@ -675,7 +1004,7 @@ export default function WorkoutsPage() {
                         {entry.category} · {entry.movementPattern}
                       </p>
                       <div className="library-card-hero">
-                        {renderCatalogPreview(entry)}
+                        {renderCatalogPreview(entry, visualModelPreference)}
                         <div className="library-card-hero-copy">
                           <span className="library-depth-note">Browse deeper movement pool</span>
                           <span className="library-depth-note">{entry.rehabSafe ? "Joint-friendly option" : "Built for swaps and variety"}</span>
@@ -687,8 +1016,9 @@ export default function WorkoutsPage() {
                         {entry.difficulty} · {entry.jointStress} joint stress
                         {entry.rehabSafe ? " · rehab-safe option" : ""}
                       </p>
+                      <p className="support-copy">{entry.primaryMuscleGroup}{entry.movementQuality ? ` · ${entry.movementQuality.toLowerCase()}` : ""}</p>
                       <div className="module-card-actions">
-                        <button className="ghost-button" type="button" onClick={(event) => { event.stopPropagation(); setSelectedMovement(buildPreviewMovement(entry)); }}>
+                        <button className="ghost-button" type="button" onClick={(event) => { event.stopPropagation(); openMovementGuide(buildPreviewMovement(entry)); }}>
                           Open guide
                         </button>
                       </div>
@@ -703,14 +1033,14 @@ export default function WorkoutsPage() {
             {exercisePreview.slice(0, 12).map((entry) => (
               <article
                 className="module-card module-card-clickable"
-                key={entry.id}
+                key={entry.detailId || entry.id}
                 role="button"
                 tabIndex={0}
-                onClick={() => setSelectedMovement(buildPreviewMovement(entry))}
+                onClick={() => openMovementGuide(buildPreviewMovement(entry))}
                 onKeyDown={(event) => {
                   if (event.key === "Enter" || event.key === " ") {
                     event.preventDefault();
-                    setSelectedMovement(buildPreviewMovement(entry));
+                    openMovementGuide(buildPreviewMovement(entry));
                   }
                 }}
               >
@@ -718,7 +1048,7 @@ export default function WorkoutsPage() {
                   {entry.category} · {entry.movementPattern}
                 </p>
                 <div className="library-card-hero">
-                  {renderCatalogPreview(entry)}
+                  {renderCatalogPreview(entry, visualModelPreference)}
                   <div className="library-card-hero-copy">
                     <span className="library-depth-note">Browse deeper movement pool</span>
                     <span className="library-depth-note">{entry.rehabSafe ? "Joint-friendly option" : "Built for swaps and variety"}</span>
@@ -731,10 +1061,10 @@ export default function WorkoutsPage() {
                   {entry.rehabSafe ? " · rehab-safe option" : ""}
                 </p>
                 <p className="support-copy">
-                  {entry.mediaStatus === "full" ? "Full media ready" : entry.mediaStatus === "basic" ? "Reference media ready" : "Text guide ready"}
+                  {getGuideStatusLabel(entry, { visualModelPreference })}
                 </p>
                 <div className="module-card-actions">
-                  <button className="ghost-button" type="button" onClick={(event) => { event.stopPropagation(); setSelectedMovement(buildPreviewMovement(entry)); }}>
+                  <button className="ghost-button" type="button" onClick={(event) => { event.stopPropagation(); openMovementGuide(buildPreviewMovement(entry)); }}>
                     Open guide
                   </button>
                 </div>
@@ -763,7 +1093,7 @@ export default function WorkoutsPage() {
               >
                 <p className="section-label">{workout.focusLabel || formatWorkoutFocus(workout.focus || "full_body")}</p>
                 <div className="library-card-hero">
-                  {renderMovementPreview(workout.exercises?.[0], workout.name)}
+                  {renderMovementPreview(workout.previewExercise || workout.exercises?.[0], workout.name, visualModelPreference)}
                   <div className="library-card-hero-copy">
                     <span className="library-depth-note">{savedWorkoutKeys.has(String(workout.presetId || workout.id || "").trim()) ? "Saved and ready to re-run" : "Ready to re-run"}</span>
                     <span className="library-depth-note">{workout.jointStressProfile === "low" ? "Recovery-friendly option" : "Matches your saved setup"}</span>
@@ -853,7 +1183,7 @@ export default function WorkoutsPage() {
         onClose={() => setSelectedWorkout(null)}
         onLog={addPresetWorkout}
         isSaving={saving === `preset-${selectedWorkout?.presetId || selectedWorkout?.id}`}
-        onOpenMovement={setSelectedMovement}
+        onOpenMovement={openMovementGuide}
         onUpgrade={startUpgradeCheckout}
         accessTier={accessTier}
         canStartTrial={Boolean(summary?.workoutAccess?.canStartTrial)}
@@ -877,7 +1207,12 @@ export default function WorkoutsPage() {
             : ""
         }
       />
-      <MovementDetailModal guidanceLevel={data.profile?.exerciseGuidanceLevel || "standard"} movement={selectedMovement} onClose={() => setSelectedMovement(null)} />
+      <MovementDetailModal
+        movement={selectedMovement}
+        movementId={selectedMovement?.detailId || selectedMovement?.id}
+        visualModelPreference={visualModelPreference}
+        onClose={() => setSelectedMovement(null)}
+      />
     </div>
   );
 }
@@ -923,6 +1258,95 @@ function countEquipmentWords(value) {
     .filter(Boolean).length;
 }
 
+function matchesWorkoutEnvironment(workout, environment) {
+  if (environment === "both") {
+    return true;
+  }
+  const workoutEnvironment = String(workout.environment || "").toLowerCase();
+  return workoutEnvironment === environment || workoutEnvironment === "hybrid" || workoutEnvironment === "both";
+}
+
+function matchesWorkoutEquipment(workout, selections) {
+  if (!selections?.length) {
+    return true;
+  }
+  const haystack = JSON.stringify([
+    workout.equipmentSelections || [],
+    workout.equipmentProfile,
+    workout.equipmentSummary,
+    workout.exercises?.map((exercise) => exercise.equipment)
+  ]).toLowerCase();
+  return selections.every((selection) => haystack.includes(String(selection).toLowerCase()));
+}
+
+function matchesWorkoutFocus(workout, focus) {
+  if (!focus || focus === "recommended") {
+    return true;
+  }
+  return String(workout.focus || "").toLowerCase() === String(focus).toLowerCase();
+}
+
+function matchesWorkoutCategory(workout, category) {
+  return (
+    category === "all" ||
+    (workout.categoryTags || []).some((tag) => slugifyDiscoveryTag(tag) === category)
+  );
+}
+
+function matchesWorkoutDuration(workout, duration) {
+  if (duration === "all") {
+    return true;
+  }
+  if (duration === "short") {
+    return workout.duration <= 35;
+  }
+  if (duration === "medium") {
+    return workout.duration > 35 && workout.duration <= 50;
+  }
+  return workout.duration > 50;
+}
+
+function matchesWorkoutIntensity(workout, intensity) {
+  return intensity === "all" || String(workout.intensity || "").toLowerCase() === intensity;
+}
+
+function matchesWorkoutJointStress(workout, jointStress) {
+  return jointStress === "all" || String(workout.jointStressProfile || "").toLowerCase() === jointStress;
+}
+
+function matchesWorkoutTrainingStyle(workout, trainingStyle) {
+  return (
+    trainingStyle === "all" ||
+    (workout.trainingStyleTags || []).some((tag) => slugifyDiscoveryTag(tag) === slugifyDiscoveryTag(trainingStyle))
+  );
+}
+
+function sortWorkouts(workouts, selectedSort, recommendationContext = {}) {
+  const sorted = [...workouts];
+  switch (selectedSort) {
+    case "shortest":
+      return sorted.sort((left, right) => left.duration - right.duration);
+    case "longest":
+      return sorted.sort((left, right) => right.duration - left.duration);
+    case "easiest":
+      return sorted.sort((left, right) => rankDifficulty(left.difficultyTag) - rankDifficulty(right.difficultyTag) || rankJointStress(left.jointStressProfile) - rankJointStress(right.jointStressProfile));
+    case "highest_intensity":
+      return sorted.sort((left, right) => rankIntensity(right.intensity) - rankIntensity(left.intensity));
+    case "alphabetical":
+      return sorted.sort((left, right) => String(left.name || "").localeCompare(String(right.name || "")));
+    case "recovery_friendly":
+      return sorted.sort((left, right) => rankJointStress(left.jointStressProfile) - rankJointStress(right.jointStressProfile));
+    case "equipment_efficient":
+      return sorted.sort((left, right) => countEquipmentWords(left.equipmentSummary) - countEquipmentWords(right.equipmentSummary));
+    default:
+      return sorted.sort(
+        (left, right) =>
+          getWorkoutRecommendationScore(right, recommendationContext) - getWorkoutRecommendationScore(left, recommendationContext) ||
+          String(left.name || "").localeCompare(String(right.name || ""))
+      );
+  }
+}
+
 function slugifyDiscoveryTag(value) {
   return String(value || "")
     .toLowerCase()
@@ -936,9 +1360,13 @@ function formatPreviewEquipment(value) {
   return Array.isArray(value) ? value.join(", ") : String(value || "").replaceAll("_", " ");
 }
 
-function buildLoadedWorkoutMessage(workout, selectedCategoryMeta, selectedFocusLabel) {
+function buildLoadedWorkoutMessage(workout, selectedCategoryMeta, selectedFocusLabel, isUsingFilterRecovery = false) {
   if (!workout) {
     return "Your session is ready.";
+  }
+
+  if (isUsingFilterRecovery) {
+    return "Your closest-fit fallback workout is loaded so you can still train today.";
   }
 
   if (selectedCategoryMeta?.id && selectedCategoryMeta.id !== "all") {
@@ -983,49 +1411,123 @@ function getLoadedWorkoutPrescription(exercise) {
   return parts.join(" · ");
 }
 
-function renderMovementPreview(exercise, fallbackName) {
-  const mediaView = getMovementMedia(exercise?.movement || exercise || { name: fallbackName });
-  if (mediaView.thumbnail) {
-    return <img alt={`${exercise?.name || fallbackName} preview`} className="library-card-thumb" src={mediaView.thumbnail} />;
+function renderMovementPreview(exercise, fallbackName, visualModelPreference = "default") {
+  const visual = resolveMovementVisual(exercise?.movement || exercise || { name: fallbackName }, { visualModelPreference });
+  if (visual.mode === "image") {
+    return <img alt={visual.alt} className="library-card-thumb" src={visual.src} />;
   }
+  const source = exercise?.movement || exercise || {};
+  const muscles = Array.isArray(source.primaryMuscles)
+    ? source.primaryMuscles.join(", ")
+    : String(source.primaryMuscleGroup || "").trim();
+  const difficulty = String(source.difficulty || source.difficultyLevel || "").trim();
+  const equipment = Array.isArray(source.equipment)
+    ? source.equipment.join(", ")
+    : String(source.equipmentDisplay || source.equipment || source.equipmentRequirements || "").trim();
+  const jointStress = String(source.jointStress || source.jointStressProfile || "").trim();
   return (
-    <div className="library-card-thumb library-card-thumb-placeholder">
-      <span>{mediaView.placeholderInitials}</span>
-      <small>{mediaView.placeholderLabel}</small>
+    <div className="library-card-thumb library-card-thumb-placeholder workout-guide-fallback">
+      <small>Text coaching guide</small>
+      <strong>{source.name || fallbackName || "Exercise guide"}</strong>
+      {muscles ? <p>{muscles}</p> : null}
+      {equipment ? <span>{equipment}</span> : null}
+      {difficulty ? <span>{difficulty}{jointStress ? ` · ${jointStress} joint stress` : ""}</span> : null}
     </div>
   );
 }
 
-function renderCatalogPreview(entry) {
-  const mediaView = getMovementMedia(entry);
-  if (mediaView.thumbnail) {
-    return <img alt={`${entry.title || entry.name} preview`} className="library-card-thumb" src={mediaView.thumbnail} />;
+function renderCatalogPreview(entry, visualModelPreference = "default") {
+  const visual = resolveMovementVisual(entry, { visualModelPreference });
+  if (visual.mode === "image") {
+    return <img alt={visual.alt} className="library-card-thumb" src={visual.src} />;
   }
+  const muscles = Array.isArray(entry.primaryMuscles) ? entry.primaryMuscles.join(", ") : entry.primaryMuscleGroup;
   return (
-    <div className="library-card-thumb library-card-thumb-placeholder">
-      <span>{mediaView.placeholderInitials}</span>
-      <small>{mediaView.placeholderLabel}</small>
+    <div className="library-card-thumb library-card-thumb-placeholder workout-guide-fallback">
+      <small>Text coaching guide</small>
+      <strong>{entry.title || entry.name}</strong>
+      {muscles ? <p>{muscles}</p> : null}
+      {entry.equipmentDisplay ? <span>{entry.equipmentDisplay}</span> : null}
+      {entry.difficulty ? <span>{entry.difficulty}{entry.jointStress ? ` · ${entry.jointStress} joint stress` : ""}</span> : null}
     </div>
   );
+}
+
+function rankIntensity(value) {
+  const map = { low: 1, moderate: 2, high: 3 };
+  return map[String(value || "").toLowerCase()] || 2;
 }
 
 function buildPreviewMovement(entry) {
+  const equipment = Array.isArray(entry.equipment)
+    ? entry.equipment
+    : typeof entry.equipment === "string"
+      ? entry.equipment.split(",").map((item) => item.trim()).filter(Boolean)
+      : Array.isArray(entry.equipmentRequirements)
+        ? entry.equipmentRequirements
+        : [];
   return {
+    ...entry,
     id: entry.id,
+    detailId: entry.detailId || entry.id,
     name: entry.title || entry.name,
     category: entry.category || "Movement",
     difficulty: entry.difficulty || entry.difficultyLevel || "Standard",
-    environment: Array.isArray(entry.environments) && entry.environments.length ? entry.environments.join(" / ") : "Home / gym",
-    equipment: Array.isArray(entry.equipment) ? entry.equipment : Array.isArray(entry.equipmentRequirements) ? entry.equipmentRequirements : [],
-    primaryMuscles: entry.primaryMuscleGroup ? [entry.primaryMuscleGroup] : entry.bodyFocus || [],
-    secondaryMuscles: entry.secondaryMuscleGroups || [],
-    instructions: entry.instructions || entry.guidance?.instructions || ["Use a controlled setup and follow the guide one step at a time."],
-    cues: entry.cues || entry.guidance?.cues || ["Match the movement to your setup and stay controlled."],
-    commonMistakes: entry.mistakes || entry.guidance?.mistakes || ["Rushing the rep before the pattern feels clean."],
-    safetyNotes: entry.safetyNotes || entry.guidance?.safetyNotes || ["Use a load and range you can control cleanly."],
-    modifications: entry.modifications || entry.guidance?.modifications || ["Swap into the same movement family if this version does not fit today."],
+    environment: Array.isArray(entry.environments) && entry.environments.length ? entry.environments.join(" / ") : entry.environment || "Home / gym",
+    equipment,
+    primaryMuscles: Array.isArray(entry.primaryMuscles)
+      ? entry.primaryMuscles
+      : entry.primaryMuscleGroup
+        ? entry.primaryMuscleGroup.split(",").map((item) => item.trim()).filter(Boolean)
+        : entry.bodyFocus || [],
+    secondaryMuscles: entry.secondaryMuscleGroups || entry.secondaryMuscles || [],
+    visualSequence: entry.stepSequence || entry.visualSequence || [],
+    stepSequence: entry.stepSequence || entry.visualSequence || [],
+    snapshot: entry.snapshot || {
+      summary: entry.trainingUse || "",
+      setup: entry.setup || "",
+      execution: entry.execution || ""
+    },
     media: entry.media,
     mediaStatus: entry.mediaStatus,
     rehabSafe: Boolean(entry.rehabSafe)
+  };
+}
+
+function buildSavedWorkoutPayload(workout = {}) {
+  return {
+    id: workout.id || null,
+    presetId: workout.presetId || workout.id || null,
+    name: workout.name,
+    type: workout.type,
+    environment: workout.environment,
+    focus: workout.focus,
+    focusLabel: workout.focusLabel,
+    duration: workout.duration,
+    intensity: workout.intensity,
+    summary: workout.summary,
+    continuityNote: workout.continuityNote,
+    varietyNote: workout.varietyNote,
+    equipmentProfile: workout.equipmentProfile,
+    equipmentSummary: workout.equipmentSummary,
+    primaryMuscles: Array.isArray(workout.primaryMuscles) ? workout.primaryMuscles : [],
+    exercises: Array.isArray(workout.exercises)
+      ? workout.exercises.map((exercise) => ({
+          name: exercise.name,
+          sets: exercise.sets,
+          reps: exercise.reps,
+          duration: exercise.duration,
+          equipment: exercise.equipment,
+          muscleGroup: exercise.muscleGroup,
+          movement: exercise.movement
+            ? {
+                id: exercise.movement.id,
+                name: exercise.movement.name,
+                thumbnail: exercise.movement.thumbnail || "",
+                mediaStatus: exercise.movement.mediaStatus || ""
+              }
+            : null
+        }))
+      : []
   };
 }

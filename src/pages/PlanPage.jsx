@@ -9,23 +9,51 @@ import { useAuth } from "../state/AuthContext";
 import { apiRequest } from "../api/client";
 import { useUpgradeCheckout } from "../hooks/useUpgradeCheckout";
 import { getUpgradePrompt } from "../config/upgradePrompts";
+import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "../../shared/exerciseCatalog";
+import { getPremiumCapabilitySummary, getPremiumComparisonSummary, getPremiumOutcomeLayer, getUpgradeMoment, hasFullWorkoutAccess } from "../../shared/entitlements";
+import {
+  getCheckpoints,
+  getIdentitySignal,
+  getImprovementSignals,
+  getModuleContinuityContext,
+  getNextWeekAdjustment,
+  getPerformanceSignals,
+  getProgramPhase,
+  getPrimarySignalHighlight,
+  getRecommendedCompanionAction,
+  getResultSignals,
+  getSmartRotationStatus,
+  getSystemTrustCue,
+  getTodaysRecommendedWorkout,
+  getWeeklyTrainingOutline,
+  getWhyThisMattersNotes,
+  getWorkoutRecommendationExplanation,
+  getRecoveryBias,
+  getSystemConfidenceSignal
+} from "../../shared/workoutEngine";
 import { PLAN_DISCOVERY_CATEGORIES, PLAN_LIBRARY, TOOL_CATEGORIES, TOOL_LIBRARY } from "../../shared/libraryTaxonomy.js";
 
 export default function PlanPage() {
-  const { token, isPremium } = useAuth();
+  const { token, accessTier, workoutMemory, workoutMomentum } = useAuth();
   const { data, summary, loading, error } = useDashboardData();
   const [weeklyPlanState, setWeeklyPlanState] = useState(null);
   const [selectedMovement, setSelectedMovement] = useState(null);
   const [feedback, setFeedback] = useState("");
   const [opening, setOpening] = useState(false);
+  const [recommendedWorkout, setRecommendedWorkout] = useState(null);
+  const [recommendedWorkoutPool, setRecommendedWorkoutPool] = useState([]);
   const [selectedPlanCategory, setSelectedPlanCategory] = useState("all");
   const [selectedGoalFilter, setSelectedGoalFilter] = useState("all");
   const [selectedEquipmentFilter, setSelectedEquipmentFilter] = useState("all");
   const [selectedRecoveryFilter, setSelectedRecoveryFilter] = useState("all");
   const [selectedEnvironmentFilter, setSelectedEnvironmentFilter] = useState("all");
   const { busy: checkoutBusy, startUpgradeCheckout: startUpgradeCheckoutFlow } = useUpgradeCheckout();
+  const openMovementGuide = (target) => setSelectedMovement(buildGuideTarget(target));
   const safeProfile = data?.profile || {};
   const safeSummary = summary || {};
+  const currentPlanFocus = null;
+  const programSummary = null;
+  const focusLabel = "";
   const planLibrary = useMemo(() => {
     const goalType = safeProfile.goalType || "general_fitness";
     const equipmentProfile = safeProfile.equipmentProfile || "hybrid";
@@ -53,6 +81,222 @@ export default function PlanPage() {
       })),
     []
   );
+  const weeklyStructure = useMemo(
+    () =>
+      getWeeklyTrainingOutline({
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        accessTier,
+        workouts: recommendedWorkoutPool
+      }),
+    [accessTier, currentPlanFocus, recommendedWorkoutPool, workoutMemory]
+  );
+  const recommendationExplanation = useMemo(
+    () =>
+      getWorkoutRecommendationExplanation(recommendedWorkout, {
+        accessTier,
+        currentPlanFocus,
+        goalType: safeProfile.goalType,
+        memoryState: workoutMemory,
+        filters: {
+          workoutEnvironment: safeProfile.trainingEnvironment === "hybrid" ? "both" : safeProfile.trainingEnvironment,
+          equipmentSelections: safeProfile.equipmentSelections || []
+        }
+      }),
+    [accessTier, currentPlanFocus, recommendedWorkout, safeProfile.equipmentSelections, safeProfile.goalType, safeProfile.trainingEnvironment, workoutMemory]
+  );
+  const improvementSignals = useMemo(
+    () =>
+      getImprovementSignals({
+        completionRecords: workoutMemory.completionRecords,
+        memoryState: workoutMemory,
+        currentPlanFocus
+      }),
+    [currentPlanFocus, workoutMemory]
+  );
+  const resultSignals = useMemo(
+    () =>
+      getResultSignals({
+        completionRecords: workoutMemory.completionRecords,
+        workoutMomentum
+      }),
+    [workoutMemory.completionRecords, workoutMomentum]
+  );
+  const performanceSignals = useMemo(
+    () =>
+      getPerformanceSignals({
+        completionRecords: workoutMemory.completionRecords
+      }),
+    [workoutMemory.completionRecords]
+  );
+  const checkpoint = useMemo(
+    () =>
+      getCheckpoints({
+        completionRecords: workoutMemory.completionRecords,
+        workoutMomentum
+      }),
+    [workoutMemory.completionRecords, workoutMomentum]
+  );
+  const identitySignal = useMemo(
+    () =>
+      getIdentitySignal({
+        completionRecords: workoutMemory.completionRecords,
+        workoutMomentum
+      }),
+    [workoutMemory.completionRecords, workoutMomentum]
+  );
+  const programPhase = useMemo(
+    () =>
+      getProgramPhase({
+        completionRecords: workoutMemory.completionRecords,
+        currentPlanFocus,
+        workoutMomentum
+      }),
+    [currentPlanFocus, workoutMemory.completionRecords, workoutMomentum]
+  );
+  const nextWeekAdjustment = useMemo(
+    () =>
+      getNextWeekAdjustment({
+        completionRecords: workoutMemory.completionRecords,
+        currentPlanFocus,
+        workoutMomentum,
+        accessTier
+      }),
+    [accessTier, currentPlanFocus, workoutMemory.completionRecords, workoutMomentum]
+  );
+  const recoveryBias = useMemo(() => getRecoveryBias(workoutMemory), [workoutMemory]);
+  const launchContext = null;
+  const preferenceInfluence = null;
+  const whyThisMattersNotes = useMemo(
+    () =>
+      getWhyThisMattersNotes({
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        phase: programPhase,
+        recoveryBias
+      }),
+    [currentPlanFocus, programPhase, recoveryBias, workoutMemory]
+  );
+  const premiumOutcomeLayer = useMemo(
+    () => getPremiumOutcomeLayer(accessTier, { surface: "plan" }),
+    [accessTier]
+  );
+  const upgradeMoment = useMemo(
+    () =>
+      getUpgradeMoment({
+        accessTier,
+        context: {
+          resultSignals,
+          checkpoint,
+          workoutMomentum
+        }
+      }),
+    [accessTier, checkpoint, resultSignals, workoutMomentum]
+  );
+  const premiumComparison = useMemo(
+    () =>
+      getPremiumComparisonSummary(accessTier, {
+        surface: "plan",
+        upgradeMoment
+      }),
+    [accessTier, upgradeMoment]
+  );
+  const companionAction = useMemo(
+    () =>
+      getRecommendedCompanionAction({
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        workoutMomentum,
+        recoveryBias,
+        weeklyStructure,
+        nutritionMode: safeProfile.nutritionMode,
+        hasMobilityModule: (safeSummary.activeModules || []).includes("mobility"),
+        hasNutritionModule: (safeSummary.activeModules || []).includes("nutrition")
+      }),
+    [currentPlanFocus, recoveryBias, safeProfile.nutritionMode, safeSummary.activeModules, weeklyStructure, workoutMemory, workoutMomentum]
+  );
+  const continuityContext = useMemo(
+    () =>
+      getModuleContinuityContext({
+        module: "plan",
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        workoutMomentum,
+        recoveryBias,
+        weeklyStructure,
+        nutritionMode: safeProfile.nutritionMode
+      }),
+    [currentPlanFocus, recoveryBias, safeProfile.nutritionMode, weeklyStructure, workoutMemory, workoutMomentum]
+  );
+  const trustCue = useMemo(
+    () =>
+      getSystemTrustCue({
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        weeklyStructure,
+        resultSignals
+      }),
+    [currentPlanFocus, resultSignals, weeklyStructure, workoutMemory]
+  );
+  const smartRotationStatus = useMemo(
+    () => getSmartRotationStatus({ recommendedWorkout }),
+    [recommendedWorkout]
+  );
+  const systemConfidenceSignal = useMemo(
+    () =>
+      getSystemConfidenceSignal({
+        completionRecords: workoutMemory.completionRecords,
+        memoryState: workoutMemory,
+        workoutMomentum,
+        currentPlanFocus
+      }),
+    [currentPlanFocus, workoutMemory, workoutMomentum]
+  );
+  const primarySignal = useMemo(
+    () =>
+      getPrimarySignalHighlight({
+        checkpoint,
+        identitySignal,
+        performanceSignals,
+        resultSignals
+      }),
+    [checkpoint, identitySignal, performanceSignals, resultSignals]
+  );
+
+  React.useEffect(() => {
+    if (!token || !safeProfile.trainingEnvironment) {
+      return;
+    }
+
+    const preferredEnvironment = safeProfile.trainingEnvironment === "hybrid" ? "both" : safeProfile.trainingEnvironment;
+    const preferredEquipment = Array.isArray(safeProfile.equipmentSelections) ? safeProfile.equipmentSelections.join(",") : "";
+    const params = new URLSearchParams({
+      environment: preferredEnvironment,
+      focus: currentPlanFocus
+    });
+    if (preferredEquipment) {
+      params.set("equipmentSelections", preferredEquipment);
+    }
+
+    apiRequest(`/workout-library?${params.toString()}`, {}, token)
+      .then((payload) => {
+        setRecommendedWorkoutPool(payload.workouts || []);
+        setRecommendedWorkout(
+          getTodaysRecommendedWorkout({
+            workouts: payload.workouts || [],
+            currentPlanFocus,
+            memoryState: workoutMemory,
+            accessTier,
+            filters: { workoutEnvironment: preferredEnvironment, equipmentSelections: safeProfile.equipmentSelections || [] },
+            goalType: safeProfile.goalType
+          })
+        );
+      })
+      .catch(() => {
+        setRecommendedWorkoutPool([]);
+        setRecommendedWorkout(null);
+      });
+  }, [accessTier, currentPlanFocus, safeProfile.equipmentSelections, safeProfile.goalType, safeProfile.trainingEnvironment, token, workoutMemory]);
 
   if (loading) {
     return <div className="screen-center">Loading your plan...</div>;
@@ -62,7 +306,8 @@ export default function PlanPage() {
     return <div className="screen-center">{error || "Unable to load your weekly plan."}</div>;
   }
 
-  const weeklyPlanPrompt = isPremium
+  const hasPlanAccess = hasFullWorkoutAccess(accessTier);
+  const weeklyPlanPrompt = hasPlanAccess
     ? null
     : getUpgradePrompt({
         surface: "weekly-plan",
@@ -77,7 +322,7 @@ export default function PlanPage() {
     try {
       const payload = await apiRequest(
         "/weekly-plan",
-        isPremium
+        hasPlanAccess
           ? {}
           : {
               headers: {
@@ -110,23 +355,131 @@ export default function PlanPage() {
           <p className="badge">Plan</p>
           <h2>{summary.planSummary?.weeklyFocus || "Your adaptive weekly plan"}</h2>
           <p className="lead-copy">
-            This week stays centered on the work that matters most for your goal, recovery, and training setup.
+            {programSummary || "This page keeps your weekly plan organized around your current setup, available tools, and next recommended actions."}
           </p>
         </div>
         <div className="module-page-actions">
           <button className="primary-button" disabled={opening} type="button" onClick={openWeeklyPlan}>
-            {opening ? "Opening plan..." : isPremium ? "Open full weekly plan" : "Preview weekly plan"}
+            {opening ? "Opening plan..." : hasPlanAccess ? "Open full weekly plan" : "Preview weekly plan"}
           </button>
         </div>
       </section>
 
       {feedback ? <div className="status-banner">{feedback}</div> : null}
 
+      <div className="module-note">
+        <strong>{launchContext?.launchLabel || "Plan overview"}</strong>
+        <p className="support-copy">{launchContext?.launchSummary || "Use this space to review the week at a high level before opening a full plan preview or jumping into workouts."}</p>
+      </div>
+
+      <div className="content-grid">
+        <Panel eyebrow="Program" title="What this block is trying to do">
+          <div className="module-note">
+            <strong>{focusLabel || "This plan"} is leading this week.</strong>
+            <p className="support-copy">{programSummary || "The weekly plan stays centered on a simple structure so you can review the week without extra coaching overlays."}</p>
+          </div>
+          {trustCue ? <p className="support-copy recommendation-context-note">{trustCue}</p> : null}
+          {preferenceInfluence?.items?.length ? (
+            <div className="module-note">
+              <strong>{preferenceInfluence.primary}</strong>
+              <p className="support-copy">{preferenceInfluence.summary}</p>
+            </div>
+          ) : null}
+          {primarySignal ? (
+            <div className="module-note">
+              <strong>{primarySignal.title}</strong>
+              <p className="support-copy">{primarySignal.detail}</p>
+            </div>
+          ) : null}
+          <div className="module-note">
+            <strong>Current phase: {programPhase.label}</strong>
+            <p className="support-copy">{programPhase.detail}</p>
+          </div>
+          <div className="module-note">
+            <strong>{weeklyStructure?.summary || continuityContext.title}</strong>
+            <p className="support-copy">
+              {workoutMomentum.weeklyCompletionCount
+                ? `You have already logged ${workoutMomentum.weeklyCompletionCount} session${workoutMomentum.weeklyCompletionCount === 1 ? "" : "s"} this week, so the next workout should fit the broader pattern instead of repeating blindly.`
+                : continuityContext.detail || "The first session of the week should set the direction cleanly instead of forcing too many choices."}
+            </p>
+          </div>
+          <div className="module-note">
+            <strong>Next week likely emphasis</strong>
+            <p className="support-copy">{nextWeekAdjustment.detail}</p>
+          </div>
+          {performanceSignals?.summaryLine ? (
+            <div className="module-note">
+              <strong>Performance trend</strong>
+              <p className="support-copy">{performanceSignals.summaryLine}</p>
+            </div>
+          ) : null}
+          {systemConfidenceSignal ? (
+            <div className="module-note">
+              <strong>This is working</strong>
+              <p className="support-copy">{systemConfidenceSignal}</p>
+            </div>
+          ) : null}
+          {whyThisMattersNotes.length ? (
+            <div className="insight-list">
+              {whyThisMattersNotes.map((note) => (
+                <div className="insight-chip" key={note}>
+                  <strong>Why this matters</strong>
+                  <p className="muted">{note}</p>
+                </div>
+              ))}
+            </div>
+          ) : null}
+          {companionAction ? (
+            <div className="module-note">
+              <strong>{companionAction.title}</strong>
+              <p className="support-copy">{companionAction.detail}</p>
+              <div className="module-card-actions">
+                <Link className="ghost-button module-link" to={companionAction.href}>
+                  {companionAction.ctaLabel}
+                </Link>
+              </div>
+            </div>
+          ) : null}
+        </Panel>
+
+        {recommendedWorkout ? (
+          <Panel eyebrow="Next workout" title="Your next recommended workout">
+            <div className="module-note">
+              <strong>{recommendedWorkout.name}</strong>
+              <p className="support-copy">{recommendationExplanation?.shortLabel || "Next recommended session"}</p>
+              <p className="support-copy">{recommendationExplanation?.supportingReason}</p>
+              {smartRotationStatus ? <p className="support-copy recommendation-context-note">{smartRotationStatus.label}</p> : null}
+              {performanceSignals?.summaryLine ? <p className="support-copy">{performanceSignals.summaryLine}</p> : null}
+              {!hasPlanAccess ? <p className="support-copy">{premiumComparison.availableNow}</p> : null}
+              {!hasPlanAccess ? <p className="support-copy">{premiumComparison.premiumLine || premiumOutcomeLayer.detail}</p> : null}
+              {!hasPlanAccess && upgradeMoment ? <p className="support-copy">{upgradeMoment.detail}</p> : null}
+              <div className="module-card-actions">
+                <Link className="primary-button module-link" to="/workouts">
+                  {recommendedWorkout.lockedForAccess ? "Review workout" : "Start or review"}
+                </Link>
+              </div>
+            </div>
+          </Panel>
+        ) : (
+          <Panel eyebrow="Next workout" title="Your next recommended workout">
+            <div className="module-note">
+              <strong>{continuityContext.title}</strong>
+              <p className="support-copy">{continuityContext.detail}</p>
+              <div className="module-card-actions">
+                <Link className="primary-button module-link" to="/workouts">
+                  Open Workouts
+                </Link>
+              </div>
+            </div>
+          </Panel>
+        )}
+      </div>
+
       <div className="content-grid">
         <Panel eyebrow="This week" title={summary.planSummary?.weeklyFocus || "Weekly focus"}>
           <div className="section-context">
             <span className="section-context-label">Weekly strategy</span>
-            <p>Use this as the target for the week so your workouts, mobility work, and recovery all pull in the same direction.</p>
+            <p>{launchContext?.weekIntent || "Use this as the target for the week so workouts and supporting tools stay organized around one clear direction."}</p>
           </div>
           <div className="module-note">
             <strong>{summary.planSummary?.workoutCadence || "Keep the week simple and repeatable."}</strong>
@@ -168,6 +521,10 @@ export default function PlanPage() {
             <strong>{summary.whyThisWorks?.trustNote}</strong>
             <p className="support-copy">{summary.whyThisWorks?.body}</p>
           </div>
+          <div className="module-note">
+            <strong>Current phase: {programPhase.label}</strong>
+            <p className="support-copy">{programPhase.detail}</p>
+          </div>
           {summary.resultProjection ? (
             <div className="module-note">
               <strong>{summary.resultProjection.summary}</strong>
@@ -176,6 +533,99 @@ export default function PlanPage() {
           ) : null}
         </Panel>
       </div>
+
+      {weeklyStructure?.days?.length ? (
+        <Panel eyebrow="This week&apos;s structure" title="A simple shape for the week">
+          <div className="weekly-structure-grid">
+            {weeklyStructure.days.map((entry) => {
+              const isTodayFocus = recommendedWorkout && normalizeFocusKey(recommendedWorkout.focus || recommendedWorkout.focusLabel) === normalizeFocusKey(entry.focus || entry.label);
+              return (
+                <article className={`weekly-structure-card ${isTodayFocus ? "weekly-structure-card-active" : ""}`} key={`plan-week-${entry.day}`}>
+                  <p className="section-label">Day {entry.day}</p>
+                  <h4>{entry.label}</h4>
+                  <p className="support-copy">{entry.title}</p>
+                  {isTodayFocus ? <p className="recommendation-context-note">Today&apos;s recommended session fits here.</p> : null}
+                </article>
+              );
+            })}
+          </div>
+        </Panel>
+      ) : (
+        <Panel eyebrow="This week&apos;s structure" title="A simple shape for the week">
+          <div className="module-note">
+            <strong>{continuityContext.title}</strong>
+            <p className="support-copy">{continuityContext.detail}</p>
+          </div>
+        </Panel>
+      )}
+
+      {!hasPlanAccess && weeklyPlanPrompt && upgradeMoment ? (
+        <UpgradePrompt compact prompt={{ ...weeklyPlanPrompt, contextNote: upgradeMoment.detail }} busy={checkoutBusy} onUpgrade={startUpgradeCheckout} />
+      ) : null}
+
+      {summary.planSummary?.suggestedWorkoutMix?.featuredMovements?.length ? (
+        <Panel eyebrow="Movement highlights" title="The week is built around these key patterns">
+          <div className="section-context">
+            <span className="section-context-label">Start-to-finish guides</span>
+            <p>Open any movement to see the full visual sequence, cues, and example video support before you train.</p>
+          </div>
+          <div className="module-card-grid">
+            {summary.planSummary.suggestedWorkoutMix.featuredMovements.map((movement) => {
+              const visual = resolveMovementVisual(movement);
+              return (
+                <article
+                  className="module-card module-card-clickable"
+                  key={movement.id}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => openMovementGuide(movement)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      openMovementGuide(movement);
+                    }
+                  }}
+                >
+                  <div className="library-card-hero">
+                    {visual.mode === "image" ? (
+                      <img alt={visual.alt} className="library-card-thumb" src={visual.src} />
+                    ) : (
+                      <div className="library-card-thumb library-card-thumb-placeholder movement-image-fallback">
+                        <span>{visual.initials}</span>
+                        <small>{visual.label}</small>
+                      </div>
+                    )}
+                    <div className="library-card-hero-copy">
+                      <span className="library-depth-note">Built into this week&apos;s plan</span>
+                      <span className="library-depth-note">
+                        {getGuideStatusLabel(movement)}
+                      </span>
+                    </div>
+                  </div>
+                  <p className="section-label">{movement.category}</p>
+                  <h4>{movement.name}</h4>
+                  <p className="support-copy">
+                    {movement.primaryMuscles.join(", ")}
+                    {movement.secondaryMuscles?.length ? ` · Supports ${movement.secondaryMuscles[0]}` : ""}
+                  </p>
+                  <div className="module-card-actions">
+                    <button
+                      className="ghost-button"
+                      type="button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        openMovementGuide(movement);
+                      }}
+                    >
+                      Open guide
+                    </button>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </Panel>
+      ) : null}
 
       <Panel eyebrow="Plan library" title="Browse original PulsePeak training paths">
         <div className="section-context">
@@ -289,7 +739,7 @@ export default function PlanPage() {
         </div>
       </Panel>
 
-      {!isPremium && weeklyPlanPrompt ? (
+      {!hasPlanAccess && weeklyPlanPrompt && !upgradeMoment ? (
         <UpgradePrompt compact prompt={weeklyPlanPrompt} busy={checkoutBusy} onUpgrade={startUpgradeCheckout} />
       ) : null}
 
@@ -297,9 +747,13 @@ export default function PlanPage() {
         planPayload={weeklyPlanState}
         onClose={() => setWeeklyPlanState(null)}
         onUpgrade={startUpgradeCheckout}
-        onOpenMovement={setSelectedMovement}
+        onOpenMovement={openMovementGuide}
       />
-      <MovementDetailModal movement={selectedMovement} onClose={() => setSelectedMovement(null)} />
+      <MovementDetailModal
+        movement={selectedMovement}
+        movementId={selectedMovement?.detailId || selectedMovement?.guideTargetId || selectedMovement?.id}
+        onClose={() => setSelectedMovement(null)}
+      />
     </div>
   );
 }
@@ -315,4 +769,21 @@ function rankPlan(plan, { goalType, equipmentProfile, environment, recoveryBias 
 
 function formatPlanCategory(value) {
   return PLAN_DISCOVERY_CATEGORIES.find((category) => category.id === value)?.label || value.replaceAll("_", " ");
+}
+
+function normalizeFocusKey(value = "") {
+  const normalized = String(value || "")
+    .toLowerCase()
+    .replaceAll("&", "and")
+    .replaceAll("/", " ")
+    .replaceAll("-", "_")
+    .replaceAll(" ", "_");
+
+  if (["legs", "glutes"].includes(normalized)) {
+    return "lower_body";
+  }
+  if (normalized === "recovery_day") {
+    return "mobility_recovery";
+  }
+  return normalized;
 }

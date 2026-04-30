@@ -4,6 +4,8 @@ import Panel from "../components/Panel";
 import ActivityList from "../components/ActivityList";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { useAuth } from "../state/AuthContext";
+import { getNutritionTemplateMedia } from "../../shared/nutritionMedia";
+import { getModuleContinuityContext, getRecoveryBias } from "../../shared/workoutEngine";
 import {
   convertHydrationToStored,
   formatHydration,
@@ -15,7 +17,7 @@ function sanitizeNutritionText(value) {
 }
 
 export default function NutritionPage() {
-  const { isPremium } = useAuth();
+  const { isPremium, workoutMemory, workoutMomentum } = useAuth();
   const { data, summary, loading, error, mutate } = useDashboardData();
   const [saving, setSaving] = useState("");
   const [feedback, setFeedback] = useState("");
@@ -38,6 +40,16 @@ export default function NutritionPage() {
   const todayDirectionSteps = isPremium
     ? [...(guidance?.todayDirection?.freeSteps || []), ...(guidance?.todayDirection?.premiumSteps || [])]
     : guidance?.todayDirection?.freeSteps || [];
+  const currentPlanFocus = null;
+  const recoveryBias = getRecoveryBias(workoutMemory);
+  const continuityContext = getModuleContinuityContext({
+    module: "nutrition",
+    currentPlanFocus,
+    memoryState: workoutMemory,
+    workoutMomentum,
+    recoveryBias,
+    nutritionMode
+  });
 
   const addMeal = async (event) => {
     event.preventDefault();
@@ -109,6 +121,7 @@ export default function NutritionPage() {
           <p className="lead-copy">
             PulsePeak keeps the numbers practical, then turns them into a few repeatable meals, hydration moves, and simple timing choices that support training and recovery.
           </p>
+          <p className="support-copy recommendation-context-note">{continuityContext.title}</p>
         </div>
       </section>
 
@@ -154,7 +167,7 @@ export default function NutritionPage() {
             <Panel eyebrow="Today's food direction" title={guidance?.todayDirection?.title || "Actionable nutrition guidance"}>
               <div className="section-context">
                 <span className="section-context-label">Today</span>
-                <p>{guidance?.todayDirection?.summary || "These are the easiest nutrition wins left for the day, based on the gaps PulsePeak still sees."}</p>
+                <p>{continuityContext.detail || guidance?.todayDirection?.summary || "These are the easiest nutrition wins left for the day, based on the gaps PulsePeak still sees."}</p>
               </div>
               {todayDirectionSteps.length ? (
                 <ul className="plan-list nutrition-action-list">
@@ -212,6 +225,13 @@ export default function NutritionPage() {
                 <div className="module-card-grid nutrition-template-grid">
                   {visibleTemplates.map((template) => (
                     <article key={template.id || template.title} className="module-card nutrition-template-card">
+                      {getNutritionTemplateMedia(template.id)?.image ? (
+                        <img
+                          alt={getNutritionTemplateMedia(template.id)?.alt || `${template.title} example`}
+                          className="nutrition-template-image"
+                          src={getNutritionTemplateMedia(template.id).image}
+                        />
+                      ) : null}
                       <p className="section-label">{template.title}</p>
                       <strong>{template.combo}</strong>
                       <p className="support-copy">{sanitizeNutritionText(template.nutrition)}</p>

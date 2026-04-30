@@ -5,7 +5,6 @@ import MovementDetailModal from "../components/MovementDetailModal";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { useAuth } from "../state/AuthContext";
 import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "../../shared/exerciseCatalog";
-import { getCurrentPlanFocus } from "../../shared/profileState";
 import { getModuleContinuityContext, getRecoveryBias } from "../../shared/workoutEngine";
 
 const INITIAL_VISIBLE_COUNT = 8;
@@ -97,15 +96,7 @@ export default function MobilityPage() {
   const normalizedSearchQuery = searchQuery.trim().toLowerCase();
   const isSearchMode = Boolean(normalizedSearchQuery);
   const openMovementGuide = (target) => setSelectedMovement(buildGuideTarget(target));
-  const currentPlanFocus = useMemo(
-    () =>
-      getCurrentPlanFocus({
-        profile: data?.profile,
-        planSummary: summary?.planSummary,
-        workoutEngine: summary?.workoutEngine
-      }),
-    [data?.profile, summary?.planSummary, summary?.workoutEngine]
-  );
+  const currentPlanFocus = null;
   const recoveryBias = useMemo(() => getRecoveryBias(workoutMemory), [workoutMemory]);
   const continuityContext = useMemo(
     () =>

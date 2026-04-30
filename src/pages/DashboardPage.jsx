@@ -12,29 +12,65 @@ import { useDashboardData } from "../hooks/useDashboardData";
 import { useAuth } from "../state/AuthContext";
 import { useUpgradeCheckout } from "../hooks/useUpgradeCheckout";
 import { getUpgradePrompt } from "../config/upgradePrompts";
+import { buildGuideTarget } from "../../shared/exerciseCatalog";
+import { ACCESS_TIERS, getPremiumComparisonSummary, getPremiumOutcomeLayer, getUpgradeMoment, hasFullWorkoutAccess } from "../../shared/entitlements";
+import {
+  getCheckpoints,
+  getIdentitySignal,
+  getImprovementSignals,
+  getNextWeekAdjustment,
+  getPerformanceSignals,
+  getProgramPhase,
+  getPrimarySignalHighlight,
+  getRecommendedCompanionAction,
+  getResultSignals,
+  getSmartRotationStatus,
+  getSystemTrustCue,
+  getTodaysRecommendedWorkout,
+  getWeeklyTrainingOutline,
+  getWhyThisMattersNotes,
+  getWorkoutRecommendationExplanation,
+  getRecoveryBias,
+  getModuleContinuityContext,
+  getSystemConfidenceSignal
+} from "../../shared/workoutEngine";
+import { getDashboardNextAction } from "../../shared/dashboardModules";
 
 export default function DashboardPage() {
-  const { token, user, isPremium, accessTier, isTrial } = useAuth();
+  const { token, user, isPremium, accessTier, isTrial, needsOnboarding, workoutMemory, workoutMomentum, workoutMilestones, recordWorkoutCompletion } = useAuth();
   const { data, summary, loading, error, mutate } = useDashboardData();
   const [recommendedWorkout, setRecommendedWorkout] = useState(null);
+  const [recommendedWorkoutPool, setRecommendedWorkoutPool] = useState([]);
   const [libraryLoading, setLibraryLoading] = useState(true);
   const [feedback, setFeedback] = useState("");
   const [saving, setSaving] = useState("");
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [weeklyPlanState, setWeeklyPlanState] = useState(null);
   const [selectedMovement, setSelectedMovement] = useState(null);
+  const openMovementGuide = (target) => setSelectedMovement(buildGuideTarget(target));
   const onboardingNudgeKey = useMemo(
     () => `pulsepeak-onboarding-upgrade-nudge:${user?.id || "guest"}`,
+    [user?.id]
+  );
+  const conversionPromptKey = useMemo(
+    () => `pulsepeak-dashboard-conversion:${user?.id || "guest"}`,
     [user?.id]
   );
   const [showOnboardingUpgradePrompt, setShowOnboardingUpgradePrompt] = useState(
     () => window.sessionStorage.getItem(onboardingNudgeKey) === "true"
   );
+  const [showConversionPrompt, setShowConversionPrompt] = useState(
+    () => window.sessionStorage.getItem(conversionPromptKey) !== "dismissed"
+  );
   const { busy: checkoutBusy, startUpgradeCheckout: startUpgradeCheckoutFlow } = useUpgradeCheckout();
+  const currentPlanFocus = null;
 
   useEffect(() => {
     setShowOnboardingUpgradePrompt(window.sessionStorage.getItem(onboardingNudgeKey) === "true");
   }, [onboardingNudgeKey]);
+  useEffect(() => {
+    setShowConversionPrompt(window.sessionStorage.getItem(conversionPromptKey) !== "dismissed");
+  }, [conversionPromptKey]);
 
   useEffect(() => {
     if (!token || !data?.profile) {
@@ -42,22 +78,35 @@ export default function DashboardPage() {
     }
 
     const preferredEnvironment = data.profile.trainingEnvironment === "hybrid" ? "both" : data.profile.trainingEnvironment;
-    const preferredFocus = summary?.workoutEngine?.recommendedFocus || "recommended";
     const preferredEquipment = Array.isArray(data.profile.equipmentSelections) ? data.profile.equipmentSelections.join(",") : "";
     setLibraryLoading(true);
     apiRequest(
-      `/workout-library?environment=${preferredEnvironment}&equipmentSelections=${encodeURIComponent(preferredEquipment)}&focus=${preferredFocus}`,
+      `/workout-library?environment=${preferredEnvironment}&equipmentSelections=${encodeURIComponent(preferredEquipment)}&focus=${currentPlanFocus}`,
       {},
       token
     )
       .then((payload) => {
-        setRecommendedWorkout(payload.workouts[0] || null);
+        setRecommendedWorkoutPool(payload.workouts || []);
+        setRecommendedWorkout(
+          getTodaysRecommendedWorkout({
+            workouts: payload.workouts || [],
+            currentPlanFocus,
+            memoryState: workoutMemory,
+            accessTier,
+            filters: {
+              workoutEnvironment: preferredEnvironment,
+              equipmentSelections: data.profile.equipmentSelections || []
+            },
+            goalType: data.profile.goalType
+          })
+        );
       })
       .catch(() => {
+        setRecommendedWorkoutPool([]);
         setRecommendedWorkout(null);
       })
       .finally(() => setLibraryLoading(false));
-  }, [token, data?.profile, summary?.workoutEngine?.recommendedFocus]);
+  }, [accessTier, currentPlanFocus, data?.profile, token, workoutMemory]);
 
   const todayFocus = summary?.todayFocus;
   const planSummary = summary?.planSummary;
@@ -68,7 +117,8 @@ export default function DashboardPage() {
   const appMode = data?.profile?.appMode || "full_system";
   const showMobilityDashboard = appMode !== "training_only";
   const showExpandedSupport = appMode === "full_system";
-  const workoutsUpgradePrompt = isPremium
+  const hasFullAccess = hasFullWorkoutAccess(accessTier);
+  const workoutsUpgradePrompt = hasFullAccess
     ? null
     : getUpgradePrompt({
         surface: "workouts",
@@ -76,7 +126,7 @@ export default function DashboardPage() {
         activeModules: summary?.activeModules,
         weeklyPlan: summary?.planSummary
       });
-  const onboardingUpgradePrompt = isPremium
+  const onboardingUpgradePrompt = hasFullAccess
     ? null
     : getUpgradePrompt({
         surface: "onboarding",
@@ -115,6 +165,207 @@ export default function DashboardPage() {
     }
     return "Continue training with the next session that fits today.";
   }, [todayFocus?.actions, todayFocus?.whyThisMatters, recommendedWorkout, returnGapDays, workoutAccess?.locked]);
+  const recommendationExplanation = useMemo(
+    () =>
+      getWorkoutRecommendationExplanation(recommendedWorkout, {
+        accessTier,
+        currentPlanFocus,
+        goalType: data?.profile?.goalType,
+        memoryState: workoutMemory,
+        filters: {
+          workoutEnvironment: data?.profile?.trainingEnvironment === "hybrid" ? "both" : data?.profile?.trainingEnvironment,
+          equipmentSelections: data?.profile?.equipmentSelections || []
+        }
+      }),
+    [accessTier, currentPlanFocus, data?.profile?.equipmentSelections, data?.profile?.goalType, data?.profile?.trainingEnvironment, recommendedWorkout, workoutMemory]
+  );
+  const weeklyStructure = useMemo(
+    () =>
+      getWeeklyTrainingOutline({
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        accessTier,
+        workouts: recommendedWorkoutPool
+      }),
+    [accessTier, currentPlanFocus, recommendedWorkoutPool, workoutMemory]
+  );
+  const recoveryBias = useMemo(() => getRecoveryBias(workoutMemory), [workoutMemory]);
+  const launchContext = null;
+  const preferenceInfluence = null;
+  const improvementSignals = useMemo(
+    () =>
+      getImprovementSignals({
+        completionRecords: workoutMemory.completionRecords,
+        memoryState: workoutMemory,
+        currentPlanFocus
+      }),
+    [currentPlanFocus, workoutMemory]
+  );
+  const resultSignals = useMemo(
+    () =>
+      getResultSignals({
+        completionRecords: workoutMemory.completionRecords,
+        workoutMomentum
+      }),
+    [workoutMemory.completionRecords, workoutMomentum]
+  );
+  const performanceSignals = useMemo(
+    () =>
+      getPerformanceSignals({
+        completionRecords: workoutMemory.completionRecords
+      }),
+    [workoutMemory.completionRecords]
+  );
+  const checkpoint = useMemo(
+    () =>
+      getCheckpoints({
+        completionRecords: workoutMemory.completionRecords,
+        workoutMomentum
+      }),
+    [workoutMemory.completionRecords, workoutMomentum]
+  );
+  const identitySignal = useMemo(
+    () =>
+      getIdentitySignal({
+        completionRecords: workoutMemory.completionRecords,
+        workoutMomentum
+      }),
+    [workoutMemory.completionRecords, workoutMomentum]
+  );
+  const programPhase = useMemo(
+    () =>
+      getProgramPhase({
+        completionRecords: workoutMemory.completionRecords,
+        currentPlanFocus,
+        workoutMomentum
+      }),
+    [currentPlanFocus, workoutMemory.completionRecords, workoutMomentum]
+  );
+  const systemConfidenceSignal = useMemo(
+    () =>
+      getSystemConfidenceSignal({
+        completionRecords: workoutMemory.completionRecords,
+        memoryState: workoutMemory,
+        workoutMomentum,
+        currentPlanFocus
+      }),
+    [currentPlanFocus, workoutMemory, workoutMomentum]
+  );
+  const nextWeekAdjustment = useMemo(
+    () =>
+      getNextWeekAdjustment({
+        completionRecords: workoutMemory.completionRecords,
+        currentPlanFocus,
+        workoutMomentum,
+        accessTier
+      }),
+    [accessTier, currentPlanFocus, workoutMemory.completionRecords, workoutMomentum]
+  );
+  const whyThisMattersNotes = useMemo(
+    () =>
+      getWhyThisMattersNotes({
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        phase: programPhase,
+        recoveryBias
+      }),
+    [currentPlanFocus, programPhase, recoveryBias, workoutMemory]
+  );
+  const premiumOutcomeLayer = useMemo(
+    () => getPremiumOutcomeLayer(accessTier, { surface: "dashboard" }),
+    [accessTier]
+  );
+  const companionAction = useMemo(
+    () =>
+      getRecommendedCompanionAction({
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        workoutMomentum,
+        recoveryBias,
+        weeklyStructure,
+        nutritionMode: data?.profile?.nutritionMode,
+        hasMobilityModule: showMobilityDashboard,
+        hasNutritionModule: (summary?.activeModules || []).includes("nutrition")
+      }),
+    [currentPlanFocus, data?.profile?.nutritionMode, recoveryBias, showMobilityDashboard, summary?.activeModules, weeklyStructure, workoutMemory, workoutMomentum]
+  );
+  const continuityContext = useMemo(
+    () =>
+      getModuleContinuityContext({
+        module: "dashboard",
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        workoutMomentum,
+        recoveryBias,
+        weeklyStructure,
+        nutritionMode: data?.profile?.nutritionMode
+      }),
+    [currentPlanFocus, data?.profile?.nutritionMode, recoveryBias, weeklyStructure, workoutMemory, workoutMomentum]
+  );
+  const trustCue = useMemo(
+    () =>
+      getSystemTrustCue({
+        currentPlanFocus,
+        memoryState: workoutMemory,
+        weeklyStructure,
+        resultSignals
+      }),
+    [currentPlanFocus, resultSignals, weeklyStructure, workoutMemory]
+  );
+  const smartRotationStatus = useMemo(
+    () => getSmartRotationStatus({ recommendedWorkout }),
+    [recommendedWorkout]
+  );
+  const upgradeMoment = useMemo(
+    () =>
+      getUpgradeMoment({
+        accessTier,
+        context: {
+          resultSignals,
+          checkpoint,
+          workoutMomentum
+        }
+      }),
+    [accessTier, checkpoint, resultSignals, workoutMomentum]
+  );
+  const premiumComparison = useMemo(
+    () =>
+      getPremiumComparisonSummary(accessTier, {
+        surface: "dashboard",
+        upgradeMoment
+      }),
+    [accessTier, upgradeMoment]
+  );
+  const nextAction = useMemo(
+    () =>
+      getDashboardNextAction({
+        needsOnboarding,
+        recommendedWorkout,
+        recommendationExplanation,
+        weeklyStructure,
+        programPhase,
+        nextWeekAdjustment,
+        workoutMemory,
+        workoutMomentum,
+        workoutAccess,
+        hasFullAccess,
+        recoveryBias,
+        showMobilityDashboard,
+        hasNutritionModule: (summary?.activeModules || []).includes("nutrition")
+      }),
+    [hasFullAccess, needsOnboarding, nextWeekAdjustment, programPhase, recommendedWorkout, recommendationExplanation, recoveryBias, showMobilityDashboard, summary?.activeModules, weeklyStructure, workoutAccess, workoutMemory, workoutMomentum]
+  );
+  const primarySignal = useMemo(
+    () =>
+      getPrimarySignalHighlight({
+        checkpoint,
+        milestone: workoutMilestones?.fresh || workoutMilestones?.latest || null,
+        identitySignal,
+        performanceSignals,
+        resultSignals
+      }),
+    [checkpoint, identitySignal, performanceSignals, resultSignals, workoutMilestones]
+  );
   const trialReminder = useMemo(() => {
     if (!isTrial) {
       return null;
@@ -152,7 +403,7 @@ export default function DashboardPage() {
     try {
       const payload = await apiRequest(
         "/weekly-plan",
-        isPremium
+        hasFullAccess
           ? {}
           : {
               headers: {
@@ -195,6 +446,7 @@ export default function DashboardPage() {
             : undefined
         })
       });
+      recordWorkoutCompletion(workoutContext || { id: workoutId, name: workoutContext?.name || "Workout", focus: workoutContext?.focus || workoutEngine?.recommendedFocus, duration: workoutContext?.duration });
       setFeedback(successMessage);
       if (closeOnSuccess) {
         setSelectedWorkout(null);
@@ -228,6 +480,10 @@ export default function DashboardPage() {
     window.sessionStorage.removeItem(onboardingNudgeKey);
     setShowOnboardingUpgradePrompt(false);
   };
+  const dismissConversionPrompt = () => {
+    window.sessionStorage.setItem(conversionPromptKey, "dismissed");
+    setShowConversionPrompt(false);
+  };
 
   return (
     <div className="page-grid page-grid-tight">
@@ -248,8 +504,8 @@ export default function DashboardPage() {
               <span className="muted">Workout logs this week</span>
             </div>
             <div className="stat-pill">
-              <strong>{summary.workoutStreak} days</strong>
-              <span className="muted">Training streak</span>
+              <strong>{workoutMomentum.currentStreakDays} day{workoutMomentum.currentStreakDays === 1 ? "" : "s"}</strong>
+              <span className="muted">Current training streak</span>
             </div>
             <div className="stat-pill">
               <strong>{summary.habits.filter((habit) => habit.completedToday).length}</strong>
@@ -270,6 +526,16 @@ export default function DashboardPage() {
 
       {feedback ? <div className="status-banner">{feedback}</div> : null}
 
+      <div className="module-note">
+        <strong>{launchContext?.launchLabel || "Built from your setup"}</strong>
+        <p className="support-copy">
+          {launchContext?.launchSummary || "Your dashboard is using your current profile and access settings as the baseline for what to show next."}
+        </p>
+        <p className="support-copy">
+          {launchContext?.weekIntent || "Open the weekly plan or workouts view when you want more detailed training direction."}
+        </p>
+      </div>
+
       {returnGapDays >= 2 ? (
         <div className="status-banner">
           <strong>Pick up where you left off. Your next session is ready.</strong>
@@ -288,7 +554,7 @@ export default function DashboardPage() {
         </div>
       ) : null}
 
-      {!isPremium && showOnboardingUpgradePrompt && onboardingUpgradePrompt ? (
+      {!hasFullAccess && showOnboardingUpgradePrompt && onboardingUpgradePrompt && !upgradeMoment ? (
         <UpgradePrompt
           compact
           prompt={onboardingUpgradePrompt}
@@ -299,6 +565,78 @@ export default function DashboardPage() {
       ) : null}
 
       <div className="today-stack">
+        {nextAction ? (
+          <Panel eyebrow={nextAction.eyebrow} title={nextAction.title}>
+            <div className="module-note">
+              <p className="support-copy">{nextAction.reason}</p>
+              <div className="module-card-actions">
+                {nextAction.primaryAction?.action === "start_workout" ? (
+                  <button className="primary-button" type="button" onClick={() => recommendedWorkout && startWorkoutSession(recommendedWorkout)}>
+                    {nextAction.primaryAction.label}
+                  </button>
+                ) : nextAction.primaryAction?.action === "upgrade" ? (
+                  <button className="primary-button" type="button" onClick={() => startUpgradeCheckout(user?.canStartTrial ? "yearly" : "monthly", user?.canStartTrial ? "default" : "upgrade_now")}>
+                    {nextAction.primaryAction.label}
+                  </button>
+                ) : nextAction.primaryAction?.href ? (
+                  <Link className="primary-button module-link" to={nextAction.primaryAction.href}>
+                    {nextAction.primaryAction.label}
+                  </Link>
+                ) : null}
+                {nextAction.secondaryAction?.action === "review_workout" ? (
+                  <button className="ghost-button" type="button" onClick={() => recommendedWorkout && setSelectedWorkout(recommendedWorkout)}>
+                    {nextAction.secondaryAction.label}
+                  </button>
+                ) : nextAction.secondaryAction?.href ? (
+                  <Link className="ghost-button module-link" to={nextAction.secondaryAction.href}>
+                    {nextAction.secondaryAction.label}
+                  </Link>
+                ) : null}
+              </div>
+            </div>
+          </Panel>
+        ) : null}
+
+        {(workoutMomentum.currentStreakDays > 0 || workoutMomentum.weeklyCompletionCount > 0) ? (
+          <div className="momentum-strip">
+            <span className="momentum-badge">
+              {workoutMomentum.currentStreakDays} day{workoutMomentum.currentStreakDays === 1 ? "" : "s"} current streak
+            </span>
+            <span className="momentum-badge">
+              {workoutMomentum.longestStreakDays} day{workoutMomentum.longestStreakDays === 1 ? "" : "s"} best streak
+            </span>
+            <span className="momentum-badge">
+              {workoutMomentum.weeklyCompletionCount} session{workoutMomentum.weeklyCompletionCount === 1 ? "" : "s"} this week
+            </span>
+          </div>
+        ) : null}
+
+        {primarySignal ? (
+          <div className="module-note">
+            <strong>{primarySignal.title}</strong>
+            <p className="support-copy">{primarySignal.detail}</p>
+          </div>
+        ) : null}
+
+        {performanceSignals?.summaryLine ? (
+          <div className="module-note">
+            <strong>Performance trend</strong>
+            <p className="support-copy">{performanceSignals.summaryLine}</p>
+          </div>
+        ) : null}
+
+        {companionAction ? (
+          <div className="module-note">
+            <strong>{companionAction.title}</strong>
+            <p className="support-copy">{companionAction.detail}</p>
+            <div className="module-card-actions">
+              <Link className="ghost-button module-link" to={companionAction.href}>
+                {companionAction.ctaLabel}
+              </Link>
+            </div>
+          </div>
+        ) : null}
+
         <Panel
           eyebrow="Today&apos;s training direction"
           title={workoutEngine?.recommendedFocusLabel || planSummary?.weeklyFocus || "Your plan for today"}
@@ -326,7 +664,36 @@ export default function DashboardPage() {
         >
           <div className="section-context">
             <span className="section-context-label">Today</span>
-            <p>{workoutEngine?.recommendationReason || "This is the highest-impact move for the next few hours, pulled from the larger weekly system below."}</p>
+            <p>{workoutEngine?.recommendationReason || continuityContext.detail || "This is the highest-impact move for the next few hours, pulled from the larger weekly system below."}</p>
+          </div>
+          {trustCue ? <p className="support-copy recommendation-context-note">{trustCue}</p> : null}
+          {recommendationExplanation?.shortLabel ? (
+            <div className="module-note">
+              <strong>{recommendationExplanation.shortLabel}</strong>
+              <p className="support-copy">{recommendationExplanation.supportingReason}</p>
+            </div>
+          ) : null}
+          {smartRotationStatus ? (
+            <div className="module-note smart-rotation-note">
+              <strong>{smartRotationStatus.label}</strong>
+              <p className="support-copy">{smartRotationStatus.detail}</p>
+            </div>
+          ) : null}
+          {preferenceInfluence?.items?.length ? (
+            <div className="module-note">
+              <strong>{preferenceInfluence.primary}</strong>
+              <p className="support-copy">{preferenceInfluence.summary}</p>
+            </div>
+          ) : null}
+          {systemConfidenceSignal ? (
+            <div className="module-note">
+              <strong>This is working</strong>
+              <p className="support-copy">{systemConfidenceSignal}</p>
+            </div>
+          ) : null}
+          <div className="module-note">
+            <strong>{programPhase.label}</strong>
+            <p className="support-copy">{programPhase.detail}</p>
           </div>
           {workoutEngine?.continuityNote ? (
             <div className="module-note">
@@ -360,6 +727,9 @@ export default function DashboardPage() {
               You have completed {workoutAccess?.weeklyLogged || 0} of {weeklySessionTarget} sessions this week.
             </strong>
             <p className="support-copy">Your next session keeps the week on track.</p>
+            {workoutMemory.lastCompletedAt ? (
+              <p className="support-copy">Last completed session: {workoutMemory.completionRecords?.[0]?.workoutName || "Workout"}.</p>
+            ) : null}
           </div>
         </Panel>
 
@@ -404,8 +774,30 @@ export default function DashboardPage() {
             <span className="section-context-label">This week</span>
             <p>These blocks show the broader training direction so today feels connected to a real progression instead of a random session.</p>
           </div>
+          {weeklyStructure?.summary ? (
+            <div className="module-note">
+              <strong>{weeklyStructure.summary}</strong>
+              <p className="support-copy">
+                {recommendedWorkout ? `Today points toward ${recommendedWorkout.name} so the week starts from a clear next action.` : "Open the workout engine to lock in the next session from this weekly structure."}
+              </p>
+              <p className="support-copy">{nextWeekAdjustment.detail}</p>
+            </div>
+          ) : (
+            <div className="module-note">
+              <strong>{continuityContext.title}</strong>
+              <p className="support-copy">{continuityContext.detail}</p>
+            </div>
+          )}
           <div className="today-sequence">
-            {todayTrainingBlocks.length ? (
+            {weeklyStructure?.days?.length ? (
+              weeklyStructure.days.map((entry) => (
+                <div className="today-sequence-card" key={`weekly-structure-${entry.day}`}>
+                  <span className="focus-step">Block</span>
+                  <strong>{entry.label}</strong>
+                  <p className="muted">{entry.title}</p>
+                </div>
+              ))
+            ) : todayTrainingBlocks.length ? (
               todayTrainingBlocks.map((item) => (
                 <div className="today-sequence-card" key={item}>
                   <span className="focus-step">Block</span>
@@ -462,6 +854,9 @@ export default function DashboardPage() {
           ) : recommendedWorkout ? (
             <div className="module-note">
               <strong>{recommendedWorkout.focusLabel} · {recommendedWorkout.environment} · {recommendedWorkout.duration} mins</strong>
+              {recommendationExplanation?.shortLabel ? <p className="support-copy recommendation-context-note">{recommendationExplanation.shortLabel}</p> : null}
+              {recommendationExplanation?.supportingReason ? <p className="support-copy">{recommendationExplanation.supportingReason}</p> : null}
+              {smartRotationStatus ? <p className="support-copy recommendation-context-note">{smartRotationStatus.label}</p> : null}
               <p className="support-copy">{recommendedWorkout.summary}</p>
               {recommendedWorkout.continuityNote ? <p className="support-copy">{recommendedWorkout.continuityNote}</p> : null}
               {recommendedWorkout.varietyNote ? <p className="support-copy">{recommendedWorkout.varietyNote}</p> : null}
@@ -482,7 +877,7 @@ export default function DashboardPage() {
           ) : (
             <p className="muted">No preset recommendation is available yet. Open the workout engine and choose the setup that matches today.</p>
           )}
-          {!isPremium && !isTrial && !workoutAccess?.locked ? (
+          {!hasFullAccess && accessTier !== ACCESS_TIERS.TRIAL && !workoutAccess?.locked ? (
             <div className="module-note">
               <strong>Keep your training continuity intact.</strong>
               <p className="support-copy">
@@ -490,7 +885,16 @@ export default function DashboardPage() {
               </p>
             </div>
           ) : null}
-          {!isPremium && workoutAccess?.locked && workoutsUpgradePrompt ? (
+          {!hasFullAccess && !workoutAccess?.locked && workoutsUpgradePrompt && upgradeMoment && showConversionPrompt ? (
+            <UpgradePrompt
+              compact
+              prompt={{ ...workoutsUpgradePrompt, contextNote: upgradeMoment.detail }}
+              busy={checkoutBusy}
+              onDismiss={dismissConversionPrompt}
+              onUpgrade={startUpgradeCheckout}
+            />
+          ) : null}
+          {!hasFullAccess && workoutAccess?.locked && workoutsUpgradePrompt ? (
             <UpgradePrompt compact prompt={workoutsUpgradePrompt} busy={checkoutBusy} onUpgrade={startUpgradeCheckout} />
           ) : null}
         </Panel>
@@ -517,6 +921,23 @@ export default function DashboardPage() {
               <p className="support-copy">{weeklyCheckIn.todayConnection}</p>
             </div>
           ) : null}
+          {whyThisMattersNotes.length ? (
+            <div className="insight-list">
+              {whyThisMattersNotes.map((note) => (
+                <div className="insight-chip" key={note}>
+                  <strong>Why this matters</strong>
+                  <p className="muted">{note}</p>
+                </div>
+              ))}
+            </div>
+          ) : null}
+          {!hasFullAccess ? (
+            <div className="module-note">
+              <strong>{premiumOutcomeLayer.title}</strong>
+              <p className="support-copy">{premiumComparison.availableNow}</p>
+              <p className="support-copy">{premiumComparison.premiumLine}</p>
+            </div>
+          ) : null}
           <div className="module-card-actions">
             <Link className="ghost-button module-link" to="/coach">
               Open Coach
@@ -537,7 +958,7 @@ export default function DashboardPage() {
         onClose={() => setSelectedWorkout(null)}
         onLog={addPresetWorkout}
         isSaving={saving === `preset-${selectedWorkout?.presetId || selectedWorkout?.id}`}
-        onOpenMovement={setSelectedMovement}
+        onOpenMovement={openMovementGuide}
         onUpgrade={startUpgradeCheckout}
         accessTier={accessTier}
         canStartTrial={Boolean(user?.canStartTrial)}
@@ -558,9 +979,14 @@ export default function DashboardPage() {
         planPayload={weeklyPlanState}
         onClose={() => setWeeklyPlanState(null)}
         onUpgrade={startUpgradeCheckout}
-        onOpenMovement={setSelectedMovement}
+        onOpenMovement={openMovementGuide}
       />
-      <MovementDetailModal guidanceLevel={data.profile?.exerciseGuidanceLevel || "standard"} movement={selectedMovement} onClose={() => setSelectedMovement(null)} />
+      <MovementDetailModal
+        guidanceLevel={data.profile?.exerciseGuidanceLevel || "standard"}
+        movement={selectedMovement}
+        movementId={selectedMovement?.detailId || selectedMovement?.guideTargetId || selectedMovement?.id}
+        onClose={() => setSelectedMovement(null)}
+      />
     </div>
   );
 }

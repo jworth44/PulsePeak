@@ -6,9 +6,24 @@ import { getUpgradePrompt } from "../config/upgradePrompts";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { useUpgradeCheckout } from "../hooks/useUpgradeCheckout";
 import { useAuth } from "../state/AuthContext";
+import { getPremiumCapabilitySummary, getPremiumComparisonSummary, getPremiumOutcomeLayer, hasFullWorkoutAccess } from "../../shared/entitlements";
+import {
+  getCheckpoints,
+  getIdentitySignal,
+  getImprovementSignals,
+  getNextWeekAdjustment,
+  getPerformanceSignals,
+  getProgramPhase,
+  getProgressInsights,
+  getPrimarySignalHighlight,
+  getResultSignals,
+  getSystemConfidenceSignal,
+  getSystemTrustCue,
+  getWhyThisMattersNotes
+} from "../../shared/workoutEngine";
 
 export default function ProgressPage() {
-  const { user, isPremium } = useAuth();
+  const { user, accessTier, workoutMemory, workoutMomentum, workoutMilestones } = useAuth();
   const { data, summary, loading, mutate } = useDashboardData();
   const { busy: checkoutBusy, startUpgradeCheckout } = useUpgradeCheckout();
   const [error, setError] = React.useState("");
@@ -31,7 +46,70 @@ export default function ProgressPage() {
   const bestStreak = summary.habits.reduce((best, habit) => Math.max(best, habit.streak), 0);
   const weeklyCheckIn = summary.weeklyCheckIn;
   const latestCheckIn = weeklyCheckIn?.latestCheckIn;
-  const progressUpgradePrompt = isPremium
+  const hasProgressAccess = hasFullWorkoutAccess(accessTier);
+  const currentPlanFocus = null;
+  const progressInsights = getProgressInsights({
+    memoryState: workoutMemory,
+    currentPlanFocus
+  });
+  const improvementSignals = getImprovementSignals({
+    completionRecords: workoutMemory.completionRecords,
+    memoryState: workoutMemory,
+    currentPlanFocus
+  });
+  const resultSignals = getResultSignals({
+    completionRecords: workoutMemory.completionRecords,
+    workoutMomentum
+  });
+  const performanceSignals = getPerformanceSignals({
+    completionRecords: workoutMemory.completionRecords
+  });
+  const checkpoint = getCheckpoints({
+    completionRecords: workoutMemory.completionRecords,
+    workoutMomentum
+  });
+  const identitySignal = getIdentitySignal({
+    completionRecords: workoutMemory.completionRecords,
+    workoutMomentum
+  });
+  const programPhase = getProgramPhase({
+    completionRecords: workoutMemory.completionRecords,
+    currentPlanFocus,
+    workoutMomentum
+  });
+  const nextWeekAdjustment = getNextWeekAdjustment({
+    completionRecords: workoutMemory.completionRecords,
+    currentPlanFocus,
+    workoutMomentum,
+    accessTier
+  });
+  const whyThisMattersNotes = getWhyThisMattersNotes({
+    currentPlanFocus,
+    memoryState: workoutMemory,
+    phase: programPhase
+  });
+  const premiumOutcomeLayer = getPremiumOutcomeLayer(accessTier, { surface: "progress" });
+  const premiumComparison = getPremiumComparisonSummary(accessTier, { surface: "progress" });
+  const systemConfidenceSignal = getSystemConfidenceSignal({
+    completionRecords: workoutMemory.completionRecords,
+    memoryState: workoutMemory,
+    workoutMomentum,
+    currentPlanFocus
+  });
+  const trustCue = getSystemTrustCue({
+    currentPlanFocus,
+    memoryState: workoutMemory,
+    resultSignals
+  });
+  const primarySignal = getPrimarySignalHighlight({
+    checkpoint,
+    milestone: workoutMilestones?.fresh || workoutMilestones?.latest || null,
+    identitySignal,
+    performanceSignals,
+    resultSignals
+  });
+  const visibleMilestone = checkpoint || workoutMilestones?.fresh || workoutMilestones?.latest || null;
+  const progressUpgradePrompt = hasProgressAccess
     ? null
     : getUpgradePrompt({
         surface: "progress",
@@ -93,11 +171,146 @@ export default function ProgressPage() {
             <p className="muted">Your daily score pulls training, recovery, hydration, and nutrition into one signal so progress feels connected instead of scattered.</p>
           </div>
           <div className="module-note">
-            <strong>{bestStreak} day best streak</strong>
-            <p className="muted">Habit streaks and weekly-score history show whether your routine is becoming easier to repeat and trust.</p>
+            <strong>{workoutMomentum.currentStreakDays} day current streak</strong>
+            <p className="muted">Training streak and recent activity now reflect actual completed sessions instead of a disconnected summary signal.</p>
+          </div>
+          <div className="module-note">
+            <strong>{performanceSignals.summaryLine}</strong>
+            {systemConfidenceSignal ? <p className="muted">{systemConfidenceSignal}</p> : null}
+            {trustCue ? <p className="support-copy recommendation-context-note">{trustCue}</p> : null}
           </div>
         </div>
       </Panel>
+
+      <Panel eyebrow="Performance trend" title="How your training demand is moving">
+        <div className="content-grid">
+          <div className="module-note">
+            <strong>Session length</strong>
+            <p className="support-copy">{formatTrendLabel(performanceSignals.sessionLengthTrend)}</p>
+          </div>
+          <div className="module-note">
+            <strong>Intensity mix</strong>
+            <p className="support-copy">{formatTrendLabel(performanceSignals.intensityTrend)}</p>
+          </div>
+          <div className="module-note">
+            <strong>Training frequency</strong>
+            <p className="support-copy">{formatTrendLabel(performanceSignals.frequencyTrend)}</p>
+          </div>
+        </div>
+      </Panel>
+
+      <div className="content-grid">
+        <Panel eyebrow="Consistency" title="Recent momentum">
+          <div className="insight-list">
+            <div className="insight-chip">
+              <strong>Current streak</strong>
+              <p className="muted">{workoutMomentum.currentStreakDays} consecutive active day{workoutMomentum.currentStreakDays === 1 ? "" : "s"}</p>
+            </div>
+            <div className="insight-chip">
+              <strong>Longest streak</strong>
+              <p className="muted">{Math.max(workoutMomentum.longestStreakDays, bestStreak)} day{Math.max(workoutMomentum.longestStreakDays, bestStreak) === 1 ? "" : "s"}</p>
+            </div>
+            <div className="insight-chip">
+              <strong>Sessions this week</strong>
+              <p className="muted">{workoutMomentum.weeklyCompletionCount}</p>
+            </div>
+          </div>
+        </Panel>
+
+        <Panel eyebrow="Training insight" title="What the recent pattern suggests">
+          {progressInsights.length ? (
+            <div className="insight-list">
+              {progressInsights.map((insight) => (
+                <div className="insight-chip" key={insight.title}>
+                  <strong>{insight.title}</strong>
+                  <p className="muted">{insight.body}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="support-copy">Complete a few sessions and PulsePeak will surface simple balance, consistency, and recovery signals here.</p>
+          )}
+          {primarySignal ? (
+            <div className="module-note">
+              <strong>{primarySignal.title}</strong>
+              <p className="support-copy">{primarySignal.detail}</p>
+            </div>
+          ) : null}
+        </Panel>
+      </div>
+
+      <Panel eyebrow="Improvement signals" title="What is actually improving">
+        <div className="content-grid">
+          <div className="module-note">
+            <strong>{improvementSignals.consistency.label}</strong>
+            <p className="support-copy">{improvementSignals.consistency.detail}</p>
+          </div>
+          {hasProgressAccess ? (
+            <>
+              <div className="module-note">
+                <strong>{improvementSignals.variety.label}</strong>
+                <p className="support-copy">{improvementSignals.variety.detail}</p>
+              </div>
+              <div className="module-note">
+                <strong>{improvementSignals.loadTolerance.label}</strong>
+                <p className="support-copy">{improvementSignals.loadTolerance.detail}</p>
+              </div>
+            </>
+          ) : (
+            <div className="module-note">
+              <strong>{premiumOutcomeLayer.title}</strong>
+              <p className="support-copy">{premiumComparison.availableNow}</p>
+              <p className="support-copy">{premiumComparison.premiumLine || premiumOutcomeLayer.detail}</p>
+            </div>
+          )}
+        </div>
+        {!hasProgressAccess ? (
+          <div className="module-note">
+            <strong>Free still shows the real basics.</strong>
+            <p className="support-copy">You can still see consistency, milestones, and recent sessions here. Premium expands the interpretation layer, not just the lock screen.</p>
+          </div>
+        ) : null}
+      </Panel>
+
+      <div className="content-grid">
+        <Panel eyebrow="Milestones" title="Recent reinforcement">
+          {visibleMilestone ? (
+            <div className="module-note">
+              <strong>{visibleMilestone.title}</strong>
+              <p className="support-copy">{visibleMilestone.detail}</p>
+            </div>
+          ) : (
+            <p className="support-copy">Complete a few more sessions and PulsePeak will start surfacing grounded milestones here.</p>
+          )}
+        </Panel>
+
+        <Panel eyebrow="Program arc" title="Where the program is headed">
+          <div className="module-note">
+            <strong>Current phase: {programPhase.label}</strong>
+            <p className="support-copy">{programPhase.detail}</p>
+          </div>
+          <div className="module-note">
+            <strong>Next week likely emphasis</strong>
+            <p className="support-copy">{nextWeekAdjustment.detail}</p>
+          </div>
+          {whyThisMattersNotes.length ? (
+            <div className="insight-list">
+              {whyThisMattersNotes.map((note) => (
+                <div className="insight-chip" key={note}>
+                  <strong>Why this matters</strong>
+                  <p className="muted">{note}</p>
+                </div>
+              ))}
+            </div>
+          ) : null}
+          {systemConfidenceSignal ? (
+            <div className="module-note">
+              <strong>This is working</strong>
+              <p className="support-copy">{systemConfidenceSignal}</p>
+            </div>
+          ) : null}
+        </Panel>
+      </div>
 
       <div className="content-grid">
         <Panel eyebrow="Weekly check-in" title={weeklyCheckIn?.title || "Close the loop on your week"}>
@@ -166,8 +379,9 @@ export default function ProgressPage() {
           <div className="module-note">
             <strong>{weeklyCheckIn?.todayConnection || "Today and next week should stay connected through one clear adjustment."}</strong>
             <p className="support-copy">
-              {isPremium ? weeklyCheckIn?.premiumSummary : weeklyCheckIn?.freeSummary}
+              {hasProgressAccess ? weeklyCheckIn?.premiumSummary : weeklyCheckIn?.freeSummary}
             </p>
+            {!hasProgressAccess ? <p className="support-copy">{getPremiumCapabilitySummary("progress")}</p> : null}
           </div>
           <div className="content-grid">
             <div className="module-note">
@@ -207,7 +421,7 @@ export default function ProgressPage() {
               <p className="support-copy">The next week's changes will appear here after your check-in is saved.</p>
             )}
           </div>
-          {isPremium && weeklyCheckIn?.premiumReasoning ? (
+          {hasProgressAccess && weeklyCheckIn?.premiumReasoning ? (
             <div className="module-note">
               <strong>Premium adjustment reasoning</strong>
               <p className="support-copy">{weeklyCheckIn.premiumReasoning}</p>
@@ -249,9 +463,39 @@ export default function ProgressPage() {
         </div>
       </Panel>
 
-      {!isPremium && showUpgradePrompt && progressUpgradePrompt ? (
+      <Panel eyebrow="Recent training" title="Recent completed sessions">
+        {workoutMemory.completionRecords?.length ? (
+          <div className="module-card-grid">
+            {workoutMemory.completionRecords.slice(0, 4).map((record) => (
+              <article className="module-card" key={`${record.workoutId}-${record.completedAt}`}>
+                <p className="section-label">{record.category}</p>
+                <h4>{record.workoutName}</h4>
+                <p className="support-copy">
+                  {new Date(record.completedAt).toLocaleString()} {record.duration ? `· ${record.duration} mins` : ""}
+                </p>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p className="support-copy">Complete a workout and PulsePeak will start building a cleaner recent activity trail here.</p>
+        )}
+      </Panel>
+
+      {!hasProgressAccess && showUpgradePrompt && progressUpgradePrompt ? (
         <UpgradePrompt prompt={progressUpgradePrompt} busy={checkoutBusy} onDismiss={dismissUpgradePrompt} onUpgrade={handleUpgrade} />
       ) : null}
     </div>
   );
+}
+
+function formatTrendLabel(trend) {
+  if (trend === "up") {
+    return "Trending up";
+  }
+
+  if (trend === "down") {
+    return "Needs rebalancing";
+  }
+
+  return "Holding steady";
 }

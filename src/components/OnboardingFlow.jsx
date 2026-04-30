@@ -22,6 +22,8 @@ import {
 import { getDefaultEquipmentProfile, getEquipmentOptionsForEnvironment, normalizeEquipmentProfile } from "../../shared/workoutEngine";
 import { APP_MODE_OPTIONS, getAppModeLabel } from "../../shared/appModes.js";
 
+const BRAND_LOGO = "/brand/pulsepeak-main-logo.png";
+
 const STEP_TITLES = [
   "Welcome",
   "App mode",
@@ -32,6 +34,16 @@ const STEP_TITLES = [
   "Review"
 ];
 
+const ONBOARDING_STEP_MEDIA = {
+  0: { src: "/media/onboarding/onboarding-2.jpg", alt: "PulsePeak welcome setup preview" },
+  1: { src: "/media/onboarding/onboarding-4.jpg", alt: "PulsePeak app mode setup preview" },
+  2: { src: "/media/onboarding/onboarding-6.jpg", alt: "PulsePeak goal selection setup preview" },
+  3: { src: "/media/onboarding/onboarding-11.jpg", alt: "PulsePeak training setup preview" },
+  4: { src: "/media/onboarding/onboarding-7.jpg", alt: "PulsePeak nutrition mode setup preview" },
+  5: { src: "/media/onboarding/onboarding-10.jpg", alt: "PulsePeak body and recovery setup preview" },
+  6: { src: "/media/onboarding/onboarding-9.jpg", alt: "PulsePeak review setup preview" }
+};
+
 export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
   const { token, user, dashboard, refreshSession } = useAuth();
   const profile = dashboard?.profile || {};
@@ -39,6 +51,7 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
   const [step, setStep] = useState(0);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [imageFailures, setImageFailures] = useState({});
   const [form, setForm] = useState({
     appMode: profile.appMode || "full_system",
     goalType: profile.goalType || "general_fitness",
@@ -120,10 +133,13 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
   );
   const projectedOutcome = useMemo(() => getProjectedOutcome(form), [form]);
   const whyThisWorksPreview = useMemo(() => getWhyThisWorksPreview(form), [form]);
+  const currentPlanFocus = null;
+  const onboardingLaunchContext = null;
   const onboardingNudgeKey = useMemo(
     () => `pulsepeak-onboarding-upgrade-nudge:${user?.id || "guest"}`,
     [user?.id]
   );
+  const stepMedia = ONBOARDING_STEP_MEDIA[step];
 
   const updateField = (key, value) => {
       if (key === "unitPreference") {
@@ -226,6 +242,7 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
   return (
     <div className="onboarding-shell">
       <section className="onboarding-panel onboarding-hero">
+        <img className="onboarding-brand-logo" src={BRAND_LOGO} alt="PulsePeak" />
         <p className="badge">{mode === "onboarding" ? "Tailored setup" : "Preferences"}</p>
         <h1>
           {mode === "onboarding"
@@ -257,55 +274,64 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
 
       <section className="onboarding-panel onboarding-card">
         {step === 0 ? (
-          <div className="onboarding-step">
-            <p className="section-label">Welcome</p>
-            <h2>Build the version of PulsePeak that actually fits you.</h2>
-            <p className="muted">
-              This takes about a minute. When you finish, the dashboard, coach, and weekly plan will already feel sharper, cleaner, and more personal than a generic fitness app.
-            </p>
-            <div className="onboarding-highlights">
-              <div className="preview-highlight">
-                <span className="focus-step">Goal-aware</span>
-                <strong>Weekly plan adapts to the result you care about most.</strong>
-              </div>
-              <div className="preview-highlight">
-                <span className="focus-step">Clutter control</span>
-                <strong>Nutrition, mobility, and other modules appear only when they matter.</strong>
-              </div>
-              <div className="preview-highlight">
-                <span className="focus-step">Recovery-aware</span>
-                <strong>Injury and recovery inputs shape the training tone from day one.</strong>
-              </div>
-              <div className="preview-highlight">
-                <span className="focus-step">Body-aware</span>
-                <strong>Weight, height, and birthdate make fueling and hydration guidance more believable.</strong>
+          <StepLayout
+            media={stepMedia}
+            onImageError={() => setImageFailures((current) => ({ ...current, [step]: true }))}
+            showFallback={Boolean(imageFailures[step])}
+          >
+            <div className="onboarding-step">
+              <p className="section-label">Welcome</p>
+              <h2>Build the version of PulsePeak that actually fits you.</h2>
+              <p className="muted">
+                This takes about a minute. When you finish, the dashboard, coach, and weekly plan will already feel sharper, cleaner, and more personal than a generic fitness app.
+              </p>
+              <div className="onboarding-highlights">
+                <div className="preview-highlight">
+                  <span className="focus-step">Goal-aware</span>
+                  <strong>Weekly plan adapts to the result you care about most.</strong>
+                </div>
+                <div className="preview-highlight">
+                  <span className="focus-step">Clutter control</span>
+                  <strong>Nutrition, mobility, and other modules appear only when they matter.</strong>
+                </div>
+                <div className="preview-highlight">
+                  <span className="focus-step">Recovery-aware</span>
+                  <strong>Injury and recovery inputs shape the training tone from day one.</strong>
+                </div>
+                <div className="preview-highlight">
+                  <span className="focus-step">Body-aware</span>
+                  <strong>Weight, height, and birthdate make fueling and hydration guidance more believable.</strong>
+                </div>
               </div>
             </div>
-          </div>
+          </StepLayout>
         ) : null}
 
         {step === 1 ? (
-          <div className="onboarding-step">
-            <p className="section-label">App mode</p>
-            <h2>Choose how you want PulsePeak to work for you.</h2>
-            <p className="muted">This is your starting layout, not a permanent lock-in. You can switch it later in Settings whenever you want to open the app up again.</p>
-            <div className="goal-card-grid">
-              {APP_MODE_OPTIONS.map((option) => (
-                <button
-                  key={option.value}
-                  className={`goal-card ${form.appMode === option.value ? "goal-card-active" : ""}`}
-                  type="button"
-                  onClick={() => updateField("appMode", option.value)}
-                >
-                  <strong>{option.label}</strong>
-                  <span>{option.description}</span>
-                </button>
-              ))}
+          <StepLayout media={stepMedia} onImageError={() => setImageFailures((current) => ({ ...current, [step]: true }))} showFallback={Boolean(imageFailures[step])}>
+            <div className="onboarding-step">
+              <p className="section-label">App mode</p>
+              <h2>Choose how you want PulsePeak to work for you.</h2>
+              <p className="muted">This is your starting layout, not a permanent lock-in. You can switch it later in Settings whenever you want to open the app up again.</p>
+              <div className="goal-card-grid">
+                {APP_MODE_OPTIONS.map((option) => (
+                  <button
+                    key={option.value}
+                    className={`goal-card ${form.appMode === option.value ? "goal-card-active" : ""}`}
+                    type="button"
+                    onClick={() => updateField("appMode", option.value)}
+                  >
+                    <strong>{option.label}</strong>
+                    <span>{option.description}</span>
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          </StepLayout>
         ) : null}
 
         {step === 2 ? (
+          <StepLayout media={stepMedia} onImageError={() => setImageFailures((current) => ({ ...current, [step]: true }))} showFallback={Boolean(imageFailures[step])}>
           <div className="onboarding-step">
             <p className="section-label">Primary goal</p>
             <h2>What should PulsePeak optimize first?</h2>
@@ -326,9 +352,11 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
               ))}
             </div>
           </div>
+          </StepLayout>
         ) : null}
 
         {step === 3 ? (
+          <StepLayout media={stepMedia} onImageError={() => setImageFailures((current) => ({ ...current, [step]: true }))} showFallback={Boolean(imageFailures[step])}>
           <div className="onboarding-step">
             <p className="section-label">Training setup</p>
             <h2>How should the training side of the app think about you?</h2>
@@ -371,9 +399,11 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
               </p>
             </div>
           </div>
+          </StepLayout>
         ) : null}
 
         {step === 4 ? (
+          <StepLayout media={stepMedia} onImageError={() => setImageFailures((current) => ({ ...current, [step]: true }))} showFallback={Boolean(imageFailures[step])}>
           <div className="onboarding-step">
             <p className="section-label">Nutrition mode</p>
             <h2>Choose the nutrition depth and units you want to live in every day.</h2>
@@ -410,9 +440,11 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
               </div>
             </div>
           </div>
+          </StepLayout>
         ) : null}
 
         {step === 5 ? (
+          <StepLayout media={stepMedia} onImageError={() => setImageFailures((current) => ({ ...current, [step]: true }))} showFallback={Boolean(imageFailures[step])}>
           <div className="onboarding-step">
             <p className="section-label">Body and recovery</p>
             <h2>Give PulsePeak enough context to personalize the week responsibly.</h2>
@@ -507,13 +539,22 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
               </div>
             ) : null}
           </div>
+          </StepLayout>
         ) : null}
 
         {step === 6 ? (
+          <StepLayout media={stepMedia} onImageError={() => setImageFailures((current) => ({ ...current, [step]: true }))} showFallback={Boolean(imageFailures[step])}>
           <div className="onboarding-step">
             <p className="section-label">Review</p>
             <h2>Here&apos;s how PulsePeak will shape your starting experience.</h2>
             <div className="onboarding-summary">
+              <div className="plan-preview-callout onboarding-review-card">
+                <div>
+                  <span className="focus-step">Launch context</span>
+                  <strong>{onboardingLaunchContext?.nextWorkoutLabel || "Your tailored dashboard is ready"}</strong>
+                  <p>{onboardingLaunchContext?.launchSummary || "PulsePeak will start from your saved setup and keep the first experience simple, clear, and personalized."}</p>
+                </div>
+              </div>
               {summaryRows.map((row) => (
                 <div className="plan-preview-callout onboarding-review-card" key={row.label}>
                   <div>
@@ -542,6 +583,7 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
               Finish setup to land in a dashboard, coach view, and weekly plan that already reflect your modules, body profile, nutrition depth, training context, and recovery needs.
             </p>
           </div>
+          </StepLayout>
         ) : null}
 
         {error ? <p className="form-error">{error}</p> : null}
@@ -561,6 +603,24 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
           )}
         </div>
       </section>
+    </div>
+  );
+}
+
+function StepLayout({ children, media, onImageError, showFallback }) {
+  return (
+    <div className="onboarding-step-layout">
+      <div>{children}</div>
+      <div className="onboarding-step-media">
+        {showFallback || !media?.src ? (
+          <div className="onboarding-step-media-fallback">
+            <strong>PulsePeak setup preview</strong>
+            <p>Visual guidance for this setup step will appear here.</p>
+          </div>
+        ) : (
+          <img alt={media.alt} src={media.src} onError={onImageError} />
+        )}
+      </div>
     </div>
   );
 }

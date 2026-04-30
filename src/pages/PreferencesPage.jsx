@@ -9,8 +9,7 @@ import { apiRequest } from "../api/client";
 import { useUpgradeCheckout } from "../hooks/useUpgradeCheckout";
 import { THEME_OPTIONS, applyThemePreference, getStoredThemePreference } from "../config/themes";
 import { APP_MODE_OPTIONS } from "../../shared/appModes.js";
-import { getActivePreferenceInfluence, getCurrentPlanFocus, VISUAL_MODEL_PREFERENCE_OPTIONS } from "../../shared/profileState";
-import { getRecoveryBias } from "../../shared/workoutEngine";
+import { VISUAL_MODEL_PREFERENCE_OPTIONS } from "../../shared/profileState";
 
 export default function PreferencesPage() {
   const navigate = useNavigate();
@@ -24,18 +23,8 @@ export default function PreferencesPage() {
   const [billingError, setBillingError] = React.useState("");
   const { busy: upgradeBusy, startUpgradeCheckout } = useUpgradeCheckout();
   const profile = data?.profile || {};
-  const currentPlanFocus = getCurrentPlanFocus({
-    profile,
-    planSummary: summary?.planSummary,
-    workoutEngine: summary?.workoutEngine
-  });
-  const preferenceInfluence = getActivePreferenceInfluence({
-    profile,
-    currentPlanFocus,
-    recoveryBias: getRecoveryBias({
-      completionRecords: summary?.recentWorkouts || []
-    })
-  });
+  const currentPlanFocus = null;
+  const preferenceInfluence = null;
 
   const openSection = (section) => {
     setSearchParams({ section });
@@ -131,8 +120,8 @@ export default function PreferencesPage() {
 
             <Panel eyebrow="Training preferences" title="Control how much guidance you see in each session">
               <div className="module-note">
-                <strong>{preferenceInfluence.primary}</strong>
-                <p className="support-copy">{preferenceInfluence.summary}</p>
+                <strong>{preferenceInfluence?.primary || "Choose the guidance level that feels easiest to use consistently."}</strong>
+                <p className="support-copy">{preferenceInfluence?.summary || "You can keep training views detailed, balanced, or minimal without changing the rest of your setup."}</p>
               </div>
               <div className="goal-card-grid">
                 {[
