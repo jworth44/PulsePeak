@@ -3558,6 +3558,47 @@ select:focus {
   margin-bottom: 0.85rem;
 }
 
+.smart-quick-actions {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-top: 0.85rem;
+}
+
+.smart-quick-action {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.95rem 1rem;
+  border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--border-color) 82%, transparent);
+  background: color-mix(in srgb, var(--secondary-card-background) 92%, transparent);
+  color: var(--primary-text);
+  text-align: left;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.smart-quick-action:hover,
+.smart-quick-action:focus-visible,
+.smart-quick-action-recommended {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent-color) 52%, var(--border-color));
+  box-shadow: 0 18px 32px rgba(12, 18, 36, 0.14);
+  background: color-mix(in srgb, var(--accent-color) 11%, var(--secondary-card-background));
+}
+
+.smart-quick-action span {
+  color: color-mix(in srgb, var(--primary-text) 82%, var(--secondary-text));
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.smart-quick-action-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
 .mobility-search-input {
   display: grid;
   gap: 0.35rem;
@@ -3610,6 +3651,11 @@ select:focus {
   border-color: color-mix(in srgb, var(--accent-color) 55%, var(--border-color));
   box-shadow: 0 18px 32px rgba(12, 18, 36, 0.14);
   background: color-mix(in srgb, var(--accent-color) 12%, var(--secondary-card-background));
+}
+
+.top-level-entry-card-recommended,
+.selector-pill-recommended {
+  border-color: color-mix(in srgb, var(--accent-color) 42%, var(--border-color));
 }
 
 .top-level-entry-icon {
@@ -3669,6 +3715,20 @@ select:focus {
   border-color: color-mix(in srgb, var(--accent-color) 55%, var(--border-color));
   box-shadow: 0 18px 32px rgba(12, 18, 36, 0.14);
   background: color-mix(in srgb, var(--accent-color) 12%, var(--secondary-card-background));
+}
+
+.recommendation-badge {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.26rem 0.56rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent-color) 22%, var(--border-color));
+  background: color-mix(in srgb, var(--accent-color) 15%, var(--secondary-card-background));
+  color: var(--primary-text);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .selector-pill-active .selector-pill-icon {
@@ -4111,6 +4171,10 @@ mark {
 .recommendation-context-note {
   font-weight: 700;
   color: var(--accent-color);
+}
+
+.smart-default-copy {
+  margin: 0;
 }
 
 .exercise-library-card {

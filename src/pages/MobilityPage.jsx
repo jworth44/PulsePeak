@@ -7,6 +7,7 @@ import { useAuth } from "../state/AuthContext";
 import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "../../shared/exerciseCatalog";
 
 const INITIAL_VISIBLE_COUNT = 8;
+const MOBILITY_CATEGORY_STORAGE_KEY = "pulsepeak.mobility.lastCategory";
 const CATEGORY_ENTRY_META = {
   mobility_stretch: {
     icon: "◐",
@@ -68,13 +69,33 @@ const TOP_LEVEL_ENTRY_CARDS = [
     type: "category"
   }
 ];
+const QUICK_ACTIONS = [
+  {
+    id: "fix-pain",
+    label: "Fix pain",
+    description: "Go straight into guided injury support.",
+    targetCategory: "injury_support"
+  },
+  {
+    id: "improve-mobility",
+    label: "Improve mobility",
+    description: "Open direct mobility and stretch support.",
+    targetCategory: "mobility_stretch"
+  },
+  {
+    id: "start-workout",
+    label: "Start workout",
+    description: "Jump into the main workout movement library.",
+    routeTo: "/exercise-library"
+  }
+];
 
 export default function MobilityPage() {
   const { data, summary, loading, error } = useDashboardData();
   const { workoutMemory, workoutMomentum } = useAuth();
   const navigate = useNavigate();
   const [selectedMovement, setSelectedMovement] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(() => readStoredMobilityCategory());
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedArea, setSelectedArea] = useState("all");
   const [selectedIssueType, setSelectedIssueType] = useState("none");
@@ -88,7 +109,6 @@ export default function MobilityPage() {
   const [loadingMoreKey, setLoadingMoreKey] = useState("");
   const mobilityModule = summary?.mobilityModule || null;
   const categories = mobilityModule?.categories || [];
-  const effectiveCategory = selectedCategory || mobilityModule?.suggestedCategory || categories[0]?.id || "mobility_stretch";
   const effectiveEnvironment = data?.profile?.trainingEnvironment || "hybrid";
   const guidanceLevel = data?.profile?.exerciseGuidanceLevel || "standard";
   const routines = mobilityModule?.library || [];
@@ -120,6 +140,16 @@ export default function MobilityPage() {
   const issueTypePrompt = "Select your issue type to begin";
   const injurySupportPrompt = "Select an injury support type and body area to see targeted movements.";
   const acheSupportPrompt = "Select a body area and symptom type to see targeted support.";
+  const recommendedCategory = getRecommendedCategory({
+    selectedIssueType,
+    selectedInjury,
+    selectedArea,
+    selectedSymptomType
+  });
+  const categoryIds = categories.map((category) => category.id);
+  const recommendedSupportCategory = categoryIds.includes(recommendedCategory) ? recommendedCategory : "";
+  const fallbackCategory = mobilityModule?.suggestedCategory || categories[0]?.id || "mobility_stretch";
+  const effectiveCategory = categoryIds.includes(selectedCategory) ? selectedCategory : recommendedSupportCategory || fallbackCategory;
   const isInjurySupportReady =
     effectiveCategory !== "injury_support" ||
     (selectedIssueType === "injury"
@@ -131,6 +161,28 @@ export default function MobilityPage() {
   useEffect(() => {
     setVisibleCounts({});
   }, [effectiveCategory, normalizedSearchQuery, selectedDifficulty, selectedEquipment, selectedArea, selectedIssueType, selectedInjury, selectedSymptomType]);
+
+  useEffect(() => {
+    if (!categories.length) {
+      return;
+    }
+
+    if (categoryIds.includes(selectedCategory)) {
+      return;
+    }
+
+    const nextCategory = recommendedSupportCategory || fallbackCategory;
+    if (nextCategory && nextCategory !== selectedCategory) {
+      setSelectedCategory(nextCategory);
+    }
+  }, [categories.length, categoryIds, fallbackCategory, recommendedSupportCategory, selectedCategory]);
+
+  useEffect(() => {
+    if (!effectiveCategory || !categoryIds.includes(effectiveCategory) || typeof window === "undefined") {
+      return;
+    }
+    window.localStorage.setItem(MOBILITY_CATEGORY_STORAGE_KEY, effectiveCategory);
+  }, [categoryIds, effectiveCategory]);
 
   const browseRoutines = useMemo(() => {
     if (isSearchMode) {
@@ -314,6 +366,17 @@ export default function MobilityPage() {
     setShowFilters(false);
   };
 
+  const handleQuickAction = (action) => {
+    if (action.routeTo) {
+      navigate(action.routeTo);
+      return;
+    }
+    handleCategorySelect(action.targetCategory);
+    if (action.targetCategory === "injury_support") {
+      setShowFilters(true);
+    }
+  };
+
   return (
     <div className="page-grid page-grid-tight">
       <section className="module-page-hero">
@@ -322,6 +385,30 @@ export default function MobilityPage() {
           <h2>{mobilityModule?.title || "Guided movement support that fits today"}</h2>
           <p className="lead-copy">{getModeLeadCopy(isSearchMode ? effectiveCategory : effectiveCategory)}</p>
           <p className="support-copy recommendation-context-note">{continuityContext.title}</p>
+          <p className="support-copy smart-default-copy">
+            Recommended right now: <strong>{getSmartCategoryLabel(recommendedCategory)}</strong>
+          </p>
+        </div>
+        <div className="smart-quick-actions" aria-label="Quick actions">
+          {QUICK_ACTIONS.map((action) => {
+            const isRecommendedAction =
+              (action.targetCategory && action.targetCategory === recommendedCategory) ||
+              (action.routeTo && recommendedCategory === "strength");
+            return (
+              <button
+                key={action.id}
+                className={`smart-quick-action ${isRecommendedAction ? "smart-quick-action-recommended" : ""}`}
+                type="button"
+                onClick={() => handleQuickAction(action)}
+              >
+                <span className="smart-quick-action-label-row">
+                  <strong>{action.label}</strong>
+                  {isRecommendedAction ? <span className="recommendation-badge">Suggested</span> : null}
+                </span>
+                <span>{action.description}</span>
+              </button>
+            );
+          })}
         </div>
       </section>
 
@@ -333,10 +420,11 @@ export default function MobilityPage() {
         <div className="top-level-entry-grid">
           {TOP_LEVEL_ENTRY_CARDS.map((entry) => {
             const active = entry.type === "category" && effectiveCategory === entry.id && !isSearchMode;
+            const recommended = entry.id === recommendedCategory;
             return (
               <button
                 key={entry.id}
-                className={`top-level-entry-card ${active ? "top-level-entry-card-active" : ""}`}
+                className={`top-level-entry-card ${active ? "top-level-entry-card-active" : ""} ${recommended ? "top-level-entry-card-recommended" : ""}`}
                 type="button"
                 onClick={() => {
                   if (entry.type === "route") {
@@ -347,6 +435,7 @@ export default function MobilityPage() {
                 }}
               >
                 <span className="top-level-entry-icon" aria-hidden="true">{getEntryIcon(entry.id)}</span>
+                {recommended ? <span className="recommendation-badge">Recommended</span> : null}
                 <strong>{entry.title}</strong>
                 <span>{entry.description}</span>
               </button>
@@ -377,13 +466,14 @@ export default function MobilityPage() {
           {categories.map((category) => (
             <button
               key={category.id}
-              className={`selector-pill ${effectiveCategory === category.id ? "selector-pill-active" : ""}`}
+              className={`selector-pill ${effectiveCategory === category.id ? "selector-pill-active" : ""} ${recommendedCategory === category.id ? "selector-pill-recommended" : ""}`}
               type="button"
               onClick={() => handleCategorySelect(category.id)}
             >
               <span className="selector-pill-icon" aria-hidden="true">
                 {CATEGORY_ENTRY_META[category.id]?.icon || "•"}
               </span>
+              {recommendedCategory === category.id ? <span className="recommendation-badge">Recommended</span> : null}
               <strong>{CATEGORY_ENTRY_META[category.id]?.title || category.label}</strong>
               <span>{CATEGORY_ENTRY_META[category.id]?.description || category.description}</span>
             </button>
@@ -735,6 +825,42 @@ function getEntryIcon(entryId) {
     recovery: "RC"
   };
   return iconMap[entryId] || "GO";
+}
+
+function readStoredMobilityCategory() {
+  if (typeof window === "undefined") {
+    return "";
+  }
+  return window.localStorage.getItem(MOBILITY_CATEGORY_STORAGE_KEY) || "";
+}
+
+function getRecommendedCategory(userContext = {}) {
+  if (
+    userContext.selectedIssueType === "injury" ||
+    (userContext.selectedInjury && userContext.selectedInjury !== "none")
+  ) {
+    return "injury_support";
+  }
+  if (
+    userContext.selectedIssueType === "ache" ||
+    userContext.selectedArea !== "all" ||
+    userContext.selectedSymptomType !== "none"
+  ) {
+    return "mobility_stretch";
+  }
+  return "strength";
+}
+
+function getSmartCategoryLabel(categoryId) {
+  const labelMap = {
+    strength: "Strength",
+    mobility_stretch: "Mobility & Stretch",
+    yoga: "Yoga",
+    cardio: "Cardio",
+    injury_support: "Injury Support",
+    recovery: "Recovery"
+  };
+  return labelMap[categoryId] || "Strength";
 }
 
 function getCardSupportLabel(categoryId, routine) {
