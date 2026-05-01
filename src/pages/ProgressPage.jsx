@@ -63,6 +63,7 @@ export default function ProgressPage() {
   const premiumOutcomeLayer = getPremiumOutcomeLayer(accessTier, { surface: "progress" });
   const premiumComparison = getPremiumComparisonSummary(accessTier, { surface: "progress" });
   const systemConfidenceSignal = null;
+  const hasProgramArcData = Boolean(programPhase || nextWeekAdjustment || whyThisMattersNotes.length || systemConfidenceSignal);
   const trustCue = null;
   const primarySignal = null;
   const visibleMilestone = checkpoint || workoutMilestones?.fresh || workoutMilestones?.latest || null;
@@ -242,30 +243,40 @@ export default function ProgressPage() {
         </Panel>
 
         <Panel eyebrow="Program arc" title="Where the program is headed">
-          <div className="module-note">
-            <strong>Current phase: {programPhase.label}</strong>
-            <p className="support-copy">{programPhase.detail}</p>
-          </div>
-          <div className="module-note">
-            <strong>Next week likely emphasis</strong>
-            <p className="support-copy">{nextWeekAdjustment.detail}</p>
-          </div>
-          {whyThisMattersNotes.length ? (
-            <div className="insight-list">
-              {whyThisMattersNotes.map((note) => (
-                <div className="insight-chip" key={note}>
-                  <strong>Why this matters</strong>
-                  <p className="muted">{note}</p>
+          {hasProgramArcData ? (
+            <>
+              {programPhase ? (
+                <div className="module-note">
+                  <strong>Current phase: {programPhase?.label}</strong>
+                  <p className="support-copy">{programPhase?.detail}</p>
                 </div>
-              ))}
-            </div>
-          ) : null}
-          {systemConfidenceSignal ? (
-            <div className="module-note">
-              <strong>This is working</strong>
-              <p className="support-copy">{systemConfidenceSignal}</p>
-            </div>
-          ) : null}
+              ) : null}
+              {nextWeekAdjustment ? (
+                <div className="module-note">
+                  <strong>Next week likely emphasis</strong>
+                  <p className="support-copy">{nextWeekAdjustment?.detail}</p>
+                </div>
+              ) : null}
+              {whyThisMattersNotes.length ? (
+                <div className="insight-list">
+                  {whyThisMattersNotes.map((note) => (
+                    <div className="insight-chip" key={note}>
+                      <strong>Why this matters</strong>
+                      <p className="muted">{note}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+              {systemConfidenceSignal ? (
+                <div className="module-note">
+                  <strong>This is working</strong>
+                  <p className="support-copy">{systemConfidenceSignal}</p>
+                </div>
+              ) : null}
+            </>
+          ) : (
+            <p className="support-copy">Program-phase interpretation is deferred for this launch baseline.</p>
+          )}
         </Panel>
       </div>
 
