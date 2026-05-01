@@ -3,10 +3,15 @@ import { apiRequest } from "../api/client";
 import { useAuth } from "../state/AuthContext";
 
 export function useUpgradeCheckout() {
-  const { token } = useAuth();
+  const { token, dashboard } = useAuth();
   const [busy, setBusy] = useState(false);
+  const billingEnabled = dashboard?.pricingModel?.billingEnabled === true;
 
   const startUpgradeCheckout = async (billingInterval = "monthly", checkoutMode = "default") => {
+    if (!billingEnabled) {
+      throw new Error("Billing is coming soon for this launch baseline.");
+    }
+
     setBusy(true);
     try {
       const payload = await apiRequest(

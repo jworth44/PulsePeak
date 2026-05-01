@@ -10,6 +10,7 @@ export default function UpgradePrompt({ prompt, onUpgrade, onDismiss, busy = fal
   }
 
   const pricingModel = dashboard?.pricingModel;
+  const billingEnabled = pricingModel?.billingEnabled === true;
   const billingOptions = BILLING_OPTIONS.map((option) => {
     const liveOption = pricingModel?.[option.id];
     return {
@@ -20,10 +21,12 @@ export default function UpgradePrompt({ prompt, onUpgrade, onDismiss, busy = fal
   });
   const canStartTrial = Boolean(user?.canStartTrial);
   const trialEndsLabel = user?.trialEndsLabel || null;
-  const directPaidLabel = "Upgrade now";
+  const directPaidLabel = billingEnabled ? "Upgrade now" : "Coming soon";
   const primaryLabel = busy
     ? "Redirecting..."
-    : canStartTrial
+    : !billingEnabled
+      ? "Coming soon"
+      : canStartTrial
       ? `Start ${TRIAL_MODEL.days}-day free trial`
       : selectedPlan === "yearly"
         ? "Upgrade now"
@@ -69,6 +72,7 @@ export default function UpgradePrompt({ prompt, onUpgrade, onDismiss, busy = fal
             <button
               key={option.id}
               className={`upgrade-pricing-card ${selectedPlan === option.id ? "upgrade-pricing-card-active" : ""}`}
+              disabled={!billingEnabled}
               type="button"
               onClick={() => setSelectedPlan(option.id)}
             >
@@ -86,13 +90,16 @@ export default function UpgradePrompt({ prompt, onUpgrade, onDismiss, busy = fal
         ) : (
           <p className="support-copy upgrade-copy">Upgrade to keep logging every session, keep your week connected, and continue training without limits.</p>
         )}
+        {!billingEnabled ? (
+          <p className="support-copy upgrade-copy">Billing is coming soon for this launch baseline.</p>
+        ) : null}
       </div>
       <div className="upgrade-prompt-actions">
-        <button className="primary-button" disabled={busy} type="button" onClick={() => onUpgrade?.(canStartTrial ? "yearly" : selectedPlan, canStartTrial ? "default" : "upgrade_now")}>
+        <button className="primary-button" disabled={busy || !billingEnabled} type="button" onClick={() => onUpgrade?.(canStartTrial ? "yearly" : selectedPlan, canStartTrial ? "default" : "upgrade_now")}>
           {primaryLabel}
         </button>
         {canStartTrial ? (
-          <button className="secondary-button" disabled={busy} type="button" onClick={() => onUpgrade?.(selectedPlan, "upgrade_now")}>
+          <button className="secondary-button" disabled={busy || !billingEnabled} type="button" onClick={() => onUpgrade?.(selectedPlan, "upgrade_now")}>
             {directPaidLabel}
           </button>
         ) : null}

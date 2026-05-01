@@ -61,6 +61,7 @@ const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const premiumPlanAmount = Number(process.env.STRIPE_PREMIUM_PRICE_CENTS || 1499);
 const premiumPlanYearlyAmount = Number(process.env.STRIPE_PREMIUM_YEARLY_PRICE_CENTS || 11999);
 const premiumPlanCurrency = process.env.STRIPE_PREMIUM_CURRENCY || "usd";
+const BILLING_RUNTIME_ENABLED = false;
 const TRIAL_DURATION_DAYS = 7;
 const PRIMARY_WEBHOOK_PATH = "/api/webhook";
 const LEGACY_WEBHOOK_PATH = "/api/stripe/webhook";
@@ -707,6 +708,9 @@ app.get("/api/coaching", requireAuth, (request, response) => {
 });
 
 app.post("/api/checkout-session", requireAuth, async (request, response) => {
+  if (!BILLING_RUNTIME_ENABLED) {
+    return response.status(503).json(buildBillingDisabledResponse());
+  }
   try {
     if (!stripe) {
       throw new Error("Stripe is not configured yet. Add STRIPE_SECRET_KEY to enable upgrades.");
@@ -757,6 +761,9 @@ app.post("/api/checkout-session", requireAuth, async (request, response) => {
 });
 
 app.post("/api/billing-portal", requireAuth, async (request, response) => {
+  if (!BILLING_RUNTIME_ENABLED) {
+    return response.status(503).json(buildBillingDisabledResponse());
+  }
   try {
     if (!stripe) {
       throw new Error("Stripe is not configured yet. Add STRIPE_SECRET_KEY to manage subscriptions.");
@@ -794,6 +801,9 @@ app.post("/api/billing-portal", requireAuth, async (request, response) => {
 });
 
 app.post("/api/checkout/confirm", requireAuth, async (request, response) => {
+  if (!BILLING_RUNTIME_ENABLED) {
+    return response.status(503).json(buildBillingDisabledResponse());
+  }
   try {
     if (!stripe) {
       throw new Error("Stripe is not configured yet. Add STRIPE_SECRET_KEY to enable upgrades.");
@@ -939,6 +949,7 @@ function buildPricingModel(user) {
   const yearlySavingsPercent = yearlySavings > 0 ? 33 : 0;
 
   return {
+    billingEnabled: BILLING_RUNTIME_ENABLED,
     accessTier,
     canStartTrial: canStartTrial(user),
     trialDays: TRIAL_DURATION_DAYS,
@@ -960,6 +971,15 @@ function buildPricingModel(user) {
       savingsAmountCents: yearlySavings,
       savingsPercent: yearlySavingsPercent
     }
+  };
+}
+
+function buildBillingDisabledResponse() {
+  return {
+    billingEnabled: BILLING_RUNTIME_ENABLED,
+    checkoutEnabled: false,
+    portalEnabled: false,
+    message: "Billing is coming soon for this launch baseline."
   };
 }
 
