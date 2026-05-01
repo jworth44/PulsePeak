@@ -8,6 +8,8 @@ import Stripe from "stripe";
 import {
   buildCoachDecisionEngine,
   buildCoachingTips,
+  buildLaunchSafeCoachResponse,
+  buildLaunchSafeWeeklyCheckInState,
   buildWeeklyCheckInState,
   buildWorkoutAccess,
   buildLimitedWeeklyPlan,
@@ -701,23 +703,7 @@ app.get("/api/progress", requireAuth, (request, response) => {
 });
 
 app.get("/api/coaching", requireAuth, (request, response) => {
-  const summary = buildUserSummary(request.user);
-  const coach = buildCoachDecisionEngine(
-    request.user.data,
-    {
-      totals: summary.totals,
-      habits: summary.habits,
-      completion: summary.completion,
-      workouts: request.user.data.workouts
-    },
-    isPremiumEntitled(request.user)
-  );
-  response.json({
-    coach,
-    recommendations: summary.insights,
-    notes: request.user.data.notes,
-    recoveryFocus: buildRecoveryFocus(request.user.data, summary)
-  });
+  response.json(buildLaunchSafeCoachResponse(request.user.data.notes));
 });
 
 app.post("/api/checkout-session", requireAuth, async (request, response) => {
@@ -940,7 +926,7 @@ function buildUserSummary(user) {
   return {
     ...summarizeDashboard(user.data),
     workoutAccess: buildWorkoutAccess(user),
-    weeklyCheckIn: buildWeeklyCheckInState(user.data, { isPremium: isPremiumEntitled(user) }),
+    weeklyCheckIn: buildLaunchSafeWeeklyCheckInState(),
     pricingModel: buildPricingModel(user)
   };
 }

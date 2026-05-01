@@ -40,6 +40,7 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 const SESSION_DURATION_MS = 30 * DAY_MS;
 const FREE_WEEKLY_WORKOUT_LIMIT = FREE_COMPLETED_SESSION_LIMIT;
 const TRIAL_DURATION_DAYS = TRIAL_LENGTH_DAYS;
+const COACHING_RUNTIME_ENABLED = false;
 const GOAL_TYPES = [
   "strength",
   "athletic_performance",
@@ -501,9 +502,9 @@ export function summarizeDashboard(data) {
     resultProjection,
     whyThisWorks: buildWhyThisWorksBlock(data, weeklyPlan),
     activeModules: getActiveModules({ profile: data.profile, hasHabits: (data.habits || []).length > 0 }),
-    insights: buildCoachingTips(data, totals, habitSummary, completion, workouts),
-    todayFocus: buildTodayFocusCard(data, totals, habitSummary, completion, workouts),
-    momentum: buildMomentumFeedback(data, totals, habitSummary, completion, workouts),
+    insights: buildLaunchSafeCoachingTips(),
+    todayFocus: buildLaunchSafeTodayFocusCard(),
+    momentum: buildLaunchSafeMomentumCard(),
     weeklyPlanPreview: buildWeeklyPlanPreview(weeklyPlan),
     planSummary: buildLimitedWeeklyPlan(weeklyPlan),
     premiumPreview: {
@@ -514,6 +515,70 @@ export function summarizeDashboard(data) {
         "More exercise swap depth for the equipment you actually have",
         "Deeper mobility, recovery, and fueling adjustments"
       ]
+    }
+  };
+}
+
+function buildLaunchSafeCoachingTips() {
+  return [];
+}
+
+function buildLaunchSafeTodayFocusCard() {
+  return {
+    title: "Launch baseline active",
+    reason: "Advanced coaching is disabled for this launch baseline.",
+    whyThisMatters: "Use the core workout, mobility, and library flows without coaching overlays.",
+    actions: [],
+    coachingEnabled: COACHING_RUNTIME_ENABLED
+  };
+}
+
+function buildLaunchSafeMomentumCard() {
+  return {
+    title: "Launch baseline active",
+    detail: "Momentum and recovery coaching are disabled for this launch baseline.",
+    tone: "neutral",
+    coachingEnabled: COACHING_RUNTIME_ENABLED
+  };
+}
+
+export function buildLaunchSafeWeeklyCheckInState() {
+  return {
+    currentWeekKey: getWeekKey(),
+    submittedThisWeek: false,
+    title: "Launch baseline active",
+    summary: "Weekly coaching and adjustment guidance are disabled for this launch baseline.",
+    freeSummary: "Core training flows remain available without weekly coaching overlays.",
+    premiumSummary: "Core training flows remain available without weekly coaching overlays.",
+    whatWentWell: [],
+    needsTightening: [],
+    nextWeekAdjustments: [],
+    todayConnection: "Use the core workout, mobility, and recovery flows directly.",
+    premiumReasoning: "",
+    coachingEnabled: COACHING_RUNTIME_ENABLED
+  };
+}
+
+export function buildLaunchSafeCoachResponse(notes = []) {
+  return {
+    coachingEnabled: COACHING_RUNTIME_ENABLED,
+    coach: {
+      primaryInsight: {
+        category: "neutral",
+        title: "Launch baseline active",
+        detail: "Advanced coaching is disabled for this launch baseline."
+      },
+      whyItMatters: "Core training, mobility, and library flows remain available without coaching overlays.",
+      nextActions: [],
+      longerTermNote: "No coaching guidance is being generated right now.",
+      planConnection: "Use the standard app pathways without momentum or recovery coaching."
+    },
+    recommendations: [],
+    notes: Array.isArray(notes) ? notes : [],
+    recoveryFocus: {
+      energyLevel: "Not evaluated",
+      sleepHours: "Not evaluated",
+      topHabit: "Not evaluated"
     }
   };
 }
