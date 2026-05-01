@@ -1362,8 +1362,9 @@ function buildExerciseLibraryRecord(option, baseMovement = null) {
     movementId: baseMovement?.id || null
   }).movement;
   const movement = baseMovement || fallbackMovement;
-  const normalizedPool = String(option.pool || option.category || "").trim().toLowerCase();
-  const libraryId = normalizedPool === "conditioning" ? option.id : movement?.id || option.id;
+  // Keep the public exercise-library id tied to the unique variant id so
+  // similar movements can share one movement reference without colliding.
+  const libraryId = option.id;
   const guideProfile = buildExerciseGuideProfile(option, movement);
   const resolvedMedia = resolveExactGuideMedia(option, movement);
   const resolvedMediaStatus = resolvedMedia?.status || "none";
