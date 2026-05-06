@@ -22,7 +22,7 @@ import {
 } from "../../shared/workoutEngine.js";
 import { createLibraryEntry, createMediaPayload, validateLibraryEntries } from "../../shared/exerciseCatalog.js";
 import { buildExerciseMediaSpec } from "../../shared/mediaGenerationConfig.js";
-import { hasReviewedMediaAsset } from "../../shared/mediaReviewCatalog.js";
+import { getReviewedMediaAsset, hasReviewedMediaAsset } from "../../shared/mediaReviewCatalog.js";
 import { EXERCISE_LIBRARY_CATEGORIES, WORKOUT_DISCOVERY_CATEGORIES, WORKOUT_SORT_OPTIONS } from "../../shared/libraryTaxonomy.js";
 import { adaptMovementForProfile, attachMovementToExercise, findMovementForName } from "./movementLibrary.js";
 
@@ -1495,7 +1495,27 @@ function resolveExactGuideMedia(option, movement) {
   }
 
   const exactMovement = findMovementForName(exactKey) || attachMovementToExercise({ name: exactKey, movementId: exactKey }).movement;
-  return exactMovement?.media || null;
+  if (exactMovement?.media) {
+    return exactMovement.media;
+  }
+
+  const reviewedAsset = getReviewedMediaAsset(exactKey);
+  if (!reviewedAsset) {
+    return null;
+  }
+
+  return createMediaPayload({
+    thumbnail: reviewedAsset.thumbnail || reviewedAsset.image || null,
+    steps: reviewedAsset.steps || reviewedAsset.images || [],
+    videoUrl: reviewedAsset.videoUrl || null,
+    mediaStatus: "full",
+    generation: reviewedAsset.reviewSource
+      ? {
+          reviewSource: reviewedAsset.reviewSource,
+          modelKey: reviewedAsset.modelKey || null
+        }
+      : null
+  });
 }
 
 function buildExerciseGuideProfile(option, movement) {

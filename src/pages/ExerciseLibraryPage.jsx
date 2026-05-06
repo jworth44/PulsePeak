@@ -1,10 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import EmptyStateCard from "../components/EmptyStateCard";
 import Panel from "../components/Panel";
 import MovementDetailModal from "../components/MovementDetailModal";
 import { apiRequest } from "../api/client";
 import { useAuth } from "../state/AuthContext";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "../../shared/exerciseCatalog";
+import { getExerciseImageSrc } from "../utils/getExerciseImageSrc";
 
 const LIBRARY_CATEGORY_ORDER = ["All", "Chest", "Back", "Shoulders", "Biceps", "Triceps", "Legs", "Glutes", "Core", "Conditioning", "Mobility"];
 
@@ -106,7 +108,16 @@ export default function ExerciseLibraryPage() {
   }
 
   if (error) {
-    return <div className="screen-center">{error}</div>;
+    return (
+      <div className="screen-center">
+        <EmptyStateCard
+          ctaLabel="Browse Workouts"
+          ctaTo="/workouts"
+          description={error}
+          title="Exercise library unavailable"
+        />
+      </div>
+    );
   }
 
   return (
@@ -215,7 +226,8 @@ export default function ExerciseLibraryPage() {
                 : `${filteredEntries.length} exercises match the current search and filters.`}
             </p>
           </div>
-          <div className="module-card-grid">
+          {filteredEntries.length ? (
+            <div className="module-card-grid">
             {filteredEntries.map((entry) => (
               <article
                 className="module-card module-card-clickable exercise-library-card"
@@ -261,7 +273,15 @@ export default function ExerciseLibraryPage() {
                 </div>
               </article>
             ))}
-          </div>
+            </div>
+          ) : (
+            <EmptyStateCard
+              ctaLabel="Start Strength"
+              ctaTo="/workout/strength"
+              description="Clear the search or filters, or jump straight into a working strength session."
+              title="No exercises match these filters"
+            />
+          )}
         </Panel>
       </div>
 
@@ -280,7 +300,7 @@ export default function ExerciseLibraryPage() {
 function renderExercisePreview(entry, visualModelPreference = "default") {
   const visual = resolveMovementVisual(entry, { visualModelPreference });
   if (visual.mode === "image") {
-    return <img alt={visual.alt} className="library-card-thumb" src={visual.src} />;
+    return <img alt={visual.alt} className="library-card-thumb" src={getExerciseImageSrc(visual.src)} />;
   }
 
   return (

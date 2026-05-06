@@ -852,19 +852,14 @@ async function runBrowserVerification(token) {
     await openGuideAndAssert(page, "Incline dumbbell press", []);
     report.browserVerified.push("Incline dumbbell press");
 
-    await openGuideAndAssert(
-      page,
-      "Hammer curl",
-      [],
-      { expectTextOnly: true }
-    );
+    await openGuideAndAssert(page, "Hammer curl", [], { expectVisualFull: true });
     report.browserVerified.push("Hammer curl");
 
     await openGuideAndAssert(
       page,
       "Barbell bench press",
       [],
-      { expectTextOnly: true }
+      { expectVisualFull: true }
     );
     report.browserVerified.push("Barbell bench press");
 
@@ -872,7 +867,7 @@ async function runBrowserVerification(token) {
       page,
       "T-bar row",
       [],
-      { expectTextOnly: true }
+      { expectVisualFull: true }
     );
     report.browserVerified.push("T-bar row");
 

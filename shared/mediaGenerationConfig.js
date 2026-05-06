@@ -1,20 +1,38 @@
 import { buildMediaAssetPath } from "./exerciseCatalog.js";
 
+export const PULSEPEAK_MEDIA_VERSION = "pulsepeak-media-v2";
+export const PULSEPEAK_MEDIA_STEP_STATES = ["start position", "mid movement", "peak contraction", "finish position"];
+export const PULSEPEAK_IMAGE_REQUIREMENTS = {
+  minimumSteps: 2,
+  standardSteps: 3,
+  idealSteps: 4
+};
+
 export const PULSEPEAK_MEDIA_SYSTEM = {
   generator: "Leonardo AI",
   phase: "phase_1",
+  version: PULSEPEAK_MEDIA_VERSION,
   visualStyle: {
     subject: "athletic, realistic fitness model with balanced muscle definition and natural skin texture",
     lighting: "soft gym lighting with natural shadows and no dramatic cinematic contrast",
-    framing: "clean mid shot or full-body training frame with the movement clearly visible",
-    environment: "modern gym or clean home training setup with minimal clutter",
+    framing: "consistent full-body or 45-degree training frame with the movement clearly visible",
+    angle: "front or 45-degree only",
+    environment: "modern gym with clean background and minimal clutter",
+    wardrobe: "consistent modern training apparel with neutral tones",
     look: "professional fitness photography, sharp detail, believable anatomy, consistent visual identity"
   },
   storage: {
     publicRoot: "/media/exercises",
     localRoot: "public/media/exercises"
   },
-  stepLabels: ["start position", "movement initiation", "peak contraction", "finish position"]
+  stepLabels: PULSEPEAK_MEDIA_STEP_STATES,
+  generationRules: {
+    lockedModelsOnly: true,
+    sameIdentityRequired: true,
+    sameLightingRequired: true,
+    sameEnvironmentRequired: true,
+    sameFramingRequired: true
+  }
 };
 
 export const PULSEPEAK_MODELS = {
@@ -22,18 +40,55 @@ export const PULSEPEAK_MODELS = {
     key: "male",
     label: "Model A (Male)",
     referenceId: "pulsepeak-model-a-v1",
-    description: "Athletic build, balanced muscle, neutral expression, short clean hair, realistic training look."
+    seed: "PP-MALE-ATHLETIC-001",
+    heightRange: "5'10-6'0",
+    build: "athletic build with visible muscle definition, not bodybuilding size",
+    face: "neutral face, clean jawline, natural expression",
+    hair: "short dark hair",
+    skin: "natural skin texture with visible pores, not plastic",
+    aesthetic: "modern gym look with consistent training apparel",
+    lockingMethod: "reference image or locked seed / platform character reference",
+    description:
+      "Athletic male model, 5'10-6'0, balanced muscle, short dark hair, neutral face, natural skin texture, modern gym look."
   },
   female: {
     key: "female",
     label: "Model B (Female)",
     referenceId: "pulsepeak-model-b-v1",
-    description: "Athletic, toned, strong but realistic, neutral expression, clean fitness look."
+    seed: "PP-FEMALE-ATHLETIC-001",
+    heightRange: "5'5-5'8",
+    build: "athletic, toned, strong but realistic",
+    face: "neutral face with consistent proportions",
+    hair: "tied-back hair",
+    skin: "natural skin texture with realistic detail",
+    aesthetic: "modern fitness aesthetic with consistent training apparel",
+    lockingMethod: "reference image or locked seed / platform character reference",
+    description:
+      "Athletic female model, 5'5-5'8, toned and realistic, tied-back hair, neutral face, natural skin texture, modern fitness aesthetic."
   }
 };
 
 export const STANDARD_EXERCISE_PROMPT_TEMPLATE =
-  "high-quality fitness photo of [MODEL], performing [EXERCISE NAME], [STEP STATE], correct form, mid-movement, natural skin texture, modern gym, clean background, soft lighting, professional fitness photography, sharp detail";
+  "high-quality fitness photo of [MODEL], performing [EXERCISE NAME], [STEP STATE], correct form, natural skin texture, modern gym, clean background, soft lighting, professional fitness photography, sharp detail";
+
+export const PULSEPEAK_MEDIA_VALIDATION_RULES = {
+  rejectIf: [
+    "anatomy is wrong",
+    "hands are broken",
+    "pose is unclear",
+    "wrong exercise is shown",
+    "model identity changes",
+    "lighting or framing does not match the PulsePeak style",
+    "environment or clothing breaks consistency"
+  ],
+  approveOnlyIf: [
+    "the movement is instantly understandable",
+    "posture is clean and believable",
+    "the same locked model identity is preserved",
+    "the image clearly matches the intended movement phase",
+    "the image fits the PulsePeak visual style"
+  ]
+};
 
 export const INITIAL_EXERCISE_MEDIA_BATCH = [
   { id: "push-up", name: "Push-up", modelKey: "male", priority: "high" },
@@ -60,15 +115,20 @@ export const INITIAL_EXERCISE_MEDIA_BATCH = [
 
 export function buildExerciseMediaSpec({
   id,
+  exerciseDetailId = null,
   name,
   familyId = "general",
   trainingType = "training",
   fallbackImage = null,
-  modelKey = null
+  modelKey = null,
+  stepCount = PULSEPEAK_IMAGE_REQUIREMENTS.idealSteps
 }) {
-  const selectedModel = PULSEPEAK_MODELS[modelKey] || pickDefaultModel(id, trainingType);
-  const assetPath = buildMediaAssetPath(PULSEPEAK_MEDIA_SYSTEM.storage.publicRoot, trainingType, familyId, id);
-  const localPath = buildMediaAssetPath(PULSEPEAK_MEDIA_SYSTEM.storage.localRoot, trainingType, familyId, id);
+  const selectedModel = PULSEPEAK_MODELS[modelKey] || resolveLockedModelForExercise({ id, familyId, trainingType });
+  const resolvedStepCount = normalizeStepCount(stepCount);
+  const mediaKey = String(exerciseDetailId || id || "").trim();
+  const assetPath = buildMediaAssetPath(PULSEPEAK_MEDIA_SYSTEM.storage.publicRoot, mediaKey);
+  const localPath = buildMediaAssetPath(PULSEPEAK_MEDIA_SYSTEM.storage.localRoot, mediaKey);
+  const prompts = buildMovementPromptSet({ model: selectedModel, exerciseName: name, stepCount: resolvedStepCount });
 
   return {
     thumbnail: fallbackImage || null,
@@ -80,22 +140,38 @@ export function buildExerciseMediaSpec({
     generation: {
       tool: PULSEPEAK_MEDIA_SYSTEM.generator,
       phase: PULSEPEAK_MEDIA_SYSTEM.phase,
+      systemVersion: PULSEPEAK_MEDIA_SYSTEM.version,
+      familyId,
+      trainingType,
       modelKey: selectedModel.key,
       modelLabel: selectedModel.label,
       modelReferenceId: selectedModel.referenceId,
+      modelSeed: selectedModel.seed,
       localPath,
-      thumbnailPath: buildMediaAssetPath(assetPath, "thumbnail.webp"),
-      stepPaths: PULSEPEAK_MEDIA_SYSTEM.stepLabels.map((_, index) => buildMediaAssetPath(assetPath, `step-${index + 1}.webp`)),
-      prompts: buildMovementPromptSet({ model: selectedModel, exerciseName: name })
+      thumbnailPath: buildMediaAssetPath(assetPath, "thumbnail.png"),
+      stepCount: resolvedStepCount,
+      stepPaths: Array.from({ length: resolvedStepCount }, (_, index) => buildMediaAssetPath(assetPath, `step-${index + 1}.png`)),
+      prompts,
+      validationRules: PULSEPEAK_MEDIA_VALIDATION_RULES,
+      consistencyLock: {
+        modelKey: selectedModel.key,
+        referenceId: selectedModel.referenceId,
+        seed: selectedModel.seed,
+        lighting: PULSEPEAK_MEDIA_SYSTEM.visualStyle.lighting,
+        angle: PULSEPEAK_MEDIA_SYSTEM.visualStyle.angle,
+        environment: PULSEPEAK_MEDIA_SYSTEM.visualStyle.environment,
+        wardrobe: PULSEPEAK_MEDIA_SYSTEM.visualStyle.wardrobe
+      }
     }
   };
 }
 
-export function buildMovementPromptSet({ model, exerciseName }) {
-  return PULSEPEAK_MEDIA_SYSTEM.stepLabels.map((stepState, index) => ({
+export function buildMovementPromptSet({ model, exerciseName, stepCount = PULSEPEAK_IMAGE_REQUIREMENTS.idealSteps }) {
+  const resolvedStepCount = normalizeStepCount(stepCount);
+  return PULSEPEAK_MEDIA_SYSTEM.stepLabels.slice(0, resolvedStepCount).map((stepState, index) => ({
     step: index + 1,
     label: stepState,
-    prompt: STANDARD_EXERCISE_PROMPT_TEMPLATE.replace("[MODEL]", model.label)
+    prompt: STANDARD_EXERCISE_PROMPT_TEMPLATE.replace("[MODEL]", buildLockedModelPrompt(model))
       .replace("[EXERCISE NAME]", exerciseName)
       .replace("[STEP STATE]", stepState)
   }));
@@ -110,10 +186,22 @@ export function getInitialMediaBatch() {
   }));
 }
 
-function pickDefaultModel(id, trainingType) {
-  const value = String(id || trainingType || "").toLowerCase();
-  if (["glute", "stretch", "mobility", "rotation", "slide", "flow"].some((token) => value.includes(token))) {
+export function resolveLockedModelForExercise({ id, familyId = "", trainingType = "" }) {
+  const value = [id, familyId, trainingType].join(" ").toLowerCase();
+  if (["glute", "stretch", "mobility", "rotation", "slide", "flow", "bridge", "lunge"].some((token) => value.includes(token))) {
     return PULSEPEAK_MODELS.female;
   }
   return PULSEPEAK_MODELS.male;
+}
+
+export function normalizeStepCount(value) {
+  const numericValue = Number(value);
+  if (!Number.isFinite(numericValue)) {
+    return PULSEPEAK_IMAGE_REQUIREMENTS.idealSteps;
+  }
+  return Math.max(PULSEPEAK_IMAGE_REQUIREMENTS.minimumSteps, Math.min(PULSEPEAK_IMAGE_REQUIREMENTS.idealSteps, Math.round(numericValue)));
+}
+
+function buildLockedModelPrompt(model) {
+  return `${model.label}, same PulsePeak reference identity, ${model.description}`;
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import EmptyStateCard from "../components/EmptyStateCard";
 import Panel from "../components/Panel";
 import WorkoutDetailModal from "../components/WorkoutDetailModal";
 import MovementDetailModal from "../components/MovementDetailModal";
@@ -13,6 +14,7 @@ import {
   formatWorkoutFocus
 } from "../../shared/workoutEngine";
 import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "../../shared/exerciseCatalog";
+import { getExerciseImageSrc } from "../utils/getExerciseImageSrc";
 import { getVisibleLockedWorkoutMessage, hasFullWorkoutAccess } from "../../shared/entitlements";
 import { WORKOUT_DISCOVERY_CATEGORIES, WORKOUT_FILTER_PRESETS, WORKOUT_SORT_OPTIONS } from "../../shared/libraryTaxonomy.js";
 
@@ -239,7 +241,16 @@ export default function WorkoutsPage() {
   }
 
   if (!data || !summary) {
-    return <div className="screen-center">{error || "Unable to load workouts."}</div>;
+    return (
+      <div className="screen-center">
+        <EmptyStateCard
+          ctaLabel="Return to Dashboard"
+          ctaTo="/dashboard"
+          description={error || "Head back to the dashboard and reopen workouts from a live route."}
+          title="Workouts unavailable"
+        />
+      </div>
+    );
   }
 
   const workoutAccess = safeWorkoutAccess;
@@ -742,14 +753,16 @@ export default function WorkoutsPage() {
             </div>
           </div>
         ) : (
-          <div className="empty-state-card">
-            <strong>No workouts match that combination yet.</strong>
-            <p className="support-copy">Loosen the split or equipment filters and PulsePeak will reload a broader session pool.</p>
-            <p className="support-copy">{continuityContext.detail}</p>
+          <EmptyStateCard
+            ctaLabel="Start Strength"
+            ctaTo="/workout/strength"
+            description="Start a working strength session now, or reset your filters to reopen a broader workout pool."
+            title="No workouts match these filters"
+          >
             <button className="ghost-button" type="button" onClick={resetWorkoutFilters}>
               Reset filters
             </button>
-          </div>
+          </EmptyStateCard>
         )}
       </Panel>
 
@@ -841,15 +854,20 @@ export default function WorkoutsPage() {
             ))}
           </div>
         ) : (
-          <div className="empty-state-card">
-            <strong>No workout alternatives match the current filter set.</strong>
-            <p className="support-copy">
-              {hasFullAccess ? "Broaden the filters and PulsePeak will bring the larger workout pool back into view." : getVisibleLockedWorkoutMessage()}
-            </p>
+          <EmptyStateCard
+            ctaLabel="Start Quick Workout"
+            ctaTo="/workout/quick-start"
+            description={
+              hasFullAccess
+                ? "Open a working quick-start session now, or reset the filters to bring more alternatives back into view."
+                : `${getVisibleLockedWorkoutMessage()} You can still open a quick-start session right away.`
+            }
+            title="No workout alternatives are available"
+          >
             <button className="ghost-button" type="button" onClick={resetWorkoutFilters}>
               Reset filters
             </button>
-          </div>
+          </EmptyStateCard>
         )}
       </Panel>
 
@@ -1024,7 +1042,12 @@ export default function WorkoutsPage() {
             ))}
           </div>
         ) : (
-          <p className="support-copy">Save a workout from the recommendation card, workout library, or session view and it will stay here for quick access.</p>
+          <EmptyStateCard
+            ctaLabel="Start Quick Workout"
+            ctaTo="/workout/quick-start"
+            description="Save a session from the workout library or a session view so it stays ready for quick access here."
+            title="Nothing saved yet"
+          />
         )}
       </Panel>
 
@@ -1076,7 +1099,12 @@ export default function WorkoutsPage() {
             ))}
           </div>
         ) : (
-          <p className="support-copy">No workouts logged yet. Start with one session that fits your equipment and let the rest of the week build around it.</p>
+          <EmptyStateCard
+            ctaLabel="Start Strength"
+            ctaTo="/workout/strength"
+            description="Start your first session so PulsePeak has completed training to show here."
+            title="No sessions yet"
+          />
         )}
       </Panel>
 
@@ -1316,7 +1344,7 @@ function getLoadedWorkoutPrescription(exercise) {
 function renderMovementPreview(exercise, fallbackName, visualModelPreference = "default") {
   const visual = resolveMovementVisual(exercise?.movement || exercise || { name: fallbackName }, { visualModelPreference });
   if (visual.mode === "image") {
-    return <img alt={visual.alt} className="library-card-thumb" src={visual.src} />;
+    return <img alt={visual.alt} className="library-card-thumb" src={getExerciseImageSrc(visual.src)} />;
   }
   const source = exercise?.movement || exercise || {};
   const muscles = Array.isArray(source.primaryMuscles)
@@ -1341,7 +1369,7 @@ function renderMovementPreview(exercise, fallbackName, visualModelPreference = "
 function renderCatalogPreview(entry, visualModelPreference = "default") {
   const visual = resolveMovementVisual(entry, { visualModelPreference });
   if (visual.mode === "image") {
-    return <img alt={visual.alt} className="library-card-thumb" src={visual.src} />;
+    return <img alt={visual.alt} className="library-card-thumb" src={getExerciseImageSrc(visual.src)} />;
   }
   const muscles = Array.isArray(entry.primaryMuscles) ? entry.primaryMuscles.join(", ") : entry.primaryMuscleGroup;
   return (

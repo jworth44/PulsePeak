@@ -2810,7 +2810,7 @@ export function normalizeWorkout(workout) {
 }
 
 function normalizeExercise(exercise) {
-  return attachMovementToExercise({
+  const normalizedExercise = attachMovementToExercise({
     name: exercise.name,
     sets: Number(exercise.sets || 0),
     reps: exercise.reps || null,
@@ -2822,6 +2822,18 @@ function normalizeExercise(exercise) {
     repsCompleted: exercise.repsCompleted ?? null,
     notes: exercise.notes || ""
   });
+
+  return {
+    ...normalizedExercise,
+    detailId: exercise.detailId || exercise.guideTargetId || normalizedExercise.detailId || null,
+    guideTargetId: exercise.guideTargetId || exercise.detailId || normalizedExercise.guideTargetId || null,
+    movement: exercise.movement && typeof exercise.movement === "object" ? exercise.movement : normalizedExercise.movement,
+    media: exercise.media || normalizedExercise.media || null,
+    mediaStatus: exercise.mediaStatus || normalizedExercise.mediaStatus || "",
+    thumbnail: exercise.thumbnail || normalizedExercise.thumbnail || "",
+    image: exercise.image || normalizedExercise.image || "",
+    imageAlt: exercise.imageAlt || normalizedExercise.imageAlt || ""
+  };
 }
 
 function normalizeSavedWorkout(workout) {

@@ -176,14 +176,20 @@ export function buildGuideTarget(target = {}) {
     return null;
   }
 
-  const movement = target.movement && typeof target.movement === "object" ? target.movement : target;
-  const detailId = String(target.detailId || movement.detailId || "").trim();
-  const guideTargetId = String(target.guideTargetId || movement.guideTargetId || detailId || "").trim();
-  const movementId = String(target.movementId || movement.movementId || "").trim();
-  const id = String(movement.id || target.id || "").trim();
-  const resolvedName = String(movement.name || target.name || target.title || "Exercise guide").trim();
+  const nestedMovement = target.movement && typeof target.movement === "object" ? target.movement : null;
+  const preferTarget =
+    Boolean(target.detailId || target.guideTargetId) ||
+    target.mediaStatus === "full" ||
+    target.media?.status === "full";
+  const movement = preferTarget ? target : nestedMovement || target;
+  const detailId = String(target.detailId || movement.detailId || nestedMovement?.detailId || "").trim();
+  const guideTargetId = String(target.guideTargetId || movement.guideTargetId || nestedMovement?.guideTargetId || detailId || "").trim();
+  const movementId = String(target.movementId || movement.movementId || nestedMovement?.movementId || "").trim();
+  const id = String(target.id || movement.id || nestedMovement?.id || "").trim();
+  const resolvedName = String(target.name || target.title || movement.name || nestedMovement?.name || "Exercise guide").trim();
 
   return {
+    ...(nestedMovement || {}),
     ...target,
     ...movement,
     name: resolvedName,

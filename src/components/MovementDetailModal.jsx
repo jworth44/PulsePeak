@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { apiRequest } from "../api/client";
 import { useAuth } from "../state/AuthContext";
 import { getGuideStatusLabel, getMovementMedia, resolveMovementVisual } from "../../shared/exerciseCatalog";
+import { getExerciseImageSrc } from "../utils/getExerciseImageSrc";
 
 export default function MovementDetailModal({ movement, movementId, visualModelPreference = "default", onClose }) {
   const { token } = useAuth();
@@ -233,9 +234,9 @@ export default function MovementDetailModal({ movement, movementId, visualModelP
                     </span>
                   </div>
                   {usesDirectVideo ? (
-                    <video className="movement-image" controls poster={mediaView.thumbnail || undefined} src={mediaView.media.videoUrl} />
+                    <video className="movement-image exercise-image-contain" controls poster={getExerciseImageSrc(mediaView.thumbnail) || undefined} src={mediaView.media.videoUrl} />
                   ) : visual.mode === "image" ? (
-                    <img alt={visual.alt} className="movement-image" src={visual.src} />
+                    <img alt={visual.alt} className="movement-image exercise-image-contain" src={getExerciseImageSrc(visual.src)} />
                   ) : null}
                   {hasExternalVideo ? (
                     <div className="movement-video-actions">
@@ -301,7 +302,7 @@ export default function MovementDetailModal({ movement, movementId, visualModelP
                             <strong>{step.title}</strong>
                           </div>
                           {!textFirstGuide && sequenceItem.src ? (
-                            <img alt={`${exercise.name} ${step.title.toLowerCase()}`} className="movement-sequence-image" src={sequenceItem.src} />
+                            <img alt={`${exercise.name} ${step.title.toLowerCase()}`} className="movement-sequence-image exercise-image-contain" src={getExerciseImageSrc(sequenceItem.src)} />
                           ) : null}
                           <div className="movement-sequence-text-body">
                             {textFirstGuide ? <span className="movement-sequence-index">{step.title}</span> : null}

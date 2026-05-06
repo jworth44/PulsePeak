@@ -10,7 +10,8 @@ import { apiRequest } from "../api/client";
 import { useUpgradeCheckout } from "../hooks/useUpgradeCheckout";
 import { getUpgradePrompt } from "../config/upgradePrompts";
 import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "../../shared/exerciseCatalog";
-import { getPremiumCapabilitySummary, getPremiumComparisonSummary, getPremiumOutcomeLayer, getUpgradeMoment, hasFullWorkoutAccess } from "../../shared/entitlements";
+import { getExerciseImageSrc } from "../utils/getExerciseImageSrc";
+import { getPremiumComparisonSummary, getPremiumOutcomeLayer, getUpgradeMoment, hasFullWorkoutAccess } from "../../shared/entitlements";
 import { PLAN_DISCOVERY_CATEGORIES, PLAN_LIBRARY, TOOL_CATEGORIES, TOOL_LIBRARY } from "../../shared/libraryTaxonomy.js";
 
 export default function PlanPage() {
@@ -31,9 +32,11 @@ export default function PlanPage() {
   const openMovementGuide = (target) => setSelectedMovement(buildGuideTarget(target));
   const safeProfile = data?.profile || {};
   const safeSummary = summary || {};
-  const currentPlanFocus = null;
-  const programSummary = null;
-  const focusLabel = "";
+  const workoutEngine = safeSummary.workoutEngine || {};
+  const currentPlanFocus = workoutEngine.recommendedFocus || "recommended";
+  const programSummary = workoutEngine.recommendationReason || null;
+  const focusLabel = workoutEngine.recommendedFocusLabel || "";
+  const alternativeWorkoutCount = Math.max(recommendedWorkoutPool.length - (recommendedWorkout ? 1 : 0), 0);
   const planLibrary = useMemo(() => {
     const goalType = safeProfile.goalType || "general_fitness";
     const equipmentProfile = safeProfile.equipmentProfile || "hybrid";
@@ -62,7 +65,10 @@ export default function PlanPage() {
     []
   );
   const weeklyStructure = null;
-  const recommendationExplanation = null;
+  const recommendationExplanation = {
+    shortLabel: focusLabel ? `${focusLabel} fits today` : "Next recommended session",
+    supportingReason: workoutEngine.recommendationReason || recommendedWorkout?.continuityNote || ""
+  };
   const improvementSignals = [];
   const resultSignals = [];
   const performanceSignals = [];
@@ -117,7 +123,7 @@ export default function PlanPage() {
     const preferredEquipment = Array.isArray(safeProfile.equipmentSelections) ? safeProfile.equipmentSelections.join(",") : "";
     const params = new URLSearchParams({
       environment: preferredEnvironment,
-      focus: currentPlanFocus
+      focus: currentPlanFocus || "recommended"
     });
     if (preferredEquipment) {
       params.set("equipmentSelections", preferredEquipment);
@@ -125,8 +131,9 @@ export default function PlanPage() {
 
     apiRequest(`/workout-library?${params.toString()}`, {}, token)
       .then((payload) => {
-        setRecommendedWorkoutPool(payload.workouts || []);
-        setRecommendedWorkout(null);
+        const workouts = payload.workouts || [];
+        setRecommendedWorkoutPool(workouts);
+        setRecommendedWorkout(workouts[0] || null);
       })
       .catch(() => {
         setRecommendedWorkoutPool([]);
@@ -284,6 +291,7 @@ export default function PlanPage() {
               <strong>{recommendedWorkout.name}</strong>
               <p className="support-copy">{recommendationExplanation?.shortLabel || "Next recommended session"}</p>
               <p className="support-copy">{recommendationExplanation?.supportingReason}</p>
+              {alternativeWorkoutCount ? <p className="support-copy">{alternativeWorkoutCount} alternate sessions are ready in Workouts.</p> : null}
               {smartRotationStatus ? <p className="support-copy recommendation-context-note">{smartRotationStatus.label}</p> : null}
               {performanceSignals?.summaryLine ? <p className="support-copy">{performanceSignals.summaryLine}</p> : null}
               {!hasPlanAccess ? <p className="support-copy">{premiumComparison.availableNow}</p> : null}
@@ -424,7 +432,7 @@ export default function PlanPage() {
                 >
                   <div className="library-card-hero">
                     {visual.mode === "image" ? (
-                      <img alt={visual.alt} className="library-card-thumb" src={visual.src} />
+                      <img alt={visual.alt} className="library-card-thumb" src={getExerciseImageSrc(visual.src)} />
                     ) : (
                       <div className="library-card-thumb library-card-thumb-placeholder movement-image-fallback">
                         <span>{visual.initials}</span>

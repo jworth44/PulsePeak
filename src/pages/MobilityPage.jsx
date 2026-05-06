@@ -1,10 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import EmptyStateCard from "../components/EmptyStateCard";
 import Panel from "../components/Panel";
 import MovementDetailModal from "../components/MovementDetailModal";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { useAuth } from "../state/AuthContext";
 import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "../../shared/exerciseCatalog";
+import { getExerciseImageSrc } from "../utils/getExerciseImageSrc";
 
 const INITIAL_VISIBLE_COUNT = 8;
 const MOBILITY_CATEGORY_STORAGE_KEY = "pulsepeak.mobility.lastCategory";
@@ -84,8 +86,8 @@ const QUICK_ACTIONS = [
   },
   {
     id: "start-workout",
-    label: "Start workout",
-    description: "Jump into the main workout movement library.",
+    label: "Browse strength library",
+    description: "Open the main strength movement library and workout path.",
     routeTo: "/exercise-library"
   }
 ];
@@ -342,7 +344,16 @@ export default function MobilityPage() {
   }
 
   if (!data || !summary || !mobilityModule) {
-    return <div className="screen-center">{error || "Unable to load mobility guidance."}</div>;
+    return (
+      <div className="screen-center">
+        <EmptyStateCard
+          ctaLabel="Open Guided Start"
+          ctaTo="/guided-start"
+          description={error || "Use a working start path while mobility guidance reconnects."}
+          title="Mobility guidance unavailable"
+        />
+      </div>
+    );
   }
 
   const handleLoadMore = (key) => {
@@ -602,13 +613,18 @@ export default function MobilityPage() {
               <p className="support-copy">Matches are grouped by category below so you can move straight into the right support library.</p>
             </div>
           ) : effectiveCategory === "injury_support" && !isInjurySupportReady ? (
-            <p className="muted">
-              {selectedIssueType === "none"
-                ? "Select your issue to see targeted movements."
-                : selectedIssueType === "injury"
-                  ? "Choose the injury first, then we&apos;ll lock the correct body area automatically."
-                  : "Choose a body area and symptom so we can narrow the support options."}
-            </p>
+            <EmptyStateCard
+              ctaLabel="Start Injury Support"
+              ctaTo="/injury-support"
+              description={
+                selectedIssueType === "none"
+                  ? "Choose whether you are managing an injury or an ache so PulsePeak can narrow the support path."
+                  : selectedIssueType === "injury"
+                    ? "Choose the injury first and PulsePeak will lock the correct body area automatically."
+                    : "Choose a body area and symptom so PulsePeak can narrow the support options."
+              }
+              title="Choose your issue first"
+            />
           ) : (
             <>
               <div className="module-note">
@@ -681,16 +697,26 @@ export default function MobilityPage() {
               ))}
             </div>
           ) : (
-            <p className="muted">No results found — try a different keyword.</p>
+            <EmptyStateCard
+              ctaLabel="Start Guided Session"
+              ctaTo="/guided-start"
+              description="Try a broader keyword or return to browsing mode to open a guided support path."
+              title="No search results"
+            />
           )
         ) : effectiveCategory === "injury_support" && !isInjurySupportReady ? (
-          <p className="muted">
-            {selectedIssueType === "none"
-              ? "Select your issue to see targeted movements."
-              : selectedIssueType === "injury"
-                ? injurySupportPrompt
-                : acheSupportPrompt}
-          </p>
+          <EmptyStateCard
+            ctaLabel="Start Injury Support"
+            ctaTo="/injury-support"
+            description={
+              selectedIssueType === "none"
+                ? "Choose your issue type first so this library can lock onto the right support path."
+                : selectedIssueType === "injury"
+                  ? injurySupportPrompt
+                  : acheSupportPrompt
+            }
+            title="Injury support needs one more step"
+          />
         ) : browseRoutines.length ? (
           <>
             <div className="module-card-grid">
@@ -722,13 +748,18 @@ export default function MobilityPage() {
             ) : null}
           </>
         ) : (
-          <p className="muted">
-            {effectiveCategory === "injury_support"
-              ? selectedIssueType === "injury"
-                ? "No rehab movements match that injury mapping yet."
-                : "No mobility, stretch, or light rehab movements match that ache pattern yet."
-              : "No movements match that filter combination yet. Clear one filter and try again."}
-          </p>
+          <EmptyStateCard
+            ctaLabel={effectiveCategory === "injury_support" ? "Start Injury Support" : "Start Guided Session"}
+            ctaTo={effectiveCategory === "injury_support" ? "/injury-support" : "/guided-start"}
+            description={
+              effectiveCategory === "injury_support"
+                ? selectedIssueType === "injury"
+                  ? "No rehab movements match that injury mapping yet, so use the broader mobility path for a safer next step."
+                  : "No mobility, stretch, or light rehab movements match that ache pattern yet, so open the broader mobility path instead."
+                : "Clear one filter or open a guided session path to get moving without guessing."
+            }
+            title={effectiveCategory === "injury_support" ? "No support matches yet" : "No movements match these filters"}
+          />
         )}
       </Panel>
 
@@ -1073,7 +1104,7 @@ function highlightMatch(text, query) {
 function renderMobilityPreview(routine) {
   const visual = resolveMovementVisual(routine.movement || routine);
   if (visual.mode === "image") {
-    return <img alt={visual.alt} className="library-card-thumb" src={visual.src} />;
+    return <img alt={visual.alt} className="library-card-thumb" src={getExerciseImageSrc(visual.src)} />;
   }
   return (
     <div className="library-card-thumb library-card-thumb-placeholder movement-image-fallback">

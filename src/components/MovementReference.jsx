@@ -1,5 +1,6 @@
 import React from "react";
 import { buildGuideTarget, resolveMovementVisual } from "../../shared/exerciseCatalog";
+import { getExerciseImageSrc } from "../utils/getExerciseImageSrc";
 
 export default function MovementReference({ movement, onClick, compact = false, prefix }) {
   if (!movement) {
@@ -19,7 +20,7 @@ export default function MovementReference({ movement, onClick, compact = false, 
     <>
       <div className="movement-reference-media" aria-hidden="true">
         {visual.mode === "image" ? (
-          <img alt="" className="movement-reference-thumb" src={visual.src} />
+          <img alt="" className="movement-reference-thumb exercise-image-contain" src={getExerciseImageSrc(visual.src)} />
         ) : (
           <div className="movement-reference-fallback movement-image-fallback">
             <span>{visual.initials}</span>

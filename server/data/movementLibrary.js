@@ -2,8 +2,10 @@ import { getReviewedMediaAsset } from "../../shared/mediaReviewCatalog.js";
 
 const MOVEMENT_MEDIA = {
   squat: buildMovementMedia("squat", "Athlete setting up a squat with a stable stance."),
+  "goblet-squat": buildMovementMedia("goblet-squat", "Athlete holding a goblet squat with a stable upright torso."),
   "push-up": buildMovementMedia("push-up", "Athlete holding a strong push-up position."),
   "dumbbell-press": buildMovementMedia("dumbbell-press", "Athlete pressing dumbbells from a stable bench position."),
+  "incline-dumbbell-press": buildMovementMedia("incline-dumbbell-press", "Athlete pressing dumbbells from a stable incline bench position."),
   row: buildMovementMedia("row", "Athlete performing a strong rowing pattern with a flat back."),
   deadlift: buildMovementMedia("deadlift", "Athlete hinging into a deadlift setup with the weight close."),
   lunge: buildMovementMedia("lunge", "Athlete lowering into a controlled lunge stance."),
@@ -66,6 +68,27 @@ const MOVEMENT_LIBRARY = [
     image: mediaRef("push-up", "Push-up setup guide")
   }),
   movement({
+    id: "goblet-squat",
+    name: "Goblet Squat",
+    category: "strength",
+    difficulty: "beginner",
+    environment: "both",
+    equipment: ["dumbbell", "kettlebell"],
+    primaryMuscles: ["Quads", "Glutes"],
+    secondaryMuscles: ["Core", "Adductors"],
+    instructions: [
+      "Hold the weight close to the chest and set the feet at a squat stance you can control.",
+      "Brace the trunk and lower between the hips while keeping the elbows inside the knees.",
+      "Reach the deepest position you can own without the chest collapsing or heels lifting.",
+      "Drive through the full foot to stand tall while keeping the weight quiet at the chest."
+    ],
+    cues: ["Weight close to chest", "Sit between the hips", "Stand tall through the finish"],
+    commonMistakes: ["Letting the chest cave forward", "Dropping too fast into the bottom", "Lifting the heels as depth increases"],
+    safetyNotes: ["Reduce depth if you lose spinal position or foot pressure.", "Use a lighter bell if you cannot keep the torso upright."],
+    modifications: ["Bodyweight squat", "Box squat", "Heels-elevated goblet squat"],
+    image: mediaRef("goblet-squat", "Goblet squat form guide")
+  }),
+  movement({
     id: "dumbbell-press",
     name: "Dumbbell Press",
     category: "strength",
@@ -85,6 +108,27 @@ const MOVEMENT_LIBRARY = [
     safetyNotes: ["Use the floor press variation if shoulder range feels limited.", "Keep load conservative if shoulder irritation is active."],
     modifications: ["Floor press", "Single-arm dumbbell press", "Neutral-grip press"],
     image: mediaRef("dumbbell-press", "Dumbbell press form guide")
+  }),
+  movement({
+    id: "incline-dumbbell-press",
+    name: "Incline Dumbbell Press",
+    category: "strength",
+    difficulty: "beginner",
+    environment: "both",
+    equipment: ["dumbbell", "bench"],
+    primaryMuscles: ["Chest", "Shoulders"],
+    secondaryMuscles: ["Triceps"],
+    instructions: [
+      "Set the bench to a low incline and stack the dumbbells over the elbows before the first rep.",
+      "Lower with control toward the upper chest line while keeping the shoulder blades gently set.",
+      "Pause briefly at the controlled bottom without bouncing or losing wrist position.",
+      "Press back up on the same upward path and finish without flaring the ribs."
+    ],
+    cues: ["Low incline angle", "Wrists over elbows", "Press on an upward path"],
+    commonMistakes: ["Setting the bench too steep", "Flaring the ribs to finish the rep", "Letting the elbows drift too low behind the torso"],
+    safetyNotes: ["Reduce the incline or load if the front shoulders feel pinched.", "Keep the range controlled if shoulder comfort changes rep to rep."],
+    modifications: ["Flat dumbbell press", "Neutral-grip incline press", "Machine incline press"],
+    image: mediaRef("incline-dumbbell-press", "Incline dumbbell press form guide")
   }),
   movement({
     id: "row",

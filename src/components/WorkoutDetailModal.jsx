@@ -3,6 +3,7 @@ import { buildGuideTarget, resolveMovementVisual } from "../../shared/exerciseCa
 import { hasFullWorkoutAccess } from "../../shared/entitlements";
 import { getWorkoutLoadBand } from "../../shared/workoutEngine";
 import { useAuth } from "../state/AuthContext";
+import { getExerciseImageSrc } from "../utils/getExerciseImageSrc";
 
 export default function WorkoutDetailModal({
   workout,
@@ -284,7 +285,7 @@ export default function WorkoutDetailModal({
             <div className="workout-current-step-visual-panel">
               <div className="exercise-visual-thumb exercise-visual-thumb-large">
                 {activeVisual?.mode === "image" ? (
-                  <img alt={activeVisual.alt} className="exercise-visual-thumb-image" src={activeVisual.src} />
+                    <img alt={activeVisual.alt} className="exercise-visual-thumb-image exercise-image-contain" src={getExerciseImageSrc(activeVisual.src)} />
                 ) : (
                   <div className="exercise-visual-thumb-placeholder exercise-visual-thumb-placeholder-large movement-image-fallback">
                     <span>{activeVisual?.initials || "MV"}</span>
@@ -323,17 +324,22 @@ export default function WorkoutDetailModal({
                       )
                   );
 
+                  const guideTarget =
+                    exercise.detailId || exercise.guideTargetId || exercise.mediaStatus === "full"
+                      ? exercise
+                      : exercise.movement || exercise;
+
                   return (
                     <article
                       className={`exercise-detail-card exercise-detail-card-clickable ${isActive ? "exercise-detail-card-active" : ""} ${isCompleted ? "exercise-detail-card-complete" : ""}`}
                       key={slotKey}
                       role="button"
                       tabIndex={0}
-                      onClick={() => exercise.movement && onOpenMovement?.(buildGuideTarget(exercise.movement || exercise))}
+                      onClick={() => onOpenMovement?.(buildGuideTarget(guideTarget))}
                       onKeyDown={(event) => {
-                        if ((event.key === "Enter" || event.key === " ") && exercise.movement) {
+                        if (event.key === "Enter" || event.key === " ") {
                           event.preventDefault();
-                          onOpenMovement?.(buildGuideTarget(exercise.movement || exercise));
+                          onOpenMovement?.(buildGuideTarget(guideTarget));
                         }
                       }}
                     >
@@ -352,7 +358,7 @@ export default function WorkoutDetailModal({
                       <div className="exercise-step-header">
                         <div className={`exercise-visual-thumb ${isActive ? "exercise-visual-thumb-active" : ""}`}>
                           {movementVisual.mode === "image" ? (
-                            <img alt={movementVisual.alt} className="exercise-visual-thumb-image" src={movementVisual.src} />
+                                  <img alt={movementVisual.alt} className="exercise-visual-thumb-image exercise-image-contain" src={getExerciseImageSrc(movementVisual.src)} />
                           ) : (
                             <div className="exercise-visual-thumb-placeholder movement-image-fallback">
                               <span>{movementVisual.initials}</span>

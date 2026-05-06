@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import EmptyStateCard from "../components/EmptyStateCard";
 import Panel from "../components/Panel";
 import ProgressRing from "../components/ProgressRing";
 import WorkoutDetailModal from "../components/WorkoutDetailModal";
@@ -12,11 +13,13 @@ import { useDashboardData } from "../hooks/useDashboardData";
 import { useAuth } from "../state/AuthContext";
 import { useUpgradeCheckout } from "../hooks/useUpgradeCheckout";
 import { getUpgradePrompt } from "../config/upgradePrompts";
+import { getFirstSessionRouteContent, getTodayFocusContent } from "../utils/getFirstSessionRoute";
 import { buildGuideTarget } from "../../shared/exerciseCatalog";
 import { ACCESS_TIERS, getPremiumComparisonSummary, getPremiumOutcomeLayer, getUpgradeMoment, hasFullWorkoutAccess } from "../../shared/entitlements";
 import { getDashboardNextAction } from "../../shared/dashboardModules";
 
 export default function DashboardPage() {
+  const navigate = useNavigate();
   const { token, user, isPremium, accessTier, isTrial, needsOnboarding, workoutMemory, workoutMomentum, workoutMilestones, recordWorkoutCompletion } = useAuth();
   const { data, summary, loading, error, mutate } = useDashboardData();
   const [recommendedWorkout, setRecommendedWorkout] = useState(null);
@@ -44,6 +47,25 @@ export default function DashboardPage() {
   );
   const { busy: checkoutBusy, startUpgradeCheckout: startUpgradeCheckoutFlow } = useUpgradeCheckout();
   const currentPlanFocus = null;
+  const startingPath = useMemo(() => getFirstSessionRouteContent(data?.profile || user), [data?.profile, user]);
+  const lastCategory = useMemo(() => {
+    if (typeof window === "undefined") {
+      return "";
+    }
+
+    return window.localStorage.getItem("lastCategory") || window.localStorage.getItem("pulsepeak.mobility.lastCategory") || "";
+  }, []);
+  const todayFocusStrip = useMemo(() => getTodayFocusContent(data?.profile || user, lastCategory), [data?.profile, lastCategory, user]);
+  const quickActions = useMemo(
+    () => [
+      { id: "strength", label: "Strength", route: "/workout/strength" },
+      { id: "mobility", label: "Mobility & Stretch", route: "/mobility" },
+      { id: "yoga", label: "Yoga Flow", route: "/mobility", category: "yoga" },
+      { id: "injury-support", label: "Injury Support", route: "/injury-support" },
+      { id: "cardio", label: "Cardio", route: "/workout/quick-start", category: "cardio" }
+    ],
+    []
+  );
 
   useEffect(() => {
     setShowOnboardingUpgradePrompt(window.sessionStorage.getItem(onboardingNudgeKey) === "true");
@@ -223,7 +245,16 @@ export default function DashboardPage() {
   }
 
   if (!data || !summary) {
-    return <div className="screen-center">{error || "Unable to load your dashboard."}</div>;
+    return (
+      <div className="screen-center">
+        <EmptyStateCard
+          ctaLabel="Open Guided Start"
+          ctaTo="/guided-start"
+          description={error || "Use a working start path while the dashboard reconnects."}
+          title="Dashboard unavailable"
+        />
+      </div>
+    );
   }
 
   const openWeeklyPlan = async () => {
@@ -313,6 +344,22 @@ export default function DashboardPage() {
     window.sessionStorage.setItem(conversionPromptKey, "dismissed");
     setShowConversionPrompt(false);
   };
+  const openQuickAction = (action) => {
+    if (action.category) {
+      window.localStorage.setItem("lastCategory", action.category);
+      window.localStorage.setItem("pulsepeak.mobility.lastCategory", action.category);
+    }
+
+    navigate(action.route);
+  };
+  const openPrimaryWorkoutAction = () => {
+    if (recommendedWorkout) {
+      startWorkoutSession(recommendedWorkout);
+      return;
+    }
+
+    navigate("/workouts");
+  };
 
   return (
     <div className="page-grid page-grid-tight">
@@ -352,6 +399,41 @@ export default function DashboardPage() {
           <p className="hero-support-copy">{summary.resultProjection?.summary}</p>
         </div>
       </section>
+
+      <div className="dashboard-flow-strip">
+        <div>
+          <p className="section-label">Your path</p>
+          <h3>{startingPath.title}</h3>
+          <p className="support-copy">{startingPath.text}</p>
+        </div>
+        <div className="dashboard-flow-links">
+          <Link className="primary-button module-link" to={startingPath.route}>
+            {startingPath.ctaLabel}
+          </Link>
+        </div>
+      </div>
+
+      <div className="dashboard-flow-strip">
+        <div>
+          <p className="section-label">{todayFocusStrip.title}</p>
+          <h3>{todayFocusStrip.headline}</h3>
+          <p className="support-copy">{todayFocusStrip.text}</p>
+        </div>
+        <div className="dashboard-flow-links">
+          <Link className="primary-button module-link" to={todayFocusStrip.route}>
+            {todayFocusStrip.ctaLabel}
+          </Link>
+        </div>
+      </div>
+
+      <div className="dashboard-quick-actions">
+        {quickActions.map((action) => (
+          <button key={action.id} className="secondary-button dashboard-quick-action" type="button" onClick={() => openQuickAction(action)}>
+            {action.label}
+          </button>
+        ))}
+      </div>
+      <p className="support-copy">Yoga and cardio open through the current guided session paths.</p>
 
       {feedback ? <div className="status-banner">{feedback}</div> : null}
 
@@ -475,7 +557,7 @@ export default function DashboardPage() {
                 className="primary-button"
                 disabled={recommendedWorkout ? Boolean(recommendedWorkout.lockedForAccess) : libraryLoading}
                 type="button"
-                onClick={() => (recommendedWorkout ? startWorkoutSession(recommendedWorkout) : null)}
+                onClick={openPrimaryWorkoutAction}
               >
                 {recommendedWorkout
                   ? recommendedWorkout.lockedForAccess
@@ -711,7 +793,12 @@ export default function DashboardPage() {
               </div>
             </div>
           ) : (
-            <p className="muted">No preset recommendation is available yet. Open the workout engine and choose the setup that matches today.</p>
+            <EmptyStateCard
+              ctaLabel="Browse Workouts"
+              ctaTo="/workouts"
+              description="Open the workout library and choose a session that fits today&apos;s setup."
+              title="No workout loaded yet"
+            />
           )}
           {!hasFullAccess && accessTier !== ACCESS_TIERS.TRIAL && !workoutAccess?.locked ? (
             <div className="module-note">

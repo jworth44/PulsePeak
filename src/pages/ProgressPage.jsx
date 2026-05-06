@@ -1,4 +1,5 @@
 import React from "react";
+import EmptyStateCard from "../components/EmptyStateCard";
 import Panel from "../components/Panel";
 import UpgradePrompt from "../components/UpgradePrompt";
 import { BarChart, LineChart } from "../components/SimpleChart";
@@ -186,7 +187,12 @@ export default function ProgressPage() {
               ))}
             </div>
           ) : (
-            <p className="support-copy">Complete a few sessions and PulsePeak will surface simple balance, consistency, and recovery signals here.</p>
+            <EmptyStateCard
+              ctaLabel="Start Strength"
+              ctaTo="/workout/strength"
+              description="Complete a few sessions so PulsePeak has enough recent training to summarize here."
+              title="No session insights yet"
+            />
           )}
           {primarySignal ? (
             <div className="module-note">
@@ -238,7 +244,12 @@ export default function ProgressPage() {
               <p className="support-copy">{visibleMilestone.detail}</p>
             </div>
           ) : (
-            <p className="support-copy">Complete a few more sessions and PulsePeak will start surfacing grounded milestones here.</p>
+            <EmptyStateCard
+              ctaLabel="Start Quick Workout"
+              ctaTo="/workout/quick-start"
+              description="Complete another session or two so this page has real milestones to surface."
+              title="No milestones yet"
+            />
           )}
         </Panel>
 
@@ -445,7 +456,12 @@ export default function ProgressPage() {
             ))}
           </div>
         ) : (
-          <p className="support-copy">Complete a workout and PulsePeak will start building a cleaner recent activity trail here.</p>
+          <EmptyStateCard
+            ctaLabel="Start Strength"
+            ctaTo="/workout/strength"
+            description="Complete your first session so this page can build a recent training trail."
+            title="No recent training yet"
+          />
         )}
       </Panel>
 

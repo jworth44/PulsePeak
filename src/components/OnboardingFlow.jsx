@@ -230,8 +230,8 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
       if (mode === "onboarding") {
         window.sessionStorage.setItem(onboardingNudgeKey, "true");
       }
-      await refreshSession(token);
-      onComplete?.();
+      const refreshedSession = await refreshSession(token);
+      onComplete?.(refreshedSession?.dashboard?.profile || refreshedSession?.user || null);
     } catch (saveError) {
       setError(saveError.message);
     } finally {

@@ -1604,6 +1604,17 @@ select:focus {
   justify-content: flex-end;
 }
 
+.dashboard-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.dashboard-quick-action {
+  min-width: 160px;
+  justify-content: center;
+}
+
 .dashboard-flow-link {
   padding: 10px 14px;
   border-radius: 999px;
@@ -3311,6 +3322,14 @@ select:focus {
     width: 100%;
   }
 
+  .dashboard-quick-actions {
+    flex-direction: column;
+  }
+
+  .dashboard-quick-action {
+    width: 100%;
+  }
+
   .dashboard-flow-link,
   .module-control-actions button,
   .onboarding-edit-button {
@@ -3333,6 +3352,56 @@ select:focus {
 
 .page-grid-tight {
   gap: 1.1rem;
+}
+
+.first-session-page {
+  min-height: calc(100vh - 140px);
+  align-content: center;
+}
+
+.first-session-card {
+  max-width: 760px;
+  margin: 0 auto;
+  display: grid;
+  gap: 24px;
+}
+
+.first-session-header {
+  display: grid;
+  gap: 10px;
+}
+
+.first-session-header h2 {
+  margin: 0;
+}
+
+.first-session-details {
+  display: grid;
+  gap: 14px;
+}
+
+.first-session-note {
+  display: grid;
+  gap: 8px;
+}
+
+.first-session-note strong {
+  font-size: 0.95rem;
+}
+
+.first-session-note p {
+  margin: 0;
+}
+
+.first-session-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.first-session-actions .primary-button,
+.first-session-actions .secondary-button {
+  min-width: 220px;
 }
 
 .module-page-hero,
@@ -4728,4 +4797,63 @@ mark {
   .loaded-workout-exercise .ghost-button {
     grid-column: 1 / -1;
   }
+}
+
+/* Exercise media display modes: preview surfaces can crop lightly, instructional surfaces must show the full movement. */
+.library-card-thumb {
+  padding: 0;
+  background: none;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
+  transform: none;
+  transform-origin: center;
+}
+
+.movement-image-panel {
+  gap: 12px;
+}
+
+.exercise-image-contain {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
+  transform: none;
+  transform-origin: center;
+}
+
+.movement-image {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 4 / 5;
+  padding: 0;
+  border-radius: 18px;
+  background: none;
+}
+
+.movement-sequence-step-visual {
+  overflow: visible;
+}
+
+.movement-sequence-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border-radius: 14px;
+  background: none;
+}
+
+.movement-image-frame .exercise-image-contain,
+.movement-reference-media .exercise-image-contain,
+.exercise-visual-thumb .exercise-image-contain,
+.movement-sequence-step-visual .exercise-image-contain {
+  padding: 0.35rem;
 }
