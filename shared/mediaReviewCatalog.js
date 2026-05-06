@@ -292,6 +292,11 @@ const REVIEWED_MEDIA = {
     reviewSource: "pulsepeak_ai_sequence_v1",
     sequenceCount: 4
   }),
+  "jumping-jack": approvedAsset("jumping-jack-photo", {
+    exerciseId: "jumping-jack",
+    reviewSource: "pulsepeak_ai_preview_jumping_jack_male_v1",
+    sequenceCount: 4
+  }),
   burpee: approvedAsset("burpee-photo", {
     exerciseId: "burpee",
     reviewSource: "pulsepeak_ai_sequence_v1",
