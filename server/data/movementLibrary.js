@@ -551,6 +551,27 @@ const MOVEMENT_LIBRARY = [
     image: mediaRef("dead-bug", "Dead bug guide")
   }),
   movement({
+    id: "bird-dog",
+    name: "Bird Dog",
+    category: "rehab",
+    difficulty: "beginner",
+    environment: "both",
+    equipment: ["bodyweight"],
+    primaryMuscles: ["Core"],
+    secondaryMuscles: ["Glutes", "Shoulders"],
+    instructions: [
+      "Set up on hands and knees with wrists under shoulders and knees under hips.",
+      "Brace gently so the low back keeps its natural position.",
+      "Reach one arm and the opposite leg long without letting the hips rotate.",
+      "Pause briefly, return with control, and switch sides."
+    ],
+    cues: ["Long line from hand to heel", "Hips stay square", "Reach, don't lift high"],
+    commonMistakes: ["Arching the low back as the leg lifts", "Rotating the hips open", "Rushing between sides"],
+    safetyNotes: ["Shorten the reach if the trunk wobbles.", "Keep the head in line with the spine instead of looking up."],
+    modifications: ["Arm-only reach", "Leg-only reach", "Bird dog with elbow-to-knee touch"],
+    image: mediaRef("bird-dog", "Bird dog form guide")
+  }),
+  movement({
     id: "side-plank",
     name: "Side Plank",
     category: "strength",
@@ -591,6 +612,27 @@ const MOVEMENT_LIBRARY = [
     safetyNotes: ["Elevate the hands if wrists or shoulders are irritated.", "Slow the tempo if low-back control slips."],
     modifications: ["Incline mountain climber", "Slow climber", "Marching plank"],
     image: mediaRef("mountain-climber", "Mountain climber guide")
+  }),
+  movement({
+    id: "jumping-jack",
+    name: "Jumping Jack",
+    category: "cardio",
+    difficulty: "beginner",
+    environment: "both",
+    equipment: ["bodyweight"],
+    primaryMuscles: ["Cardio"],
+    secondaryMuscles: ["Shoulders", "Calves"],
+    instructions: [
+      "Stand tall with feet together and arms at your sides.",
+      "Jump the feet out wide while sweeping the arms overhead in one motion.",
+      "Land softly with knees relaxed, not locked.",
+      "Jump back to the start position and keep an even rhythm."
+    ],
+    cues: ["Land soft", "Full arm sweep", "Steady rhythm over speed"],
+    commonMistakes: ["Landing stiff-legged", "Cutting the arm swing short", "Leaning forward as fatigue builds"],
+    safetyNotes: ["Step the feet out instead of jumping if impact is uncomfortable.", "Slow the pace before form breaks down."],
+    modifications: ["Step jack", "Half jack", "Low-impact arm-only jack"],
+    image: mediaRef("jumping-jack", "Jumping jack form guide")
   }),
   movement({
     id: "high-knees",
@@ -892,7 +934,22 @@ const MOVEMENT_NAME_ALIASES = new Map(
     ["walking spiderman reach", "worlds-greatest-stretch"],
     ["child's pose with side reach", "childs-pose-side-reach"],
     ["wall slide", "wall-slide"],
-    ["glute bridge hold", "glute-bridge"]
+    ["glute bridge hold", "glute-bridge"],
+    ["sumo deadlift", "deadlift"],
+    ["good morning", "deadlift"],
+    ["hamstring curl", "deadlift"],
+    ["seated hamstring curl", "deadlift"],
+    ["lying hamstring curl", "deadlift"],
+    ["leg extension", "squat"],
+    ["split squat", "supported-split-squat"],
+    ["front-foot elevated split squat", "supported-split-squat"],
+    ["dumbbell walking lunge", "lunge"],
+    ["goblet reverse lunge", "lunge"],
+    ["dumbbell step-up", "lunge"],
+    ["cable glute kickback", "hip-thrust"],
+    ["band glute kickback", "hip-thrust"],
+    ["treadmill incline walk", "high-knees"],
+    ["assault bike sprint", "high-knees"]
   ].map(([name, id]) => [name.toLowerCase(), id])
 );
 

@@ -5,16 +5,33 @@
 | | |
 |---|---|
 | **State** | Pre–Production Complete (0 of 2 states granted) |
-| **Last verified** | 2026-07-04 — build exit 0 · qa:launch **10/10** · 0 blockers · 0 console errors (×3 runs) |
+| **Last verified** | 2026-07-04 — build exit 0 · qa:launch **10/10** · 0 blockers · 0 console errors |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
-| **Active unit** | none (Unit 1 closed) |
-| **Next unit** | Backlog #2 — close the 35-exercise reviewed-media gap |
-| **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
+| **Media ledger** | **19 unmatched** (was 36) — remaining are net-new patterns needing generated media |
+| **Active unit** | Unit 2 Phase B — parked on owner gate |
+| **Next unit** | Backlog #3 (PWA installability) while Phase B is gated |
+| **Owner gates pending** | **Phase B media generation:** ~19 movements × 5 images via gpt-image-1 on the configured OPENAI_API_KEY (~95+ images, est. $10–30 with retries). §6: real-money spend needs owner OK. |
 
 ---
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-04 · Unit 2 Phase A — media ledger 36 → 19 (backlog #2, zero-cost wiring) ✅** —
+  every unmatched variant that could honestly resolve to *already-approved*
+  media now does: 2 new canonical movements added with reviewed 4-step
+  assets (**Bird Dog**, **Jumping Jack** — media existed on disk, approved
+  in `mediaReviewCatalog`, but no movement entry) + 15 aliases extending
+  the library's own established granularity (precedents: "leg curl"→deadlift,
+  "bike sprint"→high-knees, "banded good morning"→deadlift): sumo deadlift/
+  good morning/hamstring curls→deadlift, leg extension→squat, split-squat
+  family→supported-split-squat, lunge-family dumbbell variants→lunge,
+  glute kickbacks→hip-thrust, treadmill walk & assault bike→high-knees.
+  Remaining 19 are genuinely new patterns (crunch family, hip-abduction
+  family, hollow holds, rollout, superman, bear crawl, jumps, ropes, slam)
+  — need generated media → **Phase B parked on owner gate (API spend)**.
+  Evidence: direct resolver check 17/17 → correct ids with media;
+  qa:launch 10/10, 0 blockers; build exit 0; no new missing-media or
+  broken-mapping warnings.
 - **2026-07-04 · Unit 1 — Engine QA depth (backlog #1) ✅** — added the
   `engine-depth-e2e` launch-QA scenario: dedicated seed user logs a meal
   (mutation + rendered totals asserted), toggles a habit (persists across
