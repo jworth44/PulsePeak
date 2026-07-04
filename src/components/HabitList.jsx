@@ -16,7 +16,7 @@ export default function HabitList({ habits, onToggle }) {
             <p className="muted">{habit.target}</p>
           </div>
           <div className="habit-status">
-            <strong>{habit.streak} days</strong>
+            <strong>{habit.streak} day{habit.streak === 1 ? "" : "s"}</strong>
             <span>{habit.completedToday ? "Done today" : "Tap to complete"}</span>
           </div>
         </button>

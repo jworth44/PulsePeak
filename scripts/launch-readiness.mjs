@@ -381,6 +381,7 @@ async function runBrowserCoverage(browser) {
   const returningEmail = "returning_user@pulsepeak.local";
   const sparseEmail = "sparse_user@pulsepeak.local";
   const onboardingEmail = "gate_user@pulsepeak.local";
+  const engineEmail = "engine_user@pulsepeak.local";
 
   createSeedUser({ name: "Free User", email: freeEmail });
   createSeedUser({ name: "Trial User", email: trialEmail });
@@ -388,6 +389,7 @@ async function runBrowserCoverage(browser) {
   createSeedUser({ name: "Returning User", email: returningEmail });
   createSeedUser({ name: "Sparse User", email: sparseEmail });
   createSeedUser({ name: "Gate User", email: onboardingEmail });
+  createSeedUser({ name: "Engine User", email: engineEmail });
 
   const completedProfile = buildCompletedProfile();
   const returningWorkouts = buildHistoryForProfile(completedProfile, 4);
@@ -464,6 +466,16 @@ async function runBrowserCoverage(browser) {
     sleepHours: 7,
     energyLevel: "Steady"
   });
+  // Dedicated user for the engine-depth E2E scenario: mutations (meal log,
+  // habit toggle, weekly check-in) must not contaminate other scenarios'
+  // assumptions, so this user is shared with nobody else.
+  seedUserState(engineEmail, {
+    // nutritionMode "full" so the meal-logging form renders for this user.
+    profile: buildCompletedProfile({ nutritionMode: "full" }),
+    workouts: buildHistoryForProfile(completedProfile, 2),
+    meals: [],
+    waterIntake: 0
+  });
   seedUserState(onboardingEmail, {
     profile: {
       goalType: "general_fitness",
@@ -510,6 +522,7 @@ async function runBrowserCoverage(browser) {
   const returningLogin = await loginUser({ email: returningEmail });
   const sparseLogin = await loginUser({ email: sparseEmail });
   const onboardingLogin = await loginUser({ email: onboardingEmail });
+  const engineLogin = await loginUser({ email: engineEmail });
 
   expect(freeLogin.user?.onboardingCompleted && freeLogin.user?.profileComplete, `Free seed user still incomplete after login: ${JSON.stringify(freeLogin.user)}`);
   expect(trialLogin.user?.onboardingCompleted && trialLogin.user?.profileComplete, `Trial seed user still incomplete after login: ${JSON.stringify(trialLogin.user)}`);
@@ -740,6 +753,86 @@ async function runBrowserCoverage(browser) {
       consoleErrors: bucket.consoleErrors,
       pageErrors: bucket.pageErrors,
       note: "Injected missing sequence image path to verify fallback stability."
+    });
+  });
+
+  // Engine-depth E2E: exercises the Nutrition, Habit, Body-Metrics and
+  // Progress engines end-to-end — an action is performed, the mutation is
+  // asserted at the API level, the UI reflects it, and it survives reload.
+  // Uses the dedicated engine user so state changes contaminate nothing.
+  await withAuthedPage(browser, engineLogin.token, async (page, bucket) => {
+    // --- Nutrition engine: log a meal, assert mutation + rendered totals.
+    await assertRouteRenders(page, "/nutrition", /today's food direction|meal templates|nutrition/i);
+    const mealForm = page.locator("form", { has: page.getByRole("button", { name: "Log meal" }) });
+    await mealForm.locator('input[name="name"]').fill("QA Meal Bowl");
+    await mealForm.locator('input[name="calories"]').fill("640");
+    await mealForm.locator('input[name="protein"]').fill("45");
+    const mealMutation = page.waitForResponse(
+      (response) => response.url().includes("/api/meals") && response.request().method() === "POST",
+      { timeout: 10000 }
+    );
+    await page.getByRole("button", { name: "Log meal" }).click();
+    const mealResponse = await mealMutation;
+    expect(mealResponse.ok(), `Meal log mutation failed with status ${mealResponse.status()}.`);
+    await page.getByText(/640 kcal \| 45g protein/i).first().waitFor({ timeout: 10000 });
+
+    // --- Habit engine: toggle a habit on the dashboard, assert counter + state.
+    await page.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
+    await page.getByText(/Habits done today/i).first().waitFor({ timeout: 15000 });
+    const habitCounter = page.locator(".stat-pill", { hasText: "Habits done today" }).locator("strong");
+    expect((await habitCounter.textContent()).trim() === "0", "Engine user unexpectedly starts with completed habits.");
+    const habitMutation = page.waitForResponse(
+      (response) => response.url().includes("/api/habits/toggle") && response.request().method() === "POST",
+      { timeout: 10000 }
+    );
+    await page.locator(".habit-card").first().click();
+    const habitResponse = await habitMutation;
+    expect(habitResponse.ok(), `Habit toggle mutation failed with status ${habitResponse.status()}.`);
+    await page.locator(".habit-card.habit-done").first().waitFor({ timeout: 10000 });
+    await page.getByText(/Done today/i).first().waitFor({ timeout: 10000 });
+
+    // Persistence: the completed habit must survive a cold reload.
+    await page.reload({ waitUntil: "networkidle" });
+    await page.getByText(/Habits done today/i).first().waitFor({ timeout: 15000 });
+    try {
+      await page.locator(".habit-card.habit-done").first().waitFor({ timeout: 10000 });
+    } catch (error) {
+      throw new Error(
+        `Habit completion did not persist across reload :: url=${page.url()} :: console=${bucket.consoleErrors.join(" | ") || "none"} :: body=${(await page.locator("body").innerText().catch(() => "")).slice(0, 500)}`
+      );
+    }
+
+    // --- Body-metrics engine: submit the weekly check-in, assert persistence.
+    await assertRouteRenders(page, "/progress", /progress overview|performance trend|recent completed sessions/i, {
+      stableSelector: ".page-grid",
+      retries: 2,
+      retryDelayMs: 400
+    });
+    const checkInMutation = page.waitForResponse(
+      (response) => response.url().includes("/api/weekly-check-in") && response.request().method() === "POST",
+      { timeout: 10000 }
+    );
+    await page.getByRole("button", { name: /Save weekly check-in/i }).click();
+    const checkInResponse = await checkInMutation;
+    expect(checkInResponse.ok(), `Weekly check-in mutation failed with status ${checkInResponse.status()}.`);
+    await page.getByText(/Weekly check-in saved\./i).first().waitFor({ timeout: 10000 });
+
+    // Persistence: after reload the form must acknowledge this week's entry.
+    await page.reload({ waitUntil: "networkidle" });
+    await page.getByText(/progress overview/i).first().waitFor({ timeout: 15000 });
+    await page.getByRole("button", { name: /Update weekly check-in/i }).waitFor({ timeout: 10000 });
+
+    // --- Progress engine: the page must reflect the data the other engines
+    // just produced — completed habit streak and a non-zero completion score.
+    await page.getByText(/1 day streak/i).first().waitFor({ timeout: 10000 });
+    const completionText = await page.getByText(/% current completion/i).first().textContent();
+    expect(!/^0% current completion/.test(completionText.trim()), `Progress completion score stayed at zero after meal, habit, check-in and seeded workouts: "${completionText.trim()}"`);
+
+    recordScenario("engine-depth-e2e", {
+      pass: bucket.consoleErrors.length === 0 && bucket.pageErrors.length === 0,
+      consoleErrors: bucket.consoleErrors,
+      pageErrors: bucket.pageErrors,
+      note: "Nutrition, Habit, Body-Metrics and Progress engines verified end-to-end with API-level mutation asserts and reload persistence."
     });
   });
 }

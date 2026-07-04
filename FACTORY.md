@@ -89,14 +89,14 @@ end-to-end acceptance scenario** in the launch QA — an action performed and
 its effect asserted, not just a page rendering. Audit of current coverage
 (2026-07-04):
 
-| Engine | Exists in code | E2E verification today | Required scenario |
+| Engine | Exists in code | E2E verification | Scenario |
 |---|---|---|---|
-| Workout Engine | ✓ | ✅ Deep (filters, modal, save mutation asserted, session start) | — covered |
-| Exercise Library | ✓ | ✅ Media audit + `qa:exercise-library` | — covered |
-| Nutrition Engine | ✓ meals/protein/hydration | ⚠️ route render only | log meal → dashboard calories/protein update |
-| Habit Tracking | ✓ `/api/habits/toggle` | ❌ none | toggle habit → state persists across reload |
-| Body Metrics | ✓ weight history, weekly check-in, recovery | ❌ none | submit check-in + recovery → history/trend reflects it |
-| Progress Engine | ✓ `/api/progress` | ⚠️ route render only | after logged actions, progress numbers assert correct |
+| Workout Engine | ✓ | ✅ Deep (filters, modal, save mutation asserted, session start) | free/premium user scenarios |
+| Exercise Library | ✓ | ✅ Media audit + `qa:exercise-library` | media audit |
+| Nutrition Engine | ✓ meals/protein/hydration | ✅ log meal → mutation asserted → rendered totals (2026-07-04) | `engine-depth-e2e` |
+| Habit Tracking | ✓ toggle wired to dashboard | ✅ toggle → mutation asserted → done-state survives reload (2026-07-04) | `engine-depth-e2e` |
+| Body Metrics | ✓ weight history, weekly check-in | ✅ check-in saved → acknowledged after reload (2026-07-04) | `engine-depth-e2e` |
+| Progress Engine | ✓ `/api/progress` | ✅ reflects habit streak + non-zero completion from real actions (2026-07-04) | `engine-depth-e2e` |
 
 **Rule: no engine may be declared complete — and Production Complete cannot
 be granted — while its row is not ✅.** New engines enter this matrix before

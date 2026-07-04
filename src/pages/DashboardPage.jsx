@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import EmptyStateCard from "../components/EmptyStateCard";
+import HabitList from "../components/HabitList";
 import Panel from "../components/Panel";
 import ProgressRing from "../components/ProgressRing";
 import WorkoutDetailModal from "../components/WorkoutDetailModal";
@@ -361,6 +362,20 @@ export default function DashboardPage() {
     navigate("/workouts");
   };
 
+  const toggleHabit = async (habitId) => {
+    if (saving === "habit") {
+      return;
+    }
+    setSaving("habit");
+    try {
+      await mutate("/habits/toggle", { method: "POST", body: JSON.stringify({ habitId }) });
+    } catch (toggleError) {
+      setFeedback(toggleError.message);
+    } finally {
+      setSaving("");
+    }
+  };
+
   return (
     <div className="page-grid page-grid-tight">
       <section className="today-hero">
@@ -399,6 +414,12 @@ export default function DashboardPage() {
           <p className="hero-support-copy">{summary.resultProjection?.summary}</p>
         </div>
       </section>
+
+      {summary.habits.length > 0 && (
+        <Panel eyebrow="Daily habits" title="Small wins that keep the week on track">
+          <HabitList habits={summary.habits} onToggle={toggleHabit} />
+        </Panel>
+      )}
 
       <div className="dashboard-flow-strip">
         <div>

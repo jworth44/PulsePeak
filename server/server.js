@@ -936,7 +936,7 @@ function buildUserSummary(user) {
   return {
     ...summarizeDashboard(user.data),
     workoutAccess: buildWorkoutAccess(user),
-    weeklyCheckIn: buildLaunchSafeWeeklyCheckInState(),
+    weeklyCheckIn: buildLaunchSafeWeeklyCheckInState(user.data),
     pricingModel: buildPricingModel(user)
   };
 }

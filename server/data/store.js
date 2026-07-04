@@ -542,10 +542,15 @@ function buildLaunchSafeMomentumCard() {
   };
 }
 
-export function buildLaunchSafeWeeklyCheckInState() {
+export function buildLaunchSafeWeeklyCheckInState(data = null) {
+  // Coaching copy stays disabled for the launch baseline, but the check-in
+  // *state* must stay truthful: a submitted week is acknowledged so the UI
+  // does not keep asking for a check-in that already exists.
+  const currentWeekKey = getWeekKey();
+  const checkIns = data && Array.isArray(data.weeklyCheckIns) ? data.weeklyCheckIns : [];
   return {
-    currentWeekKey: getWeekKey(),
-    submittedThisWeek: false,
+    currentWeekKey,
+    submittedThisWeek: checkIns.some((entry) => entry?.weekKey === currentWeekKey),
     title: "Launch baseline active",
     summary: "Weekly coaching and adjustment guidance are disabled for this launch baseline.",
     freeSummary: "Core training flows remain available without weekly coaching overlays.",
