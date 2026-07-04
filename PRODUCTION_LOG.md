@@ -9,7 +9,8 @@
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
 | **Media ledger** | **15 unmatched** (was 36) — Gemini pipeline proven, Crunch shipped |
 | **Active unit** | Unit 2 Phase B — Gemini media production (owner-approved, in progress) |
-| **Next unit** | continue Phase B batches: Russian Twist → Leg Raise → Hollow Hold → Superman → … |
+| **Batch in flight** | **Russian Twist 2/4 frames approved+staged** (`temp/media-staging/russian-twist/step-1-raw.png` start · `step-2-raw.png` mid-right). Still needed: peak (rotated LEFT, hands by left hip) + finish (back to center, hands at chest) — the Gemini chat "Photorealistic Athlete Russian Twist" hung mid-stream; resume there or start a fresh chat with the reference re-pasted. Then: crop/resize/wire/QA per the batch-1 recipe below. |
+| **Next unit** | finish Russian Twist → Leg Raise → Hollow Hold → Superman → Ab Wheel → Bear Crawl → Lateral Band Walk → Box Jump → Skater Hop → Battle Ropes → Med Ball Slam |
 | **Owner gates pending** | none |
 
 ---
