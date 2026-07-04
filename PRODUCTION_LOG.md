@@ -7,15 +7,41 @@
 | **State** | Pre–Production Complete (0 of 2 states granted) |
 | **Last verified** | 2026-07-04 — build exit 0 · qa:launch **10/10** · 0 blockers · 0 console errors |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
-| **Media ledger** | **19 unmatched** (was 36) — remaining are net-new patterns needing generated media |
-| **Active unit** | Unit 2 Phase B — parked on owner gate |
-| **Next unit** | Backlog #3 (PWA installability) while Phase B is gated |
-| **Owner gates pending** | **Phase B media generation:** ~19 movements × 5 images via gpt-image-1 on the configured OPENAI_API_KEY (~95+ images, est. $10–30 with retries). §6: real-money spend needs owner OK. |
+| **Media ledger** | **15 unmatched** (was 36) — Gemini pipeline proven, Crunch shipped |
+| **Active unit** | Unit 2 Phase B — Gemini media production (owner-approved, in progress) |
+| **Next unit** | continue Phase B batches: Russian Twist → Leg Raise → Hollow Hold → Superman → … |
+| **Owner gates pending** | none |
 
 ---
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-04 · Unit 2 Phase B batch 1 — Crunch shipped via Gemini; ledger 19 → 15 ✅** —
+  owner approved Gemini (no API cost) over gpt-image-1. **Proven recipe:**
+  (1) put `public/media/models/reference_male.png` on the Windows clipboard
+  (PowerShell STA `Clipboard::SetImage`), paste into a fresh
+  gemini.google.com chat (Ctrl+V via Chrome MCP); (2) one chat per movement
+  — prompt each step with "same athlete, same gym, same camera angle",
+  step states = start position / mid movement / peak contraction / finish
+  position, always append "No text, no watermarks", explicitly lock
+  wardrobe ("tank top fully covering the torso" — step-3 first attempt
+  exposed abs and was REJECTED + regenerated); (3) download each image
+  (lands in `N:\Downloads\Gemini_Generated_Image_*.png`), stage to
+  `temp/media-staging/<slug>/step-N-raw.png`; (4) review EVERY frame at
+  full res against MEDIA_APPROVAL_STANDARD; (5) post-process: crop
+  2160×1440 at offset (60,100) — removes the Gemini ✦ sparkle corner —
+  then bicubic-resize to 1536×1024 into
+  `public/media/exercises/<slug>/step-N.png`, thumbnail = copy of peak
+  frame; (6) declare `approvedAsset("<slug>-photo", …reviewSource:
+  "pulsepeak_gemini_<slug>_male_v1")` in mediaReviewCatalog + movement
+  entry + aliases; (7) qa:launch must stay green with the slug absent from
+  missing/broken lists. **Remaining queue (11 batches / 15 variants):**
+  Russian Twist · Leg Raise (+alias hanging knee raise) · Hollow Body Hold
+  (+alias hollow rock) · Ab Wheel Rollout · Superman · Bear Crawl ·
+  Lateral Band Walk (+aliases hip abduction, clamshell) · Box Jump ·
+  Skater Hop · Battle Rope Waves · Medicine Ball Slam.
+  Evidence: crunch 4/4 frames pass review (1 rejection/regen logged);
+  qa:launch 10/10, 0 blockers; build exit 0.
 - **2026-07-04 · Unit 2 Phase A — media ledger 36 → 19 (backlog #2, zero-cost wiring) ✅** —
   every unmatched variant that could honestly resolve to *already-approved*
   media now does: 2 new canonical movements added with reviewed 4-step

@@ -572,6 +572,27 @@ const MOVEMENT_LIBRARY = [
     image: mediaRef("bird-dog", "Bird dog form guide")
   }),
   movement({
+    id: "crunch",
+    name: "Crunch",
+    category: "strength",
+    difficulty: "beginner",
+    environment: "both",
+    equipment: ["bodyweight"],
+    primaryMuscles: ["Core"],
+    secondaryMuscles: ["Hip flexors"],
+    instructions: [
+      "Lie on your back with knees bent, feet flat, and fingertips lightly at the sides of your head.",
+      "Exhale and curl your shoulder blades off the floor, leading with the chest instead of the chin.",
+      "Pause briefly at the top with your abs engaged and lower back still on the floor.",
+      "Lower back down with control and repeat without pulling on your neck."
+    ],
+    cues: ["Curl, don't yank", "Chin off the chest", "Low back stays down"],
+    commonMistakes: ["Pulling the head forward with the hands", "Lifting the lower back off the floor", "Using momentum instead of the abs"],
+    safetyNotes: ["Keep the movement small and controlled if the neck gets tense.", "Stop short of any range that pulls the low back off the floor."],
+    modifications: ["Reach-forward crunch with arms extended", "Slow-tempo crunch", "Reverse crunch"],
+    image: mediaRef("crunch", "Crunch form guide")
+  }),
+  movement({
     id: "side-plank",
     name: "Side Plank",
     category: "strength",
@@ -949,7 +970,10 @@ const MOVEMENT_NAME_ALIASES = new Map(
     ["cable glute kickback", "hip-thrust"],
     ["band glute kickback", "hip-thrust"],
     ["treadmill incline walk", "high-knees"],
-    ["assault bike sprint", "high-knees"]
+    ["assault bike sprint", "high-knees"],
+    ["reverse crunch", "crunch"],
+    ["bicycle crunch", "crunch"],
+    ["cable crunch", "crunch"]
   ].map(([name, id]) => [name.toLowerCase(), id])
 );
 
