@@ -639,7 +639,20 @@ async function runBrowserCoverage(browser) {
     await assertRouteRenders(page, "/preferences?section=preferences", /control how much guidance you see in each session/i);
     await page.getByRole("button", { name: "Minimal" }).click();
     await page.reload({ waitUntil: "networkidle" });
-    await page.getByRole("button", { name: "Minimal" }).waitFor({ timeout: 10000 });
+    // After a cold reload the SPA shell can take a moment to hydrate the
+    // preferences panel. Wait for the stable panel heading to re-render before
+    // asserting the guidance button so this launch gate can't false-fail on
+    // first-run timing, and dump full context if the panel really is missing.
+    try {
+      await page.getByText(/control how much guidance you see in each session/i)
+        .first()
+        .waitFor({ timeout: 15000 });
+      await page.getByRole("button", { name: "Minimal" }).waitFor({ timeout: 10000 });
+    } catch (error) {
+      throw new Error(
+        `Preferences guidance button missing after reload :: url=${page.url()} :: console=${bucket.consoleErrors.join(" | ") || "none"} :: page=${bucket.pageErrors.join(" | ") || "none"} :: body=${(await page.locator("body").innerText().catch(() => "")).slice(0, 800)}`
+      );
+    }
     await page.goto(`${baseUrl}/not-a-real-shell-route`, { waitUntil: "networkidle" });
     await page.getByText(/today's training direction/i).waitFor({ timeout: 15000 });
     recordScenario("free-user-shell-and-settings", {

@@ -2,6 +2,8 @@
 
 PulsePeak is a full-stack health and fitness app with authentication, a synced dashboard, meal logging, recovery tracking, and a structured workout system for both gym and home users.
 
+> **How this project is built:** see [FACTORY.md](FACTORY.md) (manufacturing system V1.0 — product definition, quality gates, backlog, autonomy contract) and [PRODUCTION_LOG.md](PRODUCTION_LOG.md) (unit-by-unit history).
+
 ## Current features
 
 ### Free
