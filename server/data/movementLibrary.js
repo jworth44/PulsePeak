@@ -593,6 +593,27 @@ const MOVEMENT_LIBRARY = [
     image: mediaRef("crunch", "Crunch form guide")
   }),
   movement({
+    id: "box-jump",
+    name: "Box Jump",
+    category: "cardio",
+    difficulty: "intermediate",
+    environment: "both",
+    equipment: ["bodyweight"],
+    primaryMuscles: ["Quads", "Glutes"],
+    secondaryMuscles: ["Calves", "Core"],
+    instructions: [
+      "Stand a short step in front of a sturdy box, feet hip-width apart.",
+      "Hinge your hips back and swing your arms behind you to load the jump.",
+      "Explode up, swinging your arms forward and driving through the floor onto the box.",
+      "Land softly in a quarter-squat with both feet flat, then stand tall on top."
+    ],
+    cues: ["Load the hips, then explode", "Land soft and quiet", "Stand tall to finish"],
+    commonMistakes: ["Landing stiff-legged", "Using a box too tall to land safely", "Landing on the edge of the box"],
+    safetyNotes: ["Choose a box height you can land on comfortably.", "Step down instead of jumping down to protect the knees."],
+    modifications: ["Lower box height", "Step-up instead of jump", "Box jump to a soft platform"],
+    image: mediaRef("box-jump", "Box jump form guide")
+  }),
+  movement({
     id: "bear-crawl",
     name: "Bear Crawl",
     category: "cardio",
@@ -1130,7 +1151,8 @@ const MOVEMENT_NAME_ALIASES = new Map(
     ["hip abduction", "lateral-band-walk"],
     ["clamshell", "lateral-band-walk"],
     ["ab wheel rollout", "ab-wheel"],
-    ["bear crawl", "bear-crawl"]
+    ["bear crawl", "bear-crawl"],
+    ["box jump", "box-jump"]
   ].map(([name, id]) => [name.toLowerCase(), id])
 );
 
