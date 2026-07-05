@@ -1564,7 +1564,35 @@ const EXACT_VISUAL_MEDIA_KEYS = new Map(
     ["band-pressdown", "triceps-pushdown"],
     ["bench-dip", "triceps-pushdown"],
     ["rope-overhead-extension", "triceps-pushdown"],
-    ["skull-crusher", "triceps-pushdown"]
+    ["skull-crusher", "triceps-pushdown"],
+    // Pass 2: name-based variants whose base movement has an approved image
+    // (these weren't pre-matched to a movement, so pass 1 missed them).
+    ["rear-delt-cable-fly", "band-pull-apart"],
+    ["cable-chest-fly", "dumbbell-chest-fly"],
+    ["battle-rope-slams", "battle-ropes"],
+    ["barbell-good-morning", "deadlift"],
+    ["cable-romanian-deadlift", "deadlift"],
+    ["conventional-deadlift", "deadlift"],
+    ["single-leg-romanian-deadlift", "deadlift"],
+    ["dumbbell-squeeze-press", "dumbbell-press"],
+    ["machine-incline-chest-press", "dumbbell-press"],
+    ["smith-machine-bench-press", "dumbbell-press"],
+    ["frog-pump", "glute-bridge"],
+    ["single-leg-glute-bridge", "glute-bridge"],
+    ["barbell-hip-thrust-pause", "hip-thrust"],
+    ["straight-arm-pulldown", "lat-pulldown"],
+    ["dumbbell-reverse-lunge", "lunge"],
+    ["lateral-lunge", "lunge"],
+    ["decline-push-up", "push-up"],
+    ["ring-push-up", "push-up"],
+    ["suspension-row", "row"],
+    ["box-squat", "squat"],
+    ["cossack-squat", "squat"],
+    ["hack-squat", "squat"],
+    ["heels-elevated-goblet-squat", "squat"],
+    ["landmine-split-squat", "supported-split-squat"],
+    ["split-jump-lunge", "supported-split-squat"],
+    ["cross-body-triceps-extension", "triceps-pushdown"]
   ]
 );
 

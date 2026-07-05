@@ -18,21 +18,23 @@ Registry: `shared/mediaReviewCatalog.js`, `shared/exerciseVisualReferences.js`,
 Automated gates currently green: `qa:model-consistency` **49/49** (all multi-frame
 model exercises present, dimensionally coherent, review-sourced);
 `qa:launch` unmatchedExerciseVariants = **[]**; `qa:exercise-library` **passed**,
-146 exact visual guides, 0 broken.
+172 exact visual guides, 0 broken.
 
-## ✅ Visual-guide coverage recovered: 67 → 146 (32% → 70%)
-**Non-owner-gated win (2026-07-05):** 82 complete 4-frame image sets existed on
-disk but only 67 exercises rendered a visual guide — 79 variant exercises were
-unwired despite their movement family already having an approved image. Extended
-`EXACT_VISUAL_MEDIA_KEYS` (the intended media-ledger map) with 79 curated
-variant→base mappings (e.g. Sumo/Trap-bar deadlift → deadlift, Preacher/EZ-bar curl
-→ biceps-curl, Bodyweight/Jump squat → squat). Visually-misleading pairings (cardio
-machines → running, machine leg-curl → deadlift, crawl → row, composites) were
-deliberately left as text guides. Also fixed a pre-existing redesign regression:
-the placeholder tile's hidden duplicate "Text coaching guide" `<small>` broke the
-library audit's selector — removed it. `qa:exercise-library` now passes with 146
-guides, 0 broken. **62 exercises remain text-only and genuinely need generation**
-(the Aurora-spec Gemini program).
+## ✅ Visual-guide coverage recovered: 67 → 172 (32% → 83%)
+**Non-owner-gated win (2026-07-05):** complete 4-frame image sets existed on disk but
+only 67 exercises rendered a visual guide — ~107 variant exercises were unwired
+despite their movement family already having an approved image. Extended
+`EXACT_VISUAL_MEDIA_KEYS` (the intended media-ledger map) in two curated passes with
+**107 variant→base mappings** (e.g. Conventional/Sumo/Trap-bar deadlift → deadlift,
+Preacher/EZ-bar curl → biceps-curl, Bodyweight/Jump/Box squat → squat, Decline/Ring
+push-up → push-up, Cable chest fly → dumbbell-chest-fly). Visually-misleading
+pairings (cardio machines → running, machine leg-curl → deadlift, crawl → row,
+composites, carries) were deliberately left as text guides. Also fixed a pre-existing
+redesign regression: the placeholder tile's hidden duplicate "Text coaching guide"
+`<small>` broke the library audit's selector — removed it. `qa:exercise-library`
+passes with **172 guides, 0 broken**. **36 exercises remain text-only and genuinely
+need generation** (mostly cardio machines, agility/conditioning drills, carries, and
+a few isolations with no representative image) — the Gemini program.
 
 ## Audit dimensions (per owner brief)
 Every asset is assessed for: consistent quality · lighting · realism ·

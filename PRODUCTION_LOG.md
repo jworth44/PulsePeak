@@ -8,6 +8,7 @@
 | **Last verified** | 2026-07-05 — build exit 0 · qa:launch **10/10** · 0 blockers · **0 warnings** · redesign v2 verified desktop 1440 + mobile 390, 0 console errors, no horizontal scroll |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
 | **Media ledger** | **ZERO unmatched ✅** (was 36) — backlog #2 COMPLETE |
+| **Exercise-library visuals** | **172 / 208 visual guides (83%)** ✅ — wired 107 existing-but-unused image sets (`0c94589`); 36 remain text-only, need generation. `qa:exercise-library` PASSED, 0 broken |
 | **Model standard** | FACTORY §5b: two locked models (fit/tanned/toned/beautiful), one per exercise; `qa:model-consistency` = **49 exercises ✓**; both male + female models in library |
 | **Design** | **Design System v2.0 "Peak" LIVE ✅** — research-driven world-class redesign (`DESIGN_RESEARCH.md` + `DESIGN_SYSTEM.md`); retuned `:root` tokens + `styles-polish.css` v2 + **mobile bottom tab bar**; verified both viewports |
 | **Active unit** | none (Redesign v2 unit closed) |
