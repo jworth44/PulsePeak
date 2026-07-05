@@ -5,12 +5,14 @@
 | | |
 |---|---|
 | **State** | Pre–Production Complete (0 of 2 states granted) |
-| **Last verified** | 2026-07-04 — build exit 0 · qa:launch **10/10** · 0 blockers · **0 warnings** |
+| **Last verified** | 2026-07-04 — build exit 0 · qa:launch **10/10** · 0 blockers · **0 warnings** · design-polish verified desktop 1440 + mobile 390, 0 console errors |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
 | **Media ledger** | **ZERO unmatched ✅** (was 36) — backlog #2 COMPLETE |
 | **Model standard** | FACTORY §5b: two locked models (fit/tanned/toned/beautiful), one per exercise; `qa:model-consistency` = **49 exercises ✓**; both male + female models in library |
-| **Active unit** | none (Unit 2 closed) |
+| **Design** | **Visual polish overlay LIVE ✅** (`src/styles-polish.css`) — premium athletic dark UI, verified both viewports |
+| **Active unit** | none (Design Polish unit closed) |
 | **Next unit** | Backlog #3 — PWA installability + mobile-viewport QA scenarios |
+| **Open escaped defect** | Arnold Press exercise media has baked-in text ("3. ARNOLD PRESS / THUMBNAIL") — regen via Gemini in a media unit (VG-001) |
 | **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
 | **Owner gates pending** | none |
 
@@ -18,6 +20,33 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-04 · Design Polish unit — premium visual overlay LIVE ✅** —
+  Owner set a hard bar ("world-class, $50k-professional-web-designer
+  quality; a vibe that makes people WANT to explore") after the base UI
+  read as terrible. Built `src/styles-polish.css` — a cascade-LAST,
+  purely-visual overlay (imported in `main.jsx` after `styles.css`, keyed to
+  real class names, zero structural/logic/classname changes): atmospheric
+  radial-glow backdrop, tightened gradient type hierarchy, elevated card
+  surfaces (gradient + inset highlight + layered shadow + top edge-light),
+  hover-lift on clickable cards, glow buttons, refined chips/pills,
+  image-forward exercise-library cards (thumb → full-width 16:10 banner with
+  overlaid badges + scrim; clean branded placeholder tile for text-only
+  entries), sidebar active-pill glow, custom scrollbar, form-control focus
+  rings. **Browser verification (the whole point of this unit) caught + fixed
+  two real defects the build could not:** (1) `backdrop-filter: blur(2px)` on
+  `.app-main` created a containing block for `position:fixed`, throwing the
+  `.modal-backdrop` off-screen (movement-guide modal opened at y≈15600px,
+  invisible) → removed the filter (added a guard comment); (2) the
+  `.sidebar-brand` wordmark was clipped because the base CSS lays it out as a
+  flex ROW (built for a logo-mark+copy pair) but the component renders
+  eyebrow + `<h1>` + tagline → restacked as a vertical brand lockup. Verified
+  all 7 surfaces (dashboard, exercise-library, movement modal, workouts,
+  plan, nutrition, progress) at desktop 1440 (Chrome MCP) AND mobile 390
+  (playwright-core, isolated Chrome) — all premium, modal correct both
+  viewports, image cards stack cleanly. Evidence: build exit 0; qa:launch
+  **10/10**, 0 blockers, 0 warnings; **0 console errors** both viewports.
+  Escaped defect surfaced (not part of this CSS unit): Arnold Press media has
+  baked-in label text — queued for a Gemini regen (VG-001 media unit).
 - **2026-07-04 · Unit 2 Phase B batches 8–13 — media ledger 6 → ZERO ✅✅ (BACKLOG #2 DONE)** —
   Ab Wheel Rollout, Bear Crawl, Box Jump, Skater Hop, Battle Rope Waves,
   Medicine Ball Slam — the last, most dynamic exercises, all 4-frame

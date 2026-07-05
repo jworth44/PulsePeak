@@ -1,0 +1,493 @@
+/* =====================================================================
+   PulsePeak — Design Polish Layer (V1)
+   Loaded AFTER styles.css so it wins the cascade. Purely visual: no
+   layout structure or class names change, so app logic is untouched.
+   Goal: a premium, athletic, "want to explore" feel — depth, hierarchy,
+   image-forward cards, refined motion. Works desktop + mobile.
+   ===================================================================== */
+
+:root {
+  --pp-radius-lg: 22px;
+  --pp-radius-md: 16px;
+  --pp-radius-sm: 11px;
+  --pp-border: rgba(255, 255, 255, 0.09);
+  --pp-border-strong: rgba(255, 255, 255, 0.14);
+  --pp-hairline: rgba(255, 255, 255, 0.05);
+  --pp-accent: #ff2a37;
+  --pp-accent-soft: rgba(255, 42, 55, 0.16);
+  --pp-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.9);
+  --pp-shadow-lift: 0 34px 80px -30px rgba(0, 0, 0, 0.92);
+  --pp-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ---- Global type + rendering ---------------------------------------- */
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body {
+  font-feature-settings: "ss01" 1, "cv01" 1, "tnum" 0;
+  letter-spacing: 0.005em;
+}
+
+/* ---- Atmospheric backdrop -------------------------------------------- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1100px 620px at 82% -8%, rgba(255, 42, 55, 0.14), transparent 60%),
+    radial-gradient(900px 700px at -6% 8%, rgba(255, 42, 55, 0.08), transparent 55%),
+    radial-gradient(1200px 900px at 50% 120%, rgba(120, 8, 14, 0.14), transparent 60%),
+    #060607;
+}
+#root { position: relative; z-index: 1; }
+
+/* ---- Headings & text hierarchy --------------------------------------- */
+h1, h2, h3, h4 { color: #fafafa; }
+h1 { letter-spacing: -0.03em; font-weight: 800; line-height: 1.04; }
+h2 { letter-spacing: -0.022em; font-weight: 800; line-height: 1.1; }
+h3 { letter-spacing: -0.015em; font-weight: 700; }
+h4 { letter-spacing: -0.012em; font-weight: 700; }
+
+.module-page-hero h2,
+.today-hero-copy h2 {
+  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+  background: linear-gradient(180deg, #ffffff 0%, #cfcfd4 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-label {
+  text-transform: uppercase;
+  letter-spacing: 0.17em;
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: var(--pp-accent);
+  opacity: 0.92;
+}
+
+.support-copy, .muted { color: #a7a7ae; line-height: 1.55; }
+.lead-copy { color: #cfcfd4; font-size: 1.02rem; line-height: 1.5; }
+
+/* ---- App frame & main scroll area ------------------------------------ */
+.app-main {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 220px),
+    rgba(9, 9, 11, 0.55) !important;
+  /* NOTE: never add filter/backdrop-filter/transform/will-change here — it
+     makes .app-main a containing block for position:fixed, which throws the
+     .modal-backdrop (a fixed descendant) off-screen. */
+}
+.page-grid { gap: 26px; }
+
+/* ---- The core card surface: panels + module cards -------------------- */
+.panel,
+.module-card,
+.today-hero,
+.weekly-plan-block,
+.movement-detail-block,
+.onboarding-step {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.008) 42%, rgba(255, 255, 255, 0) 100%),
+    rgba(19, 19, 22, 0.9) !important;
+  border: 1px solid var(--pp-border) !important;
+  border-radius: var(--pp-radius-lg) !important;
+  box-shadow:
+    var(--pp-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+.panel { padding: 26px 28px !important; }
+
+/* Top edge-light accent hairline on primary panels */
+.panel::after,
+.today-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  border-radius: var(--pp-radius-lg) var(--pp-radius-lg) 0 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+  pointer-events: none;
+}
+
+.panel-heading h3 { font-size: 1.16rem; }
+.panel-heading { margin-bottom: 6px; }
+
+/* ---- Interactive cards: hover life ----------------------------------- */
+.module-card-clickable,
+.module-link,
+.goal-card,
+.today-sequence-card {
+  transition: transform 0.28s var(--pp-ease), border-color 0.28s var(--pp-ease),
+    box-shadow 0.28s var(--pp-ease), background 0.28s var(--pp-ease);
+  will-change: transform;
+}
+.module-card-clickable:hover,
+.today-sequence-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 42, 55, 0.42) !important;
+  box-shadow:
+    var(--pp-shadow-lift),
+    0 0 0 1px rgba(255, 42, 55, 0.18),
+    0 22px 50px -26px rgba(255, 42, 55, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+}
+.module-card-clickable:active { transform: translateY(-1px); }
+
+/* ---- Buttons --------------------------------------------------------- */
+.primary-button {
+  background: linear-gradient(135deg, #ff4a55 0%, #e00d1b 100%) !important;
+  border: none !important;
+  border-radius: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.005em;
+  color: #fff !important;
+  padding: 12px 20px !important;
+  box-shadow:
+    0 12px 30px -12px rgba(255, 42, 55, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+  transition: transform 0.2s var(--pp-ease), box-shadow 0.2s var(--pp-ease), filter 0.2s var(--pp-ease);
+}
+.primary-button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow:
+    0 18px 40px -12px rgba(255, 42, 55, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32) !important;
+}
+.primary-button:active { transform: translateY(0); }
+
+.secondary-button,
+.ghost-button {
+  background: rgba(255, 255, 255, 0.055) !important;
+  border: 1px solid var(--pp-border) !important;
+  border-radius: 12px !important;
+  color: #ededf0 !important;
+  font-weight: 600 !important;
+  padding: 11px 18px !important;
+  transition: background 0.2s var(--pp-ease), border-color 0.2s var(--pp-ease), transform 0.2s var(--pp-ease);
+}
+.secondary-button:hover,
+.ghost-button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: var(--pp-border-strong) !important;
+  transform: translateY(-1px);
+}
+
+/* ---- Chips, pills, badges ------------------------------------------- */
+.badge,
+.insight-chip,
+.section-chip,
+.tier-pill,
+.exercise-signal-pill,
+.library-depth-note,
+.stat-pill {
+  border-radius: 999px !important;
+  border: 1px solid var(--pp-border) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  letter-spacing: 0.04em;
+}
+.section-context-label,
+.library-depth-note {
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 0.62rem;
+  font-weight: 700;
+}
+/* "Visual guide" style badges get the accent tint */
+.library-card-hero-copy .library-depth-note:last-child {
+  color: #ffd9dc;
+  background: linear-gradient(135deg, rgba(255, 42, 55, 0.3), rgba(255, 42, 55, 0.14)) !important;
+  border-color: rgba(255, 42, 55, 0.4) !important;
+}
+
+/* ---- Section chips / category selector row --------------------------- */
+.selector-row .section-chip,
+.exercise-library-category-row .section-chip {
+  transition: transform 0.18s var(--pp-ease), border-color 0.18s var(--pp-ease), background 0.18s var(--pp-ease);
+}
+.selector-row .section-chip:hover { transform: translateY(-2px); }
+
+/* ===================================================================== */
+/* EXERCISE LIBRARY — image-forward premium cards                        */
+/* ===================================================================== */
+.exercise-library-card {
+  padding: 0 !important;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.exercise-library-card > h4 {
+  font-size: 1.12rem;
+  margin: 16px 18px 0 !important;
+}
+.exercise-library-card .exercise-library-card-meta { margin: 10px 18px 0 !important; }
+.exercise-library-card .exercise-library-card-status { margin: 12px 18px 0 !important; }
+.exercise-library-card .module-card-actions { margin: 14px 18px 18px !important; }
+
+/* Turn the small hero thumb into a full-width banner */
+.exercise-library-card .library-card-hero {
+  position: relative;
+  display: block !important;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  margin: 0 !important;
+  overflow: hidden;
+  background: #0c0c0e;
+}
+.exercise-library-card .library-card-thumb,
+.exercise-library-card .exercise-image-contain img,
+.exercise-library-card .library-card-hero img {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: cover;
+  border-radius: 0 !important;
+  transition: transform 0.5s var(--pp-ease);
+}
+.exercise-library-card:hover .library-card-thumb,
+.exercise-library-card:hover .library-card-hero img { transform: scale(1.05); }
+
+/* Badge overlay on the banner with a readable scrim */
+.exercise-library-card .library-card-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, transparent 34%, transparent 62%, rgba(6, 6, 8, 0.85) 100%);
+  pointer-events: none;
+}
+.exercise-library-card .library-card-hero-copy {
+  position: absolute;
+  top: 11px;
+  left: 11px;
+  right: 11px;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 6px;
+}
+.exercise-library-card .library-card-hero-copy .library-depth-note {
+  white-space: nowrap;
+  backdrop-filter: blur(6px);
+  background: rgba(8, 8, 10, 0.66) !important;
+  padding: 4px 9px !important;
+  font-size: 0.56rem !important;
+}
+
+/* Placeholder (no photo) — clean branded tile: only the name shows,
+   the redundant meta lines are hidden (they repeat below the image). */
+.exercise-library-card .library-card-thumb-placeholder {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 30px 18px 14px !important;
+  text-align: center;
+  background:
+    radial-gradient(130% 90% at 50% 0%, rgba(255, 42, 55, 0.13), transparent 62%),
+    linear-gradient(160deg, #191a1e, #0c0c0e) !important;
+}
+.exercise-library-card .library-card-thumb-placeholder small,
+.exercise-library-card .library-card-thumb-placeholder p,
+.exercise-library-card .library-card-thumb-placeholder span {
+  display: none !important;
+}
+.exercise-library-card .library-card-thumb-placeholder strong {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-transform: none;
+}
+.exercise-library-card .library-card-thumb-placeholder::after {
+  content: "PULSEPEAK";
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.52rem;
+  letter-spacing: 0.28em;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.16);
+}
+
+/* Condense the meta wall: quiet labels, tighter rhythm */
+.exercise-library-card-meta .support-copy {
+  font-size: 0.82rem;
+  margin: 4px 0 !important;
+  color: #b7b7be;
+}
+.exercise-library-card-meta .support-copy strong {
+  color: #6f6f77;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.66rem;
+}
+
+/* Visible-results banner: quieter */
+.library-depth-note { opacity: 0.9; }
+
+/* ===================================================================== */
+/* MOVEMENT GUIDE MODAL — the step-by-step viewer                        */
+/* ===================================================================== */
+.movement-detail-block,
+.movement-image-fallback { border-radius: var(--pp-radius-md) !important; }
+
+/* The hero "visual guide" image */
+.movement-detail-block img,
+[class*="visual-guide"] img,
+.exercise-image-contain img {
+  border-radius: 14px;
+}
+
+/* Step sequence cards */
+.focus-step {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0)) ,
+    rgba(16, 16, 19, 0.92) !important;
+  border: 1px solid var(--pp-border) !important;
+  border-radius: var(--pp-radius-md) !important;
+  overflow: hidden;
+  transition: transform 0.24s var(--pp-ease), border-color 0.24s var(--pp-ease);
+}
+.focus-step:hover { transform: translateY(-3px); border-color: rgba(255, 42, 55, 0.35) !important; }
+.focus-step img {
+  border-radius: 10px !important;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* ===================================================================== */
+/* SIDEBAR — sleek nav rail                                               */
+/* ===================================================================== */
+.sidebar {
+  background:
+    linear-gradient(180deg, rgba(255, 42, 55, 0.05), transparent 240px),
+    rgba(7, 7, 9, 0.96) !important;
+  border-right: 1px solid var(--pp-hairline) !important;
+}
+.nav-link,
+.sidebar-group-button,
+.sidebar-submenu-link {
+  border-radius: 11px !important;
+  transition: background 0.18s var(--pp-ease), color 0.18s var(--pp-ease);
+}
+.sidebar-group-button-active,
+.nav-link.active,
+.sidebar-submenu-link[aria-current="page"] {
+  background: linear-gradient(135deg, rgba(255, 42, 55, 0.95), rgba(210, 12, 24, 0.95)) !important;
+  box-shadow: 0 10px 26px -12px rgba(255, 42, 55, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+  color: #fff !important;
+}
+.sidebar-brand-wordmark,
+.sidebar-brand .name { letter-spacing: -0.01em; font-weight: 800; }
+
+/* Brand block: the component renders eyebrow + <h1> + tagline, but the base
+   .sidebar-brand is display:flex row (built for a logo-mark + copy pair), so
+   the wordmark was squished into a row and clipped off the sidebar edge.
+   Stack it as a proper vertical brand lockup. */
+.sidebar-brand {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 3px !important;
+  padding: 16px 18px 18px !important;
+}
+.sidebar-brand .eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: var(--pp-accent);
+  opacity: 0.92;
+  margin: 0;
+}
+.sidebar-brand h1 {
+  font-size: 1.6rem !important;
+  line-height: 1 !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+  margin: 2px 0 0 !important;
+  white-space: nowrap;
+  background: linear-gradient(180deg, #ffffff 0%, #d2d2d7 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.sidebar-brand .muted {
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: #8f8f97;
+  margin: 4px 0 0;
+}
+.tier-pill {
+  background: rgba(255, 255, 255, 0.06) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.62rem;
+}
+
+/* ===================================================================== */
+/* FORM CONTROLS                                                         */
+/* ===================================================================== */
+input[type="text"], input[type="email"], input[type="password"], input[type="number"],
+input[type="search"], select, textarea, .form-field input, .form-field select {
+  background: rgba(255, 255, 255, 0.045) !important;
+  border: 1px solid var(--pp-border) !important;
+  border-radius: 12px !important;
+  color: #f2f2f4 !important;
+  transition: border-color 0.18s var(--pp-ease), box-shadow 0.18s var(--pp-ease), background 0.18s var(--pp-ease);
+}
+input:focus, select:focus, textarea:focus {
+  outline: none !important;
+  border-color: rgba(255, 42, 55, 0.55) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 0 0 3px rgba(255, 42, 55, 0.16) !important;
+}
+::placeholder { color: rgba(255, 255, 255, 0.32); }
+
+/* ---- Stat pills / metric emphasis ----------------------------------- */
+.stat-pill strong,
+.today-hero-score strong { color: #fafafa; letter-spacing: -0.01em; }
+
+/* ---- Custom scrollbar ----------------------------------------------- */
+* { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.16) transparent; }
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 42, 55, 0.5); background-clip: padding-box; }
+
+/* ---- Status banners -------------------------------------------------- */
+.status-banner {
+  border-radius: var(--pp-radius-md) !important;
+  border: 1px solid var(--pp-border) !important;
+  background: linear-gradient(135deg, rgba(255, 42, 55, 0.14), rgba(255, 42, 55, 0.05)) !important;
+}
+
+/* ---- Reduced motion respect ----------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+  .module-card-clickable:hover { transform: none; }
+}
