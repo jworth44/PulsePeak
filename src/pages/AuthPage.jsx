@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../state/AuthContext";
 
 const BRAND_LOGO = "/brand/pulsepeak-main-logo.png";
@@ -98,6 +99,12 @@ export default function AuthPage() {
             {busy ? (mode === "register" ? "Creating account..." : "Signing in...") : mode === "register" ? "Create PulsePeak account" : "Sign in"}
           </button>
         </form>
+        <nav className="auth-legal-footer">
+          <Link to="/help">Help</Link>
+          <Link to="/privacy">Privacy Policy</Link>
+          <Link to="/terms">Terms of Service</Link>
+          <Link to="/contact">Contact</Link>
+        </nav>
       </section>
     </div>
   );

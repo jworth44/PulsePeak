@@ -17,6 +17,11 @@ import HelpCenterPage from "./pages/HelpCenterPage";
 import OnboardingPage from "./pages/OnboardingPage";
 import PreferencesPage from "./pages/PreferencesPage";
 import FirstSessionRoutePage from "./pages/FirstSessionRoutePage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TermsPage from "./pages/TermsPage";
+import ContactPage from "./pages/ContactPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import PublicPageLayout from "./components/PublicPageLayout";
 
 const BRAND_LOGO = "/brand/pulsepeak-main-logo.png";
 
@@ -33,7 +38,15 @@ export default function App() {
   }
 
   if (!token) {
-    return <AuthPage />;
+    return (
+      <Routes>
+        <Route path="/privacy" element={<PublicPageLayout><PrivacyPolicyPage /></PublicPageLayout>} />
+        <Route path="/terms" element={<PublicPageLayout><TermsPage /></PublicPageLayout>} />
+        <Route path="/help" element={<PublicPageLayout><HelpCenterPage /></PublicPageLayout>} />
+        <Route path="/contact" element={<PublicPageLayout><ContactPage /></PublicPageLayout>} />
+        <Route path="*" element={<AuthPage />} />
+      </Routes>
+    );
   }
 
   return (
@@ -95,11 +108,14 @@ export default function App() {
           <Route path="/progress" element={<ProgressPage />} />
           <Route path="/coach" element={<CoachPage />} />
           <Route path="/help" element={<HelpCenterPage />} />
+          <Route path="/privacy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/preferences" element={<PreferencesPage />} />
           <Route path="/onboarding" element={<Navigate to="/" replace />} />
           <Route path="/billing/success" element={<BillingSuccessPage />} />
           <Route path="/billing/cancel" element={<BillingCancelPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AppShell>
     )

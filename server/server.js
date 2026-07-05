@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
 import crypto from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -71,6 +72,37 @@ const allowedCorsOrigins = buildAllowedCorsOrigins(process.env.CORS_ALLOWED_ORIG
 logStripeConfigurationWarnings();
 
 app.set("trust proxy", 1);
+
+// Security headers. CSP allowlists Google Fonts (used in index.html), Stripe
+// (checkout/js), and the same-origin service worker. React uses inline style
+// attributes, so 'unsafe-inline' is required in style-src only. Scripts are all
+// external (no inline), so script-src stays tight. COEP is disabled to avoid
+// blocking cross-origin font/image loads.
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        "default-src": ["'self'"],
+        "base-uri": ["'self'"],
+        "script-src": ["'self'", "https://js.stripe.com"],
+        "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        "font-src": ["'self'", "https://fonts.gstatic.com", "data:"],
+        "img-src": ["'self'", "data:", "blob:"],
+        "connect-src": ["'self'", "https://api.stripe.com"],
+        "frame-src": ["https://js.stripe.com", "https://checkout.stripe.com", "https://hooks.stripe.com"],
+        "worker-src": ["'self'", "blob:"],
+        "manifest-src": ["'self'"],
+        "object-src": ["'none'"],
+        "frame-ancestors": ["'self'"],
+        "upgrade-insecure-requests": null
+      }
+    },
+    crossOriginEmbedderPolicy: false,
+    hsts: { maxAge: 15552000, includeSubDomains: true }
+  })
+);
+
 app.use(
   cors(
     allowedCorsOrigins.length
