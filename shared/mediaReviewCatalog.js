@@ -286,6 +286,11 @@ const REVIEWED_MEDIA = {
     reviewSource: "pulsepeak_gemini_russian_twist_male_v1",
     sequenceCount: 4
   }),
+  "leg-raise": approvedAsset("leg-raise-photo", {
+    exerciseId: "leg-raise",
+    reviewSource: "pulsepeak_gemini_leg_raise_male_v1",
+    sequenceCount: 4
+  }),
   "side-plank": approvedAsset("side-plank-photo", {
     exerciseId: "side-plank",
     reviewSource: "pulsepeak_ai_pilot_side_plank_male_v1",

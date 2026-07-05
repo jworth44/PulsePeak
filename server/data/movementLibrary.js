@@ -593,6 +593,27 @@ const MOVEMENT_LIBRARY = [
     image: mediaRef("crunch", "Crunch form guide")
   }),
   movement({
+    id: "leg-raise",
+    name: "Leg Raise",
+    category: "strength",
+    difficulty: "beginner",
+    environment: "both",
+    equipment: ["bodyweight"],
+    primaryMuscles: ["Core"],
+    secondaryMuscles: ["Hip flexors"],
+    instructions: [
+      "Lie on your back with legs straight and together, arms flat by your sides with palms down.",
+      "Press your lower back gently into the floor and raise both straight legs toward the ceiling.",
+      "Lift until your legs are roughly vertical, keeping the lower back down.",
+      "Lower the legs back toward the floor slowly, stopping before the back arches."
+    ],
+    cues: ["Low back stays down", "Legs long and together", "Lower under control"],
+    commonMistakes: ["Letting the lower back arch off the floor", "Bending the knees to cheat the range", "Dropping the legs fast at the bottom"],
+    safetyNotes: ["Bend the knees or reduce the range if the low back lifts.", "Place your hands under your glutes for extra support if needed."],
+    modifications: ["Bent-knee leg raise", "Single-leg raise", "Heels-to-floor tempo lower"],
+    image: mediaRef("leg-raise", "Leg raise form guide")
+  }),
+  movement({
     id: "russian-twist",
     name: "Russian Twist",
     category: "strength",
@@ -994,7 +1015,10 @@ const MOVEMENT_NAME_ALIASES = new Map(
     ["assault bike sprint", "high-knees"],
     ["reverse crunch", "crunch"],
     ["bicycle crunch", "crunch"],
-    ["cable crunch", "crunch"]
+    ["cable crunch", "crunch"],
+    ["leg raise", "leg-raise"],
+    ["lying leg raise", "leg-raise"],
+    ["hanging knee raise", "leg-raise"]
   ].map(([name, id]) => [name.toLowerCase(), id])
 );
 
