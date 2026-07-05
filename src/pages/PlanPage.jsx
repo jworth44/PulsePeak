@@ -432,7 +432,7 @@ export default function PlanPage() {
                 >
                   <div className="library-card-hero">
                     {visual.mode === "image" ? (
-                      <img alt={visual.alt} className="library-card-thumb" src={getExerciseImageSrc(visual.src)} />
+                      <img alt={visual.alt} className="library-card-thumb" loading="lazy" src={getExerciseImageSrc(visual.src)} />
                     ) : (
                       <div className="library-card-thumb library-card-thumb-placeholder movement-image-fallback">
                         <span>{visual.initials}</span>
@@ -449,7 +449,7 @@ export default function PlanPage() {
                   <p className="section-label">{movement.category}</p>
                   <h4>{movement.name}</h4>
                   <p className="support-copy">
-                    {movement.primaryMuscles.join(", ")}
+                    {(movement.primaryMuscles || []).join(", ")}
                     {movement.secondaryMuscles?.length ? ` · Supports ${movement.secondaryMuscles[0]}` : ""}
                   </p>
                   <div className="module-card-actions">

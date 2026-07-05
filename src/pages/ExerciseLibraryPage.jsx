@@ -300,7 +300,7 @@ export default function ExerciseLibraryPage() {
 function renderExercisePreview(entry, visualModelPreference = "default") {
   const visual = resolveMovementVisual(entry, { visualModelPreference });
   if (visual.mode === "image") {
-    return <img alt={visual.alt} className="library-card-thumb" src={getExerciseImageSrc(visual.src)} />;
+    return <img alt={visual.alt} className="library-card-thumb" loading="lazy" src={getExerciseImageSrc(visual.src)} />;
   }
 
   return (

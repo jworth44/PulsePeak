@@ -11,7 +11,7 @@ import { getPremiumCapabilitySummary, getPremiumComparisonSummary, getPremiumOut
 
 export default function ProgressPage() {
   const { user, accessTier, workoutMemory, workoutMomentum, workoutMilestones } = useAuth();
-  const { data, summary, loading, mutate } = useDashboardData();
+  const { data, summary, loading, error: loadError, mutate } = useDashboardData();
   const { busy: checkoutBusy, startUpgradeCheckout } = useUpgradeCheckout();
   const [error, setError] = React.useState("");
   const [saving, setSaving] = React.useState(false);
@@ -25,6 +25,20 @@ export default function ProgressPage() {
   React.useEffect(() => {
     setShowUpgradePrompt(window.localStorage.getItem(dismissalKey) !== "true");
   }, [dismissalKey]);
+
+  if (!loading && loadError && (!data || !summary)) {
+    return (
+      <div className="screen-center">
+        <div className="empty-state-card">
+          <strong>We couldn't load your progress</strong>
+          <p className="support-copy">{loadError || "Please check your connection and try again."}</p>
+          <div className="module-card-actions">
+            <button type="button" className="primary-button" onClick={() => mutate()}>Retry</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (loading || !data || !summary) {
     return <div className="screen-center">Loading progress...</div>;
@@ -415,13 +429,17 @@ export default function ProgressPage() {
         </Panel>
 
         <Panel eyebrow="Weight trend" title="7-day bodyweight view">
-          <LineChart
-            max={Math.max(...data.weightHistory.map((point) => point.weight)) + 1}
-            min={Math.min(...data.weightHistory.map((point) => point.weight)) - 1}
-            points={data.weightHistory}
-            suffix=" lb"
-            valueKey="weight"
-          />
+          {Array.isArray(data.weightHistory) && data.weightHistory.length ? (
+            <LineChart
+              max={Math.max(...data.weightHistory.map((point) => point.weight)) + 1}
+              min={Math.min(...data.weightHistory.map((point) => point.weight)) - 1}
+              points={data.weightHistory}
+              suffix=" lb"
+              valueKey="weight"
+            />
+          ) : (
+            <p className="support-copy muted">Log a few weigh-ins and your bodyweight trend will appear here.</p>
+          )}
         </Panel>
       </div>
 

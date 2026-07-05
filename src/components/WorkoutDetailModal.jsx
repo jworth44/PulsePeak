@@ -3,6 +3,7 @@ import { buildGuideTarget, resolveMovementVisual } from "../../shared/exerciseCa
 import { hasFullWorkoutAccess } from "../../shared/entitlements";
 import { getWorkoutLoadBand } from "../../shared/workoutEngine";
 import { useAuth } from "../state/AuthContext";
+import useModalA11y from "../hooks/useModalA11y";
 import { getExerciseImageSrc } from "../utils/getExerciseImageSrc";
 
 export default function WorkoutDetailModal({
@@ -25,6 +26,7 @@ export default function WorkoutDetailModal({
   onToggleFavorite
 }) {
   const { workoutMemory } = useAuth();
+  const dialogRef = useModalA11y(onClose);
   const workoutExercises = Array.isArray(workout?.exercises) ? workout.exercises : [];
   const currentWorkoutFocus = workout?.focus || workout?.focusLabel || workout?.type || "training";
   const [selectedBySlot, setSelectedBySlot] = React.useState({});
@@ -198,7 +200,7 @@ export default function WorkoutDetailModal({
 
   return (
     <div className="modal-backdrop" role="presentation" onClick={onClose}>
-      <div aria-modal="true" className="modal-card workout-session-modal" role="dialog" onClick={(event) => event.stopPropagation()}>
+      <div ref={dialogRef} aria-modal="true" className="modal-card workout-session-modal" role="dialog" onClick={(event) => event.stopPropagation()}>
         <div className="panel-heading">
           <div>
             <p className="section-label">Workout session</p>

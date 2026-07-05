@@ -3,10 +3,12 @@ import { getUpgradePrompt } from "../config/upgradePrompts";
 import MovementReference from "./MovementReference";
 import UpgradePrompt from "./UpgradePrompt";
 import { useAuth } from "../state/AuthContext";
+import useModalA11y from "../hooks/useModalA11y";
 import { formatHeight, formatWeight, normalizeUnitPreference } from "../../shared/unitSystem";
 
 export default function WeeklyPlanPreviewModal({ planPayload, onClose, onUpgrade, onOpenMovement }) {
   const { isPremium, accessTier, user } = useAuth();
+  const dialogRef = useModalA11y(onClose);
 
   if (!planPayload?.plan) {
     return null;
@@ -17,6 +19,7 @@ export default function WeeklyPlanPreviewModal({ planPayload, onClose, onUpgrade
   const executionPriorities = plan.executionPriorities || [];
   const weeklyRationale = plan.weeklyRationale || [];
   const mobilityBlock = plan.mobilityBlock || null;
+  const suggestedWorkoutMix = plan.suggestedWorkoutMix || {};
   const activeModuleIds = new Set((plan.activeModules || []).map((module) => module.id));
   const showNutrition = activeModuleIds.has("nutrition");
   const showHydration = activeModuleIds.has("hydration");
@@ -39,6 +42,7 @@ export default function WeeklyPlanPreviewModal({ planPayload, onClose, onUpgrade
   return (
     <div className="modal-backdrop" role="presentation" onClick={onClose}>
       <div
+        ref={dialogRef}
         aria-modal="true"
         className="modal-card weekly-plan-modal"
         role="dialog"
@@ -98,25 +102,25 @@ export default function WeeklyPlanPreviewModal({ planPayload, onClose, onUpgrade
             <p className="section-label">Workout cadence</p>
             <span className="section-chip">Cadence</span>
             <strong>{plan.workoutCadence}</strong>
-            <p className="muted">{plan.suggestedWorkoutMix.intensityGuidance}</p>
+            <p className="muted">{suggestedWorkoutMix.intensityGuidance}</p>
           </article>
 
           <article className="weekly-plan-block">
             <p className="section-label">Workout mix</p>
             <span className="section-chip">Training</span>
             <strong>
-              {plan.suggestedWorkoutMix.environment === "both"
+              {suggestedWorkoutMix.environment === "both"
                 ? "Gym + Home blend"
-                : `${plan.suggestedWorkoutMix.environment} leaning week`}
+                : `${suggestedWorkoutMix.environment || "Balanced"} leaning week`}
             </strong>
             <ul className="plan-list">
-              {plan.suggestedWorkoutMix.split.map((item) => (
+              {(suggestedWorkoutMix.split || []).map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
-            {(plan.suggestedWorkoutMix.featuredMovements || []).length ? (
+            {(suggestedWorkoutMix.featuredMovements || []).length ? (
               <div className="movement-chip-list">
-                {plan.suggestedWorkoutMix.featuredMovements.map((movement) => (
+                {suggestedWorkoutMix.featuredMovements.map((movement) => (
                   <MovementReference compact key={movement.id} movement={movement} onClick={onOpenMovement} />
                 ))}
               </div>

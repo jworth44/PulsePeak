@@ -3,9 +3,11 @@ import { apiRequest } from "../api/client";
 import { useAuth } from "../state/AuthContext";
 import { getGuideStatusLabel, getMovementMedia, resolveMovementVisual } from "../../shared/exerciseCatalog";
 import { getExerciseImageSrc } from "../utils/getExerciseImageSrc";
+import useModalA11y from "../hooks/useModalA11y";
 
 export default function MovementDetailModal({ movement, movementId, visualModelPreference = "default", onClose }) {
   const { token } = useAuth();
+  const dialogRef = useModalA11y(onClose);
   const [fullExerciseRecord, setFullExerciseRecord] = useState(null);
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState("");
@@ -86,7 +88,6 @@ export default function MovementDetailModal({ movement, movementId, visualModelP
     if (!exercise) {
       return;
     }
-    console.log("MOVEMENT DETAIL FULL RECORD", exercise);
   }, [exercise]);
 
   const mediaView = getMovementMedia(exercise || {}, { visualModelPreference });
@@ -168,6 +169,7 @@ export default function MovementDetailModal({ movement, movementId, visualModelP
   return (
     <div className="modal-backdrop" role="presentation" onClick={onClose}>
       <div
+        ref={dialogRef}
         aria-modal="true"
         className="modal-card movement-detail-modal"
         role="dialog"
@@ -469,9 +471,10 @@ function normalizeText(value) {
 }
 
 function GuideStatusModal({ title, message, onClose }) {
+  const dialogRef = useModalA11y(onClose);
   return (
     <div className="modal-backdrop" role="presentation" onClick={onClose}>
-      <div aria-modal="true" className="modal-card movement-detail-modal" role="dialog" onClick={(event) => event.stopPropagation()}>
+      <div ref={dialogRef} aria-modal="true" className="modal-card movement-detail-modal" role="dialog" onClick={(event) => event.stopPropagation()}>
         <div className="panel-heading movement-guide-header">
           <div className="movement-guide-header-copy">
             <p className="section-label">Movement guide</p>

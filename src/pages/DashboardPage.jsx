@@ -644,7 +644,7 @@ export default function DashboardPage() {
             <div className="today-sequence-card">
               <span className="focus-step">Where you are training</span>
               <strong>{data.profile.trainingEnvironment === "hybrid" ? "Hybrid setup" : data.profile.trainingEnvironment === "gym" ? "Gym" : "Home"}</strong>
-              <p className="muted">{data.profile.equipmentProfile.replace(/_/g, " ")}</p>
+              <p className="muted">{(data.profile.equipmentProfile || "").replace(/_/g, " ")}</p>
             </div>
             <div className="today-sequence-card">
               <span className="focus-step">What to train</span>

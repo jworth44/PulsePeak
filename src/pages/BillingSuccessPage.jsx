@@ -5,7 +5,7 @@ import { useAuth } from "../state/AuthContext";
 
 export default function BillingSuccessPage() {
   const [searchParams] = useSearchParams();
-  const { token, setUser, setDashboard, refreshSession } = useAuth();
+  const { user, token, setUser, setDashboard, refreshSession } = useAuth();
   const [status, setStatus] = useState("confirming");
   const [message, setMessage] = useState("Confirming your PulsePeak access...");
   const hasConfirmedRef = useRef(false);

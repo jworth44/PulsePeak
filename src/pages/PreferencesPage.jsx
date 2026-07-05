@@ -30,6 +30,15 @@ export default function PreferencesPage() {
     setSearchParams({ section });
   };
 
+  const handleUpgradeClick = async (interval, mode) => {
+    setBillingError("");
+    try {
+      await startUpgradeCheckout(interval, mode);
+    } catch (upgradeError) {
+      setBillingError(upgradeError?.message || "We couldn't start checkout. Please try again.");
+    }
+  };
+
   const changeTheme = (nextTheme) => {
     setTheme(applyThemePreference(nextTheme));
   };
@@ -184,9 +193,9 @@ export default function PreferencesPage() {
                     <article className="module-card" key={workout.id}>
                       <p className="section-label">{workout.loggedAt?.slice(0, 10) || "Recent session"}</p>
                       <h4>{workout.name}</h4>
-                      <p className="support-copy">{workout.duration} mins · {workout.exercises.length} exercises</p>
+                      <p className="support-copy">{workout.duration} mins · {(workout.exercises || []).length} exercises</p>
                       <ul className="plan-list compact-plan-list">
-                        {workout.exercises.slice(0, 4).map((exercise) => (
+                        {(workout.exercises || []).slice(0, 4).map((exercise) => (
                           <li key={`${workout.id}-${exercise.name}`}>
                             {exercise.name}
                             {exercise.weight ? ` · ${exercise.weight}` : ""}
@@ -264,10 +273,10 @@ export default function PreferencesPage() {
                   <h4>Keep the full system available</h4>
                   <p className="support-copy">Choose yearly to stay on the main trial and renewal path, or use monthly only as a separate direct paid option.</p>
                   <div className="module-card-actions">
-                    <button className="primary-button" disabled={upgradeBusy} type="button" onClick={() => startUpgradeCheckout("yearly", user?.canStartTrial ? "default" : "upgrade_now")}>
+                    <button className="primary-button" disabled={upgradeBusy} type="button" onClick={() => handleUpgradeClick("yearly", user?.canStartTrial ? "default" : "upgrade_now")}>
                       {user?.canStartTrial ? "Start 7-day free trial" : "Upgrade yearly"}
                     </button>
-                    <button className="secondary-button" disabled={upgradeBusy} type="button" onClick={() => startUpgradeCheckout("monthly", "upgrade_now")}>
+                    <button className="secondary-button" disabled={upgradeBusy} type="button" onClick={() => handleUpgradeClick("monthly", "upgrade_now")}>
                       Upgrade monthly
                     </button>
                   </div>

@@ -1,7 +1,8 @@
 import React from "react";
 
 export default function ActivityList({ items, emptyTitle, emptyMeta, onRemove, renderMeta }) {
-  if (!items.length) {
+  const list = Array.isArray(items) ? items : [];
+  if (!list.length) {
     return (
       <ul className="card-list">
         <li className="list-card">
@@ -16,7 +17,7 @@ export default function ActivityList({ items, emptyTitle, emptyMeta, onRemove, r
 
   return (
     <ul className="card-list">
-      {items.map((item) => (
+      {list.map((item) => (
         <li className="list-card" key={item.id}>
           <div>
             <strong className="item-title">{item.name}</strong>

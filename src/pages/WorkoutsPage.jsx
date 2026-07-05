@@ -226,8 +226,8 @@ export default function WorkoutsPage() {
     setLibraryLoading(true);
     apiRequest(`/workout-library?${params.toString()}`, {}, token)
       .then((payload) => {
-        setWorkoutLibrary(payload.workouts);
-        setLibraryMeta(payload.meta);
+        setWorkoutLibrary(payload.workouts || []);
+        setLibraryMeta(payload.meta || null);
         setLibraryError("");
       })
       .catch((loadError) => {
@@ -640,12 +640,12 @@ export default function WorkoutsPage() {
           <div className="loaded-workout-shell">
             <div className="module-card loaded-workout-summary">
               <p className="section-label">
-                {topWorkout.focusLabel} · {topWorkout.environment} · {topWorkout.equipmentSummary || topWorkout.equipmentProfile.replaceAll("_", " ")}
+                {topWorkout.focusLabel} · {topWorkout.environment} · {topWorkout.equipmentSummary || (topWorkout.equipmentProfile || "").replaceAll("_", " ")}
               </p>
               <div className="library-card-hero">
                 {renderMovementPreview(topWorkout.previewExercise || topWorkout.exercises?.[0], topWorkout.name, visualModelPreference)}
                 <div className="library-card-hero-copy">
-                  <span className="library-depth-note">Built from {Math.max(topWorkout.exercises.reduce((total, exercise) => total + (exercise.availableSwapCount || 1), 0), 6)}+ variations</span>
+                  <span className="library-depth-note">Built from {Math.max((topWorkout.exercises || []).reduce((total, exercise) => total + (exercise.availableSwapCount || 1), 0), 6)}+ variations</span>
                   <span className="library-depth-note">{topWorkout.jointStressProfile === "low" ? "Joint-friendly option" : "Matches your setup"}</span>
                 </div>
               </div>
@@ -660,7 +660,7 @@ export default function WorkoutsPage() {
               {topWorkout.varietyNote ? <p className="support-copy">{topWorkout.varietyNote}</p> : null}
               {topWorkout.lockedReason ? <p className="support-copy">{topWorkout.lockedReason}</p> : null}
               {preferenceInfluence?.summary ? <p className="support-copy">{preferenceInfluence.summary}</p> : null}
-              <p className="support-copy">{topWorkout.duration} mins · {topWorkout.intensity} · {topWorkout.primaryMuscles.join(", ")}</p>
+              <p className="support-copy">{topWorkout.duration} mins · {topWorkout.intensity} · {(topWorkout.primaryMuscles || []).join(", ")}</p>
               <div className="module-card-actions">
                 <button
                   className="primary-button"
@@ -801,9 +801,9 @@ export default function WorkoutsPage() {
                   {workout.focusLabel} · {workout.environment}
                 </p>
                 <div className="library-card-hero">
-                  {renderMovementPreview(workout.exercises[0], workout.name, visualModelPreference)}
+                  {renderMovementPreview(workout.exercises?.[0], workout.name, visualModelPreference)}
                   <div className="library-card-hero-copy">
-                    <span className="library-depth-note">Built from {Math.max(workout.exercises.reduce((total, exercise) => total + (exercise.availableSwapCount || 1), 0), 6)}+ variations</span>
+                    <span className="library-depth-note">Built from {Math.max((workout.exercises || []).reduce((total, exercise) => total + (exercise.availableSwapCount || 1), 0), 6)}+ variations</span>
                     <span className="library-depth-note">{workout.jointStressProfile === "low" ? "Recovery-friendly option" : "Built for your current setup"}</span>
                   </div>
                 </div>
@@ -1094,7 +1094,7 @@ export default function WorkoutsPage() {
                     </button>
                   ) : null}
                 </div>
-                <p className="support-copy">{workout.duration} mins · {workout.exercises.length} exercises</p>
+                <p className="support-copy">{workout.duration} mins · {(workout.exercises || []).length} exercises</p>
               </article>
             ))}
           </div>
@@ -1344,7 +1344,7 @@ function getLoadedWorkoutPrescription(exercise) {
 function renderMovementPreview(exercise, fallbackName, visualModelPreference = "default") {
   const visual = resolveMovementVisual(exercise?.movement || exercise || { name: fallbackName }, { visualModelPreference });
   if (visual.mode === "image") {
-    return <img alt={visual.alt} className="library-card-thumb" src={getExerciseImageSrc(visual.src)} />;
+    return <img alt={visual.alt} className="library-card-thumb" loading="lazy" src={getExerciseImageSrc(visual.src)} />;
   }
   const source = exercise?.movement || exercise || {};
   const muscles = Array.isArray(source.primaryMuscles)
@@ -1369,7 +1369,7 @@ function renderMovementPreview(exercise, fallbackName, visualModelPreference = "
 function renderCatalogPreview(entry, visualModelPreference = "default") {
   const visual = resolveMovementVisual(entry, { visualModelPreference });
   if (visual.mode === "image") {
-    return <img alt={visual.alt} className="library-card-thumb" src={getExerciseImageSrc(visual.src)} />;
+    return <img alt={visual.alt} className="library-card-thumb" loading="lazy" src={getExerciseImageSrc(visual.src)} />;
   }
   const muscles = Array.isArray(entry.primaryMuscles) ? entry.primaryMuscles.join(", ") : entry.primaryMuscleGroup;
   return (

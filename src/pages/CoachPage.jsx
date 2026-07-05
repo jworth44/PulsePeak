@@ -35,6 +35,14 @@ export default function CoachPage() {
     return <div className="screen-center">Loading coaching...</div>;
   }
 
+  if (!data.coach || !data.coach.primaryInsight) {
+    return <div className="screen-center">Your coaching view is being prepared. Check back shortly.</div>;
+  }
+
+  const recoveryFocus = data.recoveryFocus || {};
+  const coachNextActions = data.coach.nextActions || [];
+  const coachNotes = data.notes || [];
+
   const coachUpgradePrompt = isPremium
     ? null
     : getUpgradePrompt({
@@ -88,7 +96,7 @@ export default function CoachPage() {
       <div className="content-grid">
         <Panel eyebrow="Next actions" title="Do these next">
           <div className="coach-action-list">
-            {data.coach.nextActions.map((action) => (
+            {coachNextActions.map((action) => (
               <article className="coach-action-card" key={action.title}>
                 <span className="focus-step">Action</span>
                 <strong>{action.title}</strong>
@@ -107,15 +115,15 @@ export default function CoachPage() {
             <div className="insight-list">
               <div className="insight-chip">
                 <strong>Energy</strong>
-                <p className="muted">{data.recoveryFocus.energyLevel}</p>
+                <p className="muted">{recoveryFocus.energyLevel ?? "Not logged"}</p>
               </div>
               <div className="insight-chip">
                 <strong>Sleep</strong>
-                <p className="muted">{data.recoveryFocus.sleepHours} hours</p>
+                <p className="muted">{recoveryFocus.sleepHours ?? "--"} hours</p>
               </div>
               <div className="insight-chip">
                 <strong>Top habit</strong>
-                <p className="muted">{data.recoveryFocus.topHabit}</p>
+                <p className="muted">{recoveryFocus.topHabit ?? "Not set"}</p>
               </div>
             </div>
             {isPremium ? (
@@ -125,7 +133,7 @@ export default function CoachPage() {
               </div>
             ) : null}
             <div className="coach-note-list">
-              {data.notes.map((note) => (
+              {coachNotes.map((note) => (
                 <p key={note}>{note}</p>
               ))}
             </div>

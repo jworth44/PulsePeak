@@ -193,7 +193,7 @@ export default function MobilityPage() {
 
     return routines
       .filter((routine) => {
-        if (effectiveEnvironment !== "hybrid" && !routine.environments.includes(effectiveEnvironment) && !routine.environments.includes("hybrid")) {
+        if (effectiveEnvironment !== "hybrid" && !(routine.environments || []).includes(effectiveEnvironment) && !(routine.environments || []).includes("hybrid")) {
           return false;
         }
         if (selectedDifficulty !== "all" && String(routine.difficulty || "").toLowerCase() !== selectedDifficulty) {
@@ -252,7 +252,7 @@ export default function MobilityPage() {
 
     return routines
       .filter((routine) => {
-        if (effectiveEnvironment !== "hybrid" && !routine.environments.includes(effectiveEnvironment) && !routine.environments.includes("hybrid")) {
+        if (effectiveEnvironment !== "hybrid" && !(routine.environments || []).includes(effectiveEnvironment) && !(routine.environments || []).includes("hybrid")) {
           return false;
         }
         if (selectedDifficulty !== "all" && String(routine.difficulty || "").toLowerCase() !== selectedDifficulty) {
@@ -1104,7 +1104,7 @@ function highlightMatch(text, query) {
 function renderMobilityPreview(routine) {
   const visual = resolveMovementVisual(routine.movement || routine);
   if (visual.mode === "image") {
-    return <img alt={visual.alt} className="library-card-thumb" src={getExerciseImageSrc(visual.src)} />;
+    return <img alt={visual.alt} className="library-card-thumb" loading="lazy" src={getExerciseImageSrc(visual.src)} />;
   }
   return (
     <div className="library-card-thumb library-card-thumb-placeholder movement-image-fallback">

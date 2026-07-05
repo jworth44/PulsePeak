@@ -722,6 +722,39 @@ input:focus, select:focus, textarea:focus {
   background: linear-gradient(135deg, rgba(245, 40, 61, 0.14), rgba(245, 40, 61, 0.05)) !important;
 }
 
+/* ---- Error boundary fallback ---------------------------------------- */
+.error-boundary {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(1000px 600px at 50% -10%, rgba(245, 40, 61, 0.1), transparent 60%),
+    var(--app-background);
+}
+.error-boundary-card {
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+  padding: 36px 32px;
+  background: var(--grad-surface), rgba(18, 20, 23, 0.92);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elev-2);
+}
+.error-boundary-card h2 { margin: 8px 0 10px; }
+.error-boundary-actions { margin-top: 20px; display: flex; justify-content: center; }
+
+/* Center-of-screen loading/error surfaces */
+.screen-center {
+  min-height: 60vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
 /* ---- Reduced motion respect ----------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
