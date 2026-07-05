@@ -1592,7 +1592,9 @@ const EXACT_VISUAL_MEDIA_KEYS = new Map(
     ["heels-elevated-goblet-squat", "squat"],
     ["landmine-split-squat", "supported-split-squat"],
     ["split-jump-lunge", "supported-split-squat"],
-    ["cross-body-triceps-extension", "triceps-pushdown"]
+    ["cross-body-triceps-extension", "triceps-pushdown"],
+    ["bear-crawl-cardio", "bear-crawl"],
+    ["bear-crawl-drag", "bear-crawl"]
   ]
 );
 
