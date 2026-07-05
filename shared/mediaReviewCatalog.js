@@ -296,6 +296,11 @@ const REVIEWED_MEDIA = {
     reviewSource: "pulsepeak_gemini_superman_male_v1",
     sequenceCount: 4
   }),
+  "hollow-hold": approvedAsset("hollow-hold-photo", {
+    exerciseId: "hollow-hold",
+    reviewSource: "pulsepeak_gemini_hollow_hold_male_v1",
+    sequenceCount: 4
+  }),
   "side-plank": approvedAsset("side-plank-photo", {
     exerciseId: "side-plank",
     reviewSource: "pulsepeak_ai_pilot_side_plank_male_v1",

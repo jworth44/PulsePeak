@@ -593,6 +593,27 @@ const MOVEMENT_LIBRARY = [
     image: mediaRef("crunch", "Crunch form guide")
   }),
   movement({
+    id: "hollow-hold",
+    name: "Hollow Body Hold",
+    category: "strength",
+    difficulty: "intermediate",
+    environment: "both",
+    equipment: ["bodyweight"],
+    primaryMuscles: ["Core"],
+    secondaryMuscles: ["Hip flexors", "Shoulders"],
+    instructions: [
+      "Lie on your back with arms reaching overhead and legs straight and together.",
+      "Press your lower back firmly into the floor and brace your abs.",
+      "Lift your shoulders and straight legs off the floor into a shallow dish shape.",
+      "Hold the position while breathing steadily, keeping the low back pinned down."
+    ],
+    cues: ["Low back glued to the floor", "Long dish shape", "Breathe while you brace"],
+    commonMistakes: ["Letting the lower back arch up", "Bending the knees to make it easier", "Holding the breath"],
+    safetyNotes: ["Bend the knees or lower the legs if the low back lifts.", "Shorten the hold time before form breaks down."],
+    modifications: ["Tuck hollow hold", "Arms-by-sides hollow hold", "Hollow rock once the hold is solid"],
+    image: mediaRef("hollow-hold", "Hollow body hold form guide")
+  }),
+  movement({
     id: "superman",
     name: "Superman",
     category: "rehab",
@@ -1039,7 +1060,9 @@ const MOVEMENT_NAME_ALIASES = new Map(
     ["cable crunch", "crunch"],
     ["leg raise", "leg-raise"],
     ["lying leg raise", "leg-raise"],
-    ["hanging knee raise", "leg-raise"]
+    ["hanging knee raise", "leg-raise"],
+    ["hollow body hold", "hollow-hold"],
+    ["hollow rock", "hollow-hold"]
   ].map(([name, id]) => [name.toLowerCase(), id])
 );
 
