@@ -305,11 +305,7 @@ function renderExercisePreview(entry, visualModelPreference = "default") {
 
   return (
     <div className="library-card-thumb library-card-thumb-placeholder exercise-library-card-fallback">
-      <small>Text coaching guide</small>
       <strong>{entry.name}</strong>
-      <p>{entry.primaryMuscleGroup}</p>
-      <span>{entry.equipmentDisplay}</span>
-      <span>{entry.difficulty} · {entry.jointStress} joint stress</span>
     </div>
   );
 }
