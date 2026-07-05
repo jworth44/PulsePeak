@@ -5,24 +5,31 @@
 | | |
 |---|---|
 | **State** | Pre–Production Complete (0 of 2 states granted) |
-| **Last verified** | 2026-07-04 — build exit 0 · qa:launch **10/10** · 0 blockers · 0 console errors |
+| **Last verified** | 2026-07-04 — build exit 0 · qa:launch **10/10** · 0 blockers · **0 warnings** |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
-| **Media ledger** | **4 unmatched** (was 36); + push-up escaped-defect fixed |
-| **Model standard** | FACTORY §5b: two locked models (fit/tanned/toned/beautiful), one per exercise; `qa:model-consistency` gate = **45 exercises ✓**; female model in library |
-| **Active unit** | Unit 2 Phase B — Gemini media production (owner-approved, in progress) |
-| **Next unit** | Box Jump → Skater Hop → Battle Ropes → Med Ball Slam (4 left → ledger zero) |
+| **Media ledger** | **ZERO unmatched ✅** (was 36) — backlog #2 COMPLETE |
+| **Model standard** | FACTORY §5b: two locked models (fit/tanned/toned/beautiful), one per exercise; `qa:model-consistency` = **49 exercises ✓**; both male + female models in library |
+| **Active unit** | none (Unit 2 closed) |
+| **Next unit** | Backlog #3 — PWA installability + mobile-viewport QA scenarios |
+| **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
 | **Owner gates pending** | none |
 
 ---
 
 One line per unit: date · what · why · evidence. Newest first.
 
-- **2026-07-04 · Unit 2 Phase B batches 8–9 — Ab Wheel Rollout + Bear Crawl; ledger 6 → 4 ✅** —
-  both male, 4-frame sets, identity consistent, wired + reviewed. Bear Crawl:
-  Gemini renders locomotion as strides (honest for a crawl) rather than a
-  static hold. Evidence: qa:model-consistency 45/45; qa:launch 10/10, 0
-  blockers; build exit 0. **4 left: Box Jump, Skater Hop, Battle Ropes,
-  Med Ball Slam.**
+- **2026-07-04 · Unit 2 Phase B batches 8–13 — media ledger 6 → ZERO ✅✅ (BACKLOG #2 DONE)** —
+  Ab Wheel Rollout, Bear Crawl, Box Jump, Skater Hop, Battle Rope Waves,
+  Medicine Ball Slam — the last, most dynamic exercises, all 4-frame
+  locked-model sets via Gemini, identity consistent, wired + reviewed.
+  Gemini quirks handled: transient content refusals on mid-air frames
+  (reworded to "crisp frozen action photo"), out-of-order downloads
+  (re-sequenced after vision check), and a persistently stuck composer on
+  the med-ball chat (finished that batch in a fresh chat, reference
+  re-pasted — identity held). **Final: qa:launch unmatchedExerciseVariants=[],
+  warnings=[]; all 36 originally-unmatched variants resolve to canonical
+  reviewed media.** Evidence: qa:model-consistency 49/49; qa:launch 10/10,
+  0 blockers, 0 warnings; build exit 0. Committed per-batch.
 - **2026-07-04 · Unit 2 Phase B batches 6–7 — Hollow Body Hold + Lateral Band Walk; ledger 11 → 6 ✅** —
   Hollow Body Hold (male, `+hollow rock`) and **Lateral Band Walk — first
   use of the locked FEMALE model** (glute exercise; `+hip abduction`,

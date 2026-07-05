@@ -157,11 +157,11 @@ goods:** verification machinery ships before the content it must judge.
    matrix (§5a): nutrition, habits, body metrics, progress. Built with the
    stable-anchor + diagnostics pattern (this absorbs the de-flake sweep —
    every scenario written or touched adopts it). Done = matrix all-✅.
-2. **Close the reviewed-media gap** — 35 exercise variants (sumo deadlift,
-   leg extension, crunch, russian twist, bird dog, box jump, …) fall back
-   with no canonical reviewed asset — the product's biggest credibility
-   risk, flagged by its own QA. Produce + review through the existing media
-   pipeline. The QA warning list is the ledger; empty list = done.
+2. ~~**Close the reviewed-media gap**~~ **✅ DONE (2026-07-04).** All 36
+   originally-unmatched exercise variants now resolve to canonical reviewed
+   media (13 new movements generated via the Gemini pipeline against the two
+   locked models + alias wiring). `qa:launch` unmatchedExerciseVariants=[],
+   warnings=[]; `qa:model-consistency` 49/49.
 3. **Desktop & mobile installability** — add the PWA layer (manifest,
    service worker, icons, install prompt) and mobile-viewport scenarios in
    launch QA so gate 5 is enforced by machinery, not memory.
