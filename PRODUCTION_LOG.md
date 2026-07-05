@@ -7,16 +7,24 @@
 | **State** | Pre–Production Complete (0 of 2 states granted) |
 | **Last verified** | 2026-07-04 — build exit 0 · qa:launch **10/10** · 0 blockers · 0 console errors |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
-| **Media ledger** | **11 unmatched** (was 36); + push-up escaped-defect fixed |
-| **Model standard** | FACTORY §5b: two locked models (fit/tanned/toned/beautiful), one per exercise; `qa:model-consistency` gate = **41 exercises ✓** |
+| **Media ledger** | **6 unmatched** (was 36); + push-up escaped-defect fixed |
+| **Model standard** | FACTORY §5b: two locked models (fit/tanned/toned/beautiful), one per exercise; `qa:model-consistency` gate = **43 exercises ✓**; female model now in library (Lateral Band Walk) |
 | **Active unit** | Unit 2 Phase B — Gemini media production (owner-approved, in progress) |
-| **Next unit** | Hollow Hold → Ab Wheel → Bear Crawl → Lateral Band Walk (female) → Box Jump → Skater Hop → Battle Ropes → Med Ball Slam |
+| **Next unit** | Ab Wheel Rollout → Bear Crawl → Box Jump → Skater Hop → Battle Ropes → Med Ball Slam (6 left) |
 | **Owner gates pending** | none |
 
 ---
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-04 · Unit 2 Phase B batches 6–7 — Hollow Body Hold + Lateral Band Walk; ledger 11 → 6 ✅** —
+  Hollow Body Hold (male, `+hollow rock`) and **Lateral Band Walk — first
+  use of the locked FEMALE model** (glute exercise; `+hip abduction`,
+  `+clamshell`), 4-frame sets with a visible resistance band, identity
+  consistent across all frames, uniform 1536×1024, wired + reviewed.
+  Evidence: qa:model-consistency 43/43; qa:launch 10/10, 0 blockers; build
+  exit 0. **6 exercises left: Ab Wheel, Bear Crawl, Box Jump, Skater Hop,
+  Battle Ropes, Med Ball Slam.**
 - **2026-07-04 · Unit 2 Phase B batches 4–5 — Leg Raise + Superman via Gemini; ledger 14 → 11 ✅** —
   Leg Raise (`+aliases lying leg raise, hanging knee raise`) and Superman,
   each 4-frame locked-male sets, identity consistent first-try (no
