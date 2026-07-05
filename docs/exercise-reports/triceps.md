@@ -41,15 +41,15 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Single-arm light band pressdown.
   - Focus on one thing first: "Elbows stay pinned".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Use a stronger band.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
   - Use a stronger band
@@ -66,8 +66,7 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
   - Rope overhead extension
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -126,15 +125,15 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Cable or band triceps pressdown.
   - Focus on one thing first: "Keep hips close".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Straighten legs.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
   - Straighten legs
@@ -152,8 +151,7 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
   - Rope overhead extension
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -212,15 +210,15 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Incline close-grip push-up.
   - Focus on one thing first: "Hands narrow but comfortable".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Slow eccentric close-grip push-ups.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
   - Slow eccentric close-grip push-ups
@@ -238,8 +236,7 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
   - Overhead dumbbell extension
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -293,25 +290,21 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
   - Stay smooth from rep to rep.
 
 **11. Beginner tips:**
-  - If it feels hard, start with an easier version: Reduce load or shorten the range slightly if the pattern feels shaky today..
   - Focus on one thing first: "Move with control.".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
-  - Make it harder: Reduce load or shorten the range slightly if the pattern feels shaky today..
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
 **14. Progressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **15. Regressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **16. Alternative exercises:**
   - Preacher curl
@@ -320,7 +313,7 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
   - Rope overhead extension
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -379,15 +372,15 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band pressdown.
   - Focus on one thing first: "Elbows point forward".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Use a heavier dumbbell.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Use a heavier dumbbell
@@ -405,8 +398,8 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
   - Rope overhead extension
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -462,15 +455,15 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band pressdown.
   - Focus on one thing first: "Elbows point forward".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Lighter single-dumbbell extension.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Lighter single-dumbbell extension
@@ -487,8 +480,8 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
   - Overhead dumbbell extension
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -547,13 +540,13 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band pressdown.
   - Focus on one thing first: "Upper arms stay fixed".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Slow eccentric skull crushers.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -573,7 +566,7 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
   - Overhead dumbbell extension
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 8–12 reps
 
@@ -629,15 +622,15 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band pushdown.
   - Focus on one thing first: "Elbows stay pinned".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Close-grip push-up.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
   - Close-grip push-up
@@ -654,8 +647,7 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
   - Overhead dumbbell extension
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–15 reps
 

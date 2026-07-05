@@ -41,15 +41,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Goblet squat.
   - Focus on one thing first: "Brace before every rep".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase barbell load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Increase barbell load gradually
@@ -68,7 +68,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Front squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -127,15 +127,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Bodyweight calf raise.
   - Focus on one thing first: "Press through the forefoot".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Use a stronger band.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** enough ankle movement to rise up onto the balls of your feet and lower your heels.
 
 **14. Progressions:**
   - Use a stronger band
@@ -154,7 +154,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Standing calf raise
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Ankles/Achilles: move only as far as is comfortable and stop if the back of the ankle pinches or hurts.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -213,15 +213,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Hip hinge drill.
   - Focus on one thing first: "Hips go back first".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Use a stronger band.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Use a stronger band
@@ -240,7 +240,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Conventional deadlift
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -296,15 +296,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Romanian deadlift.
   - Focus on one thing first: "Push hips back".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Dumbbell deadlift.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Dumbbell deadlift
@@ -321,7 +321,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Good morning
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -377,15 +377,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Reverse lunge.
   - Focus on one thing first: "Front foot heavy".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Supported split squat.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Supported split squat
@@ -402,7 +402,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Rear-foot elevated split squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -461,15 +461,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Bodyweight squat.
   - Focus on one thing first: "Band tension stays even".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Use a stronger band.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Use a stronger band
@@ -488,7 +488,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Front squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -542,25 +542,21 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Finish tall without leaning back.
 
 **11. Beginner tips:**
-  - If it feels hard, start with an easier version: Reduce load or shorten the range slightly if the pattern feels shaky today..
   - Focus on one thing first: "Send the hips back first.".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
-  - Make it harder: Reduce load or shorten the range slightly if the pattern feels shaky today..
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **15. Regressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **16. Alternative exercises:**
   - Band hip hinge
@@ -569,7 +565,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Dumbbell Romanian deadlift
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -628,15 +624,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Supported squat.
   - Focus on one thing first: "Whole foot stays grounded".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add a pause.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Add a pause
@@ -655,7 +651,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Front squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -712,13 +708,12 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Jump squat.
   - Focus on one thing first: "Explode to the box".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase box height gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Make each rep more explosive, or add a small jump/step up in height — keep landings soft.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -739,7 +734,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Bike sprint
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 3–6 explosive reps
 
@@ -793,25 +788,21 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Push the floor away on the way up.
 
 **11. Beginner tips:**
-  - If it feels hard, start with an easier version: Reduce load or shorten the range slightly if the pattern feels shaky today..
   - Focus on one thing first: "Stay balanced through the whole foot.".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
-  - Make it harder: Reduce load or shorten the range slightly if the pattern feels shaky today..
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **15. Regressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **16. Alternative exercises:**
   - Back squat
@@ -820,7 +811,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Front squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -877,15 +868,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Split squat.
   - Focus on one thing first: "Front leg does the work".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add dumbbells.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Add dumbbells
@@ -903,7 +894,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Supported split squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -957,25 +948,21 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Finish tall without leaning back.
 
 **11. Beginner tips:**
-  - If it feels hard, start with an easier version: Reduce load or shorten the range slightly if the pattern feels shaky today..
   - Focus on one thing first: "Send the hips back first.".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
-  - Make it harder: Reduce load or shorten the range slightly if the pattern feels shaky today..
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **15. Regressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **16. Alternative exercises:**
   - Band hip hinge
@@ -984,7 +971,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Dumbbell Romanian deadlift
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1043,15 +1030,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated calf raise.
   - Focus on one thing first: "Push through the ball of the foot".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Single-leg calf raise.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** enough ankle movement to rise up onto the balls of your feet and lower your heels.
 
 **14. Progressions:**
   - Single-leg calf raise
@@ -1069,7 +1056,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Standing calf raise
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Ankles/Achilles: move only as far as is comfortable and stop if the back of the ankle pinches or hurts.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -1128,15 +1115,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Hip hinge drill.
   - Focus on one thing first: "Brace before you break the floor".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Increase load gradually
@@ -1155,7 +1142,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Dumbbell Romanian deadlift
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1209,25 +1196,21 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Push the floor away on the way up.
 
 **11. Beginner tips:**
-  - If it feels hard, start with an easier version: Reduce load or shorten the range slightly if the pattern feels shaky today..
   - Focus on one thing first: "Stay balanced through the whole foot.".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
-  - Make it harder: Reduce load or shorten the range slightly if the pattern feels shaky today..
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **15. Regressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **16. Alternative exercises:**
   - Dumbbell reverse lunge
@@ -1235,7 +1218,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Lateral lunge
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1289,25 +1272,21 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Push the floor away on the way up.
 
 **11. Beginner tips:**
-  - If it feels hard, start with an easier version: Reduce load or shorten the range slightly if the pattern feels shaky today..
   - Focus on one thing first: "Stay balanced through the whole foot.".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
-  - Make it harder: Reduce load or shorten the range slightly if the pattern feels shaky today..
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **15. Regressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **16. Alternative exercises:**
   - Cossack squat
@@ -1315,7 +1294,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Lateral lunge
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1372,15 +1351,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Hip hinge drill.
   - Focus on one thing first: "Hips back first".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Increase load gradually
@@ -1399,7 +1378,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Cable Romanian deadlift
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1456,15 +1435,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Step-up.
   - Focus on one thing first: "Full foot on the box".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Increase load gradually
@@ -1483,7 +1462,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Rear-foot elevated split squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1540,15 +1519,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Walking lunge.
   - Focus on one thing first: "Tall torso under load".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Increase load gradually
@@ -1567,7 +1546,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Rear-foot elevated split squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1626,15 +1605,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Goblet squat.
   - Focus on one thing first: "Elbows stay high".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Increase load gradually
@@ -1653,7 +1632,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Box squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1713,15 +1692,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Regular split squat.
   - Focus on one thing first: "Front heel stays planted".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add dumbbells.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Add dumbbells
@@ -1741,7 +1720,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Box squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1798,15 +1777,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Reverse lunge.
   - Focus on one thing first: "Weight stays close to chest".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add load.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Add load
@@ -1825,7 +1804,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Rear-foot elevated split squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1884,15 +1863,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Bodyweight squat.
   - Focus on one thing first: "Keep the weight close".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Use a heavier dumbbell or kettlebell.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Use a heavier dumbbell or kettlebell
@@ -1911,7 +1890,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Box squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1967,15 +1946,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Bodyweight squat.
   - Focus on one thing first: "Dumbbell stays close to the chest".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Heels-elevated goblet squat.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso; shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Heels-elevated goblet squat
@@ -1992,8 +1971,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Banded good morning
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -2052,15 +2030,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Hip hinge drill.
   - Focus on one thing first: "Hips move back".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add light load.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Add light load
@@ -2078,7 +2056,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Cable Romanian deadlift
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -2137,15 +2115,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Leg press.
   - Focus on one thing first: "Whole foot stays planted".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase machine load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Increase machine load gradually
@@ -2164,7 +2142,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Box squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -2221,15 +2199,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Glute bridge.
   - Focus on one thing first: "Curl from the knees".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Pause at peak contraction.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
   - Pause at peak contraction
@@ -2248,7 +2226,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Good morning
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Knees/hamstrings: move smoothly and stop if you feel a sharp pull, cramp, or knee pain.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -2304,15 +2282,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Bodyweight squat.
   - Focus on one thing first: "Dumbbell stays close to the chest".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Heels-elevated goblet squat.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Heels-elevated goblet squat
@@ -2329,7 +2307,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Box squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -2385,15 +2363,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Romanian deadlift.
   - Focus on one thing first: "Push hips back".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Dumbbell deadlift.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Dumbbell deadlift
@@ -2410,7 +2388,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Cable Romanian deadlift
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -2467,15 +2445,14 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Bodyweight squat.
   - Focus on one thing first: "Dip with control".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase intent.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Make each rep more explosive, or add a small jump/step up in height — keep landings soft.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Increase intent
@@ -2494,7 +2471,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Banded squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 3–6 explosive reps
 
@@ -2551,15 +2528,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Hip hinge drill.
   - Focus on one thing first: "Bell stays close".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Heavier kettlebell.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Heavier kettlebell
@@ -2578,7 +2555,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Cable Romanian deadlift
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -2635,15 +2612,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Supported split squat.
   - Focus on one thing first: "Front foot does the work".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Increase load gradually
@@ -2661,7 +2638,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Lateral lunge
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -2720,15 +2697,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Supported split squat.
   - Focus on one thing first: "Sit into the hip".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add dumbbells.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Add dumbbells
@@ -2746,7 +2723,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Landmine split squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -2803,13 +2780,13 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Leg press.
   - Focus on one thing first: "Knee aligns with pivot".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -2830,7 +2807,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Front squat
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Knees/hamstrings: move smoothly and stop if you feel a sharp pull, cramp, or knee pain.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -2887,15 +2864,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Goblet squat.
   - Focus on one thing first: "Back stays supported".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso; shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Increase load gradually
@@ -2914,8 +2891,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Box squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -2972,15 +2948,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated hamstring curl.
   - Focus on one thing first: "Hips stay down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Pause at the top.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
   - Pause at the top
@@ -2999,7 +2975,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Good morning
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Knees/hamstrings: move smoothly and stop if you feel a sharp pull, cramp, or knee pain.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -3058,15 +3034,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Regular split squat.
   - Focus on one thing first: "Front foot stays heavy".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add dumbbells.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Add dumbbells
@@ -3086,7 +3062,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Goblet reverse lunge
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -3145,15 +3121,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Supported split squat.
   - Focus on one thing first: "Front foot stays rooted".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add dumbbells.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Add dumbbells
@@ -3172,7 +3148,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Dumbbell walking lunge
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -3231,15 +3207,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Hip hinge drill.
   - Focus on one thing first: "Push the hips back".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Increase load gradually
@@ -3258,7 +3234,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Cable Romanian deadlift
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -3314,15 +3290,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Supported calf raise.
   - Focus on one thing first: "Push through the big toe".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Seated calf raise.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** enough ankle movement to rise up onto the balls of your feet and lower your heels.
 
 **14. Progressions:**
   - Seated calf raise
@@ -3339,7 +3315,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Standing calf raise
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Ankles/Achilles: move only as far as is comfortable and stop if the back of the ankle pinches or hurts.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -3396,15 +3372,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Lying hamstring curl.
   - Focus on one thing first: "Thighs stay pinned".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add pauses at the bottom.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
   - Add pauses at the bottom
@@ -3423,7 +3399,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Good morning
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Knees/hamstrings: move smoothly and stop if you feel a sharp pull, cramp, or knee pain.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -3479,15 +3455,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Supported calf raise.
   - Focus on one thing first: "Push through the big toe".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Seated calf raise.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** enough ankle movement to rise up onto the balls of your feet and lower your heels.
 
 **14. Progressions:**
   - Seated calf raise
@@ -3504,7 +3480,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Standing calf raise
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Ankles/Achilles: move only as far as is comfortable and stop if the back of the ankle pinches or hurts.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -3561,15 +3537,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Dumbbell Romanian deadlift.
   - Focus on one thing first: "Hips stay square".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add dumbbells.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Add dumbbells
@@ -3588,7 +3564,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Conventional deadlift
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -3645,13 +3621,12 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Lateral step.
   - Focus on one thing first: "Push sideways".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase distance.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Make each rep more explosive, or add a small jump/step up in height — keep landings soft.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -3672,7 +3647,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Bike sprint
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 3–6 explosive reps
 
@@ -3731,15 +3706,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Supported split squat.
   - Focus on one thing first: "Front foot stays rooted".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add dumbbells.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Add dumbbells
@@ -3757,7 +3732,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Rear-foot elevated split squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -3813,15 +3788,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Supported calf raise.
   - Focus on one thing first: "Push through the big toe".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Seated calf raise.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** enough ankle movement to rise up onto the balls of your feet and lower your heels.
 
 **14. Progressions:**
   - Seated calf raise
@@ -3838,7 +3813,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Single-leg calf raise
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Ankles/Achilles: move only as far as is comfortable and stop if the back of the ankle pinches or hurts.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -3897,15 +3872,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Low step-up.
   - Focus on one thing first: "Whole foot on the box".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add dumbbells.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Add dumbbells
@@ -3923,7 +3898,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Goblet reverse lunge
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -3979,15 +3954,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Lower box step-up.
   - Focus on one thing first: "Whole lead foot on the box".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Split squat.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Split squat
@@ -4004,7 +3979,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Dumbbell walking lunge
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -4061,15 +4036,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Kettlebell deadlift.
   - Focus on one thing first: "Push the floor apart".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Increase load gradually
@@ -4088,7 +4063,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Good morning
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -4147,15 +4122,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Supported squat.
   - Focus on one thing first: "Front foot stays heavy".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Reduce hand assistance.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Reduce hand assistance
@@ -4174,7 +4149,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Rear-foot elevated split squat
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -4230,15 +4205,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Romanian deadlift.
   - Focus on one thing first: "Push hips back".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Dumbbell deadlift.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Dumbbell deadlift
@@ -4255,7 +4230,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Cable Romanian deadlift
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -4314,15 +4289,15 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Supported split squat.
   - Focus on one thing first: "Step long enough to stay grounded".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add dumbbells.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Add dumbbells
@@ -4341,7 +4316,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Goblet reverse lunge
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 

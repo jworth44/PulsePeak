@@ -38,15 +38,15 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Chest-supported row.
   - Focus on one thing first: "Lead with the elbow".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Single-arm row.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso; shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Single-arm row
@@ -63,8 +63,8 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Chest-supported row
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -120,15 +120,15 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated dumbbell press.
   - Focus on one thing first: "Ribs down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Neutral-grip press.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back; shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Neutral-grip press
@@ -145,8 +145,8 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Dumbbell thruster
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -169,7 +169,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 <a id="bear-crawl"></a>
 ## Bear crawl
 
-> 📷 Full visual sequence · Class: core
+> 📷 Full visual sequence · Class: conditioning
 
 **1. Exercise name:** Bear crawl
 
@@ -203,15 +203,14 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Bird dog.
   - Focus on one thing first: "Knees stay low".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Crawl backward.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Crawl backward
@@ -230,11 +229,11 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Renegade row
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
-**18. Ideal rep range:** 10–20 reps or 20–45 sec holds
+**18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
-**19. Ideal rest period:** 30–45 sec
+**19. Ideal rest period:** 30–60 sec, or a 1:1 work:rest ratio
 
 **20. Training purpose:** The bear crawl is a low hovering crawl where opposite hand and foot move together while the trunk stays stable and the knees stay just off the floor.
 
@@ -253,7 +252,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 <a id="bear-crawl-drag"></a>
 ## Bear crawl drag
 
-> 📷 Full visual sequence · Class: core
+> 📷 Full visual sequence · Class: conditioning
 
 **1. Exercise name:** Bear crawl drag
 
@@ -286,15 +285,14 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Chest-supported row.
   - Focus on one thing first: "Lead with the elbow".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Single-arm row.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Single-arm row
@@ -311,11 +309,11 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Chest-supported row
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
-**18. Ideal rep range:** 10–20 reps or 20–45 sec holds
+**18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
-**19. Ideal rest period:** 30–45 sec
+**19. Ideal rest period:** 30–60 sec, or a 1:1 work:rest ratio
 
 **20. Training purpose:** Bear crawl drag is a back pattern matched to bodyweight. used to train back.
 
@@ -367,15 +365,15 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated dumbbell press.
   - Focus on one thing first: "Ribs down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Neutral-grip press.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back; shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Neutral-grip press
@@ -392,8 +390,8 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Dumbbell shoulder press
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -416,7 +414,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 <a id="man-maker"></a>
 ## Man maker
 
-> 📝 Text guide (image pending) · Class: compound
+> 📝 Text guide (image pending) · Class: conditioning
 
 **1. Exercise name:** Man maker
 
@@ -449,15 +447,14 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated dumbbell press.
   - Focus on one thing first: "Ribs down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Neutral-grip press.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Neutral-grip press
@@ -474,11 +471,11 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Dumbbell shoulder press
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
-**18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
+**18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
-**19. Ideal rest period:** 90–180 sec (heavier = longer)
+**19. Ideal rest period:** 30–60 sec, or a 1:1 work:rest ratio
 
 **20. Training purpose:** Man maker is a shoulders pattern matched to dumbbells. used to train shoulders.
 
@@ -531,13 +528,12 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Jumping jack.
   - Focus on one thing first: "Reach up with control".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Use a slightly heavier slam ball.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Make each rep more explosive, or add a small jump/step up in height — keep landings soft.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -558,7 +554,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Bike sprint
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 3–6 explosive reps
 
@@ -581,7 +577,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 <a id="mountain-climber"></a>
 ## Mountain climber
 
-> 📷 Full visual sequence · Class: core
+> 📷 Full visual sequence · Class: conditioning
 
 **1. Exercise name:** Mountain climber
 
@@ -617,15 +613,14 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: High plank march.
   - Focus on one thing first: "Keep the plank shape".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase pace.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Increase pace
@@ -644,11 +639,11 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Renegade row
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
-**18. Ideal rep range:** 10–20 reps or 20–45 sec holds
+**18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
-**19. Ideal rest period:** 30–45 sec
+**19. Ideal rest period:** 30–60 sec, or a 1:1 work:rest ratio
 
 **20. Training purpose:** The mountain climber is a plank-based conditioning drill where the knees drive forward one at a time. It challenges the core and shoulders while raising the heart rate.
 
@@ -700,15 +695,15 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Incline push-up.
   - Focus on one thing first: "Long body line".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Knee push-up.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
   - Knee push-up
@@ -725,7 +720,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Dumbbell thruster
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -781,15 +776,15 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Chest-supported row.
   - Focus on one thing first: "Lead with the elbow".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Single-arm row.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Single-arm row
@@ -806,7 +801,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Bear crawl drag
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 

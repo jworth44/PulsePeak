@@ -39,13 +39,13 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Glute bridge.
   - Focus on one thing first: "Square pelvis".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Use a stronger band.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -65,7 +65,7 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Hip thrust
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -121,15 +121,15 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Bridge hold.
   - Focus on one thing first: "Ribs stay down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Single-leg bridge.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Single-leg bridge
@@ -146,8 +146,8 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Frog pump
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 8–12 reps
 
@@ -201,25 +201,21 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Stay smooth from rep to rep.
 
 **11. Beginner tips:**
-  - If it feels hard, start with an easier version: Reduce load or shorten the range slightly if the pattern feels shaky today..
   - Focus on one thing first: "Move with control.".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
-  - Make it harder: Reduce load or shorten the range slightly if the pattern feels shaky today..
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **15. Regressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **16. Alternative exercises:**
   - Banded glute bridge
@@ -228,8 +224,8 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Frog pump
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -286,13 +282,13 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band glute kickback.
   - Focus on one thing first: "Hip extends, low back stays quiet".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add a pause at full extension.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -312,7 +308,7 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Hip thrust
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -368,15 +364,15 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Glute bridge.
   - Focus on one thing first: "Drive through heels".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Dumbbell hip thrust.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Dumbbell hip thrust
@@ -393,7 +389,7 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Cable glute kickback
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 8–12 reps
 
@@ -450,15 +446,15 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Side-lying isometric hold.
   - Focus on one thing first: "Feet stay together".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add a mini band.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** thoracic rotation with a stable lower back.
+**13. Mobility requirements:** the ability to turn at the upper body while keeping your lower back still.
 
 **14. Progressions:**
   - Add a mini band
@@ -475,7 +471,7 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Lateral band walk
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -531,15 +527,15 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Bridge hold.
   - Focus on one thing first: "Ribs stay down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Single-leg bridge.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Single-leg bridge
@@ -556,8 +552,8 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Frog pump
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 8–12 reps
 
@@ -614,13 +610,13 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Glute bridge.
   - Focus on one thing first: "Soles together, knees open".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add a dumbbell to the hips.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -641,7 +637,7 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Dumbbell glute bridge
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -700,15 +696,15 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Reduced-range bridge.
   - Focus on one thing first: "Drive through the heels".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add a dumbbell across the hips.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Add a dumbbell across the hips
@@ -727,8 +723,8 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Dumbbell glute bridge
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 8–12 reps
 
@@ -785,13 +781,13 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Clamshell.
   - Focus on one thing first: "Side glutes move the thigh".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Pause at peak abduction.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -810,7 +806,7 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Lateral band walk
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 8–12 reps
 
@@ -869,15 +865,15 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Glute bridge.
   - Focus on one thing first: "Drive through the heels".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Increase load gradually
@@ -896,8 +892,8 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Cable glute kickback
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -954,13 +950,13 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Hip abduction.
   - Focus on one thing first: "Band stays taut".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Place the band around the ankles.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -979,7 +975,7 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Hip abduction
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 8–12 reps
 
@@ -1033,25 +1029,21 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Stay smooth from rep to rep.
 
 **11. Beginner tips:**
-  - If it feels hard, start with an easier version: Reduce load or shorten the range slightly if the pattern feels shaky today..
   - Focus on one thing first: "Move with control.".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
-  - Make it harder: Reduce load or shorten the range slightly if the pattern feels shaky today..
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **15. Regressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **16. Alternative exercises:**
   - Banded glute bridge
@@ -1060,8 +1052,7 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Dumbbell glute bridge
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 8–12 reps
 

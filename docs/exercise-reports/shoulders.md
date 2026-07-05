@@ -41,15 +41,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Dumbbell shoulder press.
   - Focus on one thing first: "Rotate smoothly".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Add load gradually
@@ -67,7 +67,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Dumbbell thruster
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -123,15 +123,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Cable raise.
   - Focus on one thing first: "Soft elbows".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Partial-range raise.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
   - Partial-range raise
@@ -147,7 +147,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Lean-away lateral raise
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -206,15 +206,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated dumbbell shoulder press with light weight.
   - Focus on one thing first: "Ribs stay down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Use a stronger band.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Use a stronger band
@@ -232,7 +232,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Dumbbell thruster
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -288,15 +288,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Wall slide.
   - Focus on one thing first: "Long neck".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Face pull with light cable.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
   - Face pull with light cable
@@ -312,7 +312,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Reverse snow angel
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -369,15 +369,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band pull-apart.
   - Focus on one thing first: "Pull to the face".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Pause at peak contraction.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms; thoracic rotation with a stable lower back.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Pause at peak contraction
@@ -395,7 +395,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Reverse snow angel
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -451,15 +451,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Cable raise.
   - Focus on one thing first: "Soft elbows".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Partial-range raise.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
   - Partial-range raise
@@ -475,7 +475,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Lean-away lateral raise
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -529,25 +529,21 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Stay smooth from rep to rep.
 
 **11. Beginner tips:**
-  - If it feels hard, start with an easier version: Reduce load or shorten the range slightly if the pattern feels shaky today..
   - Focus on one thing first: "Move with control.".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
-  - Make it harder: Reduce load or shorten the range slightly if the pattern feels shaky today..
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
 **14. Progressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **15. Regressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **16. Alternative exercises:**
   - Half-kneeling dumbbell press
@@ -556,7 +552,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Z-press
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -612,15 +608,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Cable raise.
   - Focus on one thing first: "Soft elbows".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Partial-range raise.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
   - Partial-range raise
@@ -636,7 +632,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Lean-away lateral raise
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -692,15 +688,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated dumbbell press.
   - Focus on one thing first: "Ribs down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Neutral-grip press.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Neutral-grip press
@@ -717,7 +713,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Dumbbell thruster
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -773,15 +769,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated dumbbell press.
   - Focus on one thing first: "Ribs down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Neutral-grip press.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
 **14. Progressions:**
   - Neutral-grip press
@@ -798,7 +794,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Cable Y raise
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -854,15 +850,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated dumbbell press.
   - Focus on one thing first: "Ribs down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Neutral-grip press.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
 **14. Progressions:**
   - Neutral-grip press
@@ -879,7 +875,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Cable Y raise
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -935,15 +931,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Cable raise.
   - Focus on one thing first: "Soft elbows".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Partial-range raise.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
   - Partial-range raise
@@ -959,7 +955,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Dumbbell lateral raise
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -1018,15 +1014,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Incline pike push-up.
   - Focus on one thing first: "Hips stay high".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Elevate feet.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Elevate feet
@@ -1045,7 +1041,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Dumbbell shoulder press
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1099,25 +1095,21 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Stay smooth from rep to rep.
 
 **11. Beginner tips:**
-  - If it feels hard, start with an easier version: Reduce load or shorten the range slightly if the pattern feels shaky today..
   - Focus on one thing first: "Move with control.".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
-  - Make it harder: Reduce load or shorten the range slightly if the pattern feels shaky today..
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **15. Regressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **16. Alternative exercises:**
   - Cable Y raise
@@ -1126,7 +1118,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Z-press
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -1183,15 +1175,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band pull-apart.
   - Focus on one thing first: "Rear delts lift the arms".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add a pause at the top.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
   - Add a pause at the top
@@ -1209,7 +1201,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Reverse snow angel
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -1265,13 +1257,13 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Wall slide.
   - Focus on one thing first: "Long neck".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Face pull with light cable.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -1289,7 +1281,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Reverse fly
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 8–12 reps
 
@@ -1345,15 +1337,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated dumbbell press.
   - Focus on one thing first: "Ribs down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Neutral-grip press.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Neutral-grip press
@@ -1370,7 +1362,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Dumbbell shoulder press
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1426,15 +1418,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated dumbbell press.
   - Focus on one thing first: "Ribs down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Neutral-grip press.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Neutral-grip press
@@ -1451,7 +1443,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Cable Y raise
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 

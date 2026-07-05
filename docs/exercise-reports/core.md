@@ -39,13 +39,13 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Dead bug.
   - Focus on one thing first: "Ribs and pelvis stay connected".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase rollout range.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -66,7 +66,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Crunch
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -123,15 +123,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Crunch.
   - Focus on one thing first: "Rotate from the ribs".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Slow the tempo.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** thoracic rotation with a stable lower back.
+**13. Mobility requirements:** the ability to turn at the upper body while keeping your lower back still.
 
 **14. Progressions:**
   - Slow the tempo
@@ -150,7 +150,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Crunch
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -207,13 +207,13 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Quadruped brace hold.
   - Focus on one thing first: "Reach long, not high".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Pause longer in the reach.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -234,7 +234,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Crunch
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -291,13 +291,13 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Crunch.
   - Focus on one thing first: "Ribs curl down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -318,7 +318,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Crunch
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -375,13 +375,13 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Abdominal brace hold.
   - Focus on one thing first: "Ribs curl up".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Slow the lowering.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -402,7 +402,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Cable crunch
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -461,13 +461,13 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Bent-knee march.
   - Focus on one thing first: "Low back stays heavy".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Pause longer at full reach.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -488,7 +488,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Rower sprint
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -545,13 +545,13 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Suitcase carry with lighter load.
   - Focus on one thing first: "Stand tall".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -572,7 +572,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Rower sprint
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 20–40 meters or 30–45 sec per set
 
@@ -629,15 +629,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Reverse crunch.
   - Focus on one thing first: "Hang active".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Pause at the top.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
 **14. Progressions:**
   - Pause at the top
@@ -656,7 +656,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Cable crunch
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -713,13 +713,13 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Dead bug.
   - Focus on one thing first: "Ribs stay down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Lower the legs farther.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -740,7 +740,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Cable crunch
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -797,13 +797,13 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Hollow body hold.
   - Focus on one thing first: "Same shape the whole time".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Lengthen the lever.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -824,7 +824,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Cable crunch
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -881,15 +881,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Hanging knee raise.
   - Focus on one thing first: "Legs move, trunk stays organized".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Pause at the top.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
 **14. Progressions:**
   - Pause at the top
@@ -908,7 +908,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Cable crunch
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -967,15 +967,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Pallof hold.
   - Focus on one thing first: "Stay square to the front".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Pause longer at full extension.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely; thoracic rotation with a stable lower back.
+**13. Mobility requirements:** the ability to turn at the upper body while keeping your lower back still.
 
 **14. Progressions:**
   - Pause longer at full extension
@@ -994,7 +994,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Rower sprint
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -1053,13 +1053,13 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Knee plank.
   - Focus on one thing first: "Ribs stay down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Longer holds.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -1079,7 +1079,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Cable crunch
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -1135,13 +1135,13 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Incline plank.
   - Focus on one thing first: "Long line".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Knee plank.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -1160,7 +1160,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Plank
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -1217,13 +1217,13 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Crunch.
   - Focus on one thing first: "Curl the pelvis".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Slow the lowering.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -1244,7 +1244,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Cable crunch
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -1301,15 +1301,15 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated trunk rotation.
   - Focus on one thing first: "Twist from the ribs".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add a medicine ball.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** thoracic rotation with a stable lower back.
+**13. Mobility requirements:** the ability to turn at the upper body while keeping your lower back still.
 
 **14. Progressions:**
   - Add a medicine ball
@@ -1328,7 +1328,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Cable crunch
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -1387,13 +1387,13 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Knee side plank.
   - Focus on one thing first: "Stack the hips".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Full side plank.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -1413,7 +1413,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Cable crunch
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -1470,13 +1470,13 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Farmer hold.
   - Focus on one thing first: "Stay tall and centered".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -1497,7 +1497,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
   - Plank shoulder tap
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 20–40 meters or 30–45 sec per set
 

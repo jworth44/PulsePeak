@@ -41,15 +41,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band pulldown.
   - Focus on one thing first: "Elbows drive to the ribs".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Reduce assistance gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely; shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Reduce assistance gradually
@@ -68,7 +68,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Lat pulldown
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -127,15 +127,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band pull-apart.
   - Focus on one thing first: "Drive through the elbows".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Hold longer at the top.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Hold longer at the top
@@ -154,7 +154,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Lat pulldown
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–15 reps
 
@@ -213,15 +213,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Straight-arm band pulldown with lighter tension.
   - Focus on one thing first: "Pull elbows to ribs".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Use a stronger band.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely; shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Use a stronger band
@@ -238,7 +238,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Lat pulldown
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -295,15 +295,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Doorframe row.
   - Focus on one thing first: "Elbows drive back".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Use a stronger band.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Use a stronger band
@@ -322,7 +322,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Doorframe row
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -379,15 +379,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band row.
   - Focus on one thing first: "Chest stays on the pad".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Increase load gradually
@@ -406,7 +406,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Doorframe row
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -462,15 +462,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band pulldown.
   - Focus on one thing first: "Elbows to ribs".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Chest-supported row.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Chest-supported row
@@ -487,7 +487,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Dumbbell pullover
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -546,15 +546,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band row.
   - Focus on one thing first: "Body stays rigid".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase the lean angle.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Increase the lean angle
@@ -573,7 +573,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Chest-supported row
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -630,15 +630,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Straight-arm pulldown.
   - Focus on one thing first: "Ribs stay down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Increase load gradually
@@ -657,7 +657,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Straight-arm band pulldown
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -716,15 +716,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band row.
   - Focus on one thing first: "Body stays in one line".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Lower the bar height.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Lower the bar height
@@ -743,7 +743,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Chest-supported row
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -802,15 +802,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band pulldown.
   - Focus on one thing first: "Elbows go to the ribs".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely; shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Increase load gradually
@@ -829,7 +829,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Chin-up
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -885,15 +885,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Chest-supported row.
   - Focus on one thing first: "Lead with the elbow".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Single-arm row.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Single-arm row
@@ -910,7 +910,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Chest-supported row
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -966,15 +966,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band pulldown.
   - Focus on one thing first: "Elbows to ribs".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Chest-supported row.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely; shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Chest-supported row
@@ -991,7 +991,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Chin-up
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1050,15 +1050,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Assisted pull-up.
   - Focus on one thing first: "Own the descent".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Lengthen the eccentric.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely; shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Lengthen the eccentric
@@ -1077,7 +1077,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Chin-up
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1134,15 +1134,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band row.
   - Focus on one thing first: "Pull to the lower ribs".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add load gradually.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Add load gradually
@@ -1161,7 +1161,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Chest-supported row
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1220,15 +1220,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Band row.
   - Focus on one thing first: "Elbow tracks toward the hip".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Use a heavier dumbbell.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Use a heavier dumbbell
@@ -1246,7 +1246,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Chest-supported row
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1302,15 +1302,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Neutral-grip pulldown.
   - Focus on one thing first: "Elbows to ribs".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Chest-supported row.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely; shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Chest-supported row
@@ -1327,7 +1327,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Chin-up
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1384,15 +1384,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Straight-arm band pulldown.
   - Focus on one thing first: "Arms stay long".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Pause at the bottom.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely; shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** shoulders and upper back that can reach overhead comfortably.
 
 **14. Progressions:**
   - Pause at the bottom
@@ -1411,8 +1411,8 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Neutral-grip lat pulldown
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Shoulders: stay in a pain-free range and stop if you feel any pinching.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1469,13 +1469,13 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Bird dog.
   - Focus on one thing first: "Lift gently".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Pause longer at the top.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -1496,7 +1496,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Cable crunch
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 10–20 reps or 20–45 sec holds
 
@@ -1550,25 +1550,21 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Pause briefly when you reach the strongest position.
 
 **11. Beginner tips:**
-  - If it feels hard, start with an easier version: Reduce load or shorten the range slightly if the pattern feels shaky today..
   - Focus on one thing first: "Start the pull from your back, not your hands.".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
-  - Make it harder: Reduce load or shorten the range slightly if the pattern feels shaky today..
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **15. Regressions:**
-  - Reduce load or shorten the range slightly if the pattern feels shaky today.
-  - Swap to a lower-stress movement in the same family if the setup does not fit.
+  - _(none)_
 
 **16. Alternative exercises:**
   - Chin-up
@@ -1577,7 +1573,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Neutral-grip lat pulldown
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1633,15 +1629,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Chest-supported row.
   - Focus on one thing first: "Lead with the elbow".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Single-arm row.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Single-arm row
@@ -1658,7 +1654,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Chest-supported row
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 
@@ -1714,15 +1710,15 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Chest-supported row.
   - Focus on one thing first: "Lead with the elbow".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Single-arm row.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Single-arm row
@@ -1739,7 +1735,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Chest-supported row
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 6–10 reps (strength: 4–6 · muscle: 8–12)
 

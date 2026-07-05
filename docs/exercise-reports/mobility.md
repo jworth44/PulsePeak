@@ -39,15 +39,14 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated hip rotation with hands supported.
   - Focus on one thing first: "Rotate through the hips".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Keep the range small and smooth at first, then slowly move a little farther as it feels easy.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Lift the hands briefly during the switch.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Once it feels smooth, hold a little longer or reach a little farther each time.
 
-**13. Mobility requirements:** thoracic rotation with a stable lower back.
+**13. Mobility requirements:** the ability to turn at the upper body while keeping your lower back still.
 
 **14. Progressions:**
   - Lift the hands briefly during the switch
@@ -64,7 +63,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Hamstring stretch
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 5–10 slow reps or 20–40 sec holds
 
@@ -121,13 +120,12 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Standing calf stretch with bent knee.
   - Focus on one thing first: "Heel stays down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Keep the range small and smooth at first, then slowly move a little farther as it feels easy.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add a longer pause at end range.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Once it feels smooth, hold a little longer or reach a little farther each time.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -146,7 +144,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Hamstring stretch
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 5–10 slow reps or 20–40 sec holds
 
@@ -203,13 +201,12 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated cat-cow.
   - Focus on one thing first: "Move one spinal segment at a time".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Keep the range small and smooth at first, then slowly move a little farther as it feels easy.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Pause at each end range.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Once it feels smooth, hold a little longer or reach a little farther each time.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -228,7 +225,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Hamstring stretch
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 5–10 slow reps or 20–40 sec holds
 
@@ -251,7 +248,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 <a id="child-s-pose-side-reach"></a>
 ## Child's pose side reach
 
-> 📷 Full visual sequence · Class: general
+> 📷 Full visual sequence · Class: mobility
 
 **1. Exercise name:** Child's pose side reach
 
@@ -285,13 +282,12 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Seated side reach.
   - Focus on one thing first: "Hips stay heavy".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Keep the range small and smooth at first, then slowly move a little farther as it feels easy.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Hold longer with deeper breaths.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Once it feels smooth, hold a little longer or reach a little farther each time.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -310,11 +306,11 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Hamstring stretch
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
-**18. Ideal rep range:** 8–12 reps
+**18. Ideal rep range:** 5–10 slow reps or 20–40 sec holds
 
-**19. Ideal rest period:** 60–90 sec
+**19. Ideal rest period:** Minimal — flow between sides
 
 **20. Training purpose:** Child's pose side reach combines a supported child's pose with a lateral hand walk to open the lats, side body, and upper back. It is useful when overhead work or pulling volume has left the upper body feeling stiff.
 
@@ -367,15 +363,14 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Supine hamstring stretch.
   - Focus on one thing first: "Hinge from the hips".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Keep the range small and smooth at first, then slowly move a little farther as it feels easy.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase the hold time.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Once it feels smooth, hold a little longer or reach a little farther each time.
 
-**13. Mobility requirements:** hamstring and hip-hinge range to keep a flat back.
+**13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
   - Increase the hold time
@@ -392,7 +387,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Child's pose side reach
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 5–10 slow reps or 20–40 sec holds
 
@@ -449,13 +444,12 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Standing split-stance hip flexor stretch.
   - Focus on one thing first: "Tuck the pelvis".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Keep the range small and smooth at first, then slowly move a little farther as it feels easy.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Reach the same-side arm overhead.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Once it feels smooth, hold a little longer or reach a little farther each time.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -474,7 +468,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Child's pose side reach
 
 **17. Injury considerations:**
-  - Elbows/wrists: keep movements smooth and avoid jerking or over-extending.
+  - Elbows/wrists: move smoothly and don't jerk or fully snap the joint straight.
 
 **18. Ideal rep range:** 5–10 slow reps or 20–40 sec holds
 
@@ -531,13 +525,12 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Wall-assisted shoulder reach.
   - Focus on one thing first: "Ribs stay stacked".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Keep the range small and smooth at first, then slowly move a little farther as it feels easy.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add a light band.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Once it feels smooth, hold a little longer or reach a little farther each time.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
@@ -556,7 +549,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Child's pose side reach
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 5–10 slow reps or 20–40 sec holds
 
@@ -613,15 +606,14 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Open-book rotation with knees stacked.
   - Focus on one thing first: "Upper back rotates".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Keep the range small and smooth at first, then slowly move a little farther as it feels easy.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add a brief end-range pause.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Once it feels smooth, hold a little longer or reach a little farther each time.
 
-**13. Mobility requirements:** thoracic rotation with a stable lower back.
+**13. Mobility requirements:** the ability to turn at the upper body while keeping your lower back still.
 
 **14. Progressions:**
   - Add a brief end-range pause
@@ -638,7 +630,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Child's pose side reach
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 5–10 slow reps or 20–40 sec holds
 
@@ -695,15 +687,14 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Supported wall reach.
   - Focus on one thing first: "Ribs stay down".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Keep the range small and smooth at first, then slowly move a little farther as it feels easy.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add a light lift-off from the wall.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Once it feels smooth, hold a little longer or reach a little farther each time.
 
-**13. Mobility requirements:** thoracic rotation with a stable lower back.
+**13. Mobility requirements:** the ability to turn at the upper body while keeping your lower back still.
 
 **14. Progressions:**
   - Add a light lift-off from the wall
@@ -720,7 +711,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Child's pose side reach
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 5–10 slow reps or 20–40 sec holds
 
@@ -777,15 +768,14 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Half-kneeling hip flexor stretch.
   - Focus on one thing first: "Long lunge first".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Keep the range small and smooth at first, then slowly move a little farther as it feels easy.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add a hamstring rock-back between reps.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Once it feels smooth, hold a little longer or reach a little farther each time.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso; thoracic rotation with a stable lower back.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Add a hamstring rock-back between reps
@@ -802,7 +792,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
   - Child's pose side reach
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 5–10 slow reps or 20–40 sec holds
 

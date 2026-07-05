@@ -80,13 +80,13 @@ Legend — 📷 = full visual sequence · 📝 = text guide (image pending) · �
 | [Agility ladder in-out](docs/exercise-reports/conditioning.md#agility-ladder-in-out) | intermediate | conditioning | 📝 |  |
 | [Agility ladder lateral](docs/exercise-reports/conditioning.md#agility-ladder-lateral) | intermediate | conditioning | 📝 |  |
 | [Assault bike sprint](docs/exercise-reports/conditioning.md#assault-bike-sprint) | Intermediate to advanced | conditioning | 📝 |  |
-| [Band power step](docs/exercise-reports/conditioning.md#band-power-step) | beginner | power | 📝 |  |
-| [Battle rope slams](docs/exercise-reports/conditioning.md#battle-rope-slams) | intermediate | power | 📷 |  |
-| [Battle rope waves](docs/exercise-reports/conditioning.md#battle-rope-waves) | Intermediate | general | 📷 |  |
+| [Band power step](docs/exercise-reports/conditioning.md#band-power-step) | beginner | conditioning | 📝 |  |
+| [Battle rope slams](docs/exercise-reports/conditioning.md#battle-rope-slams) | intermediate | conditioning | 📷 |  |
+| [Battle rope waves](docs/exercise-reports/conditioning.md#battle-rope-waves) | Intermediate | conditioning | 📷 |  |
 | [Bear crawl cardio](docs/exercise-reports/conditioning.md#bear-crawl-cardio) | intermediate | conditioning | 📷 |  |
 | [Bike sprint](docs/exercise-reports/conditioning.md#bike-sprint) | advanced | conditioning | 📝 |  |
 | [Box step-up cardio](docs/exercise-reports/conditioning.md#box-step-up-cardio) | beginner | conditioning | 📝 |  |
-| [Burpee](docs/exercise-reports/conditioning.md#burpee) | Intermediate | general | 📷 |  |
+| [Burpee](docs/exercise-reports/conditioning.md#burpee) | Intermediate | conditioning | 📷 |  |
 | [Butt kicks](docs/exercise-reports/conditioning.md#butt-kicks) | beginner | conditioning | 📝 |  |
 | [Cone drill zigzag](docs/exercise-reports/conditioning.md#cone-drill-zigzag) | intermediate | conditioning | 📝 |  |
 | [Elliptical trainer](docs/exercise-reports/conditioning.md#elliptical-trainer) | beginner | conditioning | 📝 |  |
@@ -95,7 +95,7 @@ Legend — 📷 = full visual sequence · 📝 = text guide (image pending) · �
 | [High knees](docs/exercise-reports/conditioning.md#high-knees) | Beginner | conditioning | 📷 |  |
 | [Jump rope](docs/exercise-reports/conditioning.md#jump-rope) | advanced | conditioning | 📝 |  |
 | [Jump rope double unders](docs/exercise-reports/conditioning.md#jump-rope-double-unders) | advanced | conditioning | 📝 |  |
-| [Jumping jack](docs/exercise-reports/conditioning.md#jumping-jack) | Beginner | power | 📷 |  |
+| [Jumping jack](docs/exercise-reports/conditioning.md#jumping-jack) | Beginner | conditioning | 📷 |  |
 | [Lateral shuffles](docs/exercise-reports/conditioning.md#lateral-shuffles) | beginner | conditioning | 📝 |  |
 | [Rower sprint](docs/exercise-reports/conditioning.md#rower-sprint) | Intermediate | conditioning | 📝 |  |
 | [Shadow boxing](docs/exercise-reports/conditioning.md#shadow-boxing) | beginner | conditioning | 📝 |  |
@@ -137,12 +137,12 @@ Legend — 📷 = full visual sequence · 📝 = text guide (image pending) · �
 |---|---|---|---|---|
 | [Band row to squat](docs/exercise-reports/full-body.md#band-row-to-squat) | beginner | compound | 📷 |  |
 | [Band thruster](docs/exercise-reports/full-body.md#band-thruster) | beginner | compound | 📷 |  |
-| [Bear crawl](docs/exercise-reports/full-body.md#bear-crawl) | Intermediate | core | 📷 |  |
-| [Bear crawl drag](docs/exercise-reports/full-body.md#bear-crawl-drag) | beginner | core | 📷 |  |
+| [Bear crawl](docs/exercise-reports/full-body.md#bear-crawl) | Intermediate | conditioning | 📷 |  |
+| [Bear crawl drag](docs/exercise-reports/full-body.md#bear-crawl-drag) | beginner | conditioning | 📷 |  |
 | [Dumbbell thruster](docs/exercise-reports/full-body.md#dumbbell-thruster) | standard | compound | 📷 |  |
-| [Man maker](docs/exercise-reports/full-body.md#man-maker) | advanced | compound | 📝 |  |
+| [Man maker](docs/exercise-reports/full-body.md#man-maker) | advanced | conditioning | 📝 |  |
 | [Medicine ball slam](docs/exercise-reports/full-body.md#medicine-ball-slam) | Intermediate | power | 📷 |  |
-| [Mountain climber](docs/exercise-reports/full-body.md#mountain-climber) | Beginner to intermediate | core | 📷 |  |
+| [Mountain climber](docs/exercise-reports/full-body.md#mountain-climber) | Beginner to intermediate | conditioning | 📷 |  |
 | [Push-up to down dog](docs/exercise-reports/full-body.md#push-up-to-down-dog) | beginner | compound | 📷 |  |
 | [Renegade row](docs/exercise-reports/full-body.md#renegade-row) | standard | compound | 📷 |  |
 
@@ -228,7 +228,7 @@ Legend — 📷 = full visual sequence · 📝 = text guide (image pending) · �
 | [90/90 hip flow](docs/exercise-reports/mobility.md#90-90-hip-flow) | Intermediate | mobility | 📷 |  |
 | [Ankle rocks](docs/exercise-reports/mobility.md#ankle-rocks) | Beginner | mobility | 📷 | ⚠️ uses expert jargon a child may not know (1 place(s)) |
 | [Cat-cow](docs/exercise-reports/mobility.md#cat-cow) | Beginner | mobility | 📷 |  |
-| [Child's pose side reach](docs/exercise-reports/mobility.md#child-s-pose-side-reach) | Beginner | general | 📷 |  |
+| [Child's pose side reach](docs/exercise-reports/mobility.md#child-s-pose-side-reach) | Beginner | mobility | 📷 |  |
 | [Hamstring stretch](docs/exercise-reports/mobility.md#hamstring-stretch) | Beginner | mobility | 📷 |  |
 | [Hip flexor stretch](docs/exercise-reports/mobility.md#hip-flexor-stretch) | Beginner | mobility | 📷 | ⚠️ uses expert jargon a child may not know (1 place(s)) |
 | [Shoulder mobility](docs/exercise-reports/mobility.md#shoulder-mobility) | Beginner | mobility | 📷 |  |

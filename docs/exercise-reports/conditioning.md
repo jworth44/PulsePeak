@@ -39,15 +39,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Walk the pattern first.
   - Focus on one thing first: "Eyes ahead".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Shorter ladder pass.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Shorter ladder pass
@@ -64,7 +63,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Box step-up cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -121,15 +120,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Shorter ladder segment.
   - Focus on one thing first: "Stay organized".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Walk-through pace.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Walk-through pace
@@ -146,7 +144,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Box step-up cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -203,15 +201,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Bike sprint.
   - Focus on one thing first: "Push and pull hard".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase sprint duration.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Increase sprint duration
@@ -230,7 +227,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Box jump
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -253,7 +250,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 <a id="band-power-step"></a>
 ## Band power step
 
-> 📝 Text guide (image pending) · Class: power
+> 📝 Text guide (image pending) · Class: conditioning
 
 **1. Exercise name:** Band power step
 
@@ -286,15 +283,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: High-knee march.
   - Focus on one thing first: "Tall posture".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Fast march in place.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Fast march in place
@@ -311,12 +307,11 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Box jump
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
-  - This is a higher joint-stress movement — warm up well and progress load slowly.
+  - This is a higher-stress movement — warm up well and add weight slowly.
 
-**18. Ideal rep range:** 3–6 explosive reps
+**18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
-**19. Ideal rest period:** 2–3 min (full recovery)
+**19. Ideal rest period:** 30–60 sec, or a 1:1 work:rest ratio
 
 **20. Training purpose:** Band power step is a conditioning pattern matched to resistance band. used to train conditioning.
 
@@ -335,7 +330,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 <a id="battle-rope-slams"></a>
 ## Battle rope slams
 
-> 📷 Full visual sequence · Class: power
+> 📷 Full visual sequence · Class: conditioning
 
 **1. Exercise name:** Battle rope slams
 
@@ -369,15 +364,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Alternating battle rope waves.
   - Focus on one thing first: "Brace before the lift".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Half-kneeling rope slams.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Half-kneeling rope slams
@@ -394,11 +388,11 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Box step-up cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
-**18. Ideal rep range:** 3–6 explosive reps
+**18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
-**19. Ideal rest period:** 2–3 min (full recovery)
+**19. Ideal rest period:** 30–60 sec, or a 1:1 work:rest ratio
 
 **20. Training purpose:** Battle rope slams combine a fast overhead lift with a sharp downward strike, producing a powerful cardio interval that also trains full-body coordination.
 
@@ -417,7 +411,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 <a id="battle-rope-waves"></a>
 ## Battle rope waves
 
-> 📷 Full visual sequence · Class: general
+> 📷 Full visual sequence · Class: conditioning
 
 **1. Exercise name:** Battle rope waves
 
@@ -451,15 +445,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Jumping jack.
   - Focus on one thing first: "Athletic stance".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Longer work intervals.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Longer work intervals
@@ -478,11 +471,11 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Box jump
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
-**18. Ideal rep range:** 8–12 reps
+**18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
-**19. Ideal rest period:** 60–90 sec
+**19. Ideal rest period:** 30–60 sec, or a 1:1 work:rest ratio
 
 **20. Training purpose:** Battle rope waves use repeated rope movement to challenge the shoulders, arms, and trunk while the lower body stays in an athletic stance.
 
@@ -535,15 +528,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Short crawl distance.
   - Focus on one thing first: "Small steps".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Bear crawl hold with shoulder taps.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Bear crawl hold with shoulder taps
@@ -560,7 +552,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Box step-up cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -616,15 +608,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: High-knee march.
   - Focus on one thing first: "Tall posture".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Fast march in place.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Fast march in place
@@ -641,7 +632,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Box jump
 
 **17. Injury considerations:**
-  - This is a higher joint-stress movement — warm up well and progress load slowly.
+  - This is a higher-stress movement — warm up well and add weight slowly.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -698,15 +689,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Lower box height.
   - Focus on one thing first: "Whole foot on the box".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Slow alternating step-up.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Slow alternating step-up
@@ -723,7 +713,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -746,7 +736,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 <a id="burpee"></a>
 ## Burpee
 
-> 📷 Full visual sequence · Class: general
+> 📷 Full visual sequence · Class: conditioning
 
 **1. Exercise name:** Burpee
 
@@ -782,15 +772,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Squat thrust.
   - Focus on one thing first: "Hands plant cleanly".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Add a jump.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Add a jump
@@ -809,11 +798,11 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bike sprint
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
-**18. Ideal rep range:** 8–12 reps
+**18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
-**19. Ideal rest period:** 60–90 sec
+**19. Ideal rest period:** 30–60 sec, or a 1:1 work:rest ratio
 
 **20. Training purpose:** The burpee combines a squat, plank, and explosive stand or jump into one full-body conditioning movement. It raises the heart rate quickly while challenging coordination and trunk control.
 
@@ -866,15 +855,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Marching butt kicks.
   - Focus on one thing first: "Stay tall".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Shorter work intervals.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Shorter work intervals
@@ -891,7 +879,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -948,15 +936,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Walk-jog through the cones.
   - Focus on one thing first: "Brake before you cut".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Fewer cones.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Fewer cones
@@ -973,7 +960,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -1030,15 +1017,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Shorter steady interval.
   - Focus on one thing first: "Stay tall".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Lower resistance.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Lower resistance
@@ -1055,7 +1041,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -1112,15 +1098,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Slower cadence.
   - Focus on one thing first: "Tiny contacts".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Marching fast feet.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Marching fast feet
@@ -1137,7 +1122,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -1194,15 +1179,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Fast forward walk plus controlled backpedal.
   - Focus on one thing first: "Accelerate smoothly".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Shorter lane.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Shorter lane
@@ -1219,7 +1203,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -1278,15 +1262,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: March in place.
   - Focus on one thing first: "Stay tall".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase speed.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Increase speed
@@ -1305,7 +1288,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bike sprint
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -1361,15 +1344,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: High-knee march.
   - Focus on one thing first: "Tall posture".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Fast march in place.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Fast march in place
@@ -1386,8 +1368,8 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bike sprint
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
-  - This is a higher joint-stress movement — warm up well and progress load slowly.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
+  - This is a higher-stress movement — warm up well and add weight slowly.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -1444,15 +1426,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Single-under jump rope.
   - Focus on one thing first: "Wrists stay fast".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Alternating single-single-double practice.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Alternating single-single-double practice
@@ -1469,7 +1450,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -1492,7 +1473,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 <a id="jumping-jack"></a>
 ## Jumping jack
 
-> 📷 Full visual sequence · Class: power
+> 📷 Full visual sequence · Class: conditioning
 
 **1. Exercise name:** Jumping jack
 
@@ -1526,15 +1507,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Step jack.
   - Focus on one thing first: "Light feet".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase pace.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Increase pace
@@ -1553,11 +1533,11 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bike sprint
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
 
-**18. Ideal rep range:** 3–6 explosive reps
+**18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
-**19. Ideal rest period:** 2–3 min (full recovery)
+**19. Ideal rest period:** 30–60 sec, or a 1:1 work:rest ratio
 
 **20. Training purpose:** The jumping jack is a classic bodyweight conditioning drill where the feet and arms move out and in together in a repeatable rhythm.
 
@@ -1610,15 +1590,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Short shuffle distance.
   - Focus on one thing first: "Stay low".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Reduced speed.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Reduced speed
@@ -1635,7 +1614,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -1694,15 +1673,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Steady rowing.
   - Focus on one thing first: "Legs drive first".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase interval intensity.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** shoulder-blade control to pull with the back, not just the arms.
+**13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
   - Increase interval intensity
@@ -1721,7 +1699,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Plank shoulder tap
 
 **17. Injury considerations:**
-  - Lower back: keep a flat, braced spine and avoid rounding under load.
+  - Lower back: keep your back flat (not rounded) and don't lift more than you can control.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -1778,15 +1756,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Hands-only punches from a fixed stance.
   - Focus on one thing first: "Hands stay relaxed".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Lower-tempo footwork.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Lower-tempo footwork
@@ -1803,7 +1780,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -1860,15 +1837,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Shorter shuttle distance.
   - Focus on one thing first: "Accelerate hard".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Jog the return.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Jog the return
@@ -1885,7 +1861,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -1942,15 +1918,15 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Bike sprint.
   - Focus on one thing first: "Lean from the ankles".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase load.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
+  - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
-**13. Mobility requirements:** shoulder and thoracic (upper-back) mobility to move overhead safely.
+**13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
 **14. Progressions:**
   - Increase load
@@ -1969,7 +1945,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Plank shoulder tap
 
 **17. Injury considerations:**
-  - Shoulders: stay in a pain-free range and stop if you feel pinching.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–40 meters or 30–45 sec per set
 
@@ -2026,15 +2002,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Alternating reverse lunge.
   - Focus on one thing first: "Land softly".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Split squat cardio reps.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Make each rep more explosive, or add a small jump/step up in height — keep landings soft.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
   - Split squat cardio reps
@@ -2051,8 +2026,8 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
-  - This is a higher joint-stress movement — warm up well and progress load slowly.
+  - Knees: keep them pointing over your toes and don't go so deep that they ache.
+  - This is a higher-stress movement — warm up well and add weight slowly.
 
 **18. Ideal rep range:** 3–6 explosive reps
 
@@ -2109,15 +2084,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Lower speed.
   - Focus on one thing first: "Full steps".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Shorter intervals.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** ankle dorsiflexion and hip flexion to reach depth with a tall torso.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Shorter intervals
@@ -2134,7 +2108,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Knees: keep them tracking over the toes and reduce depth if they ache.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -2191,15 +2165,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Shorter interval.
   - Focus on one thing first: "Smooth circles".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Lower resistance.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Lower resistance
@@ -2216,7 +2189,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -2273,15 +2246,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Flat treadmill walk.
   - Focus on one thing first: "Walk tall".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Increase incline.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Increase incline
@@ -2300,7 +2272,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bike sprint
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -2357,15 +2329,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Run-walk intervals.
   - Focus on one thing first: "Quick feet".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Lower pace.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Lower pace
@@ -2382,7 +2353,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
@@ -2439,15 +2410,14 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 **11. Beginner tips:**
   - If it feels hard, start with an easier version: Shorter walking interval.
   - Focus on one thing first: "Walk tall".
-  - Use light or no weight until the movement feels smooth and repeatable, then add load slowly.
+  - If you get tired, slow down or take a short break — don't push through sloppy or shaky form.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
   - Make it harder: Lower speed.
-  - Add tempo — slow the lowering phase or add a pause to increase difficulty without more weight.
-  - Once form is automatic, chase progressive overload (small load or rep increases week to week).
+  - Add difficulty by working longer, resting less, or going a bit faster while staying in control.
 
-**13. Mobility requirements:** general full-body control — no special mobility needed to start.
+**13. Mobility requirements:** general full-body coordination — no special stretchiness needed to start.
 
 **14. Progressions:**
   - Lower speed
@@ -2464,7 +2434,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
   - Bear crawl cardio
 
 **17. Injury considerations:**
-  - Low joint stress. Stop if any sharp pain appears and reduce range or load.
+  - Low joint stress. Stop if any sharp pain appears and make the movement smaller or easier.
 
 **18. Ideal rep range:** 20–60 sec work intervals (or 30–90 sec steady)
 
