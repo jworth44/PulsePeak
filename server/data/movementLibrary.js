@@ -593,6 +593,27 @@ const MOVEMENT_LIBRARY = [
     image: mediaRef("crunch", "Crunch form guide")
   }),
   movement({
+    id: "battle-ropes",
+    name: "Battle Rope Waves",
+    category: "cardio",
+    difficulty: "beginner",
+    environment: "both",
+    equipment: ["band"],
+    primaryMuscles: ["Shoulders", "Core"],
+    secondaryMuscles: ["Arms", "Cardio"],
+    instructions: [
+      "Hold one rope end in each hand and set up in an athletic quarter-squat with hips back.",
+      "Brace your core and keep a tall chest with a slight forward lean.",
+      "Drive the ropes with your arms to send continuous waves down to the anchor.",
+      "Keep a steady rhythm and breathe, staying low and stable the whole set."
+    ],
+    cues: ["Stay low and braced", "Drive from the shoulders", "Keep the waves continuous"],
+    commonMistakes: ["Standing upright and losing the squat", "Only moving the wrists", "Letting the waves die out"],
+    safetyNotes: ["Keep the core braced to protect the low back.", "Work in short intervals and rest as the shoulders fatigue."],
+    modifications: ["Both-arm waves for simplicity", "Shorter work intervals", "Lighter/thinner rope"],
+    image: mediaRef("battle-ropes", "Battle rope waves form guide")
+  }),
+  movement({
     id: "skater-hop",
     name: "Skater Hop",
     category: "cardio",
@@ -1174,7 +1195,8 @@ const MOVEMENT_NAME_ALIASES = new Map(
     ["ab wheel rollout", "ab-wheel"],
     ["bear crawl", "bear-crawl"],
     ["box jump", "box-jump"],
-    ["skater hop", "skater-hop"]
+    ["skater hop", "skater-hop"],
+    ["battle rope waves", "battle-ropes"]
   ].map(([name, id]) => [name.toLowerCase(), id])
 );
 
