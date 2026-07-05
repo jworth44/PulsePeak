@@ -666,8 +666,10 @@ async function runBrowserCoverage(browser) {
         `Preferences guidance button missing after reload :: url=${page.url()} :: console=${bucket.consoleErrors.join(" | ") || "none"} :: page=${bucket.pageErrors.join(" | ") || "none"} :: body=${(await page.locator("body").innerText().catch(() => "")).slice(0, 800)}`
       );
     }
+    // Unknown routes now render a branded 404 (not a silent redirect / white-screen).
     await page.goto(`${baseUrl}/not-a-real-shell-route`, { waitUntil: "networkidle" });
-    await page.getByText(/today's training direction/i).waitFor({ timeout: 15000 });
+    await page.getByText(/this page took a rest day/i).waitFor({ timeout: 15000 });
+    await page.getByRole("link", { name: /back to dashboard/i }).waitFor({ timeout: 10000 });
     recordScenario("free-user-shell-and-settings", {
       pass: bucket.consoleErrors.length === 0 && bucket.pageErrors.length === 0,
       consoleErrors: bucket.consoleErrors,

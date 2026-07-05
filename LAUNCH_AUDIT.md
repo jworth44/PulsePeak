@@ -32,9 +32,9 @@ gaps). Checkboxes track fix status during the commercial launch drive.
 - [ ] Legal/support: Privacy Policy `/privacy`, Terms `/terms`, Contact — **reachable logged-out** (router currently returns AuthPage for any unauth visitor).
 - [ ] Sentry (`@sentry/react`) + analytics scaffolds, dormant behind env vars.
 - [~] Cookie/consent notice — N/A by default (cookieless analytics, no non-essential cookies). Add only if owner enables cookie-based tracking.
-- [ ] Marketing landing page.
+- [ ] Marketing landing page (auth page serves as entry; dedicated landing = polish).
 - [x] CI workflow (`npm ci` + build + smoke).
-- [ ] Cleanup: empty `public_brand/`, stray root logs.
+- [x] Cleanup: empty `public_brand/`, stray root logs.
 
 ## Already SOLID (verified — no rework)
 Build/serve pipeline · `/api/health` + Render health check · CORS allow-list + trust proxy ·
