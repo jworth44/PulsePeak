@@ -154,7 +154,7 @@ Part of the Exercise Manufacturing Gold Standard. 17 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Barbell bench press is a chest pattern matched to barbell. used to train chest.
+**20. Training purpose:** Barbell bench press is a controlled strength exercise you perform with barbell used to train chest.
 
 **Setup:** Set the shoulders and wrists so the press starts from a stacked, controlled position.
 
@@ -624,21 +624,25 @@ Part of the Exercise Manufacturing Gold Standard. 17 exercises. See `EXERCISE_MA
   - Drive through the rep with chest tension.
 
 **11. Beginner tips:**
+  - If it feels hard, start with an easier version: Use less weight or a smaller range of motion to start.
   - Focus on one thing first: "Brace before you press.".
   - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
+  - Make it harder: Add a little weight or a few more reps as it gets easier.
   - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
   - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
 **14. Progressions:**
-  - _(none)_
+  - Add a little weight or a few more reps as it gets easier
+  - Slow the lowering part or add a short pause to make it harder without more weight
 
 **15. Regressions:**
-  - _(none)_
+  - Use less weight or a smaller range of motion to start
+  - Do fewer reps and rest a little longer between sets
 
 **16. Alternative exercises:**
   - Cable chest fly
@@ -653,7 +657,7 @@ Part of the Exercise Manufacturing Gold Standard. 17 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Dumbbell squeeze press is a chest pattern matched to dumbbells. used to train chest.
+**20. Training purpose:** Dumbbell squeeze press is a controlled strength exercise you perform with dumbbells used to train chest.
 
 **Setup:** Set the shoulders and wrists so the press starts from a stacked, controlled position.
 
@@ -734,7 +738,7 @@ Part of the Exercise Manufacturing Gold Standard. 17 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Flat dumbbell bench press is a chest pattern matched to dumbbells. used to train chest.
+**20. Training purpose:** Flat dumbbell bench press is a controlled strength exercise you perform with dumbbells used to train chest.
 
 **Setup:** Set the shoulders and wrists so the press starts from a stacked, controlled position.
 
@@ -1117,21 +1121,25 @@ Part of the Exercise Manufacturing Gold Standard. 17 exercises. See `EXERCISE_MA
   - Drive through the rep with chest tension.
 
 **11. Beginner tips:**
+  - If it feels hard, start with an easier version: Use less weight or a smaller range of motion to start.
   - Focus on one thing first: "Brace before you press.".
   - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
+  - Make it harder: Add a little weight or a few more reps as it gets easier.
   - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
   - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
-  - _(none)_
+  - Add a little weight or a few more reps as it gets easier
+  - Slow the lowering part or add a short pause to make it harder without more weight
 
 **15. Regressions:**
-  - _(none)_
+  - Use less weight or a smaller range of motion to start
+  - Do fewer reps and rest a little longer between sets
 
 **16. Alternative exercises:**
   - Cable chest fly
@@ -1280,21 +1288,25 @@ Part of the Exercise Manufacturing Gold Standard. 17 exercises. See `EXERCISE_MA
   - Drive through the rep with chest tension.
 
 **11. Beginner tips:**
+  - If it feels hard, start with an easier version: Use less weight or a smaller range of motion to start.
   - Focus on one thing first: "Brace before you press.".
   - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
+  - Make it harder: Add a little weight or a few more reps as it gets easier.
   - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
   - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
-  - _(none)_
+  - Add a little weight or a few more reps as it gets easier
+  - Slow the lowering part or add a short pause to make it harder without more weight
 
 **15. Regressions:**
-  - _(none)_
+  - Use less weight or a smaller range of motion to start
+  - Do fewer reps and rest a little longer between sets
 
 **16. Alternative exercises:**
   - Cable chest fly
@@ -1309,7 +1321,7 @@ Part of the Exercise Manufacturing Gold Standard. 17 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Ring push-up is a chest pattern matched to bodyweight. used to train chest.
+**20. Training purpose:** Ring push-up is a controlled strength exercise you perform with bodyweight used to train chest.
 
 **Setup:** Set the shoulders and wrists so the press starts from a stacked, controlled position.
 
@@ -1357,21 +1369,25 @@ Part of the Exercise Manufacturing Gold Standard. 17 exercises. See `EXERCISE_MA
   - Drive through the rep with chest tension.
 
 **11. Beginner tips:**
+  - If it feels hard, start with an easier version: Use less weight or a smaller range of motion to start.
   - Focus on one thing first: "Brace before you press.".
   - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
+  - Make it harder: Add a little weight or a few more reps as it gets easier.
   - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
   - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
-  - _(none)_
+  - Add a little weight or a few more reps as it gets easier
+  - Slow the lowering part or add a short pause to make it harder without more weight
 
 **15. Regressions:**
-  - _(none)_
+  - Use less weight or a smaller range of motion to start
+  - Do fewer reps and rest a little longer between sets
 
 **16. Alternative exercises:**
   - Cable chest fly
@@ -1386,7 +1402,7 @@ Part of the Exercise Manufacturing Gold Standard. 17 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Smith machine bench press is a chest pattern matched to machine or cable station. used to train chest.
+**20. Training purpose:** Smith machine bench press is a controlled strength exercise you perform with machine or cable station used to train chest.
 
 **Setup:** Set the shoulders and wrists so the press starts from a stacked, controlled position.
 

@@ -290,21 +290,25 @@ Part of the Exercise Manufacturing Gold Standard. 8 exercises. See `EXERCISE_MAN
   - Stay smooth from rep to rep.
 
 **11. Beginner tips:**
+  - If it feels hard, start with an easier version: Use less weight or a smaller range of motion to start.
   - Focus on one thing first: "Move with control.".
   - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
+  - Make it harder: Add a little weight or a few more reps as it gets easier.
   - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
   - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** general full-body control — no special mobility needed to start.
 
 **14. Progressions:**
-  - _(none)_
+  - Add a little weight or a few more reps as it gets easier
+  - Slow the lowering part or add a short pause to make it harder without more weight
 
 **15. Regressions:**
-  - _(none)_
+  - Use less weight or a smaller range of motion to start
+  - Do fewer reps and rest a little longer between sets
 
 **16. Alternative exercises:**
   - Preacher curl

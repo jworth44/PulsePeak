@@ -70,7 +70,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Band row to squat is a mid-back and lats pattern matched to resistance band. used to train mid-back, lats.
+**20. Training purpose:** Band row to squat is a controlled strength exercise you perform with resistance band used to train mid-back, lats.
 
 **Setup:** Set the feet, brace the trunk, and hold the resistance band where the torso can stay tall.
 
@@ -152,7 +152,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Band thruster is a shoulders pattern matched to resistance band. used to train shoulders.
+**20. Training purpose:** Band thruster is a controlled strength exercise you perform with resistance band used to train shoulders.
 
 **Setup:** Plant the feet, set the ribs down, and position the load over the hips before you begin the first rep.
 
@@ -315,7 +315,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 30–60 sec, or a 1:1 work:rest ratio
 
-**20. Training purpose:** Bear crawl drag is a back pattern matched to bodyweight. used to train back.
+**20. Training purpose:** Bear crawl drag is a controlled strength exercise you perform with bodyweight used to train back.
 
 **Setup:** Set up in a hovering tabletop beside the load, keep the knees just off the floor, and brace before each drag.
 
@@ -397,7 +397,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Dumbbell thruster is a shoulders pattern matched to dumbbells. used to train shoulders.
+**20. Training purpose:** Dumbbell thruster is a controlled strength exercise you perform with dumbbells used to train shoulders.
 
 **Setup:** Plant the feet, set the ribs down, and position the load over the hips before you begin the first rep.
 
@@ -477,7 +477,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 30–60 sec, or a 1:1 work:rest ratio
 
-**20. Training purpose:** Man maker is a shoulders pattern matched to dumbbells. used to train shoulders.
+**20. Training purpose:** Man maker is a controlled strength exercise you perform with dumbbells used to train shoulders.
 
 **Setup:** Place the dumbbells on the floor at shoulder width, set a strong plank, and prepare to move from the floor to standing in one sequence.
 
@@ -726,7 +726,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Push-up to down dog is a chest and triceps pattern matched to bodyweight. used to train chest, triceps.
+**20. Training purpose:** Push-up to down dog is a controlled strength exercise you perform with bodyweight used to train chest, triceps.
 
 **Setup:** Set the shoulders and wrists so the press starts from a stacked, controlled position.
 
@@ -807,7 +807,7 @@ Part of the Exercise Manufacturing Gold Standard. 10 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Renegade row is a mid-back and lats pattern matched to dumbbells. used to train mid-back, lats.
+**20. Training purpose:** Renegade row is a controlled strength exercise you perform with dumbbells used to train mid-back, lats.
 
 **Setup:** Set the torso and shoulders before the first pull so the line of force stays clean.
 

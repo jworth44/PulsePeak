@@ -6909,7 +6909,7 @@ function inferMovementQualityDetail(option, loweredName, primaryMuscles, equipme
   if (loweredName.includes("sled push")) return "Forward drive conditioning effort that loads the legs without a large eccentric hit.";
   if (loweredName.includes("rower sprint")) return "Short high-output rowing effort driven by legs, trunk timing, and a hard finish.";
   if (loweredName.includes("jump rope")) return "Rhythm-based conditioning drill built around repeated low-amplitude jumps.";
-  return `${primaryMuscles.join(" and ")} pattern matched to ${setup}.`;
+  return `controlled strength exercise you perform with ${setup}`;
 }
 
 function buildGuideSnapshot(option, loweredName, primaryMuscles, equipment, movementQualityDetail) {
@@ -7872,9 +7872,46 @@ function buildGuideModifications(option, loweredName, existingModifications = []
   if (loweredName.includes("sled push")) return ["Lighter sled push", "Marching sled push", "Bike sprint if sled space is unavailable"];
   if (loweredName.includes("rower sprint")) return ["Longer moderate rowing interval", "Bike sprint", "High-knees interval"];
   if (Array.isArray(existingModifications) && existingModifications.length) return existingModifications;
+  return buildGenericModifications(option, loweredName);
+}
+
+// Class-aware, directional fallback ordered [easier, easier, harder, harder] so
+// deriveGuideRegressions (slice 0,2) and deriveGuideProgressions (slice -2) both
+// return sensible, correctly-directional guidance instead of a broken placeholder.
+function buildGenericModifications(option, loweredName) {
+  const isMobility = String(option.mode || option.trainingType || "").toLowerCase() === "mobility"
+    || /(stretch|mobility|cat-cow|90\/90|hip flow|wall slide|thoracic|ankle rock|child|hip flexor)/.test(loweredName);
+  const isConditioning = /(sprint|treadmill|bike|elliptical|stair|rower|jump rope|shuttle|agility|butt kick|fast feet|shadow|cone|shuffle|high knee|jumping jack|battle rope|power step)/.test(loweredName);
+  const isPower = /(box jump|jump squat|slam|skater|broad jump|bound|med ball|split jump)/.test(loweredName);
+  if (isMobility) {
+    return [
+      "Make the movement smaller and gentler, or hold something for balance",
+      "Only move as far as feels comfortable — no forcing the stretch",
+      "Move a little farther as it loosens up",
+      "Hold the end position a little longer, or add a slow breath there"
+    ];
+  }
+  if (isConditioning) {
+    return [
+      "Go slower or take short walk breaks when you get tired",
+      "Shorten the work interval and rest a little longer",
+      "Work a bit longer or rest a little less",
+      "Increase the pace, resistance, or incline while staying in control"
+    ];
+  }
+  if (isPower) {
+    return [
+      "Do it without the jump first (step through the motion)",
+      "Use a lower height or a smaller, softer jump",
+      "Increase the height or distance a little",
+      "Make each rep more explosive — always land soft and controlled"
+    ];
+  }
   return [
-    "Reduce load or shorten the range slightly if the pattern feels shaky today.",
-    "Swap to a lower-stress movement in the same family if the setup does not fit."
+    "Use less weight or a smaller range of motion to start",
+    "Do fewer reps and rest a little longer between sets",
+    "Add a little weight or a few more reps as it gets easier",
+    "Slow the lowering part or add a short pause to make it harder without more weight"
   ];
 }
 

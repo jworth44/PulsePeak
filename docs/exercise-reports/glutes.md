@@ -153,7 +153,7 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 60–90 sec
 
-**20. Training purpose:** Banded glute bridge is a glutes pattern matched to resistance band. used to train glutes.
+**20. Training purpose:** Banded glute bridge is a controlled strength exercise you perform with resistance band used to train glutes.
 
 **Setup:** Plant the feet, set the ribs down, and position the load over the hips before you begin the first rep.
 
@@ -201,21 +201,25 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Stay smooth from rep to rep.
 
 **11. Beginner tips:**
+  - If it feels hard, start with an easier version: Use less weight or a smaller range of motion to start.
   - Focus on one thing first: "Move with control.".
   - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
+  - Make it harder: Add a little weight or a few more reps as it gets easier.
   - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
   - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
-  - _(none)_
+  - Add a little weight or a few more reps as it gets easier
+  - Slow the lowering part or add a short pause to make it harder without more weight
 
 **15. Regressions:**
-  - _(none)_
+  - Use less weight or a smaller range of motion to start
+  - Do fewer reps and rest a little longer between sets
 
 **16. Alternative exercises:**
   - Banded glute bridge
@@ -231,7 +235,7 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Barbell hip thrust pause is a glutes pattern matched to barbell. used to train glutes.
+**20. Training purpose:** Barbell hip thrust pause is a controlled strength exercise you perform with barbell used to train glutes.
 
 **Setup:** Plant the feet, set the ribs down, and position the load over the hips before you begin the first rep.
 
@@ -559,7 +563,7 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 60–90 sec
 
-**20. Training purpose:** Dumbbell glute bridge is a glutes pattern matched to dumbbells. used to train glutes.
+**20. Training purpose:** Dumbbell glute bridge is a controlled strength exercise you perform with dumbbells used to train glutes.
 
 **Setup:** Plant the feet, set the ribs down, and position the load over the hips before you begin the first rep.
 
@@ -1029,21 +1033,25 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
   - Stay smooth from rep to rep.
 
 **11. Beginner tips:**
+  - If it feels hard, start with an easier version: Use less weight or a smaller range of motion to start.
   - Focus on one thing first: "Move with control.".
   - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
+  - Make it harder: Add a little weight or a few more reps as it gets easier.
   - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
   - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
-  - _(none)_
+  - Add a little weight or a few more reps as it gets easier
+  - Slow the lowering part or add a short pause to make it harder without more weight
 
 **15. Regressions:**
-  - _(none)_
+  - Use less weight or a smaller range of motion to start
+  - Do fewer reps and rest a little longer between sets
 
 **16. Alternative exercises:**
   - Banded glute bridge
@@ -1058,7 +1066,7 @@ Part of the Exercise Manufacturing Gold Standard. 13 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 60–90 sec
 
-**20. Training purpose:** Single-leg glute bridge is a glutes pattern matched to bodyweight. used to train glutes.
+**20. Training purpose:** Single-leg glute bridge is a controlled strength exercise you perform with bodyweight used to train glutes.
 
 **Setup:** Plant the feet, set the ribs down, and position the load over the hips before you begin the first rep.
 

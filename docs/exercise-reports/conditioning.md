@@ -313,7 +313,7 @@ Part of the Exercise Manufacturing Gold Standard. 30 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 30–60 sec, or a 1:1 work:rest ratio
 
-**20. Training purpose:** Band power step is a conditioning pattern matched to resistance band. used to train conditioning.
+**20. Training purpose:** Band power step is a controlled strength exercise you perform with resistance band used to train conditioning.
 
 **Setup:** Set the band tension first, stand tall, and load the stance leg before you move.
 

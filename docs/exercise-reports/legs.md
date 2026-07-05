@@ -327,7 +327,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Banded good morning is a hamstrings and glutes pattern matched to resistance band. used to train hamstrings, glutes.
+**20. Training purpose:** Banded good morning is a controlled strength exercise you perform with resistance band used to train hamstrings, glutes.
 
 **Setup:** Set the load across the upper back, unlock the knees softly, and brace before you hinge from the hips.
 
@@ -408,7 +408,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Banded reverse lunge is a quads and glutes pattern matched to resistance band. used to train quads, glutes.
+**20. Training purpose:** Banded reverse lunge is a controlled strength exercise you perform with resistance band used to train quads, glutes.
 
 **Setup:** Build a split stance that lets both knees bend under control, stack the torso, and brace before you descend.
 
@@ -542,21 +542,25 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Finish tall without leaning back.
 
 **11. Beginner tips:**
+  - If it feels hard, start with an easier version: Use less weight or a smaller range of motion to start.
   - Focus on one thing first: "Send the hips back first.".
   - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
+  - Make it harder: Add a little weight or a few more reps as it gets easier.
   - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
   - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
-  - _(none)_
+  - Add a little weight or a few more reps as it gets easier
+  - Slow the lowering part or add a short pause to make it harder without more weight
 
 **15. Regressions:**
-  - _(none)_
+  - Use less weight or a smaller range of motion to start
+  - Do fewer reps and rest a little longer between sets
 
 **16. Alternative exercises:**
   - Band hip hinge
@@ -571,7 +575,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Barbell good morning is a hamstrings and glutes pattern matched to barbell. used to train hamstrings, glutes.
+**20. Training purpose:** Barbell good morning is a controlled strength exercise you perform with barbell used to train hamstrings, glutes.
 
 **Setup:** Set the load across the upper back, unlock the knees softly, and brace before you hinge from the hips.
 
@@ -788,21 +792,25 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Push the floor away on the way up.
 
 **11. Beginner tips:**
+  - If it feels hard, start with an easier version: Use less weight or a smaller range of motion to start.
   - Focus on one thing first: "Stay balanced through the whole foot.".
   - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
+  - Make it harder: Add a little weight or a few more reps as it gets easier.
   - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
   - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
-  - _(none)_
+  - Add a little weight or a few more reps as it gets easier
+  - Slow the lowering part or add a short pause to make it harder without more weight
 
 **15. Regressions:**
-  - _(none)_
+  - Use less weight or a smaller range of motion to start
+  - Do fewer reps and rest a little longer between sets
 
 **16. Alternative exercises:**
   - Back squat
@@ -948,21 +956,25 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Finish tall without leaning back.
 
 **11. Beginner tips:**
+  - If it feels hard, start with an easier version: Use less weight or a smaller range of motion to start.
   - Focus on one thing first: "Send the hips back first.".
   - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
+  - Make it harder: Add a little weight or a few more reps as it gets easier.
   - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
   - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** hamstring and hip flexibility to bend forward from the hips with a flat back.
 
 **14. Progressions:**
-  - _(none)_
+  - Add a little weight or a few more reps as it gets easier
+  - Slow the lowering part or add a short pause to make it harder without more weight
 
 **15. Regressions:**
-  - _(none)_
+  - Use less weight or a smaller range of motion to start
+  - Do fewer reps and rest a little longer between sets
 
 **16. Alternative exercises:**
   - Band hip hinge
@@ -977,7 +989,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Cable Romanian deadlift is a hamstrings and glutes pattern matched to machine or cable station. used to train hamstrings, glutes.
+**20. Training purpose:** Cable Romanian deadlift is a controlled strength exercise you perform with machine or cable station used to train hamstrings, glutes.
 
 **Setup:** Set the machine or cable station close to the body, brace the trunk, and hinge back until the hamstrings load before you pull.
 
@@ -1196,21 +1208,25 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Push the floor away on the way up.
 
 **11. Beginner tips:**
+  - If it feels hard, start with an easier version: Use less weight or a smaller range of motion to start.
   - Focus on one thing first: "Stay balanced through the whole foot.".
   - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
+  - Make it harder: Add a little weight or a few more reps as it gets easier.
   - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
   - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
-  - _(none)_
+  - Add a little weight or a few more reps as it gets easier
+  - Slow the lowering part or add a short pause to make it harder without more weight
 
 **15. Regressions:**
-  - _(none)_
+  - Use less weight or a smaller range of motion to start
+  - Do fewer reps and rest a little longer between sets
 
 **16. Alternative exercises:**
   - Dumbbell reverse lunge
@@ -1224,7 +1240,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Cossack squat is a legs pattern matched to bodyweight. used to train legs.
+**20. Training purpose:** Cossack squat is a controlled strength exercise you perform with bodyweight used to train legs.
 
 **Setup:** Set the feet, brace the trunk, and hold the bodyweight where the torso can stay tall.
 
@@ -1272,21 +1288,25 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
   - Push the floor away on the way up.
 
 **11. Beginner tips:**
+  - If it feels hard, start with an easier version: Use less weight or a smaller range of motion to start.
   - Focus on one thing first: "Stay balanced through the whole foot.".
   - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
+  - Make it harder: Add a little weight or a few more reps as it gets easier.
   - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
   - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** bendy ankles and hips so you can lower down while keeping your chest up.
 
 **14. Progressions:**
-  - _(none)_
+  - Add a little weight or a few more reps as it gets easier
+  - Slow the lowering part or add a short pause to make it harder without more weight
 
 **15. Regressions:**
-  - _(none)_
+  - Use less weight or a smaller range of motion to start
+  - Do fewer reps and rest a little longer between sets
 
 **16. Alternative exercises:**
   - Cossack squat
@@ -1300,7 +1320,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Dumbbell reverse lunge is a legs pattern matched to dumbbells. used to train legs.
+**20. Training purpose:** Dumbbell reverse lunge is a controlled strength exercise you perform with dumbbells used to train legs.
 
 **Setup:** Build a split stance that lets both knees bend under control, stack the torso, and brace before you descend.
 
@@ -2394,7 +2414,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Hip hinge reach is a hamstrings and glutes pattern matched to bodyweight. used to train hamstrings, glutes.
+**20. Training purpose:** Hip hinge reach is a controlled strength exercise you perform with bodyweight used to train hamstrings, glutes.
 
 **Setup:** Set the bodyweight close to the body, brace the trunk, and hinge back until the hamstrings load before you pull.
 
@@ -3321,7 +3341,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 45–60 sec
 
-**20. Training purpose:** Seated calf raise is a calves pattern matched to dumbbells. used to train calves.
+**20. Training purpose:** Seated calf raise is a controlled strength exercise you perform with dumbbells used to train calves.
 
 **Setup:** Stand tall, keep the ribs quiet, and begin from a light but controlled start position.
 
@@ -3486,7 +3506,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 45–60 sec
 
-**20. Training purpose:** Single-leg calf raise is a calves pattern matched to bodyweight. used to train calves.
+**20. Training purpose:** Single-leg calf raise is a controlled strength exercise you perform with bodyweight used to train calves.
 
 **Setup:** Stand tall, keep the ribs quiet, and begin from a light but controlled start position.
 
@@ -3819,7 +3839,7 @@ Part of the Exercise Manufacturing Gold Standard. 52 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 45–60 sec
 
-**20. Training purpose:** Standing calf raise is a calves pattern matched to machine or cable station. used to train calves.
+**20. Training purpose:** Standing calf raise is a controlled strength exercise you perform with machine or cable station used to train calves.
 
 **Setup:** Stand tall, keep the ribs quiet, and begin from a light but controlled start position.
 

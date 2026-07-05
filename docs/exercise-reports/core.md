@@ -1166,7 +1166,7 @@ Part of the Exercise Manufacturing Gold Standard. 18 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 30–45 sec
 
-**20. Training purpose:** Plank shoulder tap is a core pattern matched to bodyweight. used to train core.
+**20. Training purpose:** Plank shoulder tap is a controlled strength exercise you perform with bodyweight used to train core.
 
 **Setup:** Stack the shoulders over the hands or elbows, brace the trunk, and set a straight line from shoulders to heels.
 

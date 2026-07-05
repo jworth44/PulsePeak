@@ -916,7 +916,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Machine row is a mid-back and lats pattern matched to machine or cable station. used to train mid-back, lats.
+**20. Training purpose:** Machine row is a controlled strength exercise you perform with machine or cable station used to train mid-back, lats.
 
 **Setup:** Set the torso and shoulders before the first pull so the line of force stays clean.
 
@@ -997,7 +997,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Neutral-grip lat pulldown is a lats and upper back pattern matched to machine or cable station. used to train lats, upper back.
+**20. Training purpose:** Neutral-grip lat pulldown is a controlled strength exercise you perform with machine or cable station used to train lats, upper back.
 
 **Setup:** Set the torso and shoulders before the first pull so the line of force stays clean.
 
@@ -1550,21 +1550,25 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
   - Pause briefly when you reach the strongest position.
 
 **11. Beginner tips:**
+  - If it feels hard, start with an easier version: Use less weight or a smaller range of motion to start.
   - Focus on one thing first: "Start the pull from your back, not your hands.".
   - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
+  - Make it harder: Add a little weight or a few more reps as it gets easier.
   - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
   - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** the ability to pull with your back by squeezing your shoulder blades together.
 
 **14. Progressions:**
-  - _(none)_
+  - Add a little weight or a few more reps as it gets easier
+  - Slow the lowering part or add a short pause to make it harder without more weight
 
 **15. Regressions:**
-  - _(none)_
+  - Use less weight or a smaller range of motion to start
+  - Do fewer reps and rest a little longer between sets
 
 **16. Alternative exercises:**
   - Chin-up
@@ -1579,7 +1583,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Suspension row is a mid-back and lats pattern matched to bodyweight. used to train mid-back, lats.
+**20. Training purpose:** Suspension row is a controlled strength exercise you perform with bodyweight used to train mid-back, lats.
 
 **Setup:** Set the torso and shoulders before the first pull so the line of force stays clean.
 
@@ -1660,7 +1664,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** T-bar row is a mid-back and lats pattern matched to barbell. used to train mid-back, lats.
+**20. Training purpose:** T-bar row is a controlled strength exercise you perform with barbell used to train mid-back, lats.
 
 **Setup:** Set the torso and shoulders before the first pull so the line of force stays clean.
 
@@ -1741,7 +1745,7 @@ Part of the Exercise Manufacturing Gold Standard. 21 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 90–180 sec (heavier = longer)
 
-**20. Training purpose:** Tripod row is a mid-back and lats pattern matched to dumbbells. used to train mid-back, lats.
+**20. Training purpose:** Tripod row is a controlled strength exercise you perform with dumbbells used to train mid-back, lats.
 
 **Setup:** Set the torso and shoulders before the first pull so the line of force stays clean.
 

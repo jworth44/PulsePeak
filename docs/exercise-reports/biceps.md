@@ -238,7 +238,7 @@ Part of the Exercise Manufacturing Gold Standard. 11 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 45–60 sec
 
-**20. Training purpose:** Concentration curl is a biceps pattern matched to dumbbells. used to train biceps.
+**20. Training purpose:** Concentration curl is a controlled strength exercise you perform with dumbbells used to train biceps.
 
 **Setup:** Stand tall with the dumbbells hanging by your sides and the elbows close to the ribs.
 
@@ -319,7 +319,7 @@ Part of the Exercise Manufacturing Gold Standard. 11 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 45–60 sec
 
-**20. Training purpose:** EZ-bar curl is a biceps pattern matched to barbell. used to train biceps.
+**20. Training purpose:** EZ-bar curl is a controlled strength exercise you perform with barbell used to train biceps.
 
 **Setup:** Stand tall with the barbell hanging by your sides and the elbows close to the ribs.
 
@@ -651,7 +651,7 @@ Part of the Exercise Manufacturing Gold Standard. 11 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 45–60 sec
 
-**20. Training purpose:** Reverse curl is a brachioradialis and forearms pattern matched to barbell. used to train brachioradialis, forearms.
+**20. Training purpose:** Reverse curl is a controlled strength exercise you perform with barbell used to train brachioradialis, forearms.
 
 **Setup:** Stand tall with the barbell hanging by your sides and the elbows close to the ribs.
 
@@ -813,7 +813,7 @@ Part of the Exercise Manufacturing Gold Standard. 11 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 45–60 sec
 
-**20. Training purpose:** Towel curl isometric is a biceps pattern matched to bodyweight. used to train biceps.
+**20. Training purpose:** Towel curl isometric is a controlled strength exercise you perform with bodyweight used to train biceps.
 
 **Setup:** Stand tall with the bodyweight hanging by your sides and the elbows close to the ribs.
 
@@ -861,21 +861,25 @@ Part of the Exercise Manufacturing Gold Standard. 11 exercises. See `EXERCISE_MA
   - Stay smooth from rep to rep.
 
 **11. Beginner tips:**
+  - If it feels hard, start with an easier version: Use less weight or a smaller range of motion to start.
   - Focus on one thing first: "Move with control.".
   - Use light or no weight until the movement feels smooth and repeatable, then add weight slowly.
   - Move slowly and watch yourself in a mirror or video to check your positions.
 
 **12. Advanced tips:**
+  - Make it harder: Add a little weight or a few more reps as it gets easier.
   - Add tempo — slow the lowering part or add a pause to make it harder without more weight.
   - Once form is automatic, add small amounts of weight or a rep or two week to week.
 
 **13. Mobility requirements:** just enough shoulder movement to reach your arms out — no special flexibility needed to start.
 
 **14. Progressions:**
-  - _(none)_
+  - Add a little weight or a few more reps as it gets easier
+  - Slow the lowering part or add a short pause to make it harder without more weight
 
 **15. Regressions:**
-  - _(none)_
+  - Use less weight or a smaller range of motion to start
+  - Do fewer reps and rest a little longer between sets
 
 **16. Alternative exercises:**
   - Cross-body triceps extension
@@ -890,7 +894,7 @@ Part of the Exercise Manufacturing Gold Standard. 11 exercises. See `EXERCISE_MA
 
 **19. Ideal rest period:** 45–60 sec
 
-**20. Training purpose:** Wrist curl is a forearms pattern matched to dumbbells. used to train forearms.
+**20. Training purpose:** Wrist curl is a controlled strength exercise you perform with dumbbells used to train forearms.
 
 **Setup:** Stand tall with the dumbbells hanging by your sides and the elbows close to the ribs.
 
