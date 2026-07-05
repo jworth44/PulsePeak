@@ -51,6 +51,18 @@ export default function AppShell({ children }) {
     }),
     [location]
   );
+  const mobileTabs = useMemo(
+    () =>
+      [
+        { to: "/", label: "Today", end: true, icon: "home" },
+        { to: "/workouts", label: "Workouts", icon: "dumbbell" },
+        { to: "/exercise-library", label: "Library", icon: "grid" },
+        !hiddenModules.includes("nutrition") ? { to: "/nutrition", label: "Nutrition", icon: "utensils" } : null,
+        !hiddenModules.includes("progress") ? { to: "/progress", label: "Progress", icon: "trend" } : { to: "/plan", label: "Plan", icon: "calendar" }
+      ].filter(Boolean),
+    [hiddenModules]
+  );
+
   const [activeGroup, setActiveGroup] = useState(() => getGroupForRoute(location, navGroups) || "training");
 
   useLayoutEffect(() => {
@@ -177,8 +189,85 @@ export default function AppShell({ children }) {
       </aside>
 
       <main className="app-main">{children}</main>
+
+      <nav className="mobile-tabbar" aria-label="Primary">
+        {mobileTabs.map((tab) => (
+          <NavLink
+            key={tab.to}
+            to={tab.to}
+            end={tab.end}
+            className={({ isActive }) => `mobile-tab${isActive ? " active" : ""}`}
+          >
+            <TabIcon name={tab.icon} />
+            <span>{tab.label}</span>
+          </NavLink>
+        ))}
+      </nav>
     </div>
   );
+}
+
+function TabIcon({ name }) {
+  const common = {
+    width: 24,
+    height: 24,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.9,
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    "aria-hidden": true
+  };
+  switch (name) {
+    case "home":
+      return (
+        <svg {...common}>
+          <path d="M3 9.8 12 3l9 6.8" />
+          <path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5" />
+          <path d="M9.5 21v-6h5v6" />
+        </svg>
+      );
+    case "dumbbell":
+      return (
+        <svg {...common}>
+          <path d="M6.5 6.5v11M4 8.5v7M17.5 6.5v11M20 8.5v7M6.5 12h11" />
+        </svg>
+      );
+    case "grid":
+      return (
+        <svg {...common}>
+          <rect x="3" y="3" width="7.5" height="7.5" rx="1.5" />
+          <rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5" />
+          <rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5" />
+          <rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5" />
+        </svg>
+      );
+    case "utensils":
+      return (
+        <svg {...common}>
+          <path d="M4 3v6a2 2 0 0 0 4 0V3" />
+          <path d="M6 9v12" />
+          <path d="M17 3c-1.7 1-2.5 3.2-2.5 5.5 0 1.4 1 2.5 2.5 2.5V21" />
+        </svg>
+      );
+    case "trend":
+      return (
+        <svg {...common}>
+          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+          <polyline points="16 7 22 7 22 13" />
+        </svg>
+      );
+    case "calendar":
+      return (
+        <svg {...common}>
+          <rect x="3" y="4.5" width="18" height="16.5" rx="2" />
+          <path d="M3 9.5h18M8 2.5v4M16 2.5v4" />
+        </svg>
+      );
+    default:
+      return null;
+  }
 }
 
 function isRouteActive(pathname, to, end = false) {

@@ -5,13 +5,13 @@
 | | |
 |---|---|
 | **State** | Pre–Production Complete (0 of 2 states granted) |
-| **Last verified** | 2026-07-04 — build exit 0 · qa:launch **10/10** · 0 blockers · **0 warnings** · design-polish verified desktop 1440 + mobile 390, 0 console errors |
+| **Last verified** | 2026-07-05 — build exit 0 · qa:launch **10/10** · 0 blockers · **0 warnings** · redesign v2 verified desktop 1440 + mobile 390, 0 console errors, no horizontal scroll |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
 | **Media ledger** | **ZERO unmatched ✅** (was 36) — backlog #2 COMPLETE |
 | **Model standard** | FACTORY §5b: two locked models (fit/tanned/toned/beautiful), one per exercise; `qa:model-consistency` = **49 exercises ✓**; both male + female models in library |
-| **Design** | **Visual polish overlay LIVE ✅** (`src/styles-polish.css`) — premium athletic dark UI, verified both viewports |
-| **Active unit** | none (Design Polish unit closed) |
-| **Next unit** | Backlog #3 — PWA installability + mobile-viewport QA scenarios |
+| **Design** | **Design System v2.0 "Peak" LIVE ✅** — research-driven world-class redesign (`DESIGN_RESEARCH.md` + `DESIGN_SYSTEM.md`); retuned `:root` tokens + `styles-polish.css` v2 + **mobile bottom tab bar**; verified both viewports |
+| **Active unit** | none (Redesign v2 unit closed) |
+| **Next unit** | Backlog #3 — PWA installability + mobile-viewport QA scenarios (mobile-viewport now materially improved by the bottom-nav + no-horizontal-scroll work) |
 | **Open escaped defect** | Arnold Press exercise media has baked-in text ("3. ARNOLD PRESS / THUMBNAIL") — regen via Gemini in a media unit (VG-001) |
 | **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
 | **Owner gates pending** | none |
@@ -20,6 +20,37 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-05 · Design System v2.0 "Peak" — research-driven world-class redesign ✅✅** —
+  Owner rejected the prior look and commissioned a full autonomous revamp
+  ("find the top 5 web + top 5 mobile H&F apps, analyze business model /
+  design / features / palettes / ease of use / reviews, then rebuild to a
+  top-of-field bar"). **Research:** 3 parallel deep-research passes (top web
+  apps, top mobile apps, buildable design language) → `DESIGN_RESEARCH.md`
+  (10-app teardown: Strava, WHOOP, Oura, Garmin, TrainerRoad, Fitbod, Hevy,
+  Strong + steal/avoid) and `DESIGN_SYSTEM.md` (the buildable token spec).
+  **Key adopted principles:** WHOOP semantic-color discipline (red = brand +
+  effort, **Volt lime** = peak/PR/achievement, green/amber/red readiness
+  scale — red never doubles as success); dark-gray canvas (not pure black);
+  progressive disclosure; elevation via hairline-top highlight not drop
+  shadows; tabular figures on metrics. **Build:** retuned the default-theme
+  `:root` tokens in `styles.css` (cool near-black layers `#0A0B0D`/`#121417`,
+  refined Pulse Red `#F5283D`, Volt `#A3E635`, semantic + readiness palette,
+  tightened radii 20/14/10, layered dark-elevation, motion + spacing scales)
+  — propagates across all 4859 lines; rewrote `styles-polish.css` as the v2
+  layer (cards, buttons, chips, data-viz rings/bars/lines, empty states,
+  forms, motion); added SVG gradient + volt-peak state to `ProgressRing.jsx`.
+  **Biggest UX win:** new **mobile bottom tab bar** (`AppShell.jsx` + CSS —
+  Today · Workouts · Library · Nutrition · Progress, inline Lucide-style
+  icons, per-page active state) replacing the old sidebar-stacked-above-
+  content mobile layout; sidebar hidden on mobile. **Browser verification
+  caught + fixed a real responsive bug:** `.content-grid` (flex row, 380px
+  basis, no wrap) forced panels ~650px wide → horizontal scroll/clipping at
+  390px; fixed by stacking `.content-grid` + `min-width:0` on descendants +
+  `overflow-x:clip` guard (page now never scrolls sideways; firstPanelW 390
+  on every page). Kept Space Grotesk + Instrument Sans (premium, already
+  loaded) with tabular-nums for stats. Evidence: build exit 0; qa:launch
+  **10/10**, 0 blockers, 0 warnings; **0 console errors** desktop 1440 +
+  mobile 390; all 7 surfaces + movement modal verified premium both viewports.
 - **2026-07-04 · Design Polish unit — premium visual overlay LIVE ✅** —
   Owner set a hard bar ("world-class, $50k-professional-web-designer
   quality; a vibe that makes people WANT to explore") after the base UI
