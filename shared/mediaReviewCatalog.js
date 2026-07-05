@@ -307,6 +307,11 @@ const REVIEWED_MEDIA = {
     reviewSource: "pulsepeak_gemini_lateral_band_walk_female_v1",
     sequenceCount: 4
   }),
+  "ab-wheel": approvedAsset("ab-wheel-photo", {
+    exerciseId: "ab-wheel",
+    reviewSource: "pulsepeak_gemini_ab_wheel_male_v1",
+    sequenceCount: 4
+  }),
   "side-plank": approvedAsset("side-plank-photo", {
     exerciseId: "side-plank",
     reviewSource: "pulsepeak_ai_pilot_side_plank_male_v1",

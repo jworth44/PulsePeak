@@ -593,6 +593,27 @@ const MOVEMENT_LIBRARY = [
     image: mediaRef("crunch", "Crunch form guide")
   }),
   movement({
+    id: "ab-wheel",
+    name: "Ab Wheel Rollout",
+    category: "strength",
+    difficulty: "intermediate",
+    environment: "both",
+    equipment: ["bodyweight"],
+    primaryMuscles: ["Core"],
+    secondaryMuscles: ["Shoulders", "Lats"],
+    instructions: [
+      "Kneel on the floor and grip the ab wheel with both hands directly under your shoulders.",
+      "Brace your core and keep a flat back with your hips over your knees.",
+      "Roll the wheel forward, letting your body extend into a long line while resisting the low back arching.",
+      "Roll only as far as you can control, then pull back to the kneeling start."
+    ],
+    cues: ["Brace so the low back can't sag", "Roll only as far as you control", "Pull the wheel back with the abs"],
+    commonMistakes: ["Letting the hips pike or the low back arch", "Rolling out further than you can return from", "Using the arms instead of the core"],
+    safetyNotes: ["Reduce the range if the low back sags or aches.", "Stop the set before form breaks at the bottom."],
+    modifications: ["Rollout to a wall to limit range", "Short partial rollouts", "Stability-ball rollout"],
+    image: mediaRef("ab-wheel", "Ab wheel rollout form guide")
+  }),
+  movement({
     id: "lateral-band-walk",
     name: "Lateral Band Walk",
     category: "strength",
@@ -1086,7 +1107,8 @@ const MOVEMENT_NAME_ALIASES = new Map(
     ["hollow rock", "hollow-hold"],
     ["lateral band walk", "lateral-band-walk"],
     ["hip abduction", "lateral-band-walk"],
-    ["clamshell", "lateral-band-walk"]
+    ["clamshell", "lateral-band-walk"],
+    ["ab wheel rollout", "ab-wheel"]
   ].map(([name, id]) => [name.toLowerCase(), id])
 );
 
