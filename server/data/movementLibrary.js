@@ -593,6 +593,27 @@ const MOVEMENT_LIBRARY = [
     image: mediaRef("crunch", "Crunch form guide")
   }),
   movement({
+    id: "bear-crawl",
+    name: "Bear Crawl",
+    category: "cardio",
+    difficulty: "beginner",
+    environment: "both",
+    equipment: ["bodyweight"],
+    primaryMuscles: ["Core"],
+    secondaryMuscles: ["Shoulders", "Quads"],
+    instructions: [
+      "Set up on your hands and the balls of your feet with knees bent and hovering just off the floor.",
+      "Keep your back flat and level and your hips low, not piked up.",
+      "Crawl forward by moving one hand and the opposite foot together.",
+      "Keep the steps small and the hips quiet so the torso stays stable."
+    ],
+    cues: ["Knees hover low", "Move opposite hand and foot", "Keep the hips quiet"],
+    commonMistakes: ["Letting the hips pike up high", "Rocking side to side", "Taking steps too big to control"],
+    safetyNotes: ["Slow down if the low back rounds or the hips sway.", "Keep the knees low but not dragging the floor."],
+    modifications: ["Bear hold (no travel)", "Slow tempo crawl", "Crawl forward and back in a small space"],
+    image: mediaRef("bear-crawl", "Bear crawl form guide")
+  }),
+  movement({
     id: "ab-wheel",
     name: "Ab Wheel Rollout",
     category: "strength",
@@ -1108,7 +1129,8 @@ const MOVEMENT_NAME_ALIASES = new Map(
     ["lateral band walk", "lateral-band-walk"],
     ["hip abduction", "lateral-band-walk"],
     ["clamshell", "lateral-band-walk"],
-    ["ab wheel rollout", "ab-wheel"]
+    ["ab wheel rollout", "ab-wheel"],
+    ["bear crawl", "bear-crawl"]
   ].map(([name, id]) => [name.toLowerCase(), id])
 );
 

@@ -312,6 +312,11 @@ const REVIEWED_MEDIA = {
     reviewSource: "pulsepeak_gemini_ab_wheel_male_v1",
     sequenceCount: 4
   }),
+  "bear-crawl": approvedAsset("bear-crawl-photo", {
+    exerciseId: "bear-crawl",
+    reviewSource: "pulsepeak_gemini_bear_crawl_male_v1",
+    sequenceCount: 4
+  }),
   "side-plank": approvedAsset("side-plank-photo", {
     exerciseId: "side-plank",
     reviewSource: "pulsepeak_ai_pilot_side_plank_male_v1",
