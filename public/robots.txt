@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Replace the host below with the production domain at launch.
+Sitemap: https://REPLACE_WITH_PRODUCTION_DOMAIN/sitemap.xml
