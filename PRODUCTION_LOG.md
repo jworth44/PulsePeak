@@ -7,16 +7,22 @@
 | **State** | Pre–Production Complete (0 of 2 states granted) |
 | **Last verified** | 2026-07-04 — build exit 0 · qa:launch **10/10** · 0 blockers · 0 console errors |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
-| **Media ledger** | **6 unmatched** (was 36); + push-up escaped-defect fixed |
-| **Model standard** | FACTORY §5b: two locked models (fit/tanned/toned/beautiful), one per exercise; `qa:model-consistency` gate = **43 exercises ✓**; female model now in library (Lateral Band Walk) |
+| **Media ledger** | **4 unmatched** (was 36); + push-up escaped-defect fixed |
+| **Model standard** | FACTORY §5b: two locked models (fit/tanned/toned/beautiful), one per exercise; `qa:model-consistency` gate = **45 exercises ✓**; female model in library |
 | **Active unit** | Unit 2 Phase B — Gemini media production (owner-approved, in progress) |
-| **Next unit** | Ab Wheel Rollout → Bear Crawl → Box Jump → Skater Hop → Battle Ropes → Med Ball Slam (6 left) |
+| **Next unit** | Box Jump → Skater Hop → Battle Ropes → Med Ball Slam (4 left → ledger zero) |
 | **Owner gates pending** | none |
 
 ---
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-04 · Unit 2 Phase B batches 8–9 — Ab Wheel Rollout + Bear Crawl; ledger 6 → 4 ✅** —
+  both male, 4-frame sets, identity consistent, wired + reviewed. Bear Crawl:
+  Gemini renders locomotion as strides (honest for a crawl) rather than a
+  static hold. Evidence: qa:model-consistency 45/45; qa:launch 10/10, 0
+  blockers; build exit 0. **4 left: Box Jump, Skater Hop, Battle Ropes,
+  Med Ball Slam.**
 - **2026-07-04 · Unit 2 Phase B batches 6–7 — Hollow Body Hold + Lateral Band Walk; ledger 11 → 6 ✅** —
   Hollow Body Hold (male, `+hollow rock`) and **Lateral Band Walk — first
   use of the locked FEMALE model** (glute exercise; `+hip abduction`,
