@@ -593,6 +593,27 @@ const MOVEMENT_LIBRARY = [
     image: mediaRef("crunch", "Crunch form guide")
   }),
   movement({
+    id: "med-ball-slam",
+    name: "Medicine Ball Slam",
+    category: "cardio",
+    difficulty: "beginner",
+    environment: "both",
+    equipment: ["bodyweight"],
+    primaryMuscles: ["Core"],
+    secondaryMuscles: ["Shoulders", "Lats"],
+    instructions: [
+      "Stand tall holding a slam ball overhead with both hands, feet hip-width.",
+      "Brace your core and reach tall to load the movement.",
+      "Slam the ball straight down in front of you, hinging the hips and crunching the torso.",
+      "Pick the ball back up, stand tall, and reset for the next rep."
+    ],
+    cues: ["Reach tall, then slam", "Drive with the whole body", "Hinge the hips on the way down"],
+    commonMistakes: ["Slamming with only the arms", "Rounding the back to reach the ball", "Using a ball that bounces back up"],
+    safetyNotes: ["Use a non-bounce slam ball so it does not rebound into your face.", "Hinge at the hips to protect the low back."],
+    modifications: ["Lighter ball", "Half-height slam from chest", "Slower controlled tempo"],
+    image: mediaRef("med-ball-slam", "Medicine ball slam form guide")
+  }),
+  movement({
     id: "battle-ropes",
     name: "Battle Rope Waves",
     category: "cardio",
@@ -1196,7 +1217,8 @@ const MOVEMENT_NAME_ALIASES = new Map(
     ["bear crawl", "bear-crawl"],
     ["box jump", "box-jump"],
     ["skater hop", "skater-hop"],
-    ["battle rope waves", "battle-ropes"]
+    ["battle rope waves", "battle-ropes"],
+    ["medicine ball slam", "med-ball-slam"]
   ].map(([name, id]) => [name.toLowerCase(), id])
 );
 
