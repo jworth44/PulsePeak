@@ -22,11 +22,13 @@ import TermsPage from "./pages/TermsPage";
 import ContactPage from "./pages/ContactPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import PublicPageLayout from "./components/PublicPageLayout";
+import { usePageTracking } from "./lib/analytics";
 
 const BRAND_LOGO = "/brand/pulsepeak-main-logo.png";
 
 export default function App() {
   const { token, loading, needsOnboarding } = useAuth();
+  usePageTracking();
 
   if (loading) {
     return (
