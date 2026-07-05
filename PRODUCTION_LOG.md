@@ -7,16 +7,37 @@
 | **State** | Pre–Production Complete (0 of 2 states granted) |
 | **Last verified** | 2026-07-04 — build exit 0 · qa:launch **10/10** · 0 blockers · 0 console errors |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
-| **Media ledger** | **15 unmatched** (was 36) — Gemini pipeline proven, Crunch shipped |
+| **Media ledger** | **14 unmatched** (was 36); + push-up escaped-defect fixed |
+| **Model standard** | FACTORY §5b: two locked models (fit/tanned/toned/beautiful), one per exercise across its set; `qa:model-consistency` gate = **39 exercises ✓** |
 | **Active unit** | Unit 2 Phase B — Gemini media production (owner-approved, in progress) |
-| **Batch in flight** | **Russian Twist 2/4 frames approved+staged** (`temp/media-staging/russian-twist/step-1-raw.png` start · `step-2-raw.png` mid-right). Still needed: peak (rotated LEFT, hands by left hip) + finish (back to center, hands at chest) — the Gemini chat "Photorealistic Athlete Russian Twist" hung mid-stream; resume there or start a fresh chat with the reference re-pasted. Then: crop/resize/wire/QA per the batch-1 recipe below. |
-| **Next unit** | finish Russian Twist → Leg Raise → Hollow Hold → Superman → Ab Wheel → Bear Crawl → Lateral Band Walk → Box Jump → Skater Hop → Battle Ropes → Med Ball Slam |
+| **Next unit** | Leg Raise → Hollow Hold → Superman → Ab Wheel → Bear Crawl → Lateral Band Walk → Box Jump → Skater Hop → Battle Ropes → Med Ball Slam |
 | **Owner gates pending** | none |
 
 ---
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-04 · Model-identity standard + audit + push-up escaped-defect fix ✅** —
+  owner mandate: same model across an exercise's full set; use fit, athletic,
+  tanned, toned, beautiful men/women. Both locked references
+  (`reference_male.png`, `reference_female.png`) already meet that bar →
+  formalized as **FACTORY §5b** (locked-models-only, one-model-per-exercise,
+  the look is a gate). Built **`qa:model-consistency`** audit: for every
+  multi-frame model exercise verifies all frames present + dimensionally
+  coherent (scale-ratio ≤ 1.1, so legacy sub-pixel variance passes but mixed
+  sources fail) + review-sourced; emits `artifacts/model-consistency-manifest.json`
+  for the vision pass. First run flagged **push-up** (frames 192×184 vs
+  1672×941 — 3 garbled label-fragment crops + 1 full frame of the WRONG
+  dark-haired model). Regenerated push-up 4/4 via Gemini with the locked
+  blond model (identity correct first try), rebuilt to uniform 1536×1024,
+  reviewSource → `pulsepeak_gemini_push_up_male_v3`. Audit now **39/39 ✓**.
+  Added the model-identity row to the §5 quality gates. Evidence:
+  qa:model-consistency 39/39; qa:launch 10/10, 0 blockers; build exit 0;
+  crunch + russian-twist + push-up vision-verified same-model across all frames.
+- **2026-07-04 · Unit 2 Phase B batch 2 — Russian Twist shipped via Gemini; ledger 15 → 14 ✅** —
+  4-frame set (start / mid-right / peak-left / finish-center) + thumbnail,
+  locked male model, every frame reviewed; 2 drift rejections (dark hair;
+  invisible rotation) fixed with explicit locks. Committed `72edcab` region.
 - **2026-07-04 · Unit 2 Phase B batch 1 — Crunch shipped via Gemini; ledger 19 → 15 ✅** —
   owner approved Gemini (no API cost) over gpt-image-1. **Proven recipe:**
   (1) put `public/media/models/reference_male.png` on the Windows clipboard

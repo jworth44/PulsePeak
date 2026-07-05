@@ -13,6 +13,7 @@
     "media:batch": "node scripts/build-media-batch.mjs",
     "media:pilot-top5": "node scripts/build-top5-visual-pilot.mjs",
     "qa:exercise-library": "node scripts/exercise-library-audit.mjs",
+    "qa:model-consistency": "node scripts/model-consistency-audit.mjs",
     "qa:launch": "node scripts/launch-readiness.mjs",
     "qa:workout-guide-regression": "node scripts/workout-guide-regression.mjs"
   },

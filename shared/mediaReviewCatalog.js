@@ -137,9 +137,9 @@ export const DECLARED_EXERCISE_MODEL_MEDIA = {
 };
 
 const REVIEWED_MEDIA = {
-  "push-up": approvedAsset("push-up-step-2", {
+  "push-up": approvedAsset("push-up-photo", {
     exerciseId: "push-up",
-    reviewSource: "pulsepeak_ai_pilot_push_up_male_v2",
+    reviewSource: "pulsepeak_gemini_push_up_male_v3",
     sequenceCount: 4,
     videoUrl: "https://www.youtube.com/results?search_query=push-up+exercise+form"
   }),

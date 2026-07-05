@@ -76,6 +76,7 @@ A unit is **done** only when all of these hold:
 | Launch QA | `npm run qa:launch` — all scenarios pass, `blockers: []` |
 | Runtime errors | 0 console errors, 0 page errors during QA browser coverage |
 | Media | Every surfaced exercise visual resolves through the reviewed-media catalog — no unreviewed or silently-faked fallbacks on shipped surfaces |
+| Model identity | `npm run qa:model-consistency` passes (§5b): each exercise's frames present, dimensionally coherent, review-sourced. New/changed exercise media also gets a **full-res vision check that all frames are the same locked model** |
 | Both platforms | UI change ⇒ verified at desktop AND mobile viewport |
 | Honesty | No dead buttons, fake states, or simulated depth introduced |
 
@@ -101,6 +102,38 @@ its effect asserted, not just a page rendering. Audit of current coverage
 **Rule: no engine may be declared complete — and Production Complete cannot
 be granted — while its row is not ✅.** New engines enter this matrix before
 they enter the product.
+
+### 5b. MODEL IDENTITY STANDARD (exercise media)
+
+PulsePeak has exactly **two locked human models**, defined once in
+`shared/referenceModels.js` (`reference_male.png`, `reference_female.png`).
+They are the visual identity of the product and the look is deliberate:
+
+> **Fit, athletic, tanned, toned, and genuinely beautiful.** Lean, defined
+> musculature with natural skin texture (not bodybuilder-extreme, not soft);
+> healthy sun-kissed tan; symmetrical, attractive features; confident,
+> professional presence. Male: short blond-brown hair. Female: dark hair in a
+> ponytail. Both in the black-with-red PulsePeak training kit, in the dark
+> gym with red LED accents.
+
+Rules — enforced at review time and by `qa:model-consistency`:
+
+1. **Locked models only.** Every generated exercise visual must be one of the
+   two references. No new faces, no invented models.
+2. **One model per exercise, across the whole set.** All frames of a single
+   exercise (start → mid → peak → finish → thumbnail) must be the **same
+   person** — same face, hair, skin tone, and wardrobe. Identity drift within
+   an exercise is an automatic REJECT (this is the #1 failure mode of the
+   Gemini pipeline; see the batch recipe in PRODUCTION_LOG).
+3. **Consistent kit + gym.** Same wardrobe and environment across the set;
+   nothing exposed or altered that breaks continuity.
+4. **The look is a gate, not a nicety.** A technically-correct pose with an
+   off-standard or drifted model fails review.
+
+Model choice per exercise follows `resolveLockedModelForExercise`
+(mobility/glute/lunge/stretch bias female; the rest male) unless a specific
+exercise reads better with the other — either is valid, but it must be **one**
+model for that exercise's entire set.
 
 ## 6. AUTONOMY CONTRACT
 
