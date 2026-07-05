@@ -593,6 +593,27 @@ const MOVEMENT_LIBRARY = [
     image: mediaRef("crunch", "Crunch form guide")
   }),
   movement({
+    id: "russian-twist",
+    name: "Russian Twist",
+    category: "strength",
+    difficulty: "beginner",
+    environment: "both",
+    equipment: ["bodyweight", "dumbbell"],
+    primaryMuscles: ["Core", "Obliques"],
+    secondaryMuscles: ["Hip flexors"],
+    instructions: [
+      "Sit with knees bent and feet lightly on the floor, leaning your torso back to about 45 degrees.",
+      "Clasp your hands in front of your chest and keep your spine long, not rounded.",
+      "Rotate your shoulders and hands toward one side, moving from the ribcage rather than just the arms.",
+      "Return through the center and rotate to the other side with control."
+    ],
+    cues: ["Rotate from the ribs", "Chest tall, back long", "Move under control"],
+    commonMistakes: ["Rounding the lower back", "Swinging the arms without turning the torso", "Rushing the reps"],
+    safetyNotes: ["Sit taller and reduce the lean-back if the low back rounds.", "Keep the pace slow enough to feel the obliques working."],
+    modifications: ["Feet-down Russian twist", "Slow tempo without weight", "Seated torso rotations"],
+    image: mediaRef("russian-twist", "Russian twist form guide")
+  }),
+  movement({
     id: "side-plank",
     name: "Side Plank",
     category: "strength",

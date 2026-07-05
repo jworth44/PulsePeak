@@ -281,6 +281,11 @@ const REVIEWED_MEDIA = {
     reviewSource: "pulsepeak_gemini_crunch_male_v1",
     sequenceCount: 4
   }),
+  "russian-twist": approvedAsset("russian-twist-photo", {
+    exerciseId: "russian-twist",
+    reviewSource: "pulsepeak_gemini_russian_twist_male_v1",
+    sequenceCount: 4
+  }),
   "side-plank": approvedAsset("side-plank-photo", {
     exerciseId: "side-plank",
     reviewSource: "pulsepeak_ai_pilot_side_plank_male_v1",
