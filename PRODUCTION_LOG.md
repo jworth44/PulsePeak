@@ -5,15 +5,16 @@
 | | |
 |---|---|
 | **State** | Pre–Production Complete (0 of 2 states granted) |
-| **Last verified** | 2026-07-05 — build exit 0 · qa:launch **12/12** · 0 blockers · **0 warnings** · PWA assets valid + mobile-viewport-shell scenario green (true 390px) · install-prompt UI verified in-browser (renders, native prompt fires, dismissal persists) |
+| **Last verified** | 2026-07-05 — build exit 0 · qa:launch **13/13** · 0 blockers · **0 warnings** · api-hardening scenario green (malformed→JSON 400 no leak, /api 404 JSON, oversized password rejected 22ms, auth rate-limit 429) · atomic-write/guarded-read directly verified |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
 | **Media ledger** | **ZERO unmatched ✅** (was 36) — backlog #2 COMPLETE |
 | **Exercise-library visuals** | **172 / 208 visual guides (83%)** ✅ — wired 107 existing-but-unused image sets (`0c94589`); 36 remain text-only, need generation. `qa:exercise-library` PASSED, 0 broken |
 | **Model standard** | FACTORY §5b: two locked models (fit/tanned/toned/beautiful), one per exercise; `qa:model-consistency` = **49 exercises ✓**; both male + female models in library |
 | **Design** | **Design System v2.0 "Peak" LIVE ✅** — research-driven world-class redesign (`DESIGN_RESEARCH.md` + `DESIGN_SYSTEM.md`); retuned `:root` tokens + `styles-polish.css` v2 + **mobile bottom tab bar**; verified both viewports |
 | **PWA / installability** | **Backlog #3 COMPLETE ✅** — manifest + SW + icons built & served; honest `beforeinstallprompt` install-prompt UI (iOS hint fallback, dismissible, hides when installed); both prerequisites now **machine-enforced** in qa:launch (`pwa-installability-assets` + `mobile-viewport-shell` at true 390px) |
-| **Active unit** | none (Backlog #3 PWA unit closed) |
-| **Next unit** | Backlog #4 — CI: GitHub Actions on the remote running build + qa:launch on every push to main (needs a browser-install step for playwright-core; no live secrets while billing disabled) |
+| **Security / hardening** | **Backend-hardening unit DONE ✅** (red-team-driven) — atomic DB write + guarded read (P0 corruption fixed); password length cap + per-IP auth rate limiter (P0 unauthenticated scrypt-DoS + brute-force fixed); terminal error middleware + `/api` JSON 404 (P1 stack-trace/HTML leaks fixed); CORS safe default. Locked by qa:launch `api-hardening`. **Still open (owner/other units):** P0 ephemeral `/tmp` persistence (owner infra gate), O(n) full-file write + async scrypt (persistence unit), input type-confusion (input-integrity unit) — see `RED_TEAM_AUDIT.md` |
+| **Active unit** | none (backend-hardening unit closed) |
+| **Next unit** | owner's call — options: persistence (P0 `/tmp`, owner-gated) · input-integrity unit (P1 type-confusion/whitespace-wipe) · the **Living Coach** differentiation wedge (needs owner to enable an Anthropic API key on the host) · Backlog #4 CI. See `PRODUCT_DIFFERENTIATION.md` + `RED_TEAM_AUDIT.md` §8 |
 | **Open escaped defect** | Arnold Press exercise media has baked-in text ("3. ARNOLD PRESS / THUMBNAIL") — regen via Gemini in a media unit (VG-001) |
 | **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
 | **Owner gates pending** | none |
@@ -22,6 +23,34 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-05 · Backend-hardening unit — clears red-team P0/P1 security findings ✅** —
+  Driven by `RED_TEAM_AUDIT.md` (6-agent adversarial audit + live break-testing).
+  Owner endorsed sequencing hardening first (clears launch-blockers, no owner
+  gates) before the differentiation build. **Fixed:** (1) **P0 DB corruption** —
+  `writeDb` now writes a temp file then atomically `rename`s over the live DB
+  (crash/OOM/disk-full mid-write can no longer truncate it), with a direct-write
+  fallback for OneDrive/Windows lock cases; `readDb` wraps `JSON.parse` in
+  try/catch and surfaces a clean guarded error instead of crashing every request
+  with a raw `SyntaxError` (`server/data/store.js`). (2) **P0 unauthenticated
+  DoS** — `assertValidPassword` now caps length at 128 **before** any scrypt runs
+  (a 200k-char password was measured freezing the event loop ~8.7s; now rejected
+  in **22ms**) and requires a string type; a dependency-free per-IP fixed-window
+  rate limiter (100 auth attempts / 15 min) fronts `/api/auth/register` +
+  `/api/auth/login`, stopping online brute force + registration floods
+  (`server/server.js`). (3) **P1 info-leak** — a terminal 4-arg error middleware
+  converts body-parser failures + any uncaught throw into clean JSON (no HTML
+  stack traces disclosing absolute server paths), and an `/api` catch-all returns
+  JSON 404 instead of Express's default "Cannot GET /api/…". (4) **P2** CORS now
+  defaults to same-origin-only when no origins are configured (was fully-open).
+  **QA:** new `api-hardening` launch scenario asserts all four behaviors
+  (malformed JSON → JSON 400 no path leak; unknown `/api` → JSON 404; oversized
+  password rejected fast; auth burst → 429 after 92 attempts) — runs after
+  browser coverage so the rate-limit burst can't starve scenario logins.
+  Atomic-write round-trip + corrupt-file guarded-read verified directly out of
+  band. Evidence: build exit 0; qa:launch **13/13**, 0 blockers, 0 warnings.
+  **Deliberately deferred** (noted in log/audit, not silently dropped): async
+  scrypt + O(n) full-file-write (persistence unit), ephemeral `/tmp` (owner infra
+  gate), input type-confusion/whitespace-wipe (input-integrity unit).
 - **2026-07-05 · Backlog #3 — PWA installability: install-prompt UI + machine-enforced PWA/mobile QA ✅ (BACKLOG #3 DONE)** —
   The PWA scaffolding (VitePWA manifest, service worker, icons, meta tags) was
   already built and committed, but two pieces of the backlog item were missing:

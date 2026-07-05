@@ -1137,6 +1137,94 @@ async function runPwaAssetAudit() {
   }
 }
 
+// Backend-hardening gates (red-team P0/P1 fixes): malformed input returns clean
+// JSON with no stack/path leak, unknown API routes 404 as JSON, an oversized
+// password is rejected fast (no scrypt event-loop DoS), and auth endpoints are
+// rate-limited. Runs AFTER browser coverage so the rate-limit burst can't
+// starve the scenarios' own logins.
+async function runApiHardeningAudit() {
+  const checks = [];
+
+  // 1. Malformed JSON body -> clean JSON 400, no stack trace / absolute path leak.
+  {
+    const res = await fetch(`${baseUrl}/api/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: "{bad json"
+    });
+    const text = await res.text();
+    const ct = res.headers.get("content-type") || "";
+    const leaks = /SyntaxError|node_modules|at JSON\.parse|[A-Za-z]:\\\\|\/home\/|\.js:\d+/.test(text);
+    checks.push({
+      name: "malformed-json-clean-400",
+      ok: res.status === 400 && ct.includes("application/json") && !leaks,
+      detail: `status=${res.status} contentType=${ct} leak=${leaks}`
+    });
+  }
+
+  // 2. Unknown /api route -> JSON 404 (not HTML "Cannot GET /api/...").
+  {
+    const res = await fetch(`${baseUrl}/api/does-not-exist-${Date.now()}`);
+    const ct = res.headers.get("content-type") || "";
+    const text = await res.text();
+    checks.push({
+      name: "api-404-json",
+      ok: res.status === 404 && ct.includes("application/json") && !/Cannot GET/.test(text),
+      detail: `status=${res.status} contentType=${ct}`
+    });
+  }
+
+  // 3. Oversized password rejected fast (cap runs before scrypt; no event-loop freeze).
+  {
+    const huge = "a".repeat(200000);
+    const started = Date.now();
+    const res = await fetch(`${baseUrl}/api/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: "DoS Probe", email: `dos_${Date.now()}@pulsepeak.local`, password: huge })
+    });
+    const elapsed = Date.now() - started;
+    checks.push({
+      name: "oversized-password-rejected-fast",
+      ok: res.status === 400 && elapsed < 1000,
+      detail: `status=${res.status} elapsed=${elapsed}ms`
+    });
+  }
+
+  // 4. Auth rate limiting: a login burst from one IP eventually 429s.
+  {
+    let saw429 = false;
+    let attempts = 0;
+    for (let i = 0; i < 140; i += 1) {
+      attempts += 1;
+      const res = await fetch(`${baseUrl}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: "ratelimit_nobody@pulsepeak.local", password: "wrongpass" })
+      });
+      if (res.status === 429) {
+        saw429 = true;
+        break;
+      }
+    }
+    checks.push({
+      name: "auth-rate-limited",
+      ok: saw429,
+      detail: saw429 ? `429 after ${attempts} attempts` : "no 429 after 140 attempts"
+    });
+  }
+
+  report.apiHardening = checks;
+  const failed = checks.filter((check) => !check.ok);
+  recordScenario("api-hardening", {
+    pass: failed.length === 0,
+    note: "Malformed JSON -> JSON 400 (no path leak); unknown /api -> JSON 404; oversized password rejected fast; auth rate-limited."
+  });
+  if (failed.length) {
+    recordBlocker(`API hardening checks failed: ${failed.map((check) => `${check.name} (${check.detail})`).join(" | ")}`);
+  }
+}
+
 const server = startServer();
 let browser;
 
@@ -1158,6 +1246,9 @@ try {
   runMediaAudit();
   await runPwaAssetAudit();
   await runBrowserCoverage(browser);
+  // After browser coverage — the auth rate-limit burst must not starve the
+  // scenarios' own logins.
+  await runApiHardeningAudit();
 
   for (const scenario of report.scenarios) {
     if (!scenario.pass) {

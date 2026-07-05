@@ -62,7 +62,19 @@ const SEX_OPTIONS = ["female", "male", "non_binary", "prefer_not_to_say"];
 export function readDb() {
   ensureDbFile();
   const raw = fs.readFileSync(DB_PATH, "utf8");
-  const db = JSON.parse(raw);
+  let db;
+  try {
+    db = JSON.parse(raw);
+  } catch (error) {
+    // Never let a corrupt/half-written DB file crash every request with a raw
+    // SyntaxError. Atomic writes (see writeDb) make this near-impossible now,
+    // but a disk fault or external edit is still possible — surface a clean,
+    // actionable error that the terminal error middleware turns into a JSON 500.
+    throw new Error(`PulsePeak database file is unreadable at ${DB_PATH}: ${error.message}`);
+  }
+  if (!db || typeof db !== "object") {
+    throw new Error(`PulsePeak database file is not a valid object at ${DB_PATH}.`);
+  }
   if (!Array.isArray(db.users)) {
     db.users = [];
   }
@@ -91,7 +103,25 @@ export function readDb() {
 
 export function writeDb(db) {
   ensureDbFile();
-  fs.writeFileSync(DB_PATH, JSON.stringify(db, null, 2));
+  const payload = JSON.stringify(db, null, 2);
+  const tempPath = `${DB_PATH}.tmp`;
+  try {
+    // Atomic write: serialize to a temp file, then rename over the live file.
+    // rename is atomic on the same volume, so a crash/OOM/disk-full mid-write
+    // leaves the existing DB_PATH fully intact instead of truncated/corrupt.
+    fs.writeFileSync(tempPath, payload);
+    fs.renameSync(tempPath, DB_PATH);
+  } catch (error) {
+    // Some environments (OneDrive-synced dirs, transient Windows file locks)
+    // can reject the rename. Fall back to a direct write so persistence still
+    // succeeds; clean up any stray temp file.
+    fs.writeFileSync(DB_PATH, payload);
+    try {
+      fs.rmSync(tempPath, { force: true });
+    } catch {
+      // best-effort cleanup
+    }
+  }
 }
 
 function ensureDbFile() {

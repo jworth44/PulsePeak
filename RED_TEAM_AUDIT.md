@@ -6,6 +6,8 @@
 
 Legend: **P0** = data loss / outage / DoS / security. **P1** = broken flow, data-integrity, info-leak, or retention-critical. **P2** = hardening / polish.
 
+> **Resolution status (2026-07-05, backend-hardening unit):** ✅ **P0-1** (atomic write + guarded read), ✅ **P1-3** (error middleware + `/api` JSON 404), ✅ CORS default, and the DoS/brute-force core of **P0-3** (password length cap + auth rate limiting) are **fixed and locked by the qa:launch `api-hardening` scenario**. Still open: **P0-2** (ephemeral `/tmp`, owner infra gate), the async-scrypt + O(n)-full-file-write remainder of **P0-3** (persistence unit), and **P1-1** input type-confusion/whitespace-wipe (input-integrity unit).
+
 ---
 
 ## 1. Executive summary — top risks

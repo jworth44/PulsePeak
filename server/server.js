@@ -73,6 +73,45 @@ logStripeConfigurationWarnings();
 
 app.set("trust proxy", 1);
 
+// Minimal dependency-free per-IP fixed-window rate limiter. Used to blunt
+// brute-force login and registration-flood/DoS on the auth endpoints (scrypt
+// runs per attempt). `trust proxy` is set, so req.ip is the real client IP.
+function createRateLimiter({ windowMs, max, message }) {
+  const hits = new Map(); // ip -> { count, resetAt }
+  return function rateLimiter(request, response, next) {
+    const now = Date.now();
+    const ip = request.ip || request.socket?.remoteAddress || "unknown";
+    let entry = hits.get(ip);
+    if (!entry || entry.resetAt <= now) {
+      entry = { count: 0, resetAt: now + windowMs };
+      hits.set(ip, entry);
+    }
+    entry.count += 1;
+    // Opportunistic cleanup so the map can't grow unbounded.
+    if (hits.size > 5000) {
+      for (const [key, value] of hits) {
+        if (value.resetAt <= now) {
+          hits.delete(key);
+        }
+      }
+    }
+    if (entry.count > max) {
+      response.setHeader("Retry-After", Math.ceil((entry.resetAt - now) / 1000));
+      return response.status(429).json({ message: message || "Too many requests. Please try again later." });
+    }
+    return next();
+  };
+}
+
+// Auth endpoints: 100 attempts / 15 min per client IP. Generous for real users
+// (who log in a handful of times), tight enough to stop online brute force and
+// automated account-creation floods.
+const authRateLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "Too many attempts. Please wait a few minutes and try again."
+});
+
 // Security headers. CSP allowlists Google Fonts (used in index.html), Stripe
 // (checkout/js), and the same-origin service worker. React uses inline style
 // attributes, so 'unsafe-inline' is required in style-src only. Scripts are all
@@ -114,7 +153,10 @@ app.use(
             return callback(new Error("CORS origin not allowed."));
           }
         }
-      : {}
+      : // Safe default when no origins are configured: same-origin only (no
+        // cross-origin CORS headers) rather than the previous fully-open reflect.
+        // The SPA is served same-origin from dist, so this never affects it.
+        { origin: false }
   )
 );
 
@@ -149,7 +191,7 @@ app.get("/api/health", (_request, response) => {
   response.json({ ok: true });
 });
 
-app.post("/api/auth/register", (request, response) => {
+app.post("/api/auth/register", authRateLimiter, (request, response) => {
   try {
     const { name, email, password } = request.body;
     assertValidName(name);
@@ -169,7 +211,7 @@ app.post("/api/auth/register", (request, response) => {
   }
 });
 
-app.post("/api/auth/login", (request, response) => {
+app.post("/api/auth/login", authRateLimiter, (request, response) => {
   try {
     const { email, password } = request.body;
     assertValidEmail(email);
@@ -901,14 +943,47 @@ app.get("/api/weekly-plan", requireAuth, (request, response) => {
   });
 });
 
+// Any unmatched /api/* route returns JSON (not Express's default HTML
+// "Cannot GET /api/..." which leaks the framework and breaks res.json() clients).
+// Placed after all API routes, before the SPA fallback.
+app.use("/api", (request, response) => {
+  response.status(404).json({ message: "Not found." });
+});
+
 app.use(express.static(distPath));
 
-app.get("*", (request, response, next) => {
-  if (request.path.startsWith("/api")) {
-    return next();
-  }
-
+app.get("*", (request, response) => {
   return response.sendFile(path.join(distPath, "index.html"));
+});
+
+// Terminal error handler: converts body-parser failures and any uncaught
+// handler throw into a clean JSON response — never an HTML stack trace that
+// discloses absolute server file paths. Must be the last middleware, 4-arg.
+// eslint-disable-next-line no-unused-vars
+app.use((error, request, response, next) => {
+  const status =
+    error?.type === "entity.parse.failed"
+      ? 400
+      : error?.type === "entity.too.large"
+        ? 413
+        : Number.isInteger(error?.status) && error.status >= 400 && error.status < 600
+          ? error.status
+          : 500;
+  if (status >= 500) {
+    console.error("Unhandled server error:", error);
+  }
+  if (response.headersSent) {
+    return next(error);
+  }
+  const message =
+    status === 400
+      ? "Invalid request body."
+      : status === 413
+        ? "Request payload too large."
+        : status === 404
+          ? "Not found."
+          : "Something went wrong.";
+  return response.status(status).json({ message });
 });
 
 app.listen(port, () => {
@@ -1122,10 +1197,20 @@ function assertValidEmail(email) {
   }
 }
 
+const MAX_PASSWORD_LENGTH = 128;
+
 function assertValidPassword(password, allowShorterForLogin = false) {
-  const normalized = String(password || "");
+  if (typeof password !== "string") {
+    throw new Error("Password is required.");
+  }
+  // Cap length BEFORE any scrypt hashing runs. Unbounded input fed to the
+  // synchronous scryptSync blocks the single Node thread (a ~200k-char password
+  // was measured freezing the event loop ~8.7s) — an unauthenticated DoS.
+  if (password.length > MAX_PASSWORD_LENGTH) {
+    throw new Error(`Password must be at most ${MAX_PASSWORD_LENGTH} characters.`);
+  }
   const minimum = allowShorterForLogin ? 1 : 8;
-  if (normalized.trim().length < minimum) {
+  if (password.trim().length < minimum) {
     throw new Error(allowShorterForLogin ? "Password is required." : "Password must be at least 8 characters.");
   }
 }
