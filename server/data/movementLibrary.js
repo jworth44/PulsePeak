@@ -593,6 +593,27 @@ const MOVEMENT_LIBRARY = [
     image: mediaRef("crunch", "Crunch form guide")
   }),
   movement({
+    id: "superman",
+    name: "Superman",
+    category: "rehab",
+    difficulty: "beginner",
+    environment: "both",
+    equipment: ["bodyweight"],
+    primaryMuscles: ["Lower back"],
+    secondaryMuscles: ["Glutes", "Shoulders"],
+    instructions: [
+      "Lie face down with your arms extended straight out in front of you and legs straight behind.",
+      "Squeeze your glutes and lift your arms, chest, and legs off the floor at the same time.",
+      "Hold briefly at the top with a long body line, reaching the hands forward and feet back.",
+      "Lower everything back down slowly and reset before the next rep."
+    ],
+    cues: ["Reach long, don't just lift", "Squeeze the glutes", "Gaze down to protect the neck"],
+    commonMistakes: ["Cranking the neck up to look forward", "Bending the knees or elbows", "Jerking up instead of a smooth lift"],
+    safetyNotes: ["Keep the lift small if the low back feels pinched.", "Move slowly and stop if you feel any sharp back discomfort."],
+    modifications: ["Arms-only lift", "Legs-only lift", "Alternating opposite arm and leg"],
+    image: mediaRef("superman", "Superman back extension form guide")
+  }),
+  movement({
     id: "leg-raise",
     name: "Leg Raise",
     category: "strength",

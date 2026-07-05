@@ -291,6 +291,11 @@ const REVIEWED_MEDIA = {
     reviewSource: "pulsepeak_gemini_leg_raise_male_v1",
     sequenceCount: 4
   }),
+  superman: approvedAsset("superman-photo", {
+    exerciseId: "superman",
+    reviewSource: "pulsepeak_gemini_superman_male_v1",
+    sequenceCount: 4
+  }),
   "side-plank": approvedAsset("side-plank-photo", {
     exerciseId: "side-plank",
     reviewSource: "pulsepeak_ai_pilot_side_plank_male_v1",
