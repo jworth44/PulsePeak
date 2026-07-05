@@ -593,6 +593,27 @@ const MOVEMENT_LIBRARY = [
     image: mediaRef("crunch", "Crunch form guide")
   }),
   movement({
+    id: "lateral-band-walk",
+    name: "Lateral Band Walk",
+    category: "strength",
+    difficulty: "beginner",
+    environment: "both",
+    equipment: ["band"],
+    primaryMuscles: ["Glutes"],
+    secondaryMuscles: ["Hip abductors", "Quads"],
+    instructions: [
+      "Loop a resistance band around both legs just above the knees and set your feet hip-width apart.",
+      "Sink into an athletic quarter-squat with your hips back and chest up.",
+      "Step one foot out to the side so the band stretches and stays under tension.",
+      "Bring the trailing foot back in with control without letting the band go slack, then repeat."
+    ],
+    cues: ["Stay low the whole time", "Keep tension on the band", "Push the knees out, don't let them cave"],
+    commonMistakes: ["Standing up tall between steps", "Letting the band go slack", "Knees caving inward"],
+    safetyNotes: ["Use a lighter band if your knees drift inward.", "Keep steps small enough to stay controlled."],
+    modifications: ["Band above the ankles for less resistance", "Monster walk forward/back", "Clamshell for a seated-hip option"],
+    image: mediaRef("lateral-band-walk", "Lateral band walk form guide")
+  }),
+  movement({
     id: "hollow-hold",
     name: "Hollow Body Hold",
     category: "strength",
@@ -1062,7 +1083,10 @@ const MOVEMENT_NAME_ALIASES = new Map(
     ["lying leg raise", "leg-raise"],
     ["hanging knee raise", "leg-raise"],
     ["hollow body hold", "hollow-hold"],
-    ["hollow rock", "hollow-hold"]
+    ["hollow rock", "hollow-hold"],
+    ["lateral band walk", "lateral-band-walk"],
+    ["hip abduction", "lateral-band-walk"],
+    ["clamshell", "lateral-band-walk"]
   ].map(([name, id]) => [name.toLowerCase(), id])
 );
 

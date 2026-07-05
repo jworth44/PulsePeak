@@ -301,6 +301,12 @@ const REVIEWED_MEDIA = {
     reviewSource: "pulsepeak_gemini_hollow_hold_male_v1",
     sequenceCount: 4
   }),
+  "lateral-band-walk": approvedAsset("lateral-band-walk-photo", {
+    exerciseId: "lateral-band-walk",
+    modelKey: "female",
+    reviewSource: "pulsepeak_gemini_lateral_band_walk_female_v1",
+    sequenceCount: 4
+  }),
   "side-plank": approvedAsset("side-plank-photo", {
     exerciseId: "side-plank",
     reviewSource: "pulsepeak_ai_pilot_side_plank_male_v1",
