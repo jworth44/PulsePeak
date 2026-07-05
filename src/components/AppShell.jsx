@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../state/AuthContext";
 import { FALLBACK_THEME, applyThemePreference } from "../config/themes";
+import InstallPrompt from "./InstallPrompt";
 
 export default function AppShell({ children }) {
   const navigate = useNavigate();
@@ -203,6 +204,8 @@ export default function AppShell({ children }) {
           </NavLink>
         ))}
       </nav>
+
+      <InstallPrompt />
     </div>
   );
 }

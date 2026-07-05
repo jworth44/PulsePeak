@@ -162,9 +162,13 @@ goods:** verification machinery ships before the content it must judge.
    media (13 new movements generated via the Gemini pipeline against the two
    locked models + alias wiring). `qa:launch` unmatchedExerciseVariants=[],
    warnings=[]; `qa:model-consistency` 49/49.
-3. **Desktop & mobile installability** — add the PWA layer (manifest,
-   service worker, icons, install prompt) and mobile-viewport scenarios in
-   launch QA so gate 5 is enforced by machinery, not memory.
+3. ~~**Desktop & mobile installability**~~ **✅ DONE (2026-07-05).** PWA layer
+   (VitePWA manifest, service worker, icons, meta) shipped; honest
+   `InstallPrompt` UI added (real `beforeinstallprompt` flow, iOS hint,
+   dismissible, hides when installed). Gate 5 now enforced by machinery: qa:launch
+   adds `pwa-installability-assets` (manifest/SW/icons served + valid) and
+   `mobile-viewport-shell` (true 390px: sidebar→tab-bar, routes render, tab nav
+   routes, no horizontal scroll). qa:launch 12/12, 0 blockers/warnings.
 4. **CI** — GitHub Actions on the existing remote: build + `qa:launch` on
    every push to main; a red run blocks the conveyor until green. (Note:
    the QA harness uses `playwright-core` against a local Chrome — the

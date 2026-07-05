@@ -5,14 +5,15 @@
 | | |
 |---|---|
 | **State** | Pre–Production Complete (0 of 2 states granted) |
-| **Last verified** | 2026-07-05 — build exit 0 · qa:launch **10/10** · 0 blockers · **0 warnings** · redesign v2 verified desktop 1440 + mobile 390, 0 console errors, no horizontal scroll |
+| **Last verified** | 2026-07-05 — build exit 0 · qa:launch **12/12** · 0 blockers · **0 warnings** · PWA assets valid + mobile-viewport-shell scenario green (true 390px) · install-prompt UI verified in-browser (renders, native prompt fires, dismissal persists) |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
 | **Media ledger** | **ZERO unmatched ✅** (was 36) — backlog #2 COMPLETE |
 | **Exercise-library visuals** | **172 / 208 visual guides (83%)** ✅ — wired 107 existing-but-unused image sets (`0c94589`); 36 remain text-only, need generation. `qa:exercise-library` PASSED, 0 broken |
 | **Model standard** | FACTORY §5b: two locked models (fit/tanned/toned/beautiful), one per exercise; `qa:model-consistency` = **49 exercises ✓**; both male + female models in library |
 | **Design** | **Design System v2.0 "Peak" LIVE ✅** — research-driven world-class redesign (`DESIGN_RESEARCH.md` + `DESIGN_SYSTEM.md`); retuned `:root` tokens + `styles-polish.css` v2 + **mobile bottom tab bar**; verified both viewports |
-| **Active unit** | none (Redesign v2 unit closed) |
-| **Next unit** | Backlog #3 — PWA installability + mobile-viewport QA scenarios (mobile-viewport now materially improved by the bottom-nav + no-horizontal-scroll work) |
+| **PWA / installability** | **Backlog #3 COMPLETE ✅** — manifest + SW + icons built & served; honest `beforeinstallprompt` install-prompt UI (iOS hint fallback, dismissible, hides when installed); both prerequisites now **machine-enforced** in qa:launch (`pwa-installability-assets` + `mobile-viewport-shell` at true 390px) |
+| **Active unit** | none (Backlog #3 PWA unit closed) |
+| **Next unit** | Backlog #4 — CI: GitHub Actions on the remote running build + qa:launch on every push to main (needs a browser-install step for playwright-core; no live secrets while billing disabled) |
 | **Open escaped defect** | Arnold Press exercise media has baked-in text ("3. ARNOLD PRESS / THUMBNAIL") — regen via Gemini in a media unit (VG-001) |
 | **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
 | **Owner gates pending** | none |
@@ -21,6 +22,37 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-05 · Backlog #3 — PWA installability: install-prompt UI + machine-enforced PWA/mobile QA ✅ (BACKLOG #3 DONE)** —
+  The PWA scaffolding (VitePWA manifest, service worker, icons, meta tags) was
+  already built and committed, but two pieces of the backlog item were missing:
+  an install affordance and *machinery* to enforce gate 5 ("both platforms")
+  and installability so they can't silently regress. **Built** a new honest
+  `InstallPrompt.jsx` (mounted in `AppShell`): listens for `beforeinstallprompt`
+  (which the browser fires only when the app genuinely meets install criteria),
+  suppresses the mini-infobar, and shows a branded, dismissible card with a real
+  Install button that triggers the native prompt — renders **nothing** when the
+  event never fires (no dead button); iOS (no such event/API) gets an honest
+  "Share → Add to Home Screen" hint instead; hides when already installed
+  (`display-mode: standalone`) or after `appinstalled`; a dismissal is remembered
+  14 days. Styled in `styles-polish.css` from the v2 design tokens (sits
+  bottom-right on desktop, above the fixed tab bar on mobile). **QA hardening**
+  in `launch-readiness.mjs`: (1) `pwa-installability-assets` — a non-browser
+  audit that fetches `/manifest.webmanifest` (validates name/short_name/
+  start_url/`display:standalone`/192+512+maskable icons **and that every
+  referenced icon actually resolves as an image**), `/sw.js`, and the
+  apple-touch-icon; (2) `mobile-viewport-shell` — a real 390×844 Playwright
+  context asserting the desktop sidebar is hidden, the bottom tab bar takes over,
+  the primary routes render, tab-bar navigation actually routes, and **no page
+  scrolls sideways** on any surface (the exact regression the redesign fixed by
+  hand — now guarded by machinery). Caught + fixed one QA-authoring bug: the
+  `/nutrition` matcher `/nutrition/i` resolved to the hidden sidebar nav link at
+  mobile width and hung on waitFor-visible → retargeted to visible page copy.
+  **In-browser verification** (Chrome, authed AppShell): install prompt renders
+  premium, the Install button fires `prompt()` + dismisses, and the dismissal
+  persists to localStorage. Evidence: build exit 0; qa:launch **12/12**, 0
+  blockers, 0 warnings; `pwaAssets.errors: []` (manifest "PulsePeak — Personal
+  Fitness Companion", 3 icons). Gate 5 (both platforms) is now enforced by CI
+  machinery, not memory — a Production-Complete prerequisite.
 - **2026-07-05 · Design System v2.0 "Peak" — research-driven world-class redesign ✅✅** —
   Owner rejected the prior look and commissioned a full autonomous revamp
   ("find the top 5 web + top 5 mobile H&F apps, analyze business model /

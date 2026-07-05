@@ -837,6 +837,70 @@ async function runBrowserCoverage(browser) {
       note: "Nutrition, Habit, Body-Metrics and Progress engines verified end-to-end with API-level mutation asserts and reload persistence."
     });
   });
+
+  // Mobile-viewport shell: enforces FACTORY gate 5 ("both platforms") by
+  // machinery. At a phone viewport the desktop sidebar must give way to the
+  // fixed bottom tab bar, the primary routes must render, tab navigation must
+  // work, and no page may scroll sideways — the exact regression the redesign
+  // fixed manually. Runs at 390x844 (iPhone-class), below the 1080px breakpoint.
+  {
+    const context = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      hasTouch: true
+    });
+    const page = await context.newPage();
+    const bucket = { consoleErrors: [], pageErrors: [] };
+    collectNormalUsageErrors(page, bucket);
+    await page.addInitScript((storedToken) => {
+      window.localStorage.setItem("pulsepeak-auth-token", storedToken);
+    }, freeLogin.token);
+
+    async function assertNoHorizontalScroll(label) {
+      const overflow = await page.evaluate(() => ({
+        scrollWidth: document.documentElement.scrollWidth,
+        innerWidth: window.innerWidth
+      }));
+      expect(
+        overflow.scrollWidth <= overflow.innerWidth + 1,
+        `Horizontal scroll on ${label} at 390px: scrollWidth ${overflow.scrollWidth} > innerWidth ${overflow.innerWidth}.`
+      );
+    }
+
+    await assertDashboardRenders(page);
+    // Bottom tab bar is the mobile primary nav; desktop sidebar must be hidden.
+    await page.locator(".mobile-tabbar").waitFor({ state: "visible", timeout: 10000 });
+    expect(!(await page.locator(".sidebar").isVisible()), "Desktop sidebar is visible at 390px mobile viewport.");
+    await assertNoHorizontalScroll("dashboard");
+
+    const mobileRoutes = [
+      { path: "/workouts", matcher: /choose your setup, pick your focus/i },
+      { path: "/nutrition", matcher: /today's food direction|keep nutrition practical|nutrition is currently turned off/i },
+      { path: "/progress", matcher: /progress overview|performance trend|recent completed sessions/i, stableSelector: ".page-grid" }
+    ];
+    for (const route of mobileRoutes) {
+      await assertRouteRenders(page, route.path, route.matcher, {
+        stableSelector: route.stableSelector || "main, #root, .page-grid",
+        retries: 2,
+        retryDelayMs: 400
+      });
+      await assertNoHorizontalScroll(route.path);
+    }
+
+    // Tab navigation must actually route.
+    await page.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
+    await page.locator(".mobile-tabbar").waitFor({ state: "visible", timeout: 10000 });
+    await page.locator(".mobile-tab", { hasText: "Workouts" }).click();
+    await page.getByText(/choose your setup, pick your focus/i).waitFor({ timeout: 15000 });
+    expect(page.url().includes("/workouts"), `Mobile tab did not navigate to /workouts. URL: ${page.url()}`);
+
+    recordScenario("mobile-viewport-shell", {
+      pass: bucket.consoleErrors.length === 0 && bucket.pageErrors.length === 0,
+      consoleErrors: bucket.consoleErrors,
+      pageErrors: bucket.pageErrors,
+      note: "Phone viewport (390px): bottom tab bar replaces sidebar, primary routes render, tab nav routes, no horizontal scroll on any surface."
+    });
+    await context.close();
+  }
 }
 
 function runCombinationAudit() {
@@ -996,6 +1060,83 @@ function runMediaAudit() {
   }
 }
 
+// PWA installability is a machine-checkable contract: the built app must serve
+// a valid manifest, a service worker, and every icon the manifest references.
+// This asserts the prerequisites a browser uses to decide an app is
+// installable — so "installable" is enforced by CI, not by memory.
+async function runPwaAssetAudit() {
+  const errors = [];
+
+  async function fetchOk(pathname, label) {
+    try {
+      const response = await fetch(`${baseUrl}${pathname}`);
+      if (!response.ok) {
+        errors.push(`${label} (${pathname}) returned HTTP ${response.status}`);
+        return null;
+      }
+      return response;
+    } catch (error) {
+      errors.push(`${label} (${pathname}) failed to fetch: ${error.message}`);
+      return null;
+    }
+  }
+
+  const manifestResponse = await fetchOk("/manifest.webmanifest", "PWA manifest");
+  let manifest = null;
+  if (manifestResponse) {
+    try {
+      manifest = JSON.parse(await manifestResponse.text());
+    } catch (error) {
+      errors.push(`PWA manifest is not valid JSON: ${error.message}`);
+    }
+  }
+
+  if (manifest) {
+    if (!manifest.name) errors.push("Manifest missing name.");
+    if (!manifest.short_name) errors.push("Manifest missing short_name.");
+    if (!manifest.start_url) errors.push("Manifest missing start_url.");
+    if (manifest.display !== "standalone") {
+      errors.push(`Manifest display is "${manifest.display}", expected "standalone".`);
+    }
+    const icons = Array.isArray(manifest.icons) ? manifest.icons : [];
+    const has192 = icons.some((icon) => String(icon.sizes || "").includes("192x192"));
+    const has512 = icons.some((icon) => String(icon.sizes || "").includes("512x512"));
+    const hasMaskable = icons.some((icon) => String(icon.purpose || "").includes("maskable"));
+    if (!has192) errors.push("Manifest missing a 192x192 icon.");
+    if (!has512) errors.push("Manifest missing a 512x512 icon.");
+    if (!hasMaskable) errors.push("Manifest missing a maskable icon.");
+
+    // Every icon the manifest advertises must actually resolve.
+    for (const icon of icons) {
+      if (!icon.src) continue;
+      const iconPath = icon.src.startsWith("/") ? icon.src : `/${icon.src}`;
+      const iconResponse = await fetchOk(iconPath, "Manifest icon");
+      if (iconResponse) {
+        const type = iconResponse.headers.get("content-type") || "";
+        if (!type.startsWith("image/")) {
+          errors.push(`Manifest icon ${iconPath} served non-image content-type "${type}".`);
+        }
+      }
+    }
+  }
+
+  await fetchOk("/sw.js", "Service worker");
+  await fetchOk("/apple-touch-icon.png", "Apple touch icon");
+
+  report.pwaAssets = {
+    manifestName: manifest?.name || null,
+    iconCount: Array.isArray(manifest?.icons) ? manifest.icons.length : 0,
+    errors
+  };
+  recordScenario("pwa-installability-assets", {
+    pass: errors.length === 0,
+    note: "Manifest, service worker, and every referenced icon are served and valid (installability prerequisites)."
+  });
+  if (errors.length) {
+    recordBlocker(`PWA installability asset check failed: ${errors.join(" | ")}`);
+  }
+}
+
 const server = startServer();
 let browser;
 
@@ -1015,6 +1156,7 @@ try {
 
   runCombinationAudit();
   runMediaAudit();
+  await runPwaAssetAudit();
   await runBrowserCoverage(browser);
 
   for (const scenario of report.scenarios) {
