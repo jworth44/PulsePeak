@@ -593,6 +593,27 @@ const MOVEMENT_LIBRARY = [
     image: mediaRef("crunch", "Crunch form guide")
   }),
   movement({
+    id: "skater-hop",
+    name: "Skater Hop",
+    category: "cardio",
+    difficulty: "intermediate",
+    environment: "both",
+    equipment: ["bodyweight"],
+    primaryMuscles: ["Glutes", "Quads"],
+    secondaryMuscles: ["Calves", "Core"],
+    instructions: [
+      "Balance on one leg in a slight single-leg squat with the other leg swung back behind.",
+      "Push off sideways, bounding laterally to the other side.",
+      "Land softly on the opposite leg, absorbing the landing with a bent knee.",
+      "Stabilize on that leg, then bound back the other way in a smooth rhythm."
+    ],
+    cues: ["Push off and land on one leg", "Land soft and controlled", "Swing the arms for momentum"],
+    commonMistakes: ["Landing stiff or off-balance", "Bounding too far to control", "Letting the knee cave on landing"],
+    safetyNotes: ["Keep the bound small until you can land in balance.", "Land on the whole foot, not just the toes."],
+    modifications: ["Small lateral hop with a tap down", "Slow skater with a pause on each landing", "Lateral step instead of a hop"],
+    image: mediaRef("skater-hop", "Skater hop form guide")
+  }),
+  movement({
     id: "box-jump",
     name: "Box Jump",
     category: "cardio",
@@ -1152,7 +1173,8 @@ const MOVEMENT_NAME_ALIASES = new Map(
     ["clamshell", "lateral-band-walk"],
     ["ab wheel rollout", "ab-wheel"],
     ["bear crawl", "bear-crawl"],
-    ["box jump", "box-jump"]
+    ["box jump", "box-jump"],
+    ["skater hop", "skater-hop"]
   ].map(([name, id]) => [name.toLowerCase(), id])
 );
 

@@ -322,6 +322,11 @@ const REVIEWED_MEDIA = {
     reviewSource: "pulsepeak_gemini_box_jump_male_v1",
     sequenceCount: 4
   }),
+  "skater-hop": approvedAsset("skater-hop-photo", {
+    exerciseId: "skater-hop",
+    reviewSource: "pulsepeak_gemini_skater_hop_male_v1",
+    sequenceCount: 4
+  }),
   "side-plank": approvedAsset("side-plank-photo", {
     exerciseId: "side-plank",
     reviewSource: "pulsepeak_ai_pilot_side_plank_male_v1",
