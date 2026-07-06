@@ -1340,6 +1340,38 @@ input:focus, select:focus, textarea:focus {
   .foryou-item { flex-wrap: wrap; }
 }
 
+/* Recovery -> reflection nudge: the next chapter in the training day. */
+.recovery-next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 22px 24px;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(120% 120% at 0% 0%, rgba(163, 230, 53, 0.06), transparent 60%),
+    linear-gradient(180deg, rgba(26, 29, 33, 0.96), rgba(14, 15, 18, 0.98));
+  border: 1px solid var(--border-subtle);
+}
+.recovery-next-copy strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.12rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+.recovery-next-copy .support-copy { margin-top: 4px; }
+.recovery-next-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+@media (max-width: 640px) {
+  .recovery-next-actions { width: 100%; }
+  .recovery-next-actions .primary-button { flex: 1 1 auto; text-align: center; }
+}
+
 /* Paywall: the free trial is the hero offer — give it a single clear focal point. */
 .upgrade-tier-card-featured {
   border-color: rgba(163, 230, 53, 0.3) !important;

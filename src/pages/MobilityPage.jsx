@@ -763,6 +763,24 @@ export default function MobilityPage() {
         )}
       </Panel>
 
+      {/* Recovery is a chapter in the training day, not a dead-end library —
+          carry the user forward into reflection and tomorrow. */}
+      <section className="recovery-next">
+        <div className="recovery-next-copy">
+          <p className="section-label">Next in your day</p>
+          <strong>See how your week is coming together</strong>
+          <p className="support-copy">Check what's improving, then line up tomorrow's session.</p>
+        </div>
+        <div className="recovery-next-actions">
+          <button className="primary-button" type="button" onClick={() => navigate("/progress")}>
+            See your progress →
+          </button>
+          <button className="ghost-button" type="button" onClick={() => navigate("/")}>
+            Back to today
+          </button>
+        </div>
+      </section>
+
       <MovementDetailModal
         guidanceLevel={guidanceLevel}
         movement={selectedMovement}
