@@ -19,7 +19,8 @@
 | **Differentiation** | **Wow-Factor Phase 5 DONE ✅** — brutally-honest re-review appended to `PRODUCT_DIFFERENTIATION.md`. Verdict moved from "no reason to exist" → **"a real, defensible reason on the emotion/retention/delight axis"** ("the fitness app that celebrates your progress"), a genuine market gap. Remaining pillars are owner-gated: the **Living Coach** (Anthropic API key/$) and native/wearable reach. **Wow-Factor program (Phases 1–5) COMPLETE** |
 | **Attentive intelligence** | **Insight Engine LIVE ✅** — `buildInsights` (honest, evidence-gated): PR opportunity, strength progress, neglected muscle group, comeback, streak risk, weekly momentum, volume trend, plateau, best-training-day; sparse/new user → activation-only (no fabrication); each insight carries evidence + reason + action. `buildNextBestAction`. Dashboard opens with a personalized **"For You Today"** section (`TodayForYou`) — first thing the user sees is specific to their real history. Mission 1 recent-work re-verified independently (all PASS). QA `insight-engine` (10 cases). Browser-verified rich + new-user (honest activation) |
 | **Positioning** | **Mission 5 re-answer done** (`PRODUCT_DIFFERENTIATION.md`): *"PulsePeak is the fitness app that actually pays attention — it turns your training data into personal momentum."* Now **product-proven** (insight engine + celebrations + retention loop all live). Remaining differentiator: Living Coach (owner API key). |
-| **Active unit** | none — **Alive Product mission complete** (all 6 sub-missions done). Autonomous work exhausted; next differentiator (Living Coach) is an owner-gated blocker (Anthropic API key/$) |
+| **Design V3 polish** | **IN PROGRESS** — premium product-polish pass (owner: "Apple-worthy craft, less noise/more clarity, one focal point"). **Units 1–3 done:** dashboard hierarchy (For You Today = focal point; fixed 666×72px empty-badge defect + grid row-stretch dead-space; subordinated hero heading; removed conflicting streak stat; decluttered sidebar brand) · sidebar submenu gated to multi-item groups + refined global heading scale (2.85→2.3rem) · **premium auth first-impression** (mix-blend-mode:screen killed the logo's black box; 7→4-line headline; changelog copy → honest positioning). All browser-verified desktop+mobile, qa:launch 17/17. **Remaining audit (prioritized):** onboarding · new-user empty states · exercise library · nutrition · coach · progress filler cards ("Holding steady"×3, "temporarily simplified") · settings · modals · premium/paywall |
+| **Active unit** | **Design V3 polish** (premium craft pass) — units 1–3 committed; continuing screen-by-screen |
 | **Next unit / owner gates** | **Living Coach** = the last differentiator, **blocked on owner enabling an Anthropic API key** (real per-call money). Other autonomous options: input-integrity (red-team P1), CI (#4). Owner-gated: persistence P0 `/tmp` (infra), native/wearable. See `PRODUCT_DIFFERENTIATION.md` re-review + `RED_TEAM_AUDIT.md` §8 |
 | **Open escaped defect** | Arnold Press exercise media has baked-in text ("3. ARNOLD PRESS / THUMBNAIL") — regen via Gemini in a media unit (VG-001) |
 | **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
@@ -28,6 +29,28 @@
 ---
 
 One line per unit: date · what · why · evidence. Newest first.
+
+- **2026-07-06 · Design System V3 — premium product-polish pass (units 1–3) ✅** —
+  Owner shifted from features to pure craft ("Apple/Linear/Stripe bar; less noise,
+  more clarity; one obvious focal point; remove weak cards + generic copy"). Acting
+  as product/visual/UX designer, audited the live app in-browser and shipped three
+  verified units. **U1 dashboard:** made "For You Today" the single focal point;
+  fixed a real defect where the "Today" badge was a `display:block` grid child
+  stretched to a 666×72px empty box (→ 24px pill) and the copy column's rows were
+  stretching (grid `align-content:normal`==stretch) into dead space (→ top-packed);
+  subordinated the focus heading (2.85→1.8rem); removed the hero's "current streak"
+  stat that showed a *different number* than the StreakCard below it; decluttered the
+  sidebar brand lockup; dropped a stray copy line. **U2:** gated the sidebar submenu
+  to multi-item groups only (Dashboard showed a redundant panel duplicating the
+  active nav item); refined the global module-hero heading scale 2.85→2.3rem with
+  tighter line-height/tracking (was shouty). **U3 auth (first impression):** killed
+  the logo PNG's baked-in black box with `mix-blend-mode:screen`; refined the hero
+  headline 3.6rem/11ch→2.7rem/15ch (7→4 balanced lines); replaced dev-changelog copy
+  with honest positioning matching the attentive product. Evidence: build 0; qa:launch
+  **17/17** 0 blockers/warnings after each unit; browser-verified desktop 1440 +
+  mobile 390, no console errors. Commits `9746c5f`, `89ec333`, `a90aaec`. Remaining
+  screens (onboarding, empty states, library, nutrition, coach, settings, modals,
+  premium) queued for continuation.
 
 - **2026-07-05 · Alive Product — attentive insight engine + personalized dashboard ✅** —
   Owner: make PulsePeak *attentive*, not decorative — it should notice, remember,
