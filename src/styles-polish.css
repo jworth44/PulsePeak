@@ -127,6 +127,7 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
 .panel,
 .module-card,
 .today-hero,
+.today-launch,
 .weekly-plan-block,
 .movement-detail-block,
 .onboarding-step,
@@ -1337,6 +1338,47 @@ input:focus, select:focus, textarea:focus {
   .foryou-hero { flex-direction: column; align-items: flex-start; gap: 12px; }
   .foryou-cta { width: 100%; text-align: center; }
   .foryou-item { flex-wrap: wrap; }
+}
+
+/* ===================================================================== */
+/* TODAY'S SESSION — slim launcher supporting the For You hero            */
+/* ===================================================================== */
+.today-launch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 22px 26px;
+}
+.today-launch-copy { min-width: 0; }
+.today-launch-copy .badge { margin-bottom: 10px; }
+.today-launch-copy h2 { margin: 0; }
+.today-launch-copy .lead-copy { margin: 6px 0 0; max-width: 52ch; }
+.today-launch-actions {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+.today-launch-actions .primary-button { white-space: nowrap; }
+.text-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.text-link:hover { color: var(--text-primary); }
+@media (max-width: 720px) {
+  .today-launch { flex-direction: column; align-items: stretch; gap: 18px; }
+  .today-launch-actions { align-items: stretch; }
+  .today-launch-actions .primary-button { text-align: center; }
+  .text-link { align-self: flex-start; }
 }
 
 /* ===================================================================== */

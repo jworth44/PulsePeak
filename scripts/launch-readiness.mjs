@@ -369,8 +369,10 @@ async function assertRouteRenders(page, pathname, matcher, options = {}) {
 async function assertDashboardRenders(page, pathname = "/") {
   await page.goto(`${baseUrl}${pathname}`, { waitUntil: "networkidle" });
   try {
-    await page.locator(".today-hero").waitFor({ timeout: 15000 });
-    await page.locator(".today-stack").waitFor({ timeout: 15000 });
+    // Composed dashboard: the "For You Today" insight rail is the hero, and the
+    // slim "Today's session" launcher is the primary action.
+    await page.locator(".foryou-hero, .today-launch").first().waitFor({ timeout: 15000 });
+    await page.locator(".today-launch").waitFor({ timeout: 15000 });
   } catch (error) {
     const bodyText = await page.locator("body").innerText().catch(() => "");
     throw new Error(
@@ -716,7 +718,7 @@ async function runBrowserCoverage(browser) {
 
   await withAuthedPage(browser, returningLogin.token, async (page, bucket) => {
     await assertDashboardRenders(page);
-    await page.getByText(/Built from your setup|Momentum|This week/i).first().waitFor({ timeout: 10000 });
+    await page.getByText(/for you today|today's session|day streak/i).first().waitFor({ timeout: 10000 });
     await assertRouteRenders(page, "/progress", /progress overview|performance trend|recent completed sessions/i, {
       stableSelector: ".page-grid",
       retries: 2,
@@ -784,11 +786,10 @@ async function runBrowserCoverage(browser) {
     expect(mealResponse.ok(), `Meal log mutation failed with status ${mealResponse.status()}.`);
     await page.getByText(/640 kcal \| 45g protein/i).first().waitFor({ timeout: 10000 });
 
-    // --- Habit engine: toggle a habit on the dashboard, assert counter + state.
+    // --- Habit engine: toggle a habit on the dashboard, assert state changes.
     await page.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
-    await page.getByText(/Habits done today/i).first().waitFor({ timeout: 15000 });
-    const habitCounter = page.locator(".stat-pill", { hasText: "Habits done today" }).locator("strong");
-    expect((await habitCounter.textContent()).trim() === "0", "Engine user unexpectedly starts with completed habits.");
+    await page.locator(".habit-card").first().waitFor({ timeout: 15000 });
+    expect((await page.locator(".habit-card.habit-done").count()) === 0, "Engine user unexpectedly starts with completed habits.");
     const habitMutation = page.waitForResponse(
       (response) => response.url().includes("/api/habits/toggle") && response.request().method() === "POST",
       { timeout: 10000 }
@@ -801,7 +802,7 @@ async function runBrowserCoverage(browser) {
 
     // Persistence: the completed habit must survive a cold reload.
     await page.reload({ waitUntil: "networkidle" });
-    await page.getByText(/Habits done today/i).first().waitFor({ timeout: 15000 });
+    await page.locator(".habit-card").first().waitFor({ timeout: 15000 });
     try {
       await page.locator(".habit-card.habit-done").first().waitFor({ timeout: 10000 });
     } catch (error) {
