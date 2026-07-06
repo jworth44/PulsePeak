@@ -96,8 +96,12 @@ export default function DashboardPage() {
       token
     )
       .then((payload) => {
-        setRecommendedWorkoutPool(payload.workouts || []);
-        setRecommendedWorkout(null);
+        const pool = payload.workouts || [];
+        setRecommendedWorkoutPool(pool);
+        // Pick the top session from the pool as "today's recommended session" so
+        // the dashboard can start it directly instead of sending the user to
+        // re-pick a workout it already chose.
+        setRecommendedWorkout(pool[0] || null);
       })
       .catch(() => {
         setRecommendedWorkoutPool([]);
@@ -442,7 +446,11 @@ export default function DashboardPage() {
           <p className="lead-copy">{workoutEngine?.recommendationReason || todayFocus?.reason || "Pick a session that fits your setup and keep the week moving."}</p>
         </div>
         <div className="today-launch-actions">
-          <Link className="primary-button" to="/workouts">Start today's session</Link>
+          {/* Start the recommended session in place — don't send the user to
+              re-pick a workout the dashboard already chose. */}
+          <button className="primary-button" type="button" onClick={openPrimaryWorkoutAction}>
+            Start today's session
+          </button>
           <button className="text-link" type="button" onClick={() => setShowWeekReview(true)}>
             See your week in review →
           </button>
