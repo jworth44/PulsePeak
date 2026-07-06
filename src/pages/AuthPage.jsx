@@ -31,11 +31,11 @@ export default function AuthPage() {
         <div className="auth-brand">
           <img className="auth-brand-logo" src={BRAND_LOGO} alt="PulsePeak" />
         </div>
-        <p className="badge">Real accounts, synced data, coaching</p>
+        <p className="badge">Personal training, remembered</p>
         <h1>Build better health momentum with a fitness workspace that remembers you.</h1>
         <p className="hero-text">
-          PulsePeak now includes authentication, persistent dashboard data, habit streaks, progress charts,
-          and coaching recommendations tailored to your recovery and training trends.
+          PulsePeak turns every workout you log into personal momentum — spotting your records,
+          protecting your streak, and telling you what matters most today.
         </p>
       </section>
 
