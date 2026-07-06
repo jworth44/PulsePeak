@@ -1253,7 +1253,7 @@ function buildWorkoutEngineSummary(data, weeklyPlan, workouts = []) {
           ? "You're a little low on recovery today, so this keeps the week moving without grinding you down — enough to make progress, not enough to dig a hole."
           : recentMatchDays === 0
             ? `You already trained ${formatWorkoutFocus(recommendedFocus)} today — so instead of a repeat, today mixes up the movements to keep your ${formatGoalType(profile.goalType).toLowerCase()} goal moving and the session feeling fresh.`
-            : `Your week is built around ${weeklyPlan?.weeklyFocus || formatGoalType(profile.goalType)}, so today picks up the split that fits your setup and keeps everything in balance.`,
+            : `Your ${formatGoalType(profile.goalType).toLowerCase()} goal is driving the week, so today picks the split that best fits your setup and keeps everything moving in balance.`,
     recentFocuses,
     continuityNote:
       typeof recentMatchDays === "number"
