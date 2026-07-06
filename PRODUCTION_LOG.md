@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **State** | Pre–Production Complete (0 of 2 states granted) |
-| **Last verified** | 2026-07-05 — build exit 0 · qa:launch **13/13** · 0 blockers · **0 warnings** · api-hardening scenario green (malformed→JSON 400 no leak, /api 404 JSON, oversized password rejected 22ms, auth rate-limit 429) · atomic-write/guarded-read directly verified |
+| **Last verified** | 2026-07-06 — build exit 0 · qa:launch **18/18** · 0 blockers · **0 warnings** · voice-warming unit live-verified from running server (register→session: dashboard/injury reason + new-user workout-library variety note all emit warm 2nd-person copy; zero "the engine"/"the system is" self-reference in library payload) |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
 | **Media ledger** | **ZERO unmatched ✅** (was 36) — backlog #2 COMPLETE |
 | **Exercise-library visuals** | **172 / 208 visual guides (83%)** ✅ — wired 107 existing-but-unused image sets (`0c94589`); 36 remain text-only, need generation. `qa:exercise-library` PASSED, 0 broken |
@@ -29,6 +29,25 @@
 ---
 
 One line per unit: date · what · why · evidence. Newest first.
+
+- **2026-07-06 · Excellence — warm the robotic auto-gen reason/variety copy ✅**
+  (`a732fc0`, `bd1fba1`) — Closed the flagged voice defect: the app talked
+  about *itself* in the third person ("the engine is rotating the movement mix",
+  "the engine is keeping it realistic", "The engine will start rotating more
+  aggressively…"). Rewrote every **rendered** branch in warm second person so the
+  app speaks TO the user, not ABOUT itself — the dashboard/Plan "today's session"
+  reason (`store.js` recommendationReason: injury→"stays kind to your body",
+  low-recovery→"without grinding you down", repeat→"instead of a repeat, today
+  mixes up the movements", weekly→"Your week is built around X"), the Workouts
+  library recommendation (`workoutLibrary.js` buildRecommendationReason injury/
+  low-recovery branches), and the new-user variety note. Swept the whole app:
+  remaining "the engine"/"the system is" hits are all in **dead** paths
+  (`getProgramPhase`/`getModuleContinuityContext`/summary `continuityNote` — nulled
+  or unimported by every consumer), left untouched. Evidence: build 0; qa:launch
+  **18/18**, 0 blockers/warnings; **live-verified from the running server** —
+  register→session emits the new dashboard + injury reason; new-user
+  `/api/workout-library` payload carries the warm variety note and has zero
+  engine/system self-reference.
 
 - **2026-07-06 · Product Excellence Standard — refinement pass (#1–5) ✅** —
   Owner ratified a permanent Product Excellence Standard (constitution) and set a
