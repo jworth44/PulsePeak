@@ -1340,6 +1340,23 @@ input:focus, select:focus, textarea:focus {
   .foryou-item { flex-wrap: wrap; }
 }
 
+/* A warm, personal opening beat — frames the page, never competes with the hero. */
+.dash-greeting {
+  margin-bottom: 2px;
+}
+.dash-greeting-title {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+.dash-greeting-sub {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
 /* Recovery -> reflection nudge: the next chapter in the training day. */
 .recovery-next {
   display: flex;

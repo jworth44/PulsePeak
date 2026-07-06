@@ -434,8 +434,27 @@ export default function DashboardPage() {
     }
   };
 
+  // A warm, personal, time-aware opening beat — the app should greet you the way
+  // a coach who knows you would, before it shows you what to do.
+  const firstName = (user?.name || "").trim().split(/\s+/)[0] || "there";
+  const greetingHour = new Date().getHours();
+  const timeGreeting = greetingHour < 12 ? "Good morning" : greetingHour < 18 ? "Good afternoon" : "Good evening";
+  const greetingStreak = summary.streakStatus || {};
+  const greetingSubline = greetingStreak.trainedToday
+    ? greetingStreak.streak > 1
+      ? `You've already trained today — that's ${greetingStreak.streak} days running.`
+      : "You've already trained today — nice work."
+    : greetingStreak.state === "at_risk" && greetingStreak.streak > 0
+      ? `Keep your ${greetingStreak.streak}-day streak alive today.`
+      : "Let's build some momentum today.";
+
   return (
     <div className="page-grid page-grid-tight">
+      <header className="dash-greeting">
+        <h1 className="dash-greeting-title">{timeGreeting}, {firstName}</h1>
+        <p className="dash-greeting-sub">{greetingSubline}</p>
+      </header>
+
       <TodayForYou insights={summary.personalInsights} />
 
       {/* Supporting the hero: the one concrete action — start today's session. */}
