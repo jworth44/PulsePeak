@@ -70,11 +70,9 @@ export default function CoachPage() {
     <div className="page-grid">
       <Panel eyebrow="Coach summary" title="Use the coach to decide what matters most next">
         <div className="module-note">
-          <strong>{isPremium ? "Premium coaching is active." : "Your core coaching view is active."}</strong>
+          <strong>Your clearest next move, read from your real training.</strong>
           <p className="muted">
-            {isPremium
-              ? "You are seeing deeper cause-and-effect reasoning tied to your weekly plan, recovery pattern, and current gaps."
-              : "You are seeing the clearest daily guidance first. Premium adds deeper reasoning behind the next move."}
+            PulsePeak looks at your recent sessions, records, and gaps, then surfaces what matters most right now — no generic advice, only what your own data supports.
           </p>
         </div>
       </Panel>

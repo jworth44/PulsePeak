@@ -521,7 +521,10 @@ export function summarizeDashboard(data) {
   return {
     totals,
     completion,
-    workoutStreak: calculateWorkoutStreak(workouts),
+    // Exported streak is the canonical freeze-protected value (same as
+    // streakStatus.streak) so every consumer of summary.workoutStreak — e.g. the
+    // workout-completion celebration — agrees with the StreakCard on screen.
+    workoutStreak: streakStatus.streak,
     streakStatus,
     personalInsights: insights,
     nextBestAction,
@@ -602,26 +605,45 @@ export function buildLaunchSafeWeeklyCheckInState(data = null) {
   };
 }
 
-export function buildLaunchSafeCoachResponse(notes = []) {
+// The conversational LLM coach is owner-gated (API key/$), but the Coach page
+// must never claim an "active coach" and then show a disabled placeholder. So we
+// back it with the REAL deterministic insight engine — honest, evidence-based
+// guidance from the user's own logged data — plus real recovery values.
+export function buildLaunchSafeCoachResponse(data = {}) {
+  const wellness = normalizeWellnessData(data);
+  const insights = buildInsights(data, { now: Date.now() });
+  const nextAction = buildNextBestAction(insights);
+  const top = insights[0] || null;
+  const topHabit = (wellness.habits || [])
+    .map((habit) => ({ name: habit.name, streak: habit.streak || 0 }))
+    .sort((a, b) => b.streak - a.streak)[0];
+
   return {
     coachingEnabled: COACHING_RUNTIME_ENABLED,
     coach: {
       primaryInsight: {
-        category: "neutral",
-        title: "Launch baseline active",
-        detail: "Advanced coaching is disabled for this launch baseline."
+        category: top?.category || "neutral",
+        title: top?.title || "Log a session to unlock your guidance",
+        detail: top?.message || "Once you've logged a couple of workouts, PulsePeak reads your patterns and tells you the clearest next move."
       },
-      whyItMatters: "Core training, mobility, and library flows remain available without coaching overlays.",
-      nextActions: [],
-      longerTermNote: "No coaching guidance is being generated right now.",
-      planConnection: "Use the standard app pathways without momentum or recovery coaching."
+      whyItMatters: top?.reason || "Guidance sharpens as soon as there's real training history to read.",
+      nextActions: [
+        { title: nextAction.title, detail: nextAction.message },
+        ...insights.slice(1, 3).map((insight) => ({ title: insight.title, detail: insight.message }))
+      ],
+      longerTermNote: insights[1]?.title || (top ? "Keep the current rhythm going." : "Keep logging sessions and your patterns sharpen."),
+      planConnection: insights[1]?.message || top?.reason || "Your guidance is built from your real logged training — nothing generic."
     },
     recommendations: [],
-    notes: Array.isArray(notes) ? notes : [],
+    notes: Array.isArray(data.notes) ? data.notes : [],
     recoveryFocus: {
-      energyLevel: "Not evaluated",
-      sleepHours: "Not evaluated",
-      topHabit: "Not evaluated"
+      energyLevel: wellness.energyLevel || "Not logged",
+      sleepHours: wellness.sleepHours !== undefined && wellness.sleepHours !== null ? wellness.sleepHours : "--",
+      topHabit: topHabit && topHabit.streak > 0
+        ? `${topHabit.name} (${topHabit.streak}-day streak)`
+        : topHabit
+          ? topHabit.name
+          : "Not set"
     }
   };
 }
@@ -2979,9 +3001,18 @@ function estimatedOneRepMax(weight, reps) {
   return w * (1 + useReps / 30);
 }
 
+// Reps can be a free-text string ("8-12", "12 each", "5", "AMRAP"). Take the
+// leading integer so a rep range still counts as real work instead of silently
+// zeroing the set's volume (and hiding PRs / understating trends).
+function parseRepCount(value) {
+  if (value === null || value === undefined) return NaN;
+  const parsed = parseInt(String(value).trim(), 10);
+  return Number.isFinite(parsed) ? parsed : NaN;
+}
+
 function exerciseVolume(exercise) {
   const w = Number(exercise?.weight);
-  const r = Number(exercise?.repsCompleted ?? exercise?.reps);
+  const r = parseRepCount(exercise?.repsCompleted ?? exercise?.reps);
   const sets = Number(exercise?.sets) || 1;
   if (!Number.isFinite(w) || w <= 0 || !Number.isFinite(r) || r <= 0) {
     return 0;
@@ -3016,7 +3047,7 @@ export function detectPersonalRecords(priorWorkouts = [], newWorkout) {
       if (!name || !Number.isFinite(weight) || weight <= 0) {
         return;
       }
-      const reps = Number(exercise?.repsCompleted ?? exercise?.reps);
+      const reps = parseRepCount(exercise?.repsCompleted ?? exercise?.reps);
       bestWeight.set(name, Math.max(bestWeight.get(name) || 0, weight));
       bestE1rm.set(name, Math.max(bestE1rm.get(name) || 0, estimatedOneRepMax(weight, reps)));
     });
@@ -3035,7 +3066,7 @@ export function detectPersonalRecords(priorWorkouts = [], newWorkout) {
     if (!bestWeight.has(name)) {
       return;
     }
-    const reps = Number(exercise?.repsCompleted ?? exercise?.reps);
+    const reps = parseRepCount(exercise?.repsCompleted ?? exercise?.reps);
     const hasReps = Number.isFinite(reps) && reps > 0;
     const priorWeight = bestWeight.get(name);
     const priorE1rm = bestE1rm.get(name) || 0;
@@ -3087,20 +3118,37 @@ export function buildWeekInReview(data, options = {}) {
     (sum, workout) => sum + (Array.isArray(workout.exercises) ? workout.exercises.length : 0),
     0
   );
-  const streak = calculateWorkoutStreak(allWorkouts);
+  // Canonical freeze-protected streak — must match the StreakCard that launches
+  // this recap (was strict calculateWorkoutStreak, which contradicted it).
+  const streak = buildStreakStatus(data).streak;
 
   // Personal records earned during the window: walk chronologically so each
   // workout is compared only against everything logged before it.
   const chronological = [...allWorkouts].sort(
     (left, right) => new Date(left.loggedAt).getTime() - new Date(right.loggedAt).getTime()
   );
-  const records = [];
+  const rawRecords = [];
   chronological.forEach((workout, index) => {
     if (!inWindow(workout)) {
       return;
     }
-    detectPersonalRecords(chronological.slice(0, index), workout).forEach((record) => records.push(record));
+    detectPersonalRecords(chronological.slice(0, index), workout).forEach((record) => rawRecords.push(record));
   });
+  // Collapse to distinct achievements: the best strength record per exercise plus
+  // a single best session-volume record — so "N new records" isn't inflated by a
+  // lift that trips both a weight PR and a volume PR in the same session.
+  const bestByExercise = new Map();
+  let bestVolumeRecord = null;
+  for (const record of rawRecords) {
+    if (record.type === "session_volume") {
+      if (!bestVolumeRecord || record.volume > bestVolumeRecord.volume) bestVolumeRecord = record;
+      continue;
+    }
+    const prev = bestByExercise.get(record.exercise);
+    if (!prev || (record.weight || 0) > (prev.weight || 0)) bestByExercise.set(record.exercise, record);
+  }
+  const records = [...bestByExercise.values()];
+  if (bestVolumeRecord) records.push(bestVolumeRecord);
 
   const weeklyGoalTarget = isPremium ? 4 : FREE_WEEKLY_WORKOUT_LIMIT;
 
@@ -3152,6 +3200,10 @@ export function buildInsights(data, options = {}) {
   const nowMs = options.now || Date.now();
   const wellness = normalizeWellnessData(data);
   const workouts = sortWorkoutsDesc((wellness.workouts || []).map(normalizeWorkout));
+  // Weights are stored in the user's own input unit (not converted), so the fix
+  // for the metric/imperial mismatch is a correct LABEL — matching what the
+  // Week-in-Review and celebrations show — never a hardcoded "lb".
+  const unit = String(wellness.profile?.unitPreference || "").toLowerCase() === "metric" ? "kg" : "lb";
   const insights = [];
   const add = (insight) => {
     if (insight) insights.push(insight);
@@ -3233,8 +3285,8 @@ export function buildInsights(data, options = {}) {
       priority: 82,
       confidence: "high",
       title: `Ready for a ${prCandidate.name} PR?`,
-      message: `Last time you hit ${last?.weight} lb${last?.repsCompleted ? ` × ${last.repsCompleted}` : ""}. Your best is ${prCandidate.bestWeight} lb — today could be the day you beat it.`,
-      evidence: `Best ${prCandidate.bestWeight} lb · last ${last?.weight} lb`,
+      message: `Last time you hit ${last?.weight} ${unit}${last?.repsCompleted ? ` × ${last.repsCompleted}` : ""}. Your best is ${prCandidate.bestWeight} ${unit} — today could be the day you beat it.`,
+      evidence: `Best ${prCandidate.bestWeight} ${unit} · last ${last?.weight} ${unit}`,
       action: { label: "Start a session", to: "/workouts" },
       reason: `You've trained ${prCandidate.name} in the last two weeks and have a clear personal best to chase.`
     });
@@ -3300,8 +3352,8 @@ export function buildInsights(data, options = {}) {
       priority: 68,
       confidence: "high",
       title: `Your ${improved.name} is climbing`,
-      message: `Up ${improved.gain} lb — from ${improved.earliest} to ${improved.latest} lb over about ${weeks} week${weeks === 1 ? "" : "s"}. Keep the pressure on.`,
-      evidence: `${improved.earliest} → ${improved.latest} lb`,
+      message: `Up ${improved.gain} ${unit} — from ${improved.earliest} to ${improved.latest} ${unit} over about ${weeks} week${weeks === 1 ? "" : "s"}. Keep the pressure on.`,
+      evidence: `${improved.earliest} → ${improved.latest} ${unit}`,
       action: { label: "See progress", to: "/progress" },
       reason: `${improved.name} has moved up across your recent sessions.`
     });
@@ -3354,7 +3406,7 @@ export function buildInsights(data, options = {}) {
           pct > 0
             ? `You've moved ${pct}% more weight than last month — the work is compounding.`
             : `Your training volume is down ${Math.abs(pct)}% vs last month. Worth a look if it wasn't a planned deload.`,
-        evidence: `${Math.round(thisMonthVol).toLocaleString()} vs ${Math.round(lastMonthVol).toLocaleString()} lb`,
+        evidence: `${Math.round(thisMonthVol).toLocaleString()} vs ${Math.round(lastMonthVol).toLocaleString()} ${unit}`,
         action: { label: "See progress", to: "/progress" },
         reason: "Comparing your total training volume this month against last month."
       });
@@ -3379,8 +3431,8 @@ export function buildInsights(data, options = {}) {
       priority: 54,
       confidence: "medium",
       title: `${plateau.name} has stalled`,
-      message: `You've hit ${plateau.weight} lb on ${plateau.name} for ${plateau.count} sessions straight. Try one more rep, a small load bump, or a tempo change to break through.`,
-      evidence: `${plateau.weight} lb × ${plateau.count} sessions`,
+      message: `You've hit ${plateau.weight} ${unit} on ${plateau.name} for ${plateau.count} sessions straight. Try one more rep, a small load bump, or a tempo change to break through.`,
+      evidence: `${plateau.weight} ${unit} × ${plateau.count} sessions`,
       action: { label: "Start a session", to: "/workouts" },
       reason: `${plateau.name} hasn't progressed in your last ${plateau.count} logged sets.`
     });

@@ -52,28 +52,20 @@ export default function ProgressPage() {
   const weeklyCheckIn = summary.weeklyCheckIn;
   const latestCheckIn = weeklyCheckIn?.latestCheckIn;
   const hasProgressAccess = hasFullWorkoutAccess(accessTier);
-  const progressInsights = [];
+  // Real insight-engine output (pattern/attention lens) — the same honest,
+  // evidence-gated insights the dashboard uses. Empty for sparse users → the
+  // panel's own "not enough history yet" empty state shows (honest).
+  const progressInsights = (summary.personalInsights || [])
+    .filter((insight) => ["plateau", "balance", "pattern", "comeback", "streak"].includes(insight.category))
+    .slice(0, 4)
+    .map((insight) => ({ title: insight.title, body: insight.message }));
   const improvementSignals = {
     consistency: {
       label: "Consistency builds from completed sessions",
       detail: "Keep logging workouts and the progress view will fill in stronger trend signals over time."
-    },
-    variety: {
-      label: "Variety is not being interpreted yet",
-      detail: "Advanced variety analysis is deferred for now."
-    },
-    loadTolerance: {
-      label: "Load tolerance is not being interpreted yet",
-      detail: "Advanced load-tolerance analysis is deferred for now."
     }
   };
   const resultSignals = [];
-  const performanceSignals = {
-    summaryLine: "Performance interpretation is temporarily simplified",
-    sessionLengthTrend: null,
-    intensityTrend: null,
-    frequencyTrend: null
-  };
   const checkpoint = null;
   const identitySignal = null;
   const programPhase = null;
@@ -83,7 +75,6 @@ export default function ProgressPage() {
   const premiumComparison = getPremiumComparisonSummary(accessTier, { surface: "progress" });
   const systemConfidenceSignal = null;
   const hasProgramArcData = Boolean(programPhase || nextWeekAdjustment || whyThisMattersNotes.length || systemConfidenceSignal);
-  const trustCue = null;
   const primarySignal = null;
   const visibleMilestone = checkpoint || workoutMilestones?.fresh || workoutMilestones?.latest || null;
   const progressUpgradePrompt = hasProgressAccess
@@ -151,28 +142,6 @@ export default function ProgressPage() {
             <strong>{streakStatus.streak || 0} day current streak</strong>
             <p className="muted">Your training streak, freeze-protected so a single rest day doesn't reset your momentum.</p>
           </div>
-          <div className="module-note">
-            <strong>{performanceSignals.summaryLine}</strong>
-            {systemConfidenceSignal ? <p className="muted">{systemConfidenceSignal}</p> : null}
-            {trustCue ? <p className="support-copy recommendation-context-note">{trustCue}</p> : null}
-          </div>
-        </div>
-      </Panel>
-
-      <Panel eyebrow="Performance trend" title="How your training demand is moving">
-        <div className="content-grid">
-          <div className="module-note">
-            <strong>Session length</strong>
-            <p className="support-copy">{formatTrendLabel(performanceSignals.sessionLengthTrend)}</p>
-          </div>
-          <div className="module-note">
-            <strong>Intensity mix</strong>
-            <p className="support-copy">{formatTrendLabel(performanceSignals.intensityTrend)}</p>
-          </div>
-          <div className="module-note">
-            <strong>Training frequency</strong>
-            <p className="support-copy">{formatTrendLabel(performanceSignals.frequencyTrend)}</p>
-          </div>
         </div>
       </Panel>
 
@@ -228,16 +197,18 @@ export default function ProgressPage() {
             <p className="support-copy">{improvementSignals.consistency.detail}</p>
           </div>
           {hasProgressAccess ? (
-            <>
-              <div className="module-note">
-                <strong>{improvementSignals.variety.label}</strong>
-                <p className="support-copy">{improvementSignals.variety.detail}</p>
-              </div>
-              <div className="module-note">
-                <strong>{improvementSignals.loadTolerance.label}</strong>
-                <p className="support-copy">{improvementSignals.loadTolerance.detail}</p>
-              </div>
-            </>
+            // Real, evidence-backed progress signals from the insight engine —
+            // never placeholder "deferred for now" copy. Empty for sparse users
+            // (the consistency note above already covers that honestly).
+            (summary.personalInsights || [])
+              .filter((insight) => ["progress", "pr_opportunity", "plateau", "momentum", "balance"].includes(insight.category))
+              .slice(0, 3)
+              .map((insight) => (
+                <div className="module-note" key={insight.id}>
+                  <strong>{insight.title}</strong>
+                  <p className="support-copy">{insight.message}</p>
+                </div>
+              ))
           ) : (
             <div className="module-note">
               <strong>{premiumOutcomeLayer.title}</strong>

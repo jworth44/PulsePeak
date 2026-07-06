@@ -61,7 +61,7 @@ export default function StreakCard({ status, weeklyTarget = 3 }) {
         <div className="streak-goal-top">
           <span>Weekly goal</span>
           <span>
-            {status.weeklyCompleted || 0}/{goalTarget}
+            {Math.min(status.weeklyCompleted || 0, goalTarget)}/{goalTarget}
           </span>
         </div>
         <div className="streak-goal-bar">

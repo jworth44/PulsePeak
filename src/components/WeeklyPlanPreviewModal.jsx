@@ -328,7 +328,7 @@ export default function WeeklyPlanPreviewModal({ planPayload, onClose, onUpgrade
               <p className="muted">
                 {accessTier === "trial_active"
                   ? `Your trial includes adaptive rationale, execution priorities, and richer weekly adjustments${user?.trialEndsLabel ? ` until ${user.trialEndsLabel}` : ""}. Then it renews yearly at $119.99/year unless canceled before trial ends.`
-                  : "This plan now includes adaptive rationale, execution priorities, and richer weekly adjustments built from your latest data."}
+                  : "Your plan includes adaptive rationale, execution priorities, and weekly adjustments built from your latest data."}
               </p>
             </div>
           </div>

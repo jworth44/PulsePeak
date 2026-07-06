@@ -58,7 +58,8 @@ const {
   buildWeekInReview,
   buildStreakStatus,
   buildInsights,
-  buildNextBestAction
+  buildNextBestAction,
+  buildLaunchSafeCoachResponse
 } = await import("../server/data/store.js");
 const {
   getWorkoutLibraryForProfile,
@@ -1436,6 +1437,59 @@ function runInsightEngineAudit() {
   }
 }
 
+// Locks the correctness fixes from the cross-screen + calculation audits:
+// consistent streak, honest units, rep-range volume, PR-count dedup, and a Coach
+// surface backed by the real insight engine (never a "disabled" placeholder).
+function runCorrectnessFixesAudit() {
+  const checks = [];
+  const push = (name, ok) => checks.push({ name, ok });
+  const DAY = 24 * 60 * 60 * 1000;
+  const iso = (d) => new Date(Date.now() - d * DAY).toISOString();
+  const ex = (name, weight, reps, group) => ({ name, weight, repsCompleted: null, reps, sets: 3, muscleGroup: group, equipment: "barbell" });
+  const wk = (name, d, exs) => ({ name, type: "strength", duration: 45, intensity: "Moderate", exercises: exs, loggedAt: iso(d) });
+
+  // Rep RANGE ("8-12") must count as real volume (was silently zeroed -> NaN).
+  const ranged = { workouts: [wk("A", 0, [ex("Bench", 135, "8-12", "Chest")]), wk("B", 2, [ex("Bench", 135, "8-12", "Chest")])] };
+  push("rep-range-counts-volume", buildWeekInReview(ranged, { isPremium: false }).totalVolume > 0);
+
+  // PR count must not double-count (heaviest + session_volume) per heavier session.
+  const climbing = {
+    workouts: [
+      wk("W1", 6, [ex("Bench", 100, "8", "Chest")]),
+      wk("W2", 4, [ex("Bench", 110, "8", "Chest")]),
+      wk("W3", 2, [ex("Bench", 120, "8", "Chest")])
+    ]
+  };
+  const wir = buildWeekInReview(climbing, { isPremium: false });
+  push("pr-count-deduped", wir.prCount <= 2); // one bench progression + at most one volume record
+
+  // Metric users must see "kg", not a hardcoded "lb".
+  const metric = {
+    profile: { unitPreference: "metric" },
+    workouts: [
+      wk("A", 0, [ex("Bench", 100, "8", "Chest")]),
+      wk("B", 5, [ex("Bench", 90, "8", "Chest")]),
+      wk("C", 9, [ex("Bench", 80, "8", "Chest")])
+    ]
+  };
+  const metricInsights = buildInsights(metric);
+  push("metric-unit-label", metricInsights.some((i) => /kg/.test(i.evidence || "")) && !metricInsights.some((i) => / lb/.test(i.evidence || "")));
+
+  // Coach surface is backed by the real insight engine — never the old
+  // "Launch baseline active / Advanced coaching is disabled" placeholder.
+  const coach = buildLaunchSafeCoachResponse(metric);
+  push("coach-not-disabled-placeholder", coach.coach.primaryInsight.title !== "Launch baseline active" && coach.recoveryFocus.energyLevel !== "Not evaluated");
+
+  const failed = checks.filter((c) => !c.ok);
+  recordScenario("correctness-fixes", {
+    pass: failed.length === 0,
+    note: "Cross-screen consistency + calc fixes: rep-range volume, PR-count dedup, metric unit labels, insight-engine-backed Coach surface."
+  });
+  if (failed.length) {
+    recordBlocker(`Correctness fix checks failed: ${failed.map((c) => c.name).join(", ")}`);
+  }
+}
+
 const server = startServer();
 let browser;
 
@@ -1459,6 +1513,7 @@ try {
   runWeekInReviewAudit();
   runStreakStatusAudit();
   runInsightEngineAudit();
+  runCorrectnessFixesAudit();
   await runPwaAssetAudit();
   await runBrowserCoverage(browser);
   // After browser coverage — the auth rate-limit burst must not starve the

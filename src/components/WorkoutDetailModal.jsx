@@ -218,7 +218,10 @@ export default function WorkoutDetailModal({
 
     const volume = selectedExercises.reduce((sum, exercise) => {
       const weight = Number(exercise.weight);
-      const reps = Number(exercise.repsCompleted);
+      // Mirror the server's volume math: fall back to planned reps (and take the
+      // leading integer of a range like "8-12") so the celebration volume matches
+      // the recap/PR volume instead of zeroing when "reps done" is left blank.
+      const reps = parseInt(String(exercise.repsCompleted || exercise.reps || ""), 10);
       const sets = Number(exercise.sets) || 1;
       if (Number.isFinite(weight) && weight > 0 && Number.isFinite(reps) && reps > 0) {
         return sum + weight * reps * sets;

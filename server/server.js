@@ -799,7 +799,7 @@ app.get("/api/progress", requireAuth, (request, response) => {
 });
 
 app.get("/api/coaching", requireAuth, (request, response) => {
-  response.json(buildLaunchSafeCoachResponse(request.user.data.notes));
+  response.json(buildLaunchSafeCoachResponse(request.user.data));
 });
 
 app.post("/api/checkout-session", requireAuth, async (request, response) => {

@@ -149,7 +149,7 @@ export default function WeekInReview({ open, onClose }) {
               <div className="wir-meter">
                 <div className="wir-meter-top">
                   <span>Weekly goal</span>
-                  <span>{review.weeklyGoal.completed}/{review.weeklyGoal.target}</span>
+                  <span>{Math.min(review.weeklyGoal.completed, review.weeklyGoal.target)}/{review.weeklyGoal.target}</span>
                 </div>
                 <div className="wir-bar">
                   <div
