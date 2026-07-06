@@ -30,6 +30,23 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-06 · Excellence — fix "today's session" reason contradicting its title ✅**
+  (`4e3f9a4`) — Judging the new-user dashboard from a screenshot (per the
+  "judge from screenshots" directive) exposed a real incoherence the copy pass
+  alone wouldn't catch: the session title said **"Chest + triceps"** while the
+  reason below claimed *"Your week is built around Recovery through better
+  fueling."* Root cause — the *training* reason borrowed `weeklyPlan.weeklyFocus`,
+  which `getWeeklyFocus` derives from **nutrition** signals (proteinGap ≥ 25 →
+  "Recovery through better fueling"); every new user (little logged nutrition)
+  inherited a fueling theme that contradicts the recommended push session, making
+  the app look like it *isn't* paying attention — the opposite of its positioning.
+  Anchored the training reason on the training goal ("Your bodybuilding goal is
+  driving the week, so today picks the split that best fits your setup…");
+  weeklyFocus still drives the plan/nutrition teasers where a fueling theme
+  belongs. Evidence: live in-browser fresh-onboarded bodybuilding user — title +
+  reason cohere, desktop + 375px mobile clean, 0 console errors; build 0;
+  qa:launch 18/18, 0 blockers/warnings.
+
 - **2026-07-06 · Excellence — warm the robotic auto-gen reason/variety copy ✅**
   (`a732fc0`, `bd1fba1`) — Closed the flagged voice defect: the app talked
   about *itself* in the third person ("the engine is rotating the movement mix",
