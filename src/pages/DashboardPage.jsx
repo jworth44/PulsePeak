@@ -448,10 +448,6 @@ export default function DashboardPage() {
               <span className="muted">Workout logs this week</span>
             </div>
             <div className="stat-pill">
-              <strong><CountUp value={workoutMomentum.currentStreakDays} /> day{workoutMomentum.currentStreakDays === 1 ? "" : "s"}</strong>
-              <span className="muted">Current training streak</span>
-            </div>
-            <div className="stat-pill">
               <strong><CountUp value={summary.habits.filter((habit) => habit.completedToday).length} /></strong>
               <span className="muted">Habits done today</span>
             </div>
@@ -514,7 +510,6 @@ export default function DashboardPage() {
           </button>
         ))}
       </div>
-      <p className="support-copy">Yoga and cardio open through the current guided session paths.</p>
 
       {feedback ? <div className="status-banner">{feedback}</div> : null}
 

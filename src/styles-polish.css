@@ -56,13 +56,44 @@ h3 { letter-spacing: -0.015em; font-weight: 700; }
 h4 { letter-spacing: -0.012em; font-weight: 700; }
 
 .module-page-hero h2,
-.today-hero-copy h2,
 .hero-copy h2 {
   font-size: clamp(1.9rem, 3.4vw, 2.85rem);
   background: linear-gradient(180deg, #ffffff 0%, #cfd3d9 130%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+/* The dashboard focus card is supporting context beneath "For You Today" —
+   restrained, not a competing page title. */
+.today-hero-copy h2 {
+  font-size: clamp(1.5rem, 2vw, 1.8rem);
+  letter-spacing: -0.015em;
+  background: linear-gradient(180deg, #ffffff 0%, #cfd3d9 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* The copy column stretches to match the tall ring column; its grid rows were
+   stretching too (align-content:normal == stretch for grid), inflating the
+   badge and spreading dead space. Pack the content at the top instead. */
+.today-hero-copy { align-content: start; }
+
+/* The "Today" badge is a grid child, so it stretched to a full-width empty box.
+   Make it a compact pill that hugs its label. */
+.today-hero-copy .badge {
+  justify-self: start;
+  align-self: start;
+  width: auto;
+  padding: 4px 11px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
 }
 
 .section-label {

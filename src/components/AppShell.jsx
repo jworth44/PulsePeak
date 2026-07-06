@@ -84,9 +84,8 @@ export default function AppShell({ children }) {
       <aside className="sidebar">
         <div className="sidebar-primary">
           <div className="sidebar-brand">
-            <p className="eyebrow">Health and fitness companion</p>
             <h1>PulsePeak</h1>
-            <p className="muted">Training, recovery, and decision support in one polished fitness workspace.</p>
+            <p className="muted">Your training companion</p>
           </div>
 
           <div className="sidebar-nav-shell">
