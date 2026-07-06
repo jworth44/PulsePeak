@@ -439,12 +439,6 @@ export default function WorkoutsPage() {
 
       {feedback ? <div className="status-banner">{feedback}</div> : null}
 
-      <div className="module-note">
-        <strong>{continuityContext.title}</strong>
-        <p className="support-copy">{continuityContext.detail}</p>
-        {preferenceInfluence?.summary ? <p className="support-copy">{preferenceInfluence.summary}</p> : null}
-      </div>
-
       <div className={`cap-banner ${workoutAccess?.locked ? "cap-banner-locked" : ""}`}>
         <div>
           <strong>
