@@ -59,6 +59,12 @@ export default function ProgressPage() {
     .filter((insight) => ["plateau", "balance", "pattern", "comeback", "streak"].includes(insight.category))
     .slice(0, 4)
     .map((insight) => ({ title: insight.title, body: insight.message }));
+  // The single strongest "you're getting stronger" signal — headlines the hero
+  // so Progress opens by answering its reason to exist. Null (honest) for users
+  // without enough history to show real improvement.
+  const improvementHeadline = (summary.personalInsights || [])
+    .filter((insight) => ["progress", "pr_opportunity", "momentum"].includes(insight.category))
+    .map((insight) => ({ title: insight.title, body: insight.message }))[0] || null;
   const improvementSignals = {
     consistency: {
       label: "Consistency builds from completed sessions",
@@ -132,17 +138,17 @@ export default function ProgressPage() {
       {error ? <div className="status-banner">{error}</div> : null}
       {status ? <div className="status-banner">{status}</div> : null}
 
-      <Panel eyebrow="Progress overview" title="See whether the week is actually moving forward">
-        <div className="content-grid">
-          <div className="module-note">
-            <strong>{summary.completion}% current completion</strong>
-            <p className="muted">Your daily score pulls training, recovery, hydration, and nutrition into one signal so progress feels connected instead of scattered.</p>
-          </div>
-          <div className="module-note">
-            <strong>{streakStatus.streak || 0} day current streak</strong>
-            <p className="muted">Your training streak, freeze-protected so a single rest day doesn't reset your momentum.</p>
-          </div>
+      <Panel eyebrow="Progress overview" title="Are you getting stronger?">
+        <div className="module-note">
+          <strong>{summary.completion}% current completion</strong>
+          <p className="muted">One score across training, recovery, hydration, and nutrition — so your progress reads as a single, connected signal.</p>
         </div>
+        {improvementHeadline ? (
+          <div className="module-note">
+            <strong>{improvementHeadline.title}</strong>
+            <p className="support-copy">{improvementHeadline.body}</p>
+          </div>
+        ) : null}
       </Panel>
 
       <div className="content-grid">
