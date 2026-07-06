@@ -882,7 +882,9 @@ async function runBrowserCoverage(browser) {
     const mobileRoutes = [
       { path: "/workouts", matcher: /choose your setup, pick your focus/i },
       { path: "/nutrition", matcher: /today's food direction|keep nutrition practical|nutrition is currently turned off/i },
-      { path: "/progress", matcher: /progress overview|performance trend|recent completed sessions/i, stableSelector: ".page-grid" }
+      { path: "/progress", matcher: /are you getting stronger|progress overview|recent completed sessions/i, stableSelector: ".page-grid" },
+      { path: "/mobility", matcher: /choose your training path|guided movement|next in your day/i, stableSelector: ".page-grid" },
+      { path: "/exercise-library", matcher: /learn every movement, the right way|find the exact movement/i, stableSelector: ".page-grid" }
     ];
     for (const route of mobileRoutes) {
       await assertRouteRenders(page, route.path, route.matcher, {
