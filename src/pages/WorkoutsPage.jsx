@@ -618,9 +618,9 @@ export default function WorkoutsPage() {
           <p className="support-copy">Building the best workout for today...</p>
         ) : libraryError ? (
           <div className="module-note">
-            <strong>Workout recommendations are temporarily unavailable.</strong>
+            <strong>We couldn't build your session just now.</strong>
             <p className="support-copy">{libraryError}</p>
-            <p className="support-copy">Reset the filters or reload the page to rebuild the session cleanly.</p>
+            <p className="support-copy">Reset the filters or reload the page and we'll rebuild it cleanly.</p>
           </div>
         ) : isUsingFilterRecovery ? (
           <div className="module-note">

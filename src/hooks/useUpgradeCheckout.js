@@ -9,7 +9,7 @@ export function useUpgradeCheckout() {
 
   const startUpgradeCheckout = async (billingInterval = "monthly", checkoutMode = "default") => {
     if (!billingEnabled) {
-      throw new Error("Billing is coming soon for this launch baseline.");
+      throw new Error("Premium is launching soon — check back to unlock the full experience.");
     }
 
     setBusy(true);
