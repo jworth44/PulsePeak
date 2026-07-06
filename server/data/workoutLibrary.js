@@ -1054,7 +1054,7 @@ function buildWorkoutContinuityNote(templateEntry, historyContext) {
 function buildWorkoutVarietyNote(exercises, historyContext) {
   const repeatedMovements = exercises.filter((exercise) => (historyContext.exerciseUsage.get(exercise.name.toLowerCase()) || 0) > 0).length;
   if (!historyContext.workouts.length) {
-    return "The engine will start rotating more aggressively once it has a little workout history to learn from.";
+    return "Once you've logged a few sessions, your workouts start rotating more to keep things fresh — for now, this is a strong, balanced place to start.";
   }
   if (repeatedMovements === 0) {
     return "This session keeps the same goal but rotates in a fresh movement mix.";
