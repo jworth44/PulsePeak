@@ -30,6 +30,29 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-06 · Product Excellence Standard — refinement pass (#1–5) ✅** —
+  Owner ratified a permanent Product Excellence Standard (constitution) and set a
+  priority queue. Worked it end-to-end under continuous build+QA+browser gates.
+  **#1 Premium/paywall** (`2330edd`): removed dev/launch language ("launch
+  baseline", "full workout system", "execution priorities", "Direct paid option"),
+  reframed to honest benefit copy, made the free trial the single Volt-highlighted
+  focal point, added a trust signal, killed a redundant double "Coming soon"
+  button. **#2 Modals** (`fb95370`): audited all six; de-jargoned the weekly-plan
+  preview; confirmed forward momentum + honest states elsewhere. **#3 Recovery→
+  reflection** (`222c959`): added a "Next in your day" nudge so the mobility page
+  carries the user into progress/dashboard instead of dead-ending in a library.
+  **#4 Progress composition** (`ba9ac60`): retitled the hero to its reason-to-exist
+  ("Are you getting stronger?"), led it with the strongest real improvement signal,
+  removed the duplicated streak (one source of truth). **#5 Adversarial sweep**
+  (`636d602`): verified API resilience (401/400/404/fast-reject), corrupt-token →
+  graceful auth page (no white-screen), premium new-user empty state; expanded the
+  machine-enforced mobile-viewport scenario to /mobility + /exercise-library (no
+  horizontal scroll) and fixed a flaky matcher. Evidence: build 0; qa:launch
+  **18/18**, 0 blockers/warnings throughout; browser-verified desktop + mobile.
+  Earlier same-day: Design-V3 composition (dashboard single-hero, sidebar/heading,
+  auth first-impression, library + settings de-jargon) and streak/goal/insight
+  correctness unification.
+
 - **2026-07-06 · Experience Composition — journey momentum, no dead ends ✅** —
   Owner mission: think in journeys not pages; every action creates forward
   momentum; a completed workout should flow into recovery; the app should make
