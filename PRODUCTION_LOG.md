@@ -5,7 +5,10 @@
 | | |
 |---|---|
 | **State** | Pre–Production Complete (0 of 2 states granted) |
-| **Last verified** | 2026-07-06 — build exit 0 · qa:launch **18/18** · 0 blockers · **0 warnings** · voice-warming unit live-verified from running server (register→session: dashboard/injury reason + new-user workout-library variety note all emit warm 2nd-person copy; zero "the engine"/"the system is" self-reference in library payload) |
+| **Last verified** | 2026-07-06 — build exit 0 · qa:launch **18/18** · 0 blockers · **0 warnings** · systemic honesty audit live-verified (fresh user → Coach "Not logged yet", no fabricated notes; honest plan copy; after POST /api/recovery real values appear) · media audit `qa:media` = 16/49 sets at standard (register logged) |
+| **Design direction** | **⏸️ Design-V3 implementation HALTED by owner 2026-07-06 — the design *language* itself is the problem (reads developer-built).** Superseded by **`CREATIVE_DIRECTION.md` v1.0 (proposal)**: editorial coach not control panel; one warm Ember accent (retire red+lime); Daylight/Midnight warm themes (retire cool near-black); remove sidebar → 4 bottom tabs; full-bleed 4:5 media tiles + swipeable guide sequence; modals→sheets; media re-shoot standard. Awaiting owner approval to begin the token→component→shell→screens rebuild. |
+| **Media quality (owner top priority)** | **`MEDIA_AUDIT_REGISTER.md` + `npm run qa:media`** — only **16/49** photo sets at 1536×1024; 3 resolutions + 3 aspect ratios; 5 broken sub-thumbnail sets; 5 baked-text sets; 33 orphaned dirs; inconsistent models/lighting/grade. Full re-shoot to the §10 media standard = Gemini/owner-cost-gated program. |
+| **Honesty (Product Excellence Standard clause)** | **Systemic "never infer state from absence of data" audit DONE ✅** (`HONESTY_AUDIT.md`) — all LIVE offenders fixed at root (seed fabrication, recovery `recoveryLogged` flag, plan gap-copy gating, habit/trust/workout copy). buildInsights verified honest. Dead twins flagged. |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
 | **Media ledger** | **ZERO unmatched ✅** (was 36) — backlog #2 COMPLETE |
 | **Exercise-library visuals** | **172 / 208 visual guides (83%)** ✅ — wired 107 existing-but-unused image sets (`0c94589`); 36 remain text-only, need generation. `qa:exercise-library` PASSED, 0 broken |
@@ -29,6 +32,47 @@
 ---
 
 One line per unit: date · what · why · evidence. Newest first.
+
+- **2026-07-06 · Creative Direction v1.0 — challenge the design language (PROPOSAL) ✅**
+  (`ad666a3`) — Owner halted Design-V3 implementation: the problem is the design
+  *language*, not spacing/type/hierarchy — it still reads developer-built. Produced
+  a complete Creative Direction proposal (no app code changed) as if Apple/Nike/
+  Headspace/Arc/Linear/Peloton were one studio. `CREATIVE_DIRECTION.md` covers all
+  18 requested deliverables: philosophy ("editorial coach, not a control panel"),
+  identity (one warm **Ember** accent replacing red+lime; two warm themes
+  Daylight/Midnight replacing cool near-black), one centered column on every
+  viewport, **remove the desktop sidebar → 4 bottom tabs**, kill the database-record
+  exercise card + STEP grid → full-bleed 4:5 media tiles + swipeable Start→Peak→
+  Finish sequence, modals→sheets, media/image/thumbnail standards (one shoot, one
+  grade, 4:5, no baked text), motion (physical/spring/shared-element), type/color/
+  component systems, per-screen before/after, rebuild-vs-refine. Plus a shareable
+  **visual Artifact** (live theme toggle + before/after mockups) to make it land.
+- **2026-07-06 · Complete media audit (qa:media) ✅** (`b63998f`) — Owner made media
+  quality a top priority. Built `scripts/media-audit.mjs` (dependency-free: missing/
+  duplicate frames, dimension+aspect consistency, resolution floor, placeholder
+  heuristic, cross-exercise dupes, orphans) → `artifacts/media-audit.json`;
+  `MEDIA_AUDIT_REGISTER.md` = quantified verdict: only **16/49** photo sets meet the
+  1536×1024 bar; **3 resolutions + 3 aspect ratios** coexist (1536×1024 / 768×512 /
+  627×627-square); **5 broken sub-thumbnail sets** (lat-pulldown 192×184 etc.); 5
+  baked-text sets; **33 orphaned media dirs**; inconsistent models/lighting/grade
+  between shoots (vision-confirmed). Prioritized Gemini-gated remediation plan.
+- **2026-07-06 · Systemic honesty audit — never infer state from absence of data ✅**
+  (`e20fad4`, `b63998f`) — Owner ratified the principle into the Product Excellence
+  Standard and demanded a full-product sweep. Ran 4 parallel read-only audits
+  (store.js / engine libs / client+insights / media wiring), fixed every LIVE
+  offender at the root: **seed blueprint** stopped fabricating recovery (`sleepHours:
+  7.2`/`energyLevel:"Steady"`) and fake coach notes ("<name> is building steady
+  consistency…"); **recovery** now gated by a sticky explicit `recoveryLogged` flag
+  (Coach shows "Not logged yet" until real data; premium plan's Recovery-signal/
+  training-baseline lines too); **weekly plan** gap/completion copy
+  (executionPriorities, premiumReason, previewNote) gated behind nutritionTracked/
+  hydrationTracked; **habitAnchor** "consistency is fragile" split new-vs-lapsed;
+  **trustNote** "Built from your actual data" conditioned on real history; **workout
+  copy** ("not shown up recently" / "recent training history") gated on real
+  training. Verified the gated buildInsights engine is genuinely honest. Dead twins
+  documented, left untouched. `HONESTY_AUDIT.md` records it all. Live-verified
+  (fresh user → honest Coach/Plan; after POST /api/recovery real values appear);
+  build 0; qa:launch 18/18; clean console.
 
 - **2026-07-06 · Excellence — stop asserting a nutrition deficit the user never logged ✅**
   (`14410a1`) — Tracing the "Recovery through better fueling" theme to its root
