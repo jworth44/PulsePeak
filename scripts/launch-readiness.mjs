@@ -55,7 +55,8 @@ const {
   normalizeWorkout,
   sanitizeUser,
   detectPersonalRecords,
-  buildWeekInReview
+  buildWeekInReview,
+  buildStreakStatus
 } = await import("../server/data/store.js");
 const {
   getWorkoutLibraryForProfile,
@@ -1322,6 +1323,53 @@ function runWeekInReviewAudit() {
   }
 }
 
+// The retention streak (with freeze protection) must be deterministic and honest:
+// trained days grow it, freezes bridge a bounded number of missed days, and the
+// loop state (active/at_risk/broken/none) must be correct.
+function runStreakStatusAudit() {
+  const checks = [];
+  const push = (name, ok) => checks.push({ name, ok });
+  const DAY = 24 * 60 * 60 * 1000;
+  const dayWorkout = (daysAgo) => ({
+    name: "S",
+    type: "strength",
+    duration: 40,
+    exercises: [{ name: "Bench Press", weight: 100, repsCompleted: 8, reps: "8", sets: 3 }],
+    loggedAt: new Date(Date.now() - daysAgo * DAY).toISOString()
+  });
+
+  let s = buildStreakStatus({ workouts: [] });
+  push("empty-none", s.streak === 0 && s.state === "none" && s.trainedToday === false && s.freezesRemaining === 2);
+
+  s = buildStreakStatus({ workouts: [dayWorkout(0)] });
+  push("today-active", s.streak === 1 && s.state === "active" && s.trainedToday === true);
+
+  s = buildStreakStatus({ workouts: [dayWorkout(1)] });
+  push("yesterday-at-risk", s.streak === 1 && s.state === "at_risk" && s.trainedToday === false);
+
+  // trained today + 2 days ago, missed yesterday -> freeze bridges the gap.
+  s = buildStreakStatus({ workouts: [dayWorkout(0), dayWorkout(2)] });
+  push("freeze-bridges-gap", s.streak === 2 && s.freezesUsed === 1 && s.freezesRemaining === 1);
+
+  // today, then a 3-day gap to an older workout -> gap exceeds the 2 freezes, so
+  // the older workout can't extend the streak; only today counts (no bridged gaps).
+  s = buildStreakStatus({ workouts: [dayWorkout(0), dayWorkout(4)] });
+  push("gap-beyond-freezes-breaks", s.streak === 1 && s.freezesUsed === 0 && s.freezesRemaining === 2);
+
+  // trained 5 days ago only -> gaps exhaust the 2 freezes before reaching it -> broken.
+  s = buildStreakStatus({ workouts: [dayWorkout(5)] });
+  push("stale-broken", s.streak === 0 && s.state === "broken");
+
+  const failed = checks.filter((c) => !c.ok);
+  recordScenario("streak-status", {
+    pass: failed.length === 0,
+    note: "buildStreakStatus: freeze-protected streak is deterministic; active/at_risk/broken/none states correct; freeze buffer bounded."
+  });
+  if (failed.length) {
+    recordBlocker(`Streak status checks failed: ${failed.map((c) => c.name).join(", ")}`);
+  }
+}
+
 const server = startServer();
 let browser;
 
@@ -1343,6 +1391,7 @@ try {
   runMediaAudit();
   runPrDetectionAudit();
   runWeekInReviewAudit();
+  runStreakStatusAudit();
   await runPwaAssetAudit();
   await runBrowserCoverage(browser);
   // After browser coverage — the auth rate-limit burst must not starve the

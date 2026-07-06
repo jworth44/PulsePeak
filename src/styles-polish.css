@@ -1176,6 +1176,90 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* ===================================================================== */
+/* STREAK CARD — the retention loop's home surface                        */
+/* ===================================================================== */
+.streak-card {
+  padding: 18px 20px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(26, 29, 33, 0.96), rgba(14, 15, 18, 0.98));
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--elev-1, 0 1px 0 rgba(255, 255, 255, 0.04) inset);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+/* At-risk streak gets a warm brand edge to create urgency (loss-aversion). */
+.streak-card.streak-at_risk {
+  border-color: var(--border-accent, rgba(245, 40, 61, 0.5));
+  box-shadow: 0 0 40px -18px var(--accent-ring);
+}
+.streak-card.streak-active {
+  border-color: rgba(245, 40, 61, 0.28);
+}
+
+.streak-main { display: flex; align-items: center; gap: 16px; }
+.streak-flame {
+  flex: 0 0 auto;
+  position: relative;
+  width: 66px;
+  height: 66px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 60%, rgba(245, 40, 61, 0.22), rgba(245, 40, 61, 0.05) 70%);
+  border: 1px solid rgba(245, 40, 61, 0.28);
+}
+.streak-flame-lit {
+  box-shadow: 0 0 26px -6px var(--accent-ring);
+  animation: streak-flicker 2.4s var(--ease-in-out) infinite;
+}
+@keyframes streak-flicker {
+  0%, 100% { box-shadow: 0 0 26px -6px var(--accent-ring); }
+  50% { box-shadow: 0 0 34px -4px var(--accent-ring); }
+}
+.streak-flame-emoji { font-size: 1.7rem; line-height: 1; }
+.streak-flame-count {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 0.78rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 0 0 2px var(--surface);
+}
+.streak-copy { min-width: 0; }
+.streak-title { display: block; font-size: 1.15rem; letter-spacing: -0.01em; color: var(--text-primary); }
+.streak-sub { margin: 3px 0 0; font-size: 0.85rem; line-height: 1.35; color: var(--text-secondary); }
+.streak-at_risk .streak-sub { color: var(--text-primary); }
+.streak-freeze { margin: 8px 0 0; font-size: 0.76rem; font-weight: 600; color: #7db8ff; }
+
+.streak-goal { border-top: 1px solid var(--border-subtle); padding-top: 14px; }
+.streak-goal-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.streak-goal-bar { height: 8px; border-radius: 999px; background: var(--bg-inset); overflow: hidden; }
+.streak-goal-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--grad-pulse, linear-gradient(90deg, var(--accent), var(--accent-hover)));
+  transition: width var(--dur-ring) var(--ease-out);
+}
+.streak-goal-note { margin: 8px 0 0; font-size: 0.78rem; color: var(--text-muted); }
+
+/* ===================================================================== */
 /* WEEK IN REVIEW — premium, shareable weekly recap                       */
 /* ===================================================================== */
 /* Dashboard entry point into the recap. */

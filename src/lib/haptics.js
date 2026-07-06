@@ -20,6 +20,10 @@ export function haptic(kind = "tap") {
   try {
     if (prefersReducedMotion()) return;
     if (typeof navigator === "undefined" || typeof navigator.vibrate !== "function") return;
+    // The Vibration API is blocked (and logs a console warning) until the user
+    // has interacted with the page. Skip cleanly when no gesture has happened —
+    // e.g. a ring hitting 100% on first render — instead of triggering the warning.
+    if (navigator.userActivation && navigator.userActivation.hasBeenActive === false) return;
     navigator.vibrate(PATTERNS[kind] ?? PATTERNS.tap);
   } catch {
     // Vibration unsupported / blocked — feedback is optional.

@@ -15,7 +15,8 @@
 | **Security / hardening** | **Backend-hardening unit DONE ✅** (red-team-driven) — atomic DB write + guarded read (P0 corruption fixed); password length cap + per-IP auth rate limiter (P0 unauthenticated scrypt-DoS + brute-force fixed); terminal error middleware + `/api` JSON 404 (P1 stack-trace/HTML leaks fixed); CORS safe default. Locked by qa:launch `api-hardening`. **Still open (owner/other units):** P0 ephemeral `/tmp` persistence (owner infra gate), O(n) full-file write + async scrypt (persistence unit), input type-confusion (input-integrity unit) — see `RED_TEAM_AUDIT.md` |
 | **Moments / delight** | **Wow-Factor Phases 1–2 DONE ✅** — P1: cinematic completion celebration + count-ups + ring pulse + habit haptics. **P2: real PR / "NEW RECORD" system** — server `detectPersonalRecords` (heaviest weight / best est-1RM / biggest session volume; prior-history-required, no first-time/bodyweight/fake records) returned on both workout-log endpoints; premium PR celebration ("NEW RECORD" · exercise · "185 lb × 8 reps" · record type · Volt glow · haptic). Browser-verified end-to-end. QA `pr-detection` (7 cases). All `prefers-reduced-motion`-safe. Next: Phase 3 Week-in-Review, Phase 4 retention loop |
 | **Week in Review** | **Wow-Factor Phase 3 DONE ✅** — `GET /api/week-in-review` + `buildWeekInReview` (rolling 7-day: workouts, streak, total volume, exercises, PRs earned this week, consistency, weekly-goal progress — all derived, never faked). Premium `WeekInReview` recap modal (Volt hero volume, stat grid, goal/consistency bars, PR list, Web-Share + clipboard fallback), dashboard entry "See your week in review". Browser-verified with real data (6,720 lb, 2 records). QA `week-in-review` (7 cases) |
-| **Active unit** | Wow-Factor Phase 4 (retention loop) — starting |
+| **Retention loop** | **Wow-Factor Phase 4 DONE ✅** — `buildStreakStatus` (freeze-protected streak, deterministic; states active/at_risk/broken/none) in `summary.streakStatus`. `StreakCard` on dashboard: 🔥 flame + streak, **streak-freeze concept** (buffer bridges up to 2 missed days), adaptive return-prompt/reinforcement copy (loss-aversion at-risk edge), weekly-goal bar. Streak-milestone `CelebrationOverlay` auto-fires at 3/7/14/30… (once, localStorage-guarded, resets if streak breaks). Fixed a real `navigator.vibrate`-without-gesture console warning. Browser + QA `streak-status` (6 cases) verified |
+| **Active unit** | Wow-Factor Phase 5 (product differentiation re-review) — starting |
 | **Next unit** | owner's call — options: persistence (P0 `/tmp`, owner-gated) · input-integrity unit (P1 type-confusion/whitespace-wipe) · the **Living Coach** differentiation wedge (needs owner to enable an Anthropic API key on the host) · Backlog #4 CI. See `PRODUCT_DIFFERENTIATION.md` + `RED_TEAM_AUDIT.md` §8 |
 | **Open escaped defect** | Arnold Press exercise media has baked-in text ("3. ARNOLD PRESS / THUMBNAIL") — regen via Gemini in a media unit (VG-001) |
 | **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
@@ -25,6 +26,30 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-05 · Wow-Factor Phase 4 — retention loop ✅** —
+  Owner: build the retention mechanics — streaks, streak-freeze, weekly-goal
+  reinforcement, return prompts, milestone moments, progress motivation.
+  **Server:** `buildStreakStatus(data)` (in `summary.streakStatus`) — a
+  freeze-protected streak with a deterministic, honest model: the freeze buffer
+  lets a streak bridge up to 2 missed days; only gaps BETWEEN trained days are
+  charged (trailing misses bridge to nothing). Emits `state`
+  (active/at_risk/broken/none), `freezesRemaining`, `trainedToday`,
+  `weeklyCompleted`. **Client:** `StreakCard` on the dashboard — a 🔥 flame with
+  the streak count, the streak-freeze status line, adaptive copy keyed to state
+  (active reinforcement, **at-risk loss-aversion return prompt** with a warm
+  brand edge, broken/none restart nudges), and a weekly-goal progress bar with a
+  "N more sessions to your goal" line. **Streak-milestone moment:** crossing
+  3/7/14/30/60/100/… while trained-today auto-fires a `CelebrationOverlay`
+  milestone once (localStorage-guarded; resets if the streak breaks so
+  re-climbing celebrates again). **Verification caught a real bug:**
+  `navigator.vibrate` fired without a user gesture (ring hitting 100% on
+  auto-load) logs a Chrome console warning that failed the QA console-error gate
+  → guarded `haptic()` on `navigator.userActivation.hasBeenActive`. Also fixed my
+  own freeze math (was charging trailing gaps). **Browser-verified**: StreakCard
+  shows "1-day streak / You trained today / 2 streak freezes ready / weekly goal
+  2/2", 0 console errors. QA `streak-status` scenario (6 cases: none/active/
+  at-risk/freeze-bridge/gap-beyond-freezes/stale-broken). Evidence: build exit 0;
+  qa:launch **16/16**, 0 blockers, 0 warnings.
 - **2026-07-05 · Wow-Factor Phase 3 — shareable Week in Review ✅** —
   A premium, "Wrapped"-style weekly recap users would want to share. **Server:**
   `buildWeekInReview(data)` in `store.js` + `GET /api/week-in-review` — over the

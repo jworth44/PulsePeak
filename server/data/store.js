@@ -517,6 +517,7 @@ export function summarizeDashboard(data) {
     totals,
     completion,
     workoutStreak: calculateWorkoutStreak(workouts),
+    streakStatus: buildStreakStatus(data),
     recentWorkouts: workouts.slice(0, 3),
     savedWorkouts: sortSavedWorkoutsDesc(data.savedWorkouts || []),
     latestExerciseLoads: buildLatestExerciseLoads(workouts),
@@ -3156,6 +3157,81 @@ function calculateWorkoutStreak(workouts) {
   }
 
   return streak;
+}
+
+// How many missed days a streak may bridge before it breaks. This is a rule,
+// not depleting per-user state: "remaining" is derived from the gaps already in
+// the current streak, so the whole thing stays deterministic and honest.
+const STREAK_FREEZE_ALLOWANCE = 2;
+
+// Walk back day-by-day from today. Trained days grow the streak; a missed day
+// (not today) is bridged by a freeze if the allowance isn't spent, otherwise the
+// streak breaks. Bridged days do NOT count toward the streak length, and only
+// gaps that fall BETWEEN trained days count as freezes used (trailing misses
+// after the oldest streak day bridge to nothing and are not charged).
+function computeStreakWithFreezes(workouts, freezeAllowance) {
+  const trained = new Set((workouts || []).map((workout) => String(workout.loggedAt).slice(0, 10)));
+  const dateAt = (index) => new Date(Date.now() - index * DAY_MS).toISOString().slice(0, 10);
+
+  let streak = 0;
+  let misses = 0;
+  let lastTrainedIndex = -1;
+  for (let index = 0; index < 400; index += 1) {
+    if (trained.has(dateAt(index))) {
+      streak += 1;
+      lastTrainedIndex = index;
+      continue;
+    }
+    if (index === 0) {
+      continue; // today isn't over — no penalty for not having trained yet
+    }
+    if (misses < freezeAllowance) {
+      misses += 1; // a freeze may bridge this missed day
+      continue;
+    }
+    break;
+  }
+
+  // Charge only the missed days that actually bridge gaps inside the streak span.
+  let freezesUsed = 0;
+  for (let index = 1; index <= lastTrainedIndex; index += 1) {
+    if (!trained.has(dateAt(index))) {
+      freezesUsed += 1;
+    }
+  }
+
+  return { streak, freezesUsed };
+}
+
+// Retention-facing streak status: current streak (freeze-protected), how much of
+// the freeze buffer is spent, and the loop state (active / at_risk / broken /
+// none) used to pick the right reinforcement + return-prompt copy client-side.
+export function buildStreakStatus(data) {
+  const wellness = normalizeWellnessData(data);
+  const workouts = (wellness.workouts || []).map(normalizeWorkout);
+  const trained = new Set(workouts.map((workout) => String(workout.loggedAt).slice(0, 10)));
+  const today = new Date().toISOString().slice(0, 10);
+  const trainedToday = trained.has(today);
+  const { streak, freezesUsed } = computeStreakWithFreezes(workouts, STREAK_FREEZE_ALLOWANCE);
+  const hasEverTrained = workouts.length > 0;
+
+  let state;
+  if (streak === 0) {
+    state = hasEverTrained ? "broken" : "none";
+  } else {
+    state = trainedToday ? "active" : "at_risk";
+  }
+
+  return {
+    streak,
+    freezesTotal: STREAK_FREEZE_ALLOWANCE,
+    freezesUsed,
+    freezesRemaining: Math.max(0, STREAK_FREEZE_ALLOWANCE - freezesUsed),
+    trainedToday,
+    atRisk: state === "at_risk",
+    state,
+    weeklyCompleted: countWeeklyLoggedWorkouts(workouts)
+  };
 }
 
 export function sortWorkoutsDesc(workouts) {

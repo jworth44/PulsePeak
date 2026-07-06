@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CountUp from "../components/CountUp";
+import CelebrationOverlay from "../components/CelebrationOverlay";
 import EmptyStateCard from "../components/EmptyStateCard";
 import HabitList from "../components/HabitList";
+import StreakCard from "../components/StreakCard";
 import WeekInReview from "../components/WeekInReview";
 import Panel from "../components/Panel";
 import ProgressRing from "../components/ProgressRing";
@@ -32,6 +34,7 @@ export default function DashboardPage() {
   const [saving, setSaving] = useState("");
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [showWeekReview, setShowWeekReview] = useState(false);
+  const [streakMilestone, setStreakMilestone] = useState(null);
   const [weeklyPlanState, setWeeklyPlanState] = useState(null);
   const [selectedMovement, setSelectedMovement] = useState(null);
   const openMovementGuide = (target) => setSelectedMovement(buildGuideTarget(target));
@@ -137,6 +140,45 @@ export default function DashboardPage() {
     }
     return workoutAccess?.limit || 2;
   }, [planSummary?.suggestedWorkoutMix?.split, workoutAccess]);
+  // Streak-milestone moment: when a real streak crosses a milestone (and the
+  // user trained today), celebrate it once. localStorage suppresses repeats and
+  // resets if the streak breaks, so re-climbing celebrates again.
+  useEffect(() => {
+    const status = summary?.streakStatus;
+    if (!status) return;
+    const KEY = "pulsepeak-streak-milestone";
+    let last = 0;
+    try {
+      last = Number(window.localStorage.getItem(KEY)) || 0;
+    } catch {
+      last = 0;
+    }
+    if (status.streak < last) {
+      try {
+        window.localStorage.setItem(KEY, String(status.streak));
+      } catch {
+        /* non-fatal */
+      }
+      last = status.streak;
+    }
+    const milestones = [3, 7, 14, 30, 60, 100, 180, 365];
+    if (status.trainedToday && milestones.includes(status.streak) && status.streak > last) {
+      try {
+        window.localStorage.setItem(KEY, String(status.streak));
+      } catch {
+        /* non-fatal */
+      }
+      setStreakMilestone({
+        variant: "milestone",
+        eyebrow: "Streak milestone",
+        title: `${status.streak}-day streak!`,
+        subtitle: "Consistency is compounding — this is how results happen.",
+        hero: { value: status.streak, label: "days in a row" },
+        autoDismissMs: 6000
+      });
+    }
+  }, [summary?.streakStatus]);
+
   const lastWorkoutAt = summary?.recentWorkouts?.[0]?.loggedAt || null;
   const returnGapDays = useMemo(() => {
     if (!lastWorkoutAt) {
@@ -425,6 +467,10 @@ export default function DashboardPage() {
           </button>
         </div>
       </section>
+
+      {summary.streakStatus ? (
+        <StreakCard status={summary.streakStatus} weeklyTarget={weeklySessionTarget} />
+      ) : null}
 
       {summary.habits.length > 0 && (
         <Panel eyebrow="Daily habits" title="Small wins that keep the week on track">
@@ -943,6 +989,11 @@ export default function DashboardPage() {
         onClose={() => setSelectedMovement(null)}
       />
       <WeekInReview open={showWeekReview} onClose={() => setShowWeekReview(false)} />
+      <CelebrationOverlay
+        open={Boolean(streakMilestone)}
+        onClose={() => setStreakMilestone(null)}
+        {...(streakMilestone || {})}
+      />
     </div>
   );
 }
