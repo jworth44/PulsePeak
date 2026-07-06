@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CountUp from "../components/CountUp";
 import EmptyStateCard from "../components/EmptyStateCard";
 import HabitList from "../components/HabitList";
+import WeekInReview from "../components/WeekInReview";
 import Panel from "../components/Panel";
 import ProgressRing from "../components/ProgressRing";
 import WorkoutDetailModal from "../components/WorkoutDetailModal";
@@ -30,6 +31,7 @@ export default function DashboardPage() {
   const [feedback, setFeedback] = useState("");
   const [saving, setSaving] = useState("");
   const [selectedWorkout, setSelectedWorkout] = useState(null);
+  const [showWeekReview, setShowWeekReview] = useState(false);
   const [weeklyPlanState, setWeeklyPlanState] = useState(null);
   const [selectedMovement, setSelectedMovement] = useState(null);
   const openMovementGuide = (target) => setSelectedMovement(buildGuideTarget(target));
@@ -418,6 +420,9 @@ export default function DashboardPage() {
             <ProgressRing value={summary.completion} />
           </div>
           <p className="hero-support-copy">{summary.resultProjection?.summary}</p>
+          <button className="wir-trigger" type="button" onClick={() => setShowWeekReview(true)}>
+            See your week in review →
+          </button>
         </div>
       </section>
 
@@ -937,6 +942,7 @@ export default function DashboardPage() {
         movementId={selectedMovement?.detailId || selectedMovement?.guideTargetId || selectedMovement?.id}
         onClose={() => setSelectedMovement(null)}
       />
+      <WeekInReview open={showWeekReview} onClose={() => setShowWeekReview(false)} />
     </div>
   );
 }

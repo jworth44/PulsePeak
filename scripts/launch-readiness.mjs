@@ -54,7 +54,8 @@ const {
   createUser,
   normalizeWorkout,
   sanitizeUser,
-  detectPersonalRecords
+  detectPersonalRecords,
+  buildWeekInReview
 } = await import("../server/data/store.js");
 const {
   getWorkoutLibraryForProfile,
@@ -1284,6 +1285,43 @@ function runPrDetectionAudit() {
   }
 }
 
+// The shareable Week-in-Review recap must derive every number from real logged
+// data (workouts, streak, volume, exercises, PRs, goal) and never fabricate.
+function runWeekInReviewAudit() {
+  const checks = [];
+  const push = (name, ok) => checks.push({ name, ok });
+  const now = new Date();
+  const iso = (msAgo) => new Date(now.getTime() - msAgo).toISOString();
+  const ex = (name, weight, reps, sets = 3) => ({ name, weight, repsCompleted: reps, reps: String(reps), sets, equipment: "barbell", muscleGroup: "Chest" });
+  const wk = (exercises, msAgo) => ({ name: "Session", type: "strength", duration: 45, exercises, loggedAt: iso(msAgo) });
+
+  // Empty history → no activity.
+  let r = buildWeekInReview({ workouts: [] });
+  push("empty-no-activity", r.hasActivity === false && r.workoutsCompleted === 0 && r.totalVolume === 0);
+
+  // Two sessions this week, second heavier → activity + volume + a PR counted.
+  const workouts = [
+    wk([ex("Bench Press", 135, 8)], 3 * 24 * 60 * 60 * 1000), // 3 days ago
+    wk([ex("Bench Press", 185, 5), ex("Row", 100, 10)], 1 * 24 * 60 * 60 * 1000) // 1 day ago
+  ];
+  r = buildWeekInReview({ workouts }, { isPremium: true, completion: 72 });
+  push("counts-workouts", r.workoutsCompleted === 2);
+  push("computes-volume", r.totalVolume > 0);
+  push("counts-exercises", r.exercisesCompleted === 3);
+  push("detects-week-prs", r.prCount >= 1 && r.personalRecords.some((x) => x.type === "heaviest_weight"));
+  push("passes-consistency", r.consistency === 72);
+  push("goal-progress-shape", r.weeklyGoal && r.weeklyGoal.completed === 2 && r.weeklyGoal.target > 0);
+
+  const failed = checks.filter((c) => !c.ok);
+  recordScenario("week-in-review", {
+    pass: failed.length === 0,
+    note: "buildWeekInReview derives workouts/streak/volume/exercises/PRs/consistency/goal from real logs; empty history → no activity."
+  });
+  if (failed.length) {
+    recordBlocker(`Week-in-review checks failed: ${failed.map((c) => c.name).join(", ")}`);
+  }
+}
+
 const server = startServer();
 let browser;
 
@@ -1304,6 +1342,7 @@ try {
   runCombinationAudit();
   runMediaAudit();
   runPrDetectionAudit();
+  runWeekInReviewAudit();
   await runPwaAssetAudit();
   await runBrowserCoverage(browser);
   // After browser coverage — the auth rate-limit burst must not starve the

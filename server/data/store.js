@@ -3058,6 +3058,59 @@ export function detectPersonalRecords(priorWorkouts = [], newWorkout) {
   return records.sort((left, right) => rank[left.type] - rank[right.type]);
 }
 
+// Assemble the shareable "Week in Review" recap from real logged data over the
+// rolling 7-day window. Every number is derived, never fabricated.
+export function buildWeekInReview(data, options = {}) {
+  const { isPremium = false, completion = null, referenceDate = new Date() } = options;
+  const wellness = normalizeWellnessData(data);
+  const allWorkouts = (wellness.workouts || []).map(normalizeWorkout);
+  const { start, end } = getWorkoutWeekWindow(referenceDate);
+  const startMs = start.getTime();
+  const endMs = end.getTime();
+  const inWindow = (workout) => {
+    const logged = new Date(workout.loggedAt).getTime();
+    return Number.isFinite(logged) && logged >= startMs && logged <= endMs;
+  };
+
+  const weekWorkouts = allWorkouts.filter(inWindow);
+  const workoutsCompleted = weekWorkouts.length;
+  const totalVolume = Math.round(weekWorkouts.reduce((sum, workout) => sum + sessionVolume(workout), 0));
+  const exercisesCompleted = weekWorkouts.reduce(
+    (sum, workout) => sum + (Array.isArray(workout.exercises) ? workout.exercises.length : 0),
+    0
+  );
+  const streak = calculateWorkoutStreak(allWorkouts);
+
+  // Personal records earned during the window: walk chronologically so each
+  // workout is compared only against everything logged before it.
+  const chronological = [...allWorkouts].sort(
+    (left, right) => new Date(left.loggedAt).getTime() - new Date(right.loggedAt).getTime()
+  );
+  const records = [];
+  chronological.forEach((workout, index) => {
+    if (!inWindow(workout)) {
+      return;
+    }
+    detectPersonalRecords(chronological.slice(0, index), workout).forEach((record) => records.push(record));
+  });
+
+  const weeklyGoalTarget = isPremium ? 4 : FREE_WEEKLY_WORKOUT_LIMIT;
+
+  return {
+    weekStart: start.toISOString(),
+    weekEnd: end.toISOString(),
+    workoutsCompleted,
+    streak,
+    totalVolume,
+    exercisesCompleted,
+    personalRecords: records,
+    prCount: records.length,
+    consistency: typeof completion === "number" ? completion : null,
+    weeklyGoal: { completed: workoutsCompleted, target: weeklyGoalTarget },
+    hasActivity: workoutsCompleted > 0
+  };
+}
+
 function inferWorkoutType(name = "") {
   const lower = name.toLowerCase();
   if (lower.includes("mobility")) {

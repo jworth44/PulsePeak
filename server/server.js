@@ -12,6 +12,7 @@ import {
   buildLaunchSafeCoachResponse,
   buildLaunchSafeWeeklyCheckInState,
   buildWeeklyCheckInState,
+  buildWeekInReview,
   buildWorkoutAccess,
   buildLimitedWeeklyPlan,
   buildWeeklyPlan,
@@ -229,6 +230,19 @@ app.post("/api/auth/login", authRateLimiter, (request, response) => {
       user: sanitizeUser(user),
       dashboard: buildUserSummary(user)
     });
+  } catch (error) {
+    return response.status(400).json({ message: error.message });
+  }
+});
+
+app.get("/api/week-in-review", requireAuth, (request, response) => {
+  try {
+    const summary = buildUserSummary(request.user);
+    const review = buildWeekInReview(request.user.data, {
+      isPremium: isPremiumEntitled(request.user),
+      completion: typeof summary?.completion === "number" ? summary.completion : null
+    });
+    return response.json({ review });
   } catch (error) {
     return response.status(400).json({ message: error.message });
   }

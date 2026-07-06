@@ -14,7 +14,8 @@
 | **PWA / installability** | **Backlog #3 COMPLETE ✅** — manifest + SW + icons built & served; honest `beforeinstallprompt` install-prompt UI (iOS hint fallback, dismissible, hides when installed); both prerequisites now **machine-enforced** in qa:launch (`pwa-installability-assets` + `mobile-viewport-shell` at true 390px) |
 | **Security / hardening** | **Backend-hardening unit DONE ✅** (red-team-driven) — atomic DB write + guarded read (P0 corruption fixed); password length cap + per-IP auth rate limiter (P0 unauthenticated scrypt-DoS + brute-force fixed); terminal error middleware + `/api` JSON 404 (P1 stack-trace/HTML leaks fixed); CORS safe default. Locked by qa:launch `api-hardening`. **Still open (owner/other units):** P0 ephemeral `/tmp` persistence (owner infra gate), O(n) full-file write + async scrypt (persistence unit), input type-confusion (input-integrity unit) — see `RED_TEAM_AUDIT.md` |
 | **Moments / delight** | **Wow-Factor Phases 1–2 DONE ✅** — P1: cinematic completion celebration + count-ups + ring pulse + habit haptics. **P2: real PR / "NEW RECORD" system** — server `detectPersonalRecords` (heaviest weight / best est-1RM / biggest session volume; prior-history-required, no first-time/bodyweight/fake records) returned on both workout-log endpoints; premium PR celebration ("NEW RECORD" · exercise · "185 lb × 8 reps" · record type · Volt glow · haptic). Browser-verified end-to-end. QA `pr-detection` (7 cases). All `prefers-reduced-motion`-safe. Next: Phase 3 Week-in-Review, Phase 4 retention loop |
-| **Active unit** | Wow-Factor Phase 3 (shareable Week in Review) — starting |
+| **Week in Review** | **Wow-Factor Phase 3 DONE ✅** — `GET /api/week-in-review` + `buildWeekInReview` (rolling 7-day: workouts, streak, total volume, exercises, PRs earned this week, consistency, weekly-goal progress — all derived, never faked). Premium `WeekInReview` recap modal (Volt hero volume, stat grid, goal/consistency bars, PR list, Web-Share + clipboard fallback), dashboard entry "See your week in review". Browser-verified with real data (6,720 lb, 2 records). QA `week-in-review` (7 cases) |
+| **Active unit** | Wow-Factor Phase 4 (retention loop) — starting |
 | **Next unit** | owner's call — options: persistence (P0 `/tmp`, owner-gated) · input-integrity unit (P1 type-confusion/whitespace-wipe) · the **Living Coach** differentiation wedge (needs owner to enable an Anthropic API key on the host) · Backlog #4 CI. See `PRODUCT_DIFFERENTIATION.md` + `RED_TEAM_AUDIT.md` §8 |
 | **Open escaped defect** | Arnold Press exercise media has baked-in text ("3. ARNOLD PRESS / THUMBNAIL") — regen via Gemini in a media unit (VG-001) |
 | **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
@@ -24,6 +25,25 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-05 · Wow-Factor Phase 3 — shareable Week in Review ✅** —
+  A premium, "Wrapped"-style weekly recap users would want to share. **Server:**
+  `buildWeekInReview(data)` in `store.js` + `GET /api/week-in-review` — over the
+  rolling 7-day window it derives workouts completed, training streak, total
+  volume moved, exercises completed, PRs earned THIS week (walks the week's
+  workouts chronologically, detecting each against everything logged before it),
+  consistency score, and weekly-goal progress. Every number real; empty history
+  → `hasActivity:false` (honest empty state, no fabrication). **Client:**
+  `WeekInReview.jsx` modal — Volt hero (total volume moved), a 4-up stat grid,
+  goal + consistency progress bars, a "Records this week" list with Volt PR
+  badges, and a "Share my week" button (Web Share API with clipboard fallback);
+  count-up numbers throughout. Dashboard entry point "See your week in review →".
+  **Browser-verified** with a real 2-workout week: "Jun 28 – Jul 5", hero
+  **6,720 lb moved**, 2 workouts / 1-day streak / 4 exercises / **2 new records**,
+  goal 2/2, consistency 27%, records "Barbell bench press — 185 lb × 8" +
+  "Biggest session — 4,440 lb"; 0 console errors. QA `week-in-review` scenario
+  (7 cases incl. empty→no-activity, real volume/exercise counts, week PR
+  detection, consistency passthrough). Evidence: build exit 0; qa:launch
+  **15/15**, 0 blockers, 0 warnings.
 - **2026-07-05 · Wow-Factor Phase 2 — real PR / "NEW RECORD" system ✅** —
   Owner: build a screenshot-worthy PR celebration from REAL logged data only,
   never fabricate a record, never celebrate an ordinary workout. **Server:**
