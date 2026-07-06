@@ -53,18 +53,18 @@ export default function UpgradePrompt({ prompt, onUpgrade, onDismiss, busy = fal
         <div className="upgrade-tier-summary">
           <div className="upgrade-tier-card">
             <span className="section-label">Free</span>
-            <strong>2 completed sessions in a rolling 7-day window</strong>
-            <span className="support-copy">See the system, train a little, and feel where the real limit starts.</span>
+            <strong>2 sessions a week</strong>
+            <span className="support-copy">Log a couple of workouts each week and watch PulsePeak start to learn how you train.</span>
           </div>
-          <div className="upgrade-tier-card">
-            <span className="section-label">7-day trial</span>
-            <strong>Full access before billing starts</strong>
-            <span className="support-copy">Keep your next 7 days connected. Then auto-renews yearly at $119.99/year unless canceled.</span>
+          <div className="upgrade-tier-card upgrade-tier-card-featured">
+            <span className="section-label">7-day free trial</span>
+            <strong>Everything in Premium, free</strong>
+            <span className="support-copy">Try the full experience for a week. Cancel anytime before it ends and you pay nothing.</span>
           </div>
           <div className="upgrade-tier-card">
             <span className="section-label">Premium</span>
-            <strong>Unlimited execution and continuity</strong>
-            <span className="support-copy">Keep every session, every swap path, and the full week moving without interruption.</span>
+            <strong>Unlimited, fully personalized training</strong>
+            <span className="support-copy">Log every session, unlock your full adaptive weekly plan, and keep your momentum without hitting a limit.</span>
           </div>
         </div>
         <div className="upgrade-pricing-grid">
@@ -88,18 +88,18 @@ export default function UpgradePrompt({ prompt, onUpgrade, onDismiss, busy = fal
             <p className="support-copy upgrade-copy">{TRIAL_MODEL.support}</p>
           </>
         ) : (
-          <p className="support-copy upgrade-copy">Upgrade to keep logging every session, keep your week connected, and continue training without limits.</p>
+          <p className="support-copy upgrade-copy">Upgrade to log every session, unlock your full personalized weekly plan, and keep your momentum without limits.</p>
         )}
         {!billingEnabled ? (
-          <p className="support-copy upgrade-copy">Billing is coming soon for this launch baseline.</p>
+          <p className="support-copy upgrade-copy upgrade-soon">Premium is launching soon — you'll be able to unlock the full experience right here.</p>
         ) : null}
       </div>
       <div className="upgrade-prompt-actions">
         <button className="primary-button" disabled={busy || !billingEnabled} type="button" onClick={() => onUpgrade?.(canStartTrial ? "yearly" : selectedPlan, canStartTrial ? "default" : "upgrade_now")}>
           {primaryLabel}
         </button>
-        {canStartTrial ? (
-          <button className="secondary-button" disabled={busy || !billingEnabled} type="button" onClick={() => onUpgrade?.(selectedPlan, "upgrade_now")}>
+        {canStartTrial && billingEnabled ? (
+          <button className="secondary-button" disabled={busy} type="button" onClick={() => onUpgrade?.(selectedPlan, "upgrade_now")}>
             {directPaidLabel}
           </button>
         ) : null}

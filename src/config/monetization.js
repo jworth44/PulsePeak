@@ -30,13 +30,13 @@ export const BILLING_OPTIONS = [
     id: "monthly",
     label: "Monthly",
     priceLabel: "$14.99 / month",
-    helper: "Direct paid option"
+    helper: "Flexible — pay month to month"
   },
   {
     id: "yearly",
     label: "Yearly",
     priceLabel: "$119.99 / year",
-    helper: "Best value - save 33%"
+    helper: "Best value — save 33%"
   }
 ];
 
@@ -44,9 +44,9 @@ export const TRIAL_MODEL = {
   days: 7,
   headline: "7-day free trial",
   summary:
-    "Trial unlocks the full workout system for 7 days so you can keep your progress connected. Then auto-renews yearly at $119.99/year unless canceled before trial ends.",
+    "Your free trial unlocks the full PulsePeak experience for 7 days. It then renews yearly at $119.99/year unless you cancel before it ends.",
   support:
-    "Cancel before trial ends to return to Free. Monthly is available separately outside the trial renewal path."
+    "Cancel anytime before your trial ends and you won't be charged. Prefer to pay monthly? You can choose that instead."
 };
 
 export const PREMIUM_PREVIEW = {

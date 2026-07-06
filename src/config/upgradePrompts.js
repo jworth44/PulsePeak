@@ -17,18 +17,18 @@ function formatGoal(goalType) {
 }
 
 function getAdaptiveValueBullets(profile = {}, activeModules = []) {
-  const bullets = ["Full adaptive weekly plan", "Execution priorities tied to your real data", "Unlimited workout logging each week"];
+  const bullets = ["Your full adaptive weekly plan", "Guidance built from your real training data", "Unlimited workout logging every week"];
 
   if (hasModule(activeModules, "nutrition")) {
     bullets.push(profile.nutritionMode === "full" ? "Richer calorie, protein, and fueling guidance" : "Deeper protein and hydration guidance");
   }
 
   if (hasModule(activeModules, "hydration")) {
-    bullets.push("Hydration guidance that shifts with your current gaps");
+    bullets.push("Hydration guidance that adapts to your day");
   }
 
   if (hasModule(activeModules, "mobility") || profile.injuryStatus !== "none") {
-    bullets.push("Mobility and recovery depth shaped by injury and movement context");
+    bullets.push("Mobility and recovery shaped around how you actually feel");
   }
 
   return Array.from(new Set(bullets)).slice(0, 4);
@@ -42,21 +42,21 @@ export function getUpgradePrompt({ surface, profile = {}, activeModules = [], co
 
   if (surface === "weekly-plan") {
     const title = mobilityHeavy
-      ? "Unlock the full adaptive plan behind your recovery and mobility needs"
+      ? "Unlock your full plan — built around your recovery"
       : nutritionHeavy
-        ? "Unlock the full adaptive plan behind your fueling and recovery data"
-        : "Unlock the full adaptive weekly plan";
+        ? "Unlock your full plan — built around your fueling and recovery"
+        : "Unlock your full adaptive weekly plan";
 
     const body = mobilityHeavy
-        ? "Premium adds the deeper weekly rationale, execution priorities, guided mobility depth, and recovery-aware adjustments that help the week make better decisions."
+        ? "Premium unlocks your full weekly plan, with deeper mobility work and recovery-aware adjustments built around how you actually feel."
       : nutritionHeavy
-        ? "Premium adds the deeper weekly rationale, execution priorities, unlimited workout logging, and smarter hydration and fueling adjustments tied to your real data."
-        : "Premium adds the deeper weekly rationale, unlimited workout logging, and execution priorities that explain exactly why the week is structured this way.";
+        ? "Premium unlocks your full weekly plan, with unlimited logging and smarter fueling and hydration tuned to your real data."
+        : "Premium unlocks your full weekly plan — unlimited logging and a week that adapts to exactly how you train.";
 
     return {
-      eyebrow: "Full system feature",
+      eyebrow: "Premium",
       title,
-      body: `${body} Keep the week connected instead of stopping at the preview layer.`,
+      body: `${body} Keep your whole week moving, not just a preview.`,
       bullets: adaptiveBullets,
       ctaLabel: "Upgrade now"
     };
@@ -64,15 +64,15 @@ export function getUpgradePrompt({ surface, profile = {}, activeModules = [], co
 
   if (surface === "workouts") {
     return {
-      eyebrow: "Included in trial",
-      title: "Run the full workout system without limits",
-      body: "You are seeing only a small part of PulsePeak on Free. Keep logging sessions, keep your progress connected, and stop guessing what comes next.",
+      eyebrow: "Premium",
+      title: "Train without limits",
+      body: "Free gives you two sessions a week. Premium lets you log every workout, keep your streak alive, and never lose your momentum to a cap.",
       bullets: [
-        "Unlimited workout logging all week",
-        "Full workout system access across all visible splits",
-        "More exercise swap options without losing the workout structure",
-        "Smoother guided sessions from warm-up through completion",
-        mobilityHeavy ? "Broader recovery and physio-style support around harder sessions" : "Cleaner split guidance and smarter continuity tied to your setup"
+        "Unlimited workout logging, every week",
+        "Every session counts toward your streak and progress",
+        "More ways to swap exercises without losing your plan",
+        "Smooth, guided sessions from warm-up to finish",
+        mobilityHeavy ? "Deeper recovery support around your hardest sessions" : "Smarter session variety tuned to your setup"
       ],
       ctaLabel: "Upgrade now"
     };
@@ -81,21 +81,21 @@ export function getUpgradePrompt({ surface, profile = {}, activeModules = [], co
   if (surface === "coach") {
     const category = coach?.primaryInsight?.category || "consistency";
     const titleMap = {
-      hydration: "Unlock deeper coach reasoning around hydration and performance",
-      nutrition: "Unlock deeper coach reasoning around fueling and recovery",
-      recovery: "Unlock deeper coach reasoning around recovery and training load",
-      training: "Unlock deeper coach reasoning around training decisions",
-      consistency: "Unlock deeper coach reasoning tied to your weekly plan"
+      hydration: "Go deeper on hydration and performance",
+      nutrition: "Go deeper on fueling and recovery",
+      recovery: "Go deeper on recovery and training load",
+      training: "Go deeper on your training decisions",
+      consistency: "Go deeper on your weekly momentum"
     };
 
     return {
-      eyebrow: "Full system feature",
+      eyebrow: "Premium",
       title: titleMap[category] || titleMap.consistency,
       body: `Premium helps you keep momentum by showing the clearer why behind your ${goalLabel} decisions this week.`,
       bullets: [
-        "Deeper why-this-matters explanations",
-        "Coach reasoning tied back to your weekly plan",
-        mobilityHeavy ? "Sharper recovery and mobility guardrails" : "More precise next actions from your current data"
+        "Clearer reasons behind each recommendation",
+        "Coaching connected to your weekly plan",
+        mobilityHeavy ? "Sharper recovery and mobility guidance" : "More precise next steps from your data"
       ],
       ctaLabel: "Upgrade now"
     };
@@ -104,12 +104,12 @@ export function getUpgradePrompt({ surface, profile = {}, activeModules = [], co
   if (surface === "progress") {
     const streak = summary?.workoutStreak || 0;
     return {
-      eyebrow: "Full system feature",
-      title: streak >= 3 ? "See why your momentum is building" : "See what is actually moving your progress",
-      body: "Premium makes it easier to keep your week moving by showing what is improving, what is slipping, and what to fix next.",
+      eyebrow: "Premium",
+      title: streak >= 3 ? "See why your momentum is building" : "See what's actually moving your progress",
+      body: "Premium makes it easier to keep your week moving by showing what's improving, what's slipping, and what to fix next.",
       bullets: [
-        "Trend feedback tied to your weekly plan decisions",
-        "Clearer why-your-trends-changed explanations",
+        "See what's improving and what's slipping",
+        "Clear explanations for why your trends changed",
         nutritionHeavy ? "Richer nutrition, hydration, and recovery context" : "Stronger next-step guidance from your patterns"
       ],
       ctaLabel: "Upgrade now"
@@ -121,12 +121,12 @@ export function getUpgradePrompt({ surface, profile = {}, activeModules = [], co
       ? "Your setup is ready. Premium goes deeper on recovery, mobility, and weekly planning."
       : nutritionHeavy
         ? "Your setup is ready. Premium goes deeper on fueling, recovery, and weekly planning."
-        : "Your setup is ready. Premium unlocks the full adaptive layer behind it.";
+        : "Your setup is ready. Premium unlocks the full adaptive plan behind it.";
 
     return {
-      eyebrow: "Included in trial",
+      eyebrow: "Included in your free trial",
       title,
-      body: `PulsePeak already knows you are focused on ${goalLabel}. Trial is the easiest way to keep the full system connected for the next 7 days.`,
+      body: `PulsePeak already knows you're focused on ${goalLabel}. The free trial is the easiest way to unlock the full experience for your next 7 days.`,
       bullets: adaptiveBullets,
       ctaLabel: "Upgrade now"
     };

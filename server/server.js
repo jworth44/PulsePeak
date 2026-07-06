@@ -1088,14 +1088,14 @@ function buildPricingModel(user) {
       amountCents: monthlyAmount,
       priceLabel: formatCurrency(monthlyAmount, premiumPlanCurrency),
       cadenceLabel: `${formatCurrency(monthlyAmount, premiumPlanCurrency)} / month`,
-      helper: "Direct paid option"
+      helper: "Flexible — pay month to month"
     },
     yearly: {
       interval: "yearly",
       amountCents: yearlyAmount,
       priceLabel: formatCurrency(yearlyAmount, premiumPlanCurrency),
       cadenceLabel: `${formatCurrency(yearlyAmount, premiumPlanCurrency)} / year`,
-      helper: yearlySavings > 0 ? `Best value - save ${yearlySavingsPercent}%` : "Best long-term value",
+      helper: yearlySavings > 0 ? `Best value — save ${yearlySavingsPercent}%` : "Best long-term value",
       savingsAmountCents: yearlySavings,
       savingsPercent: yearlySavingsPercent
     }
