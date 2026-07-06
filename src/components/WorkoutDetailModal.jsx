@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { buildGuideTarget, resolveMovementVisual } from "../../shared/exerciseCatalog";
 import { hasFullWorkoutAccess } from "../../shared/entitlements";
 import { getWorkoutLoadBand } from "../../shared/workoutEngine";
@@ -28,6 +29,13 @@ export default function WorkoutDetailModal({
 }) {
   const { workoutMemory, dashboard } = useAuth();
   const dialogRef = useModalA11y(onClose);
+  const navigate = useNavigate();
+  // A finished workout should carry the user forward into recovery, never
+  // dead-end at a close button.
+  const goRecover = () => {
+    onClose?.();
+    navigate("/mobility");
+  };
   const [celebration, setCelebration] = React.useState(null);
   const workoutExercises = Array.isArray(workout?.exercises) ? workout.exercises : [];
   const currentWorkoutFocus = workout?.focus || workout?.focusLabel || workout?.type || "training";
@@ -611,8 +619,11 @@ export default function WorkoutDetailModal({
                 ))}
               </div>
             ) : null}
-            <div className="modal-actions">
-              <button className="primary-button workout-nav-button" type="button" onClick={onClose}>
+            <div className="modal-actions workout-complete-actions">
+              <button className="primary-button workout-nav-button" type="button" onClick={goRecover}>
+                Cool down &amp; recover →
+              </button>
+              <button className="ghost-button workout-nav-button" type="button" onClick={onClose}>
                 {completionExitLabel}
               </button>
             </div>
