@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import CountUp from "../components/CountUp";
 import EmptyStateCard from "../components/EmptyStateCard";
 import HabitList from "../components/HabitList";
 import Panel from "../components/Panel";
@@ -395,11 +396,11 @@ export default function DashboardPage() {
               <span className="muted">Workout logs this week</span>
             </div>
             <div className="stat-pill">
-              <strong>{workoutMomentum.currentStreakDays} day{workoutMomentum.currentStreakDays === 1 ? "" : "s"}</strong>
+              <strong><CountUp value={workoutMomentum.currentStreakDays} /> day{workoutMomentum.currentStreakDays === 1 ? "" : "s"}</strong>
               <span className="muted">Current training streak</span>
             </div>
             <div className="stat-pill">
-              <strong>{summary.habits.filter((habit) => habit.completedToday).length}</strong>
+              <strong><CountUp value={summary.habits.filter((habit) => habit.completedToday).length} /></strong>
               <span className="muted">Habits done today</span>
             </div>
           </div>

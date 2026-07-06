@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { useCountUp } from "../hooks/useCountUp";
+import { haptic } from "../lib/haptics";
 
 const CIRCUMFERENCE = 302;
 
@@ -6,6 +8,16 @@ export default function ProgressRing({ value }) {
   const clamped = Math.max(0, Math.min(100, Number(value) || 0));
   const offset = CIRCUMFERENCE - (clamped / 100) * CIRCUMFERENCE;
   const isComplete = clamped >= 100;
+  // Count the center number up in lockstep with the ring drawing (--dur-ring 1200ms).
+  const displayValue = useCountUp(clamped, { duration: 1200 });
+  // Fire a single haptic the moment the ring reaches 100% (not on every render).
+  const wasComplete = useRef(isComplete);
+  useEffect(() => {
+    if (isComplete && !wasComplete.current) {
+      haptic("celebrate");
+    }
+    wasComplete.current = isComplete;
+  }, [isComplete]);
 
   return (
     <div className={`progress-ring${isComplete ? " is-complete" : ""}`}>
@@ -24,7 +36,7 @@ export default function ProgressRing({ value }) {
         <circle className="ring-value" cx="60" cy="60" r="48" style={{ strokeDashoffset: offset }} />
       </svg>
       <div className="ring-center">
-        <strong>{clamped}%</strong>
+        <strong style={{ fontVariantNumeric: "tabular-nums" }}>{Math.round(displayValue)}%</strong>
         <span>complete</span>
       </div>
     </div>

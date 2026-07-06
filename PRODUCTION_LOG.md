@@ -13,7 +13,8 @@
 | **Design** | **Design System v2.0 "Peak" LIVE ✅** — research-driven world-class redesign (`DESIGN_RESEARCH.md` + `DESIGN_SYSTEM.md`); retuned `:root` tokens + `styles-polish.css` v2 + **mobile bottom tab bar**; verified both viewports |
 | **PWA / installability** | **Backlog #3 COMPLETE ✅** — manifest + SW + icons built & served; honest `beforeinstallprompt` install-prompt UI (iOS hint fallback, dismissible, hides when installed); both prerequisites now **machine-enforced** in qa:launch (`pwa-installability-assets` + `mobile-viewport-shell` at true 390px) |
 | **Security / hardening** | **Backend-hardening unit DONE ✅** (red-team-driven) — atomic DB write + guarded read (P0 corruption fixed); password length cap + per-IP auth rate limiter (P0 unauthenticated scrypt-DoS + brute-force fixed); terminal error middleware + `/api` JSON 404 (P1 stack-trace/HTML leaks fixed); CORS safe default. Locked by qa:launch `api-hardening`. **Still open (owner/other units):** P0 ephemeral `/tmp` persistence (owner infra gate), O(n) full-file write + async scrypt (persistence unit), input type-confusion (input-integrity unit) — see `RED_TEAM_AUDIT.md` |
-| **Active unit** | none (backend-hardening unit closed) |
+| **Moments / delight** | **Wow-Factor Phase 1 DONE ✅** — cinematic workout-completion celebration (Volt burst + count-up of real session stats + haptic, honest data), count-up numbers on dashboard stat pills + consistency ring, ring spring-pulse + haptic at 100%, habit-complete tap haptic + pop. All `prefers-reduced-motion`-safe; count-up has an rAF-pause safety net (caught in browser verify). Uses the design system's reserved celebration tokens. Phase 2 (deferred): PR moments (needs server `personalRecords` contract), Sunday "Week in Review", streak-freeze |
+| **Active unit** | none (Wow-Factor Phase 1 closed) |
 | **Next unit** | owner's call — options: persistence (P0 `/tmp`, owner-gated) · input-integrity unit (P1 type-confusion/whitespace-wipe) · the **Living Coach** differentiation wedge (needs owner to enable an Anthropic API key on the host) · Backlog #4 CI. See `PRODUCT_DIFFERENTIATION.md` + `RED_TEAM_AUDIT.md` §8 |
 | **Open escaped defect** | Arnold Press exercise media has baked-in text ("3. ARNOLD PRESS / THUMBNAIL") — regen via Gemini in a media unit (VG-001) |
 | **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
@@ -23,6 +24,37 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-05 · Wow-Factor Phase 1 — moments that make it feel alive ✅** —
+  Owner brief: "forget features — create moments that make someone say whoa;
+  build an app that feels alive, worthy of being featured by Apple." Grounded
+  first (scout agent) that the core loop logs REAL per-exercise weight/reps and
+  real streaks/completion — so every celebrated number is honest, no fakes.
+  **Built:** (1) `CelebrationOverlay.jsx` — a cinematic, reusable moment for the
+  emotional peak of finishing a workout: full-screen Volt-lime particle burst,
+  count-up of the session's real stats (volume moved / minutes / exercises),
+  streak, spring entrance, haptic, tap-or-auto dismiss. Wired into
+  `WorkoutDetailModal.finalizeWorkout`; elevates to a "milestone" variant when
+  the weekly goal is hit (precise: projected count ≥ target). (2) `useCountUp`
+  hook + `CountUp` component + `haptics` util — numbers animate 0→value across
+  the app (dashboard streak + habits-done pills, consistency-ring center), so
+  stats feel alive instead of snapping. (3) `ProgressRing` — center number
+  counts up in lockstep with the ring draw, plus a spring-pulse + Volt glow +
+  haptic the moment it reaches 100% (the design system's reserved
+  "volt glow + spring pulse at 100%"). (4) Habit cards — a satisfying tap haptic
+  + pop the instant a habit is marked done. Everything uses the design system's
+  pre-reserved celebration language (`--ease-spring`, `--grad-volt`,
+  `--volt-glow`, `--dur-count`) and is fully `prefers-reduced-motion`-safe
+  (no particles, instant numbers, plain fade). **Browser verification caught +
+  fixed a real robustness bug:** `useCountUp` relied on `requestAnimationFrame`,
+  which is paused in hidden/backgrounded tabs — numbers stuck at 0 forever;
+  added a `document.hidden` short-circuit + a post-duration safety timeout that
+  always lands the true value (verified: hero settled to real 48 min / 3
+  exercises / 1-day streak; dashboard pills + 28% ring settled correctly).
+  Celebration visual verified premium in-browser at desktop; 0 console errors.
+  Evidence: build exit 0; qa:launch **13/13**, 0 blockers, 0 warnings.
+  **Phase 2 deferred** (noted, not dropped): PR "NEW RECORD" moments (needs a
+  server `personalRecords` response — best-weight lives server-side, not on the
+  client), shareable Sunday "Week in Review", streak-freeze.
 - **2026-07-05 · Backend-hardening unit — clears red-team P0/P1 security findings ✅** —
   Driven by `RED_TEAM_AUDIT.md` (6-agent adversarial audit + live break-testing).
   Owner endorsed sequencing hardening first (clears launch-blockers, no owner

@@ -5,6 +5,7 @@ import { getWorkoutLoadBand } from "../../shared/workoutEngine";
 import { useAuth } from "../state/AuthContext";
 import useModalA11y from "../hooks/useModalA11y";
 import { getExerciseImageSrc } from "../utils/getExerciseImageSrc";
+import CelebrationOverlay from "./CelebrationOverlay";
 
 export default function WorkoutDetailModal({
   workout,
@@ -25,8 +26,9 @@ export default function WorkoutDetailModal({
   isFavorite = false,
   onToggleFavorite
 }) {
-  const { workoutMemory } = useAuth();
+  const { workoutMemory, dashboard } = useAuth();
   const dialogRef = useModalA11y(onClose);
+  const [celebration, setCelebration] = React.useState(null);
   const workoutExercises = Array.isArray(workout?.exercises) ? workout.exercises : [];
   const currentWorkoutFocus = workout?.focus || workout?.focusLabel || workout?.type || "training";
   const [selectedBySlot, setSelectedBySlot] = React.useState({});
@@ -181,9 +183,50 @@ export default function WorkoutDetailModal({
     }));
   };
 
+  const openCelebration = (logged) => {
+    // All numbers come from real session data the user just entered — no fakes.
+    const unit = dashboard?.profile?.unitPreference === "metric" ? "kg" : "lb";
+    const volume = selectedExercises.reduce((sum, exercise) => {
+      const weight = Number(exercise.weight);
+      const reps = Number(exercise.repsCompleted);
+      const sets = Number(exercise.sets) || 1;
+      if (Number.isFinite(weight) && weight > 0 && Number.isFinite(reps) && reps > 0) {
+        return sum + weight * reps * sets;
+      }
+      return sum;
+    }, 0);
+    const minutes = Number(workout?.duration) || 0;
+    const weeklyGoalHit = logged && weeklyTarget > 0 && weeklyWorkoutCount + 1 >= weeklyTarget;
+
+    let hero;
+    if (volume > 0) {
+      hero = { value: Math.round(volume), label: `${unit} moved` };
+    } else if (minutes > 0) {
+      hero = { value: minutes, label: "minutes trained" };
+    } else {
+      hero = { value: totalExercises, label: "exercises done" };
+    }
+
+    const stats = [];
+    if (hero.label !== "exercises done") stats.push({ value: totalExercises, label: "Exercises" });
+    if (hero.label !== "minutes trained" && minutes > 0) stats.push({ value: minutes, label: "Minutes" });
+    if (workoutStreak > 0) stats.push({ value: workoutStreak, label: "Day streak" });
+
+    setCelebration({
+      variant: weeklyGoalHit ? "milestone" : "session",
+      eyebrow: weeklyGoalHit ? "Weekly goal complete" : "Session complete",
+      title: weeklyGoalHit
+        ? `${weeklyTarget} sessions this week!`
+        : "Strong work.",
+      hero,
+      stats: stats.slice(0, 3)
+    });
+  };
+
   const finalizeWorkout = async () => {
     setSessionComplete(true);
     setCompletionError("");
+    let logged = false;
     if (canReplayAndLog && !loggingLocked) {
       try {
         await onLog(workout, selectedExercises, {
@@ -191,14 +234,17 @@ export default function WorkoutDetailModal({
           successMessage: "Workout complete."
         });
         setCompletionLogged(true);
+        logged = true;
       } catch (error) {
         setCompletionLogged(false);
         setCompletionError(error?.message || "Unable to save the workout.");
       }
     }
+    openCelebration(logged);
   };
 
   return (
+    <>
     <div className="modal-backdrop" role="presentation" onClick={onClose}>
       <div ref={dialogRef} aria-modal="true" className="modal-card workout-session-modal" role="dialog" onClick={(event) => event.stopPropagation()}>
         <div className="panel-heading">
@@ -550,6 +596,12 @@ export default function WorkoutDetailModal({
         )}
       </div>
     </div>
+      <CelebrationOverlay
+        open={Boolean(celebration)}
+        onClose={() => setCelebration(null)}
+        {...(celebration || {})}
+      />
+    </>
   );
 }
 

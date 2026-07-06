@@ -955,6 +955,200 @@ input:focus, select:focus, textarea:focus {
   text-align: center;
 }
 
+/* ===================================================================== */
+/* MICRO-MOMENTS — small delights that make the app feel alive            */
+/* ===================================================================== */
+/* Consistency ring: a spring pulse + volt glow the moment it hits 100%.  */
+.progress-ring.is-complete {
+  animation: ring-complete-pulse var(--dur-slow, 360ms) var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+@keyframes ring-complete-pulse {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+/* Habit card: a quick, satisfying pop when it enters the done state. */
+.habit-card.habit-done {
+  animation: habit-pop var(--dur-base, 240ms) var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+@keyframes habit-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.035); }
+  100% { transform: scale(1); }
+}
+
+/* ===================================================================== */
+/* CELEBRATION OVERLAY — the emotional peak (workout complete, milestone) */
+/* Uses the design system's reserved celebration language:               */
+/* --ease-spring (celebration only), --volt / --volt-glow, --dur-count.   */
+/* ===================================================================== */
+.celebration-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: radial-gradient(120% 120% at 50% 42%, rgba(10, 11, 13, 0.86), rgba(6, 7, 8, 0.96));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: celebration-fade var(--dur-base) var(--ease-out) both;
+}
+@keyframes celebration-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.celebration-card {
+  position: relative;
+  z-index: 2;
+  width: min(420px, calc(100vw - 40px));
+  padding: 32px 28px 24px;
+  border-radius: var(--radius-xl);
+  text-align: center;
+  background: linear-gradient(180deg, rgba(26, 29, 33, 0.98), rgba(14, 15, 18, 0.99));
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--panel-shadow), 0 0 60px -20px var(--volt-glow);
+  animation: celebration-pop var(--dur-slow) var(--ease-spring) both;
+}
+@keyframes celebration-pop {
+  from { opacity: 0; transform: scale(0.8) translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+.celebration-eyebrow {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--volt);
+}
+.celebration-title {
+  margin: 8px 0 0;
+  font-size: 1.7rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.celebration-hero {
+  margin: 22px 0 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.celebration-hero-value {
+  font-size: 3.4rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  background: var(--grad-volt, linear-gradient(135deg, var(--volt), var(--volt-bright)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 30px var(--volt-glow);
+}
+.celebration-hero-label {
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+  text-transform: lowercase;
+}
+
+.celebration-stats {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.celebration-stat {
+  flex: 1 1 0;
+  max-width: 120px;
+  padding: 12px 8px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.celebration-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+.celebration-stat-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.celebration-continue {
+  margin-top: 24px;
+  width: 100%;
+  padding: 13px 20px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--grad-pulse, linear-gradient(135deg, var(--accent), var(--accent-hover)));
+  color: var(--accent-contrast);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px -10px var(--accent-ring);
+  transition: transform var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
+}
+.celebration-continue:hover { filter: brightness(1.08); }
+.celebration-continue:active { transform: scale(0.97); }
+
+/* Milestone variant: warmer, bigger Volt presence. */
+.celebration-milestone .celebration-card {
+  box-shadow: var(--panel-shadow), 0 0 90px -18px var(--volt-glow);
+  border-color: var(--volt-soft);
+}
+
+/* Particle burst — lightweight CSS-only, radiates from center. */
+.celebration-burst {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.celebration-particle {
+  position: absolute;
+  border-radius: 999px;
+  background: var(--accent);
+  opacity: 0;
+  animation: celebration-particle-fly 1100ms var(--ease-out) forwards;
+  animation-delay: var(--delay, 0ms);
+}
+.celebration-particle-volt {
+  background: var(--volt-bright);
+  box-shadow: 0 0 10px var(--volt-glow);
+}
+@keyframes celebration-particle-fly {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
+  22% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1); }
+}
+
+/* Reduced motion: no burst, no pop — just a clean fade + static numbers. */
+.celebration-reduced .celebration-card { animation: none; }
+.celebration-reduced .celebration-burst { display: none; }
+
+@media (max-width: 480px) {
+  .celebration-hero-value { font-size: 2.9rem; }
+  .celebration-title { font-size: 1.45rem; }
+}
+
 /* ---- Reduced motion respect ----------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }

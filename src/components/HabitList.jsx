@@ -1,4 +1,5 @@
 import React from "react";
+import { haptic } from "../lib/haptics";
 
 export default function HabitList({ habits, onToggle }) {
   return (
@@ -8,7 +9,11 @@ export default function HabitList({ habits, onToggle }) {
           className={`habit-card ${habit.completedToday ? "habit-done" : ""}`}
           key={habit.id}
           type="button"
-          onClick={() => onToggle(habit.id)}
+          onClick={() => {
+            // A satisfying tick the moment a habit is marked done (not on undo).
+            if (!habit.completedToday) haptic("tap");
+            onToggle(habit.id);
+          }}
         >
           <div>
             <p className="section-label">Habit streak</p>
