@@ -154,3 +154,74 @@ PulsePeak **cannot** win by being a slightly-different version of everything. Tw
 - **Path B — Stay a generic tracker.** Keep polishing panels. This loses to free Nike Training Club and beloved Hevy indefinitely. Not recommended.
 
 The current product is Path B with Path A's marketing copy. Pick A and build it for real, or the differentiation gap never closes.
+
+---
+
+# Re-Review (2026-07-05) — after Wow-Factor Phases 1–4
+
+The original review above judged the product before the Wow-Factor work. Four
+verified units have shipped since (all real data, all `prefers-reduced-motion`
+safe, all under the launch QA which is now **16/16**):
+
+1. **Cinematic completion moments** — finishing a workout is a full-screen Volt
+   burst with count-up of real session stats, streak, and haptics.
+2. **Real PR / "NEW RECORD" system** — legitimate personal records (heaviest
+   weight, best est-1RM, biggest session volume) detected from logged data and
+   celebrated ("Bench Press — 185 lb × 8 / Heaviest ever"). Never faked.
+3. **Shareable Week in Review** — a Wrapped-style recap (volume moved, streak,
+   PRs, consistency, goal) with Web-Share.
+4. **Retention loop** — a freeze-protected streak, adaptive return-prompt copy
+   (loss-aversion when the streak is at risk), weekly-goal reinforcement, and
+   auto-firing streak-milestone moments.
+
+## The question, re-answered — brutally
+**"Why use PulsePeak instead of Strong, Hevy, Fitbod, Nike Training Club, Centr,
+or Apple Fitness+?"**
+
+**Now there is a real answer, on one clear axis:** *PulsePeak is the fitness app
+that makes your progress feel good and pulls you back tomorrow.* It celebrates
+every PR, wraps your week into something worth sharing, and turns consistency
+into a streak you don't want to break — inside a genuinely premium, alive dark
+interface. **That axis is a real market gap:** the serious logging apps (Strong,
+Hevy) are gorgeous spreadsheets with almost no emotional payoff; the content apps
+(Nike, Centr, Apple, Peloton) have production value but don't make *your* numbers
+feel like an achievement. Nobody owns "the fitness app that celebrates you." After
+Phases 1–4, PulsePeak has a credible claim to it.
+
+**Head-to-head, honestly:**
+- **vs Strong / Hevy (logging):** they still win on logger maturity and (Hevy) a
+  real social graph. But PulsePeak now **beats both on emotional payoff and
+  retention mechanics** — they have no PR celebration, no Wrapped, no streak game.
+  This is genuinely competitive now, not embarrassing.
+- **vs Fitbod (adaptive AI):** Fitbod still wins. Its recovery-aware auto-
+  generation is real; PulsePeak's "adaptive intelligence" is **still largely
+  stubbed** (the `null` variables the red-team flagged). This is the #1 remaining
+  gap and the one true differentiator left to build — the **Living Coach** — which
+  is **owner-gated on an Anthropic API key** (real per-call money).
+- **vs Nike / Centr / Apple Fitness+ (content):** they still win on video,
+  instructors, and ecosystem. PulsePeak **cannot and should not** compete here —
+  concede it.
+- **Table-stakes gap:** still web-only. No native wrapper, no Apple Health /
+  wearable sync. To sit *comfortably* beside native incumbents this must close.
+
+## Verdict
+The answer moved from **"there is no reason"** (original review) to **"there is a
+real, defensible reason on the emotion/retention/delight axis"** — the exact axis
+the Wow-Factor brief targeted, and a genuine gap in the market. That is a strong
+answer for a wedge, and it is honestly earned (every moment is backed by real
+data and shipped under QA).
+
+It is **not yet a complete answer.** Two pillars remain, and both are the kind of
+thing that needs an owner decision, not just more autonomous building:
+1. **The Living Coach** (adaptive, conversational AI over the user's own data) —
+   the moat that would also beat Fitbod. **Blocked on the owner enabling an
+   Anthropic API key** (spends real money per call). Ready to build the moment
+   it's switched on.
+2. **Native-grade reach** (packaged/native app + Health/wearable sync) — a larger
+   effort and partly a distribution decision.
+
+**Recommendation:** the emotional/retention wedge is now real — lead marketing
+with it today ("the fitness app that celebrates your progress"). Then turn on the
+Living Coach (owner: API key) to convert the wedge into a moat Fitbod can't
+quickly copy. Until then, the honest positioning is *"the most motivating way to
+train"* — which, after Phases 1–4, PulsePeak can actually back up.

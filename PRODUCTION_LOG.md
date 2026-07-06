@@ -16,8 +16,9 @@
 | **Moments / delight** | **Wow-Factor Phases 1–2 DONE ✅** — P1: cinematic completion celebration + count-ups + ring pulse + habit haptics. **P2: real PR / "NEW RECORD" system** — server `detectPersonalRecords` (heaviest weight / best est-1RM / biggest session volume; prior-history-required, no first-time/bodyweight/fake records) returned on both workout-log endpoints; premium PR celebration ("NEW RECORD" · exercise · "185 lb × 8 reps" · record type · Volt glow · haptic). Browser-verified end-to-end. QA `pr-detection` (7 cases). All `prefers-reduced-motion`-safe. Next: Phase 3 Week-in-Review, Phase 4 retention loop |
 | **Week in Review** | **Wow-Factor Phase 3 DONE ✅** — `GET /api/week-in-review` + `buildWeekInReview` (rolling 7-day: workouts, streak, total volume, exercises, PRs earned this week, consistency, weekly-goal progress — all derived, never faked). Premium `WeekInReview` recap modal (Volt hero volume, stat grid, goal/consistency bars, PR list, Web-Share + clipboard fallback), dashboard entry "See your week in review". Browser-verified with real data (6,720 lb, 2 records). QA `week-in-review` (7 cases) |
 | **Retention loop** | **Wow-Factor Phase 4 DONE ✅** — `buildStreakStatus` (freeze-protected streak, deterministic; states active/at_risk/broken/none) in `summary.streakStatus`. `StreakCard` on dashboard: 🔥 flame + streak, **streak-freeze concept** (buffer bridges up to 2 missed days), adaptive return-prompt/reinforcement copy (loss-aversion at-risk edge), weekly-goal bar. Streak-milestone `CelebrationOverlay` auto-fires at 3/7/14/30… (once, localStorage-guarded, resets if streak breaks). Fixed a real `navigator.vibrate`-without-gesture console warning. Browser + QA `streak-status` (6 cases) verified |
-| **Active unit** | Wow-Factor Phase 5 (product differentiation re-review) — starting |
-| **Next unit** | owner's call — options: persistence (P0 `/tmp`, owner-gated) · input-integrity unit (P1 type-confusion/whitespace-wipe) · the **Living Coach** differentiation wedge (needs owner to enable an Anthropic API key on the host) · Backlog #4 CI. See `PRODUCT_DIFFERENTIATION.md` + `RED_TEAM_AUDIT.md` §8 |
+| **Differentiation** | **Wow-Factor Phase 5 DONE ✅** — brutally-honest re-review appended to `PRODUCT_DIFFERENTIATION.md`. Verdict moved from "no reason to exist" → **"a real, defensible reason on the emotion/retention/delight axis"** ("the fitness app that celebrates your progress"), a genuine market gap. Remaining pillars are owner-gated: the **Living Coach** (Anthropic API key/$) and native/wearable reach. **Wow-Factor program (Phases 1–5) COMPLETE** |
+| **Active unit** | none (Wow-Factor program complete) |
+| **Next unit / owner gates** | **Living Coach** = the last differentiator, **blocked on owner enabling an Anthropic API key** (real per-call money). Other autonomous options: input-integrity (red-team P1), CI (#4). Owner-gated: persistence P0 `/tmp` (infra), native/wearable. See `PRODUCT_DIFFERENTIATION.md` re-review + `RED_TEAM_AUDIT.md` §8 |
 | **Open escaped defect** | Arnold Press exercise media has baked-in text ("3. ARNOLD PRESS / THUMBNAIL") — regen via Gemini in a media unit (VG-001) |
 | **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
 | **Owner gates pending** | none |
@@ -26,6 +27,23 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-05 · Wow-Factor Phase 5 — product differentiation re-review ✅ (PROGRAM COMPLETE)** —
+  Owner: after building the moments/retention work, re-answer honestly "why use
+  PulsePeak instead of Strong / Hevy / Fitbod / Nike / Centr / Apple?" — and if
+  the answer is weak, improve until strong. Appended a brutally-honest re-review
+  to `PRODUCT_DIFFERENTIATION.md` weighing Phases 1–4 against each competitor.
+  **Verdict: the answer moved from "there is no reason to exist" (original
+  review) to a real, defensible reason on the emotion/retention/delight axis** —
+  "the fitness app that makes your progress feel good and pulls you back" (PR
+  celebrations + shareable Week-in-Review + streak game), a genuine gap the
+  logging apps (Strong/Hevy — spreadsheets, no emotional payoff) and content apps
+  (Nike/Centr/Apple — no *personal* achievement) both leave open. Honest about
+  what's NOT yet won: Fitbod still beats us on adaptive AI (our intelligence is
+  still stubbed — the **Living Coach** is the moat left to build, **owner-gated on
+  an Anthropic API key**), and we're still web-only (native/wearable reach).
+  Report-only unit; no code changed, so gates stay green from Phase 4 (build 0;
+  qa:launch 16/16). **This closes the owner's Wow-Factor program (Phases 1–5);
+  the one remaining differentiator is a true owner-only blocker (API key/$).**
 - **2026-07-05 · Wow-Factor Phase 4 — retention loop ✅** —
   Owner: build the retention mechanics — streaks, streak-freeze, weekly-goal
   reinforcement, return prompts, milestone moments, progress motivation.
