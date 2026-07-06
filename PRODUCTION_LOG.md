@@ -30,6 +30,24 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-06 · Product Composition — dashboard reduced to one hero + journey ✅** —
+  Owner "Creative Director" mission: compose experiences not cards; every screen
+  ONE hero; remove competing focal points; judge from screenshots. The dashboard
+  was ~10 competing cards — effectively a second full dashboard of weekly-planning
+  content duplicating Plan/Workouts. **Composed to a single journey:** For You
+  Today (HERO, "what should I do today?") → slim `.today-launch` ("Start today's
+  session") → StreakCard → Habits. **Removed:** the competing consistency ring, two
+  generic "flow strip" nav CTAs, the quick-actions row, a redundant momentum-strip
+  (dup of StreakCard), a "Performance trend" placeholder, and the entire ~400-line
+  `today-stack` (training-direction w/ duplicate "Open Workouts" buttons + 4-col
+  grid, mobility panel, "This week's split", "Why this matters") — all reachable
+  from nav/Plan/Workouts. Also fixed the "Launch baseline active" weekly-check-in
+  placeholder on Progress (now honest state-aware copy). Evidence: build 0;
+  qa:launch **18/18** (dashboard selectors + habit checks updated to composed
+  markup); browser-verified calm one-hero page. Commits `c559ae4`, `f53232c`.
+  **Remaining composition queue:** Progress (8 sections → one hero), Coach,
+  Exercise Library, Nutrition, Training/Workouts, Settings, Premium, modals.
+
 - **2026-07-06 · Correctness sweep — fix cross-screen inconsistencies + misinformation ✅** —
   Owner standing mandate: "if you find inconsistency / bugs / misinformation, fix
   immediately." Two adversarial auditors (cross-screen consistency + calculation
