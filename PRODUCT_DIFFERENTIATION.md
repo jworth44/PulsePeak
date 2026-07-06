@@ -225,3 +225,61 @@ with it today ("the fitness app that celebrates your progress"). Then turn on th
 Living Coach (owner: API key) to convert the wedge into a moat Fitbod can't
 quickly copy. Until then, the honest positioning is *"the most motivating way to
 train"* — which, after Phases 1–4, PulsePeak can actually back up.
+
+---
+
+# Re-Answer (2026-07-05) — after the Attentive Insight Engine
+
+The prior re-review said the emotion/retention wedge was real but the "adaptive
+intelligence" was still stubbed — that Fitbod still won on the app *understanding*
+your training. That gap has now been materially closed with a **real, honest,
+shipped insight engine** (no LLM, no owner gate — deterministic pattern analysis
+over the user's own logged data):
+
+- It **notices**: "Ready for a Bench Press PR? Last time 185 × 5, your best is 185."
+- It **remembers + connects**: "Your Bench Press is climbing — +30 lb over 3 weeks."
+- It **spots gaps**: "Your back is overdue — 13 days since your last back work."
+- It **tells you what to do next**: a ranked, explainable next best action.
+- It is **honest**: a group you've never trained is never called "neglected"; a
+  ramp-up from an empty month is never dressed up as a "+400% trend"; a brand-new
+  user is told the truth ("log one more session and I'll start spotting patterns").
+
+Crucially, this is the FIRST thing on the dashboard now — the app opens by proving
+it knows where you are.
+
+## The question, answered — one sentence
+**"Why use PulsePeak instead of Strong, Hevy, Fitbod, Nike, Apple Fitness+, or Centr?"**
+
+> **PulsePeak is the fitness app that actually pays attention — it turns your
+> training data into personal momentum: it notices your records, tracks your
+> progress, spots your gaps, tells you exactly what to do next, then celebrates
+> the wins and keeps you coming back.**
+
+And unlike the earlier drafts, **the product now proves that sentence:**
+- "Turns your data into momentum" → the insight engine + next-best-action (live).
+- "Celebrates the wins" → real PR / completion celebrations (live).
+- "Keeps you coming back" → streak + freeze + Week-in-Review + milestones (live).
+
+## Head-to-head, honestly (updated)
+- **vs Strong / Hevy:** they *store* your training; PulsePeak *interprets* it and
+  makes it feel good. They have no PR celebration, no Wrapped, no streak game, and
+  crucially **no "here's what your data means / do this next" layer.** PulsePeak
+  now wins on the attentive + emotional axes; they still lead on logger maturity
+  and (Hevy) social.
+- **vs Fitbod:** the gap narrowed a lot. Fitbod still auto-*generates* the
+  recovery-aware session (the deepest "what to train" adaptation); PulsePeak now
+  *notices and directs* ("PR-ready", "back overdue", "do this next") and layers on
+  emotion/retention Fitbod lacks. The one thing Fitbod still does that PulsePeak
+  doesn't: auto-build the adaptive session itself — which is the **Living Coach**,
+  still owner-gated on an API key.
+- **vs Nike / Centr / Apple Fitness+:** unchanged — they win on video/instructors/
+  ecosystem; PulsePeak concedes that and competes on being *your* attentive
+  companion, not a content library.
+
+## Verdict
+The differentiation answer is now **genuinely strong and product-proven**, on a
+real, defensible axis: *attention + momentum*. The remaining pillars are the same
+two owner decisions — the conversational **Living Coach** (API key/$, the piece
+that would fully close the Fitbod gap by auto-building sessions) and **native /
+wearable reach**. Everything else — the wedge, the proof, the moments, the
+retention loop, and now the attentive intelligence — is live and honest.
