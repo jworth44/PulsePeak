@@ -241,43 +241,6 @@ export default function ProgressPage() {
             />
           )}
         </Panel>
-
-        <Panel eyebrow="Program arc" title="Where the program is headed">
-          {hasProgramArcData ? (
-            <>
-              {programPhase ? (
-                <div className="module-note">
-                  <strong>Current phase: {programPhase?.label}</strong>
-                  <p className="support-copy">{programPhase?.detail}</p>
-                </div>
-              ) : null}
-              {nextWeekAdjustment ? (
-                <div className="module-note">
-                  <strong>Next week likely emphasis</strong>
-                  <p className="support-copy">{nextWeekAdjustment?.detail}</p>
-                </div>
-              ) : null}
-              {whyThisMattersNotes.length ? (
-                <div className="insight-list">
-                  {whyThisMattersNotes.map((note) => (
-                    <div className="insight-chip" key={note}>
-                      <strong>Why this matters</strong>
-                      <p className="muted">{note}</p>
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-              {systemConfidenceSignal ? (
-                <div className="module-note">
-                  <strong>This is working</strong>
-                  <p className="support-copy">{systemConfidenceSignal}</p>
-                </div>
-              ) : null}
-            </>
-          ) : (
-            <p className="support-copy">Program-phase interpretation is deferred for this launch baseline.</p>
-          )}
-        </Panel>
       </div>
 
       <div className="content-grid">
@@ -341,60 +304,6 @@ export default function ProgressPage() {
               {saving ? "Saving..." : weeklyCheckIn?.submittedThisWeek ? "Update weekly check-in" : "Save weekly check-in"}
             </button>
           </form>
-        </Panel>
-
-        <Panel eyebrow="Check-in summary" title="What the app is taking from this week">
-          <div className="module-note">
-            <strong>{weeklyCheckIn?.todayConnection || "Today and next week should stay connected through one clear adjustment."}</strong>
-            <p className="support-copy">
-              {hasProgressAccess ? weeklyCheckIn?.premiumSummary : weeklyCheckIn?.freeSummary}
-            </p>
-            {!hasProgressAccess ? <p className="support-copy">{getPremiumCapabilitySummary("progress")}</p> : null}
-          </div>
-          <div className="content-grid">
-            <div className="module-note">
-              <strong>What went well</strong>
-              {weeklyCheckIn?.whatWentWell?.length ? (
-                <ul className="plan-list">
-                  {weeklyCheckIn.whatWentWell.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="support-copy">Complete a weekly check-in to turn the week into clearer progress notes.</p>
-              )}
-            </div>
-            <div className="module-note">
-              <strong>Needs tightening</strong>
-              {weeklyCheckIn?.needsTightening?.length ? (
-                <ul className="plan-list">
-                  {weeklyCheckIn.needsTightening.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="support-copy">PulsePeak will show what needs tightening once the week has a little more feedback behind it.</p>
-              )}
-            </div>
-          </div>
-          <div className="module-note">
-            <strong>What changes next week</strong>
-            {weeklyCheckIn?.nextWeekAdjustments?.length ? (
-              <ul className="plan-list">
-                {weeklyCheckIn.nextWeekAdjustments.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            ) : (
-              <p className="support-copy">The next week's changes will appear here after your check-in is saved.</p>
-            )}
-          </div>
-          {hasProgressAccess && weeklyCheckIn?.premiumReasoning ? (
-            <div className="module-note">
-              <strong>Premium adjustment reasoning</strong>
-              <p className="support-copy">{weeklyCheckIn.premiumReasoning}</p>
-            </div>
-          ) : null}
         </Panel>
       </div>
 
