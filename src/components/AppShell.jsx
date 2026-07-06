@@ -105,10 +105,10 @@ export default function AppShell({ children }) {
                 })}
             </nav>
 
+            {selectedGroup.items.length > 1 ? (
             <div className="sidebar-submenu-panel">
               <div className="sidebar-submenu-header">
                 <p className="section-label">{selectedGroup.label}</p>
-                <strong>{selectedGroup.label === "Settings" ? "Manage the app without cluttering the rail." : "Open the section you need next."}</strong>
               </div>
               <div className="sidebar-submenu-items">
                 {selectedGroup.items.map((item) =>
@@ -141,6 +141,7 @@ export default function AppShell({ children }) {
                 )}
               </div>
             </div>
+            ) : null}
           </div>
         </div>
 

@@ -57,7 +57,11 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
 
 .module-page-hero h2,
 .hero-copy h2 {
-  font-size: clamp(1.9rem, 3.4vw, 2.85rem);
+  /* Refined, restrained page-title scale (was up to 2.85rem — too shouty for a
+     premium product). Prominent but composed, closer to Linear/Stripe. */
+  font-size: clamp(1.7rem, 2.7vw, 2.3rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
   background: linear-gradient(180deg, #ffffff 0%, #cfd3d9 130%);
   -webkit-background-clip: text;
   background-clip: text;
