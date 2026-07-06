@@ -1584,9 +1584,11 @@ select:focus {
 }
 
 .onboarding-brand-logo {
-  width: min(100%, 320px);
+  width: min(100%, 300px);
   height: auto;
   display: block;
+  /* Drop the logo PNG's baked-in black box into the dark canvas (screen blend). */
+  mix-blend-mode: screen;
 }
 
 .onboarding-hero h1,
@@ -2965,6 +2967,7 @@ select:focus {
   width: min(280px, 80vw);
   height: auto;
   display: block;
+  mix-blend-mode: screen;
 }
 
 .screen-center-branded p {

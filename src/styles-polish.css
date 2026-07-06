@@ -256,6 +256,19 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
   background: rgba(255, 255, 255, 0.05) !important;
   letter-spacing: 0.04em;
 }
+/* Eyebrow/label pills must hug their text, not stretch to fill a grid/flex
+   parent (that produced full-width empty badge boxes on onboarding, dashboard,
+   auth, coach, etc.). Scoped to labels — never stat-pills/insight-chips, which
+   are meant to fill their cell. */
+.badge,
+.section-chip,
+.tier-pill {
+  justify-self: start !important;
+  align-self: start !important;
+  width: -moz-fit-content !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+}
 .section-context-label,
 .library-depth-note {
   text-transform: uppercase;
