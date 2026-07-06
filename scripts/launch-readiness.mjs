@@ -53,7 +53,8 @@ const {
   writeDb,
   createUser,
   normalizeWorkout,
-  sanitizeUser
+  sanitizeUser,
+  detectPersonalRecords
 } = await import("../server/data/store.js");
 const {
   getWorkoutLibraryForProfile,
@@ -1225,6 +1226,64 @@ async function runApiHardeningAudit() {
   }
 }
 
+// Personal-record detection is celebration-critical and must never fabricate a
+// record or celebrate an ordinary set. Deterministic unit coverage of the pure
+// detector (server/data/store.js) so this can't silently regress.
+function runPrDetectionAudit() {
+  const checks = [];
+  const ex = (name, weight, reps, sets = 3) => ({
+    name,
+    weight,
+    repsCompleted: reps,
+    reps: reps === null ? null : String(reps),
+    sets,
+    equipment: "barbell",
+    muscleGroup: "Chest"
+  });
+  const wk = (exercises, loggedAt = "2026-07-01T00:00:00.000Z") => ({
+    name: "Session",
+    type: "strength",
+    duration: 45,
+    exercises,
+    loggedAt
+  });
+  const prior = [wk([ex("Bench Press", 135, 8)])]; // prior best: 135×8, session vol 3240
+
+  const push = (name, ok) => checks.push({ name, ok });
+
+  let r = detectPersonalRecords(prior, wk([ex("Bench Press", 155, 5)]));
+  push("heavier-weight-is-pr", r.some((x) => x.type === "heaviest_weight" && x.exercise === "Bench Press" && x.weight === 155));
+
+  r = detectPersonalRecords(prior, wk([ex("Bench Press", 135, 12)]));
+  push("more-reps-is-e1rm-pr", r.some((x) => x.type === "best_e1rm") && !r.some((x) => x.type === "heaviest_weight"));
+
+  r = detectPersonalRecords(prior, wk([ex("Bench Press", 135, 6)]));
+  push("weaker-set-is-not-pr", !r.some((x) => x.exercise === "Bench Press"));
+
+  // First-time exercise, kept below the prior session volume (225×5×2=2250 < 3240)
+  // so this isolates the "no strength PR for a first performance" rule.
+  r = detectPersonalRecords(prior, wk([ex("Deadlift", 225, 5, 2)]));
+  push("first-time-exercise-is-not-pr", !r.some((x) => x.exercise === "Deadlift") && r.length === 0);
+
+  r = detectPersonalRecords(prior, wk([ex("Push-up", null, 20)]));
+  push("bodyweight-is-not-pr", r.length === 0);
+
+  r = detectPersonalRecords(prior, wk([ex("Bench Press", 135, 8, 6)])); // vol 6480 > 3240, same weight/reps
+  push("bigger-session-is-volume-pr", r.some((x) => x.type === "session_volume") && !r.some((x) => x.type === "heaviest_weight"));
+
+  r = detectPersonalRecords([], wk([ex("Bench Press", 135, 8)]));
+  push("no-history-no-pr", r.length === 0);
+
+  const failed = checks.filter((c) => !c.ok);
+  recordScenario("pr-detection", {
+    pass: failed.length === 0,
+    note: "detectPersonalRecords: real records only (heaviest weight, best e1RM, session volume); no first-time / weaker / bodyweight / no-history fabrication."
+  });
+  if (failed.length) {
+    recordBlocker(`PR detection checks failed: ${failed.map((c) => c.name).join(", ")}`);
+  }
+}
+
 const server = startServer();
 let browser;
 
@@ -1244,6 +1303,7 @@ try {
 
   runCombinationAudit();
   runMediaAudit();
+  runPrDetectionAudit();
   await runPwaAssetAudit();
   await runBrowserCoverage(browser);
   // After browser coverage — the auth rate-limit burst must not starve the

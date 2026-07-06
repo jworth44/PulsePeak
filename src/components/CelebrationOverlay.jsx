@@ -36,8 +36,10 @@ export default function CelebrationOverlay({
   variant = "session", // "session" | "milestone" | "pr"
   eyebrow = "Session complete",
   title = "Nice work.",
+  subtitle, // optional line under the title (e.g. a PR descriptor)
   hero, // { value, label, decimals }
   stats = [], // [{ value, label }]
+  note, // optional small line above the Continue button
   autoDismissMs = 5000,
 }) {
   const reduce = prefersReducedMotion();
@@ -105,6 +107,7 @@ export default function CelebrationOverlay({
       <div className="celebration-card" onClick={(event) => event.stopPropagation()}>
         <p className="celebration-eyebrow">{eyebrow}</p>
         <h2 className="celebration-title">{title}</h2>
+        {subtitle ? <p className="celebration-subtitle">{subtitle}</p> : null}
 
         {hero ? (
           <div className="celebration-hero">
@@ -131,6 +134,8 @@ export default function CelebrationOverlay({
             ))}
           </div>
         ) : null}
+
+        {note ? <p className="celebration-note">{note}</p> : null}
 
         <button className="celebration-continue" type="button" onClick={onClose}>
           Continue

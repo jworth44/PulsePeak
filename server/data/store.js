@@ -2959,6 +2959,105 @@ function buildExerciseHistory(workouts = []) {
     .sort((left, right) => new Date(right.lastPerformedAt || 0).getTime() - new Date(left.lastPerformedAt || 0).getTime());
 }
 
+// Estimated one-rep max (Epley). Reps default to 1 when unknown so a bare
+// weight still ranks. Used to detect "more reps at a weight you've hit before".
+function estimatedOneRepMax(weight, reps) {
+  const w = Number(weight);
+  if (!Number.isFinite(w) || w <= 0) {
+    return 0;
+  }
+  const r = Number(reps);
+  const useReps = Number.isFinite(r) && r > 0 ? r : 1;
+  return w * (1 + useReps / 30);
+}
+
+function exerciseVolume(exercise) {
+  const w = Number(exercise?.weight);
+  const r = Number(exercise?.repsCompleted ?? exercise?.reps);
+  const sets = Number(exercise?.sets) || 1;
+  if (!Number.isFinite(w) || w <= 0 || !Number.isFinite(r) || r <= 0) {
+    return 0;
+  }
+  return w * r * sets;
+}
+
+function sessionVolume(workout) {
+  return (workout?.exercises || []).reduce((sum, exercise) => sum + exerciseVolume(exercise), 0);
+}
+
+// Detect legitimate personal records earned in `newWorkout`, comparing ONLY
+// against the user's prior logged workouts. Rules that keep this honest:
+//   - A record must BEAT a previous best — a first-ever performance of an
+//     exercise is not a record (avoids celebrating every ordinary new movement).
+//   - Only real numeric weight (>0) counts; bodyweight/cardio don't fabricate PRs.
+//   - Per exercise, at most one strength record (heaviest weight > best e1RM).
+//   - One session-volume record per workout, only if a prior heavier session exists.
+// Returns a priority-sorted array (may be empty). Never invents data.
+export function detectPersonalRecords(priorWorkouts = [], newWorkout) {
+  if (!newWorkout || !Array.isArray(newWorkout.exercises)) {
+    return [];
+  }
+  const priors = Array.isArray(priorWorkouts) ? priorWorkouts.map(normalizeWorkout) : [];
+
+  const bestWeight = new Map(); // name -> heaviest prior weight
+  const bestE1rm = new Map(); //   name -> best prior estimated 1RM
+  priors.forEach((workout) => {
+    (workout.exercises || []).forEach((exercise) => {
+      const name = exercise?.name;
+      const weight = Number(exercise?.weight);
+      if (!name || !Number.isFinite(weight) || weight <= 0) {
+        return;
+      }
+      const reps = Number(exercise?.repsCompleted ?? exercise?.reps);
+      bestWeight.set(name, Math.max(bestWeight.get(name) || 0, weight));
+      bestE1rm.set(name, Math.max(bestE1rm.get(name) || 0, estimatedOneRepMax(weight, reps)));
+    });
+  });
+  const priorBestSessionVolume = priors.reduce((max, workout) => Math.max(max, sessionVolume(workout)), 0);
+
+  const records = [];
+  const seen = new Set();
+  (newWorkout.exercises || []).forEach((exercise) => {
+    const name = exercise?.name;
+    const weight = Number(exercise?.weight);
+    if (!name || !Number.isFinite(weight) || weight <= 0 || seen.has(name)) {
+      return;
+    }
+    // Must have prior history for THIS exercise to legitimately beat.
+    if (!bestWeight.has(name)) {
+      return;
+    }
+    const reps = Number(exercise?.repsCompleted ?? exercise?.reps);
+    const hasReps = Number.isFinite(reps) && reps > 0;
+    const priorWeight = bestWeight.get(name);
+    const priorE1rm = bestE1rm.get(name) || 0;
+    const newE1rm = estimatedOneRepMax(weight, reps);
+
+    if (weight > priorWeight) {
+      records.push({ exercise: name, type: "heaviest_weight", label: "Heaviest ever", weight, reps: hasReps ? reps : null });
+      seen.add(name);
+    } else if (newE1rm > priorE1rm + 0.01) {
+      records.push({
+        exercise: name,
+        type: "best_e1rm",
+        label: "Best estimated 1RM",
+        weight,
+        reps: hasReps ? reps : null,
+        estOneRepMax: Math.round(newE1rm)
+      });
+      seen.add(name);
+    }
+  });
+
+  const newSessionVolume = sessionVolume(newWorkout);
+  if (newSessionVolume > 0 && priorBestSessionVolume > 0 && newSessionVolume > priorBestSessionVolume) {
+    records.push({ exercise: null, type: "session_volume", label: "Biggest session yet", volume: Math.round(newSessionVolume) });
+  }
+
+  const rank = { heaviest_weight: 0, best_e1rm: 1, session_volume: 2 };
+  return records.sort((left, right) => rank[left.type] - rank[right.type]);
+}
+
 function inferWorkoutType(name = "") {
   const lower = name.toLowerCase();
   if (lower.includes("mobility")) {

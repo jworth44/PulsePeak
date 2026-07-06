@@ -13,8 +13,8 @@
 | **Design** | **Design System v2.0 "Peak" LIVE ✅** — research-driven world-class redesign (`DESIGN_RESEARCH.md` + `DESIGN_SYSTEM.md`); retuned `:root` tokens + `styles-polish.css` v2 + **mobile bottom tab bar**; verified both viewports |
 | **PWA / installability** | **Backlog #3 COMPLETE ✅** — manifest + SW + icons built & served; honest `beforeinstallprompt` install-prompt UI (iOS hint fallback, dismissible, hides when installed); both prerequisites now **machine-enforced** in qa:launch (`pwa-installability-assets` + `mobile-viewport-shell` at true 390px) |
 | **Security / hardening** | **Backend-hardening unit DONE ✅** (red-team-driven) — atomic DB write + guarded read (P0 corruption fixed); password length cap + per-IP auth rate limiter (P0 unauthenticated scrypt-DoS + brute-force fixed); terminal error middleware + `/api` JSON 404 (P1 stack-trace/HTML leaks fixed); CORS safe default. Locked by qa:launch `api-hardening`. **Still open (owner/other units):** P0 ephemeral `/tmp` persistence (owner infra gate), O(n) full-file write + async scrypt (persistence unit), input type-confusion (input-integrity unit) — see `RED_TEAM_AUDIT.md` |
-| **Moments / delight** | **Wow-Factor Phase 1 DONE ✅** — cinematic workout-completion celebration (Volt burst + count-up of real session stats + haptic, honest data), count-up numbers on dashboard stat pills + consistency ring, ring spring-pulse + haptic at 100%, habit-complete tap haptic + pop. All `prefers-reduced-motion`-safe; count-up has an rAF-pause safety net (caught in browser verify). Uses the design system's reserved celebration tokens. Phase 2 (deferred): PR moments (needs server `personalRecords` contract), Sunday "Week in Review", streak-freeze |
-| **Active unit** | none (Wow-Factor Phase 1 closed) |
+| **Moments / delight** | **Wow-Factor Phases 1–2 DONE ✅** — P1: cinematic completion celebration + count-ups + ring pulse + habit haptics. **P2: real PR / "NEW RECORD" system** — server `detectPersonalRecords` (heaviest weight / best est-1RM / biggest session volume; prior-history-required, no first-time/bodyweight/fake records) returned on both workout-log endpoints; premium PR celebration ("NEW RECORD" · exercise · "185 lb × 8 reps" · record type · Volt glow · haptic). Browser-verified end-to-end. QA `pr-detection` (7 cases). All `prefers-reduced-motion`-safe. Next: Phase 3 Week-in-Review, Phase 4 retention loop |
+| **Active unit** | Wow-Factor Phase 3 (shareable Week in Review) — starting |
 | **Next unit** | owner's call — options: persistence (P0 `/tmp`, owner-gated) · input-integrity unit (P1 type-confusion/whitespace-wipe) · the **Living Coach** differentiation wedge (needs owner to enable an Anthropic API key on the host) · Backlog #4 CI. See `PRODUCT_DIFFERENTIATION.md` + `RED_TEAM_AUDIT.md` §8 |
 | **Open escaped defect** | Arnold Press exercise media has baked-in text ("3. ARNOLD PRESS / THUMBNAIL") — regen via Gemini in a media unit (VG-001) |
 | **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
@@ -24,6 +24,33 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-05 · Wow-Factor Phase 2 — real PR / "NEW RECORD" system ✅** —
+  Owner: build a screenshot-worthy PR celebration from REAL logged data only,
+  never fabricate a record, never celebrate an ordinary workout. **Server:**
+  `detectPersonalRecords(priorWorkouts, newWorkout)` in `store.js` — compares the
+  new session only against prior logs and emits records for heaviest weight, best
+  estimated 1RM (Epley — captures "more reps at a weight"), and biggest session
+  volume. Honesty rules: a record must BEAT a prior best (a first-ever
+  performance is not a record), only real numeric weight counts (no bodyweight/
+  cardio PRs), one strength record per exercise, one session-volume record.
+  Returned as `personalRecords` on BOTH log endpoints (`/api/workouts` +
+  `/api/workouts/preset`). **Client:** `mutate` passes `personalRecords` through;
+  both `addPresetWorkout` handlers (DashboardPage AND WorkoutsPage) now send the
+  real `weight`/`repsCompleted` (Dashboard was silently stripping them) and
+  return the records; `WorkoutDetailModal.finalizeWorkout` builds a premium PR
+  celebration that outranks the session/milestone one — eyebrow "NEW RECORD(S)",
+  the exercise as title, hero "185 lb × 8 reps", the record type as subtitle,
+  Volt glow + haptic, "+N more records today", 8s linger. **Verification caught 2
+  real bugs:** DashboardPage stripped weight/reps before POST (so volume + PRs
+  could never work), and only the Dashboard log path returned records — the
+  actual session runs through the **WorkoutsPage** modal, whose handler also
+  needed the fix. **Browser-verified end-to-end**: seeded bench 95 → logged bench
+  185 → celebration fired `isPr:true` "NEW RECORDS / Barbell bench press / 185 lb
+  × 8 reps / Heaviest ever / +1 more personal record today". API e2e confirmed
+  both endpoints return real records; unit scenario `pr-detection` (7 cases:
+  heavier=PR, more-reps=e1RM PR, weaker=no PR, first-time=no PR, bodyweight=no PR,
+  bigger-session=volume PR, no-history=no PR). Evidence: build exit 0; qa:launch
+  **14/14**, 0 blockers, 0 warnings.
 - **2026-07-05 · Wow-Factor Phase 1 — moments that make it feel alive ✅** —
   Owner brief: "forget features — create moments that make someone say whoa;
   build an app that feels alive, worthy of being featured by Apple." Grounded

@@ -1032,6 +1032,32 @@ input:focus, select:focus, textarea:focus {
   color: var(--text-primary);
 }
 
+.celebration-subtitle {
+  margin: 6px 0 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+}
+.celebration-note {
+  margin: 18px 0 0;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--volt);
+  letter-spacing: 0.01em;
+}
+
+/* PR variant — the most premium moment: Volt eyebrow, deeper glow. */
+.celebration-pr .celebration-eyebrow {
+  font-size: 0.78rem;
+  letter-spacing: 0.24em;
+  color: var(--volt-bright);
+}
+.celebration-pr .celebration-card {
+  box-shadow: var(--panel-shadow), 0 0 100px -14px var(--volt-glow);
+  border-color: var(--volt-soft);
+}
+
 .celebration-hero {
   margin: 22px 0 6px;
   display: flex;

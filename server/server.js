@@ -21,6 +21,7 @@ import {
   countWeeklyLoggedWorkouts,
   createSession,
   createUser,
+  detectPersonalRecords,
   findUserById,
   findUserByToken,
   getAccessTier,
@@ -634,9 +635,12 @@ app.post("/api/workouts", requireAuth, (request, response) => {
       };
     });
 
+    const personalRecords = detectPersonalRecords(request.user.data.workouts || [], workoutEntry);
+
     response.status(201).json({
       data: updatedUser.data,
-      summary: buildUserSummary(updatedUser)
+      summary: buildUserSummary(updatedUser),
+      personalRecords
     });
   } catch (error) {
     return response.status(400).json({ message: error.message });
@@ -686,9 +690,12 @@ app.post("/api/workouts/preset", requireAuth, (request, response) => {
       };
     });
 
+    const personalRecords = detectPersonalRecords(request.user.data.workouts || [], workoutEntry);
+
     response.status(201).json({
       data: updatedUser.data,
-      summary: buildUserSummary(updatedUser)
+      summary: buildUserSummary(updatedUser),
+      personalRecords
     });
   } catch (error) {
     return response.status(400).json({ message: error.message });

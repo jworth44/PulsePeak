@@ -289,7 +289,7 @@ export default function DashboardPage() {
     setSaving(`preset-${workoutId}`);
     setFeedback("");
     try {
-      await mutate("/workouts/preset", {
+      const result = await mutate("/workouts/preset", {
         method: "POST",
         body: JSON.stringify({
           presetId: workoutId,
@@ -303,7 +303,11 @@ export default function DashboardPage() {
                 reps: exercise.reps,
                 duration: exercise.duration,
                 equipment: exercise.equipment,
-                muscleGroup: exercise.muscleGroup
+                muscleGroup: exercise.muscleGroup,
+                // Carry the real logged performance so volume + PR detection work.
+                weight: exercise.weight,
+                repsCompleted: exercise.repsCompleted,
+                notes: exercise.notes
               }))
             : undefined
         })
@@ -313,6 +317,7 @@ export default function DashboardPage() {
       if (closeOnSuccess) {
         setSelectedWorkout(null);
       }
+      return result?.personalRecords || [];
     } catch (mutationError) {
       setFeedback(mutationError.message);
       throw mutationError;

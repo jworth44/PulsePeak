@@ -46,7 +46,9 @@ export function useDashboardData() {
     const normalized = normalizeDashboardPayload(payload);
     setData(normalized.data);
     setSummary(normalized.summary);
-    return normalized;
+    // Pass through server-computed personal records (workout-log responses) so
+    // callers can trigger a celebration; empty for non-PR mutations.
+    return { ...normalized, personalRecords: Array.isArray(payload?.personalRecords) ? payload.personalRecords : [] };
   };
 
   return {

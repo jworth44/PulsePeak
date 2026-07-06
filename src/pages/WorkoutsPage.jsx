@@ -297,7 +297,7 @@ export default function WorkoutsPage() {
     setSaving(`preset-${workoutId}`);
     setFeedback("");
     try {
-      await mutate("/workouts/preset", {
+      const result = await mutate("/workouts/preset", {
         method: "POST",
         body: JSON.stringify({
           presetId: workoutId,
@@ -325,6 +325,7 @@ export default function WorkoutsPage() {
       if (closeOnSuccess) {
         setSelectedWorkout(null);
       }
+      return result?.personalRecords || [];
     } catch (mutationError) {
       setFeedback(mutationError.message);
       throw mutationError;

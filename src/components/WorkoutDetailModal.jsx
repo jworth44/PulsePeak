@@ -183,9 +183,39 @@ export default function WorkoutDetailModal({
     }));
   };
 
-  const openCelebration = (logged) => {
+  const openCelebration = (logged, records = []) => {
     // All numbers come from real session data the user just entered — no fakes.
     const unit = dashboard?.profile?.unitPreference === "metric" ? "kg" : "lb";
+
+    // A real personal record outranks the ordinary session celebration.
+    if (Array.isArray(records) && records.length > 0) {
+      const primary = records[0];
+      const extra = records.length - 1;
+      let title;
+      let hero;
+      let subtitle;
+      if (primary.type === "session_volume") {
+        title = "Biggest session yet";
+        hero = { value: primary.volume, label: `${unit} moved` };
+        subtitle = "A brand-new personal record";
+      } else {
+        title = primary.exercise;
+        hero = { value: primary.weight, label: primary.reps ? `${unit} × ${primary.reps} reps` : unit };
+        subtitle = primary.label; // "Heaviest ever" | "Best estimated 1RM"
+      }
+      setCelebration({
+        variant: "pr",
+        eyebrow: records.length > 1 ? "NEW RECORDS" : "NEW RECORD",
+        title,
+        subtitle,
+        hero,
+        note: extra > 0 ? `+${extra} more personal record${extra === 1 ? "" : "s"} today` : undefined,
+        // A PR is worth lingering on (and screenshotting) — hold it a beat longer.
+        autoDismissMs: 8000
+      });
+      return;
+    }
+
     const volume = selectedExercises.reduce((sum, exercise) => {
       const weight = Number(exercise.weight);
       const reps = Number(exercise.repsCompleted);
@@ -227,12 +257,14 @@ export default function WorkoutDetailModal({
     setSessionComplete(true);
     setCompletionError("");
     let logged = false;
+    let records = [];
     if (canReplayAndLog && !loggingLocked) {
       try {
-        await onLog(workout, selectedExercises, {
+        const prs = await onLog(workout, selectedExercises, {
           closeOnSuccess: false,
           successMessage: "Workout complete."
         });
+        records = Array.isArray(prs) ? prs : [];
         setCompletionLogged(true);
         logged = true;
       } catch (error) {
@@ -240,7 +272,7 @@ export default function WorkoutDetailModal({
         setCompletionError(error?.message || "Unable to save the workout.");
       }
     }
-    openCelebration(logged);
+    openCelebration(logged, records);
   };
 
   return (
