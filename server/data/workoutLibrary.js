@@ -875,14 +875,14 @@ function buildRecommendationReason(profile, filters, historyContext, selectedFoc
 
   if (profile.injuryStatus !== "none") {
     return filters.manualFocus
-      ? `You selected ${focusLabel}, so the engine is keeping that intent while still protecting your movement guardrails and equipment fit.`
-      : `${focusLabel} is leading because your current setup needs cleaner movement choices and easier recovery decisions.`;
+      ? `You picked ${focusLabel}, and today keeps that intent while staying kind to your body — clean movements and an equipment fit that won't aggravate the injury.`
+      : `${focusLabel} leads today because your body needs cleaner movement choices and easier recovery right now.`;
   }
 
   if (filters.lowRecovery) {
     return filters.manualFocus
-      ? `You selected ${focusLabel}, and the engine is keeping it realistic for a lower-recovery day instead of forcing a heavier session.`
-      : `${focusLabel} is leading because recovery is softer, so the best session today should still move the week forward without forcing extra load.`;
+      ? `You picked ${focusLabel}, and today keeps it realistic for a lower-recovery day instead of pushing a heavier session.`
+      : `${focusLabel} leads because you're low on recovery — this still moves your week forward without piling on extra load.`;
   }
 
   if (filters.manualFocus) {

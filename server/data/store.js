@@ -1248,12 +1248,12 @@ function buildWorkoutEngineSummary(data, weeklyPlan, workouts = []) {
         : weeklyPlan?.suggestedWorkoutMix?.split?.join(" · "),
     recommendationReason:
       profile.injuryStatus !== "none"
-        ? "Training should stay equipment-aware and easier to recover from while your movement guardrails stay in place."
+        ? "You're working around something right now, so today stays kind to your body — cleaner movements and easier recovery, nothing that pushes the injury."
         : lowRecovery
-          ? "Recovery is softer right now, so the best workout should still move the week forward without forcing a hard split."
+          ? "You're a little low on recovery today, so this keeps the week moving without grinding you down — enough to make progress, not enough to dig a hole."
           : recentMatchDays === 0
-            ? `${formatGoalType(profile.goalType)} is still the target, but the engine is rotating the movement mix so the session does not feel repeated.`
-            : `${weeklyPlan?.weeklyFocus || formatGoalType(profile.goalType)} is the weekly target, so today leans on the split that best fits your setup and keeps the week balanced.`,
+            ? `You already trained ${formatWorkoutFocus(recommendedFocus)} today — so instead of a repeat, today mixes up the movements to keep your ${formatGoalType(profile.goalType).toLowerCase()} goal moving and the session feeling fresh.`
+            : `Your week is built around ${weeklyPlan?.weeklyFocus || formatGoalType(profile.goalType)}, so today picks up the split that fits your setup and keeps everything in balance.`,
     recentFocuses,
     continuityNote:
       typeof recentMatchDays === "number"
