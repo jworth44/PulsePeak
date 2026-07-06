@@ -30,6 +30,32 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-06 · Correctness sweep — fix cross-screen inconsistencies + misinformation ✅** —
+  Owner standing mandate: "if you find inconsistency / bugs / misinformation, fix
+  immediately." Two adversarial auditors (cross-screen consistency + calculation
+  correctness) found real user-visible defects; all HIGH/MED fixed. **Streak
+  unified** to the canonical freeze-protected value everywhere (added
+  `streakStatus.longestStreak`, same semantics so longest ≥ current; exported
+  `summary.workoutStreak = streakStatus.streak`; Week-in-Review switched off the
+  strict streak that contradicted the card launching it; Progress read the client
+  `workoutMomentum` — a separate record that could diverge from real data — now
+  reads `streakStatus`). **Rep ranges** ("8-12") counted as real volume via
+  `parseRepCount` (were `Number()`→NaN→silently zeroed, hiding volume/PRs).
+  **Week-in-Review prCount deduped** (best strength PR per exercise + one best
+  volume PR; a heavier lift no longer double-counts). **Metric units**: insights
+  label "kg" not a hardcoded "lb". **Coach page** de-lied: replaced the "Advanced
+  coaching is disabled / coaching is active" contradiction with the REAL insight
+  engine (`buildLaunchSafeCoachResponse` now derives from buildInsights/
+  buildNextBestAction + real recovery values). **Progress page** de-faked: removed
+  "temporarily simplified" + 3× hardcoded "Holding steady" + "deferred for now"
+  placeholders; wired the real engine into the pattern/improvement panels (was
+  always "No insights"). Weekly-goal fraction clamps ("2/2" not broken "5/2");
+  reworded "now includes" changelog copy. Evidence: build 0; qa:launch **18/18**
+  (new `correctness-fixes` scenario); browser-verified Coach real + Progress
+  consistent (streak 3/3/3, was 3 vs 1). Commits `612820a`, `191f1db`. Remaining
+  LOW (documented): premium weekly-goal target 3-vs-4 source mismatch; insight
+  "earliest" from 6-entry cap; rolling-window ms boundary.
+
 - **2026-07-06 · Design System V3 — premium product-polish pass (units 1–3) ✅** —
   Owner shifted from features to pure craft ("Apple/Linear/Stripe bar; less noise,
   more clarity; one obvious focal point; remove weak cards + generic copy"). Acting
