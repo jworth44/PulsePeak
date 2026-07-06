@@ -825,7 +825,11 @@ function getLatestWeeklyScore(data) {
 
 export function getWorkoutWeekWindow(referenceDate = new Date()) {
   const end = new Date(referenceDate);
+  // Snap the start to midnight so the window boundary is deterministic — a
+  // workout logged ~7 days ago can't flicker in/out of the count on sub-ms
+  // timing between calls within the same request.
   const start = new Date(end.getTime() - 7 * DAY_MS);
+  start.setHours(0, 0, 0, 0);
   return { start, end };
 }
 
@@ -2978,11 +2982,17 @@ function buildExerciseHistory(workouts = []) {
   return Array.from(historyMap.entries())
     .map(([name, entries]) => {
       const weightedEntries = entries.filter((entry) => entry.weight !== null && entry.weight !== undefined && entry.weight !== "");
+      const earliestWeighted = weightedEntries[weightedEntries.length - 1]; // entries are newest-first
       return {
         name,
         lastPerformedAt: entries[0]?.loggedAt || null,
         lastWeight: weightedEntries[0]?.weight ?? null,
         bestWeight: weightedEntries.length ? Math.max(...weightedEntries.map((entry) => Number(entry.weight) || 0)) : null,
+        // True earliest across the FULL history (not the 6-entry display cap), so
+        // the "up X lb over N weeks" insight reflects the real starting point.
+        weightedCount: weightedEntries.length,
+        earliestWeight: earliestWeighted?.weight ?? null,
+        earliestAt: earliestWeighted?.loggedAt ?? null,
         entries: entries.slice(0, 6)
       };
     })
@@ -3326,20 +3336,20 @@ export function buildInsights(data, options = {}) {
     });
   }
 
-  // Recent strength improvement — earliest vs latest weighted set for a lift.
+  // Recent strength improvement — TRUE earliest vs latest weighted set for a lift
+  // (from full history, not the 6-entry display cap, so the gain/timespan is real).
   const improved = exerciseHistory
     .map((entry) => {
-      const weighted = entry.entries.filter((item) => Number(item.weight) > 0);
-      if (weighted.length < 3) return null;
-      const latest = Number(weighted[0].weight);
-      const earliest = Number(weighted[weighted.length - 1].weight);
-      if (!(latest > earliest)) return null;
+      if ((entry.weightedCount || 0) < 3) return null;
+      const latest = Number(entry.lastWeight);
+      const earliest = Number(entry.earliestWeight);
+      if (!Number.isFinite(latest) || !Number.isFinite(earliest) || !(latest > earliest)) return null;
       return {
         name: entry.name,
         gain: latest - earliest,
         latest,
         earliest,
-        days: insightDaysSince(weighted[weighted.length - 1].loggedAt, nowMs)
+        days: insightDaysSince(entry.earliestAt, nowMs)
       };
     })
     .filter(Boolean)

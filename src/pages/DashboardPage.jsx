@@ -136,11 +136,14 @@ export default function DashboardPage() {
   const todayTrainingBlocks = useMemo(() => planSummary?.suggestedWorkoutMix?.split || [], [planSummary]);
   const todayMobilityItems = useMemo(() => mobilityModule?.suggestedFlow?.slice(0, 3) || [], [mobilityModule]);
   const weeklySessionTarget = useMemo(() => {
+    // Must match the server's Week-in-Review target (store.js buildWeekInReview:
+    // premium/trial = 4, free = the weekly cap) so the weekly goal reads the same
+    // on the StreakCard and in the recap.
     if (workoutAccess?.premiumUnlimited || workoutAccess?.trialUnlimited) {
-      return Math.max(3, planSummary?.suggestedWorkoutMix?.split?.length || 3);
+      return 4;
     }
     return workoutAccess?.limit || 2;
-  }, [planSummary?.suggestedWorkoutMix?.split, workoutAccess]);
+  }, [workoutAccess]);
   // Streak-milestone moment: when a real streak crosses a milestone (and the
   // user trained today), celebrate it once. localStorage suppresses repeats and
   // resets if the streak breaks, so re-climbing celebrates again.
