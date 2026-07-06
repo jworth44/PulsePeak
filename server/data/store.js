@@ -214,6 +214,13 @@ export function normalizeWellnessData(data = {}) {
     waterIntake: Number(sanitizedData.waterIntake || 0),
     sleepHours: Number(sanitizedData.sleepHours || normalizedGoals.sleep),
     energyLevel: ["Low", "Steady", "High"].includes(sanitizedData.energyLevel) ? sanitizedData.energyLevel : "Steady",
+    // Sticky, explicit flag: true only once the user has actually reported
+    // recovery via /api/recovery. It must be a pure passthrough — the
+    // sleepHours/energyLevel above are backfilled to defaults on every
+    // read/write, so inferring "logged" from their presence would flip true
+    // after the first save. The backfilled values are for internal math ONLY;
+    // never present them as observed unless recoveryLogged is true.
+    recoveryLogged: sanitizedData.recoveryLogged === true,
     meals: Array.isArray(sanitizedData.meals) ? sanitizedData.meals : [],
     workouts: Array.isArray(sanitizedData.workouts) ? sanitizedData.workouts.map(normalizeWorkout) : [],
     savedWorkouts: Array.isArray(sanitizedData.savedWorkouts) ? sanitizedData.savedWorkouts.map(normalizeSavedWorkout).filter(Boolean) : [],
@@ -620,6 +627,9 @@ export function buildLaunchSafeCoachResponse(data = {}) {
   const topHabit = (wellness.habits || [])
     .map((habit) => ({ name: habit.name, streak: habit.streak || 0 }))
     .sort((a, b) => b.streak - a.streak)[0];
+  // Recovery values must reflect what the user ACTUALLY logged (the sticky
+  // recoveryLogged flag), not the defaults that normalization backfills.
+  const recoveryLogged = wellness.recoveryLogged === true;
 
   return {
     coachingEnabled: COACHING_RUNTIME_ENABLED,
@@ -640,13 +650,13 @@ export function buildLaunchSafeCoachResponse(data = {}) {
     recommendations: [],
     notes: Array.isArray(data.notes) ? data.notes : [],
     recoveryFocus: {
-      energyLevel: wellness.energyLevel || "Not logged",
-      sleepHours: wellness.sleepHours !== undefined && wellness.sleepHours !== null ? wellness.sleepHours : "--",
+      // null → the client renders an honest "Not logged yet" state instead of
+      // presenting a default as an observation.
+      energyLevel: recoveryLogged ? wellness.energyLevel : null,
+      sleepHours: recoveryLogged ? wellness.sleepHours : null,
       topHabit: topHabit && topHabit.streak > 0
         ? `${topHabit.name} (${topHabit.streak}-day streak)`
-        : topHabit
-          ? topHabit.name
-          : "Not set"
+        : null
     }
   };
 }
@@ -877,6 +887,8 @@ export function buildWorkoutAccess(user) {
 export function buildWeeklyPlan(data, totals, habits, completion, workouts = []) {
   data = normalizeWellnessData(data);
   const profile = data.profile;
+  // Sticky flag (survives normalization) — recovery was actually reported.
+  const recoveryLogged = data.recoveryLogged === true;
   const workoutStreak = calculateWorkoutStreak(workouts);
   const recentWorkouts = workouts.slice(0, 5);
   const recentWorkoutDays = new Set(recentWorkouts.map((workout) => workout.loggedAt?.slice(0, 10)).filter(Boolean)).size;
@@ -1010,17 +1022,23 @@ export function buildWeeklyPlan(data, totals, habits, completion, workouts = [])
   const adaptiveSignals = [
     `Goal signal: ${formatGoalType(profile.goalType)} with ${profile.experienceLevel} experience in a ${profile.trainingEnvironment} setup.`,
     nutritionPlanning.bodyProfileNote,
-    `Training baseline: ${recentWorkoutDays} recent workout day${recentWorkoutDays === 1 ? "" : "s"} with a ${workoutStreak}-day streak.`,
-    `Recovery signal: ${data.sleepHours.toFixed(1)} hours of sleep, ${data.energyLevel.toLowerCase()} energy, and ${profile.injuryStatus === "none" ? "no active injury flags." : `${profile.injuryStatus.replace("_", " ")} status${restrictionNote ? ` around ${restrictionNote}` : ""}.`}`
+    workouts.length
+      ? `Training baseline: ${recentWorkoutDays} recent workout day${recentWorkoutDays === 1 ? "" : "s"} with a ${workoutStreak}-day streak.`
+      : `Training baseline: no sessions logged yet — the plan starts from your goal and setup.`,
+    // Only report a recovery reading the user actually gave us.
+    recoveryLogged
+      ? `Recovery signal: ${data.sleepHours.toFixed(1)} hours of sleep, ${data.energyLevel.toLowerCase()} energy, and ${profile.injuryStatus === "none" ? "no active injury flags." : `${profile.injuryStatus.replace("_", " ")} status${restrictionNote ? ` around ${restrictionNote}` : ""}.`}`
+      : `Recovery signal: ${profile.injuryStatus === "none" ? "log sleep and energy to fold recovery into the plan." : `${profile.injuryStatus.replace("_", " ")} status${restrictionNote ? ` around ${restrictionNote}` : ""}; log sleep and energy to refine it further.`}`
   ];
+  const hydrationTracked = data.waterIntake > 0;
   const executionPriorities = [
     nutritionEnabled
-      ? proteinGap >= 25
+      ? nutritionTracked && proteinGap >= 25
         ? `Hit a daily protein floor of at least ${Math.max(data.goals.protein - 20, 100)}g before treating calories as done.`
         : `Keep protein near your ${nutritionPlanning.proteinRangeLabel} so ${goalBlueprint.outputPhrase}.`
       : `Focus first on session quality and recovery since nutrition tracking is currently turned down.`,
     hydrationEnabled
-      ? waterGap >= 0.5
+      ? hydrationTracked && waterGap >= 0.5
         ? `Treat ${hydrationFloor.toFixed(1)}L as the daily floor and close the current hydration gap earlier in the day.`
         : `Keep hydration above ${Math.max(hydrationFloor - 0.3, 1.8).toFixed(1)}L before the evening.`
       : mobilityEnabled
@@ -1042,16 +1060,25 @@ export function buildWeeklyPlan(data, totals, habits, completion, workouts = [])
     mobilityCount,
     restrictionNote
   });
-  const habitAnchor =
-    habitCompletionRate >= 0.66
+  // "Fragile consistency" is a claim about the user's history — never assert it
+  // for someone who simply hasn't started yet (no completed habit days).
+  const hasHabitHistory = (habits || []).some(
+    (habit) => (habit.streak || 0) > 0 || (Array.isArray(habit.completedDates) && habit.completedDates.length > 0)
+  );
+  const habitAnchor = !hasHabitHistory
+    ? `Anchor the week with ${topHabit?.name || "one small daily habit"} — a couple of check-ins is all it takes to start a streak.`
+    : habitCompletionRate >= 0.66
       ? `Your habits are already holding together, so protect that with ${topHabit?.name || "one repeatable daily routine"} every day.`
-      : `Consistency is still fragile, so use ${topHabit?.name || "one small daily habit"} as the non-negotiable anchor this week.`;
+      : `Your habit consistency has slipped, so use ${topHabit?.name || "one small daily habit"} as the anchor to rebuild it this week.`;
   const premiumReason = buildWeeklyPlanPremiumReason({
     proteinGap,
     waterGap,
+    nutritionTracked,
+    hydrationTracked,
     lowRecovery,
     weeklyTrend,
     habitCompletionRate,
+    hasHabitHistory,
     goalType: profile.goalType,
     injuryStatus: profile.injuryStatus
   });
@@ -1146,6 +1173,8 @@ export function buildWeeklyPlan(data, totals, habits, completion, workouts = [])
       proteinCompletion,
       hydrationCompletion,
       calorieCompletion,
+      nutritionTracked,
+      hydrationTracked,
       lowRecovery,
       goalType: profile.goalType
     }),
@@ -2558,7 +2587,7 @@ function getWeeklyTrend(history, completion) {
   return "flat";
 }
 
-function buildWeeklyPlanPremiumReason({ proteinGap, waterGap, lowRecovery, weeklyTrend, habitCompletionRate, goalType, injuryStatus }) {
+function buildWeeklyPlanPremiumReason({ proteinGap, waterGap, nutritionTracked, hydrationTracked, lowRecovery, weeklyTrend, habitCompletionRate, hasHabitHistory, goalType, injuryStatus }) {
   if (injuryStatus === "active_injury") {
     return "Premium turns your current injury and restriction inputs into safer weekly guardrails instead of a generic plan.";
   }
@@ -2568,22 +2597,22 @@ function buildWeeklyPlanPremiumReason({ proteinGap, waterGap, lowRecovery, weekl
   if (lowRecovery) {
     return "Premium turns your current recovery state into a lighter training mix and clearer weekly guardrails.";
   }
-  if (proteinGap >= 25) {
+  if (nutritionTracked && proteinGap >= 25) {
     return "Premium shows how your fueling gap should change the week, not just that protein is low.";
   }
-  if (waterGap >= 0.5) {
+  if (hydrationTracked && waterGap >= 0.5) {
     return "Premium adds hydration and recovery adjustments so the week reflects how you're actually feeling.";
   }
   if (weeklyTrend === "up") {
     return "Premium leans into your current momentum instead of giving you a generic steady-state week.";
   }
-  if (habitCompletionRate < 0.5) {
+  if (hasHabitHistory && habitCompletionRate < 0.5) {
     return "Premium connects the weekly plan to your actual consistency pattern so the plan is easier to stick to.";
   }
   return `Premium explains why your ${formatGoalType(goalType).toLowerCase()} week is structured this way using your training, recovery, and consistency data.`;
 }
 
-function getWeeklyPlanPreviewNote({ proteinCompletion, hydrationCompletion, calorieCompletion, lowRecovery, goalType }) {
+function getWeeklyPlanPreviewNote({ proteinCompletion, hydrationCompletion, calorieCompletion, nutritionTracked, hydrationTracked, lowRecovery, goalType }) {
   if (goalType === "mobility") {
     return "Movement quality is actively shaping the weekly structure.";
   }
@@ -2596,16 +2625,16 @@ function getWeeklyPlanPreviewNote({ proteinCompletion, hydrationCompletion, calo
   if (lowRecovery) {
     return "Recovery is shaping this week more than volume right now.";
   }
-  if (proteinCompletion < 0.8) {
+  if (nutritionTracked && proteinCompletion < 0.8) {
     return "Protein support is still one of the biggest levers in this plan.";
   }
-  if (hydrationCompletion < 0.8) {
+  if (hydrationTracked && hydrationCompletion < 0.8) {
     return "Hydration consistency is still influencing the weekly setup.";
   }
-  if (calorieCompletion < 0.8) {
+  if (nutritionTracked && calorieCompletion < 0.8) {
     return "Fueling consistency is still part of why this week is structured the way it is.";
   }
-  return "This preview reflects your current training and recovery pattern.";
+  return "This preview reflects your goal, training setup, and recovery inputs.";
 }
 
 function buildResultProjection(data, { completion, workoutStreak, weeklyTrend, habits }) {
@@ -2653,10 +2682,16 @@ function buildResultProjection(data, { completion, workoutStreak, weeklyTrend, h
 
 function buildWhyThisWorksBlock(data, planLike = {}) {
   const profile = data.profile;
+  const hasLoggedHistory =
+    (data.workouts?.length || 0) > 0 || (data.meals?.length || 0) > 0 || (data.weeklyHistory?.length || 0) > 0;
+  const capitalize = (value) => (value ? value.charAt(0).toUpperCase() + value.slice(1) : value);
   const parts = [
     `${formatGoalType(profile.goalType)} sets the weekly direction.`,
-    `${profile.trainingEnvironment} access, ${profile.equipmentProfile.replace("_", " ")} equipment, and ${profile.experienceLevel} experience shape how ambitious the week should feel.`,
-    `Recovery inputs and nutrition depth keep the plan from behaving like a generic template.`
+    `${capitalize(profile.trainingEnvironment)} access, ${profile.equipmentProfile.replace("_", " ")} equipment, and ${profile.experienceLevel} experience shape how ambitious the week should feel.`,
+    // Only claim recovery/nutrition are shaping the plan once they exist.
+    hasLoggedHistory
+      ? "Your recovery inputs and logged nutrition keep the plan from behaving like a generic template."
+      : "As you log training, recovery, and nutrition, the plan sharpens around you instead of a generic template."
   ];
 
   if (profile.injuryStatus !== "none") {
@@ -2666,7 +2701,9 @@ function buildWhyThisWorksBlock(data, planLike = {}) {
   return {
     title: "Why this works",
     body: parts.join(" "),
-    trustNote: "Built from your actual data and adjusted weekly from the inputs you keep updating.",
+    trustNote: hasLoggedHistory
+      ? "Built from your goal, setup, and logged training — it adjusts every week as you keep updating it."
+      : "Built from your goal and setup — it becomes a personalized, data-driven plan as you start logging.",
     premiumNote: planLike.nutritionEmphasis
       ? "Premium goes further by showing the reasoning, execution priorities, and smarter weekly adjustments behind those inputs."
       : "Premium goes further by showing the reasoning and smarter weekly adjustments behind those inputs."
@@ -2811,8 +2848,10 @@ function createDefaultWellnessData(name) {
       restrictedAreas: []
     },
     waterIntake: 0,
-    sleepHours: 7.2,
-    energyLevel: "Steady",
+    // Recovery is unlogged until the user actually reports it — never seed a
+    // fabricated sleep/energy reading that the coach would present as observed.
+    sleepHours: null,
+    energyLevel: null,
     meals: [],
     workouts: [],
     savedWorkouts: [],
@@ -2838,10 +2877,9 @@ function createDefaultWellnessData(name) {
     ],
     weeklyHistory: [],
     weightHistory: [],
-    notes: [
-      `${name.split(" ")[0] || "Athlete"} is building steady consistency through nutrition and recovery.`,
-      "Energy improves when hydration is above 2.5L and sleep crosses 7.5 hours."
-    ]
+    // No seeded "notes" — the coach must never present fabricated observations
+    // ("... is building steady consistency ...") to a user who has logged nothing.
+    notes: []
   };
 }
 

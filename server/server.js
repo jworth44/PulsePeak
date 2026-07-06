@@ -531,7 +531,9 @@ app.post("/api/recovery", requireAuth, (request, response) => {
   const updatedUser = updateUserData(request.user.id, (data) => ({
     ...data,
     sleepHours: parseNumberInRange(request.body.sleepHours, 0, 14, "Sleep hours"),
-    energyLevel: parseEnergyLevel(request.body.energyLevel)
+    energyLevel: parseEnergyLevel(request.body.energyLevel),
+    // Mark recovery as actually observed so the coach/plan may present it.
+    recoveryLogged: true
   }));
 
     response.json({

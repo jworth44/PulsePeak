@@ -113,15 +113,19 @@ export default function CoachPage() {
             <div className="insight-list">
               <div className="insight-chip">
                 <strong>Energy</strong>
-                <p className="muted">{recoveryFocus.energyLevel ?? "Not logged"}</p>
+                <p className="muted">{recoveryFocus.energyLevel ?? "Not logged yet"}</p>
               </div>
               <div className="insight-chip">
                 <strong>Sleep</strong>
-                <p className="muted">{recoveryFocus.sleepHours ?? "--"} hours</p>
+                <p className="muted">
+                  {typeof recoveryFocus.sleepHours === "number"
+                    ? `${recoveryFocus.sleepHours} hours`
+                    : "Not logged yet"}
+                </p>
               </div>
               <div className="insight-chip">
                 <strong>Top habit</strong>
-                <p className="muted">{recoveryFocus.topHabit ?? "Not set"}</p>
+                <p className="muted">{recoveryFocus.topHabit ?? "No streak yet"}</p>
               </div>
             </div>
             {isPremium ? (
