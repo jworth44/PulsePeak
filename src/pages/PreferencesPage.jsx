@@ -81,36 +81,40 @@ export default function PreferencesPage() {
       <section className="module-page-hero">
         <div>
           <p className="badge">Settings</p>
-          <h2>Keep the app simple, set your guidance level, and review the work you have actually logged.</h2>
-          <p className="lead-copy">Your training setup, appearance, session detail level, and visibility controls all live here so the main navigation stays calm.</p>
+          <h2>Tune PulsePeak to how you train.</h2>
+          <p className="lead-copy">Your setup, appearance, guidance level, and what shows up — all in one place.</p>
         </div>
       </section>
 
       <div className="settings-layout">
-        <Panel eyebrow="Settings menu" title="Choose a control area">
-          <div className="settings-menu">
-            {[
-              ["account", "Account"],
-              ["preferences", "Preferences"],
-              ["appearance", "Appearance"],
-              ["modules", "Module Visibility"]
-            ].map(([value, label]) => (
-              <button
-                key={value}
-                className={`settings-menu-button ${activeSection === value ? "settings-menu-button-active" : ""}`}
-                type="button"
-                onClick={() => openSection(value)}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        </Panel>
+        {/* Redundant with the sidebar submenu on desktop; the only section nav on
+            mobile (sidebar hidden). Shown only below the sidebar breakpoint. */}
+        <div className="settings-menu-nav">
+          <Panel eyebrow="Settings menu" title="Choose a control area">
+            <div className="settings-menu">
+              {[
+                ["account", "Account"],
+                ["preferences", "Preferences"],
+                ["appearance", "Appearance"],
+                ["modules", "Module Visibility"]
+              ].map(([value, label]) => (
+                <button
+                  key={value}
+                  className={`settings-menu-button ${activeSection === value ? "settings-menu-button-active" : ""}`}
+                  type="button"
+                  onClick={() => openSection(value)}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </Panel>
+        </div>
 
         {activeSection === "preferences" ? (
           <div className="page-grid page-grid-tight">
             <Panel eyebrow="App mode" title="Choose the version of PulsePeak you want to open first">
-              <p className="support-copy">Switching app mode reapplies the recommended layout for that mode using the same module visibility system already built into your settings.</p>
+              <p className="support-copy">Choose how much PulsePeak shows you — the full experience, or a leaner focus on just training.</p>
               <div className="goal-card-grid">
                 {APP_MODE_OPTIONS.map((option) => (
                   <button
