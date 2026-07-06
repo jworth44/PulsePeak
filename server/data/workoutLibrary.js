@@ -886,7 +886,11 @@ function buildRecommendationReason(profile, filters, historyContext, selectedFoc
   }
 
   if (filters.manualFocus) {
-    return `You picked ${focusLabel}, so today’s options stay matched to your ${filters.environment} setup, ${formatEquipmentSelections(filters.equipmentSelections).toLowerCase()} setup, and recent training history.`;
+    const equipmentPhrase = `${formatEquipmentSelections(filters.equipmentSelections).toLowerCase()} setup`;
+    // Only cite "recent training history" if there actually is any.
+    return historyContext.workouts.length
+      ? `You picked ${focusLabel}, so today’s options stay matched to your ${filters.environment} setup, ${equipmentPhrase}, and recent training history.`
+      : `You picked ${focusLabel}, so today’s options stay matched to your ${filters.environment} setup and ${equipmentPhrase}.`;
   }
 
   if (historyContext.recentFocuses[0] === recommendedFocus) {
@@ -1045,10 +1049,15 @@ function buildContinuityReason(topWorkout, historyContext) {
 
 function buildWorkoutContinuityNote(templateEntry, historyContext) {
   const lastTrainedLabel = formatLastTrainedLabel(templateEntry.focus, historyContext);
-  if (!lastTrainedLabel) {
-    return "This split is ready to be the anchor session for today because it has not shown up recently.";
+  if (lastTrainedLabel) {
+    return lastTrainedLabel;
   }
-  return lastTrainedLabel;
+  // No "not shown up recently" for a user with no training logged — that
+  // implies a history they don't have.
+  if (!historyContext.workouts.length) {
+    return "A strong anchor session to open your week with.";
+  }
+  return "This split hasn't come up in your recent sessions, so it's a good way to keep the week balanced.";
 }
 
 function buildWorkoutVarietyNote(exercises, historyContext) {
