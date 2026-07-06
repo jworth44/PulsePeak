@@ -87,7 +87,6 @@ export default function ExerciseLibraryPage() {
     Boolean(search.trim()) || selectedCategory !== "All" || selectedEquipment !== "all" || selectedDifficulty !== "all";
 
   const visualCount = entries.filter((entry) => resolveMovementVisual(entry, { visualModelPreference }).visualLevel === "full").length;
-  const textGuideCount = entries.filter((entry) => resolveMovementVisual(entry, { visualModelPreference }).visualLevel !== "full").length;
 
   function resetExerciseSearch() {
     setSearch("");
@@ -126,16 +125,15 @@ export default function ExerciseLibraryPage() {
         <section className="module-page-hero exercise-library-hero">
           <div className="today-hero-copy">
             <p className="section-label">Exercise Library</p>
-            <h2>Browse every movement used by PulsePeak workouts.</h2>
+            <h2>Learn every movement, the right way.</h2>
             <p className="lead-copy">
-              This library now drives the live movement guide, workout exercise cards, and the deeper movement pool so every exercise has one real source of truth.
+              Search every exercise in your training with step-by-step guides and coaching cues, so you always know exactly how to move.
             </p>
           </div>
           <div className="today-hero-score">
-            <span className="section-label">Coverage</span>
-            <strong>{library?.total || entries.length} live exercises</strong>
-            <p className="support-copy">{visualCount} visual guides</p>
-            <p className="support-copy">{textGuideCount} text coaching guides</p>
+            <span className="section-label">Your library</span>
+            <strong>{library?.total || entries.length} exercises</strong>
+            <p className="support-copy">{visualCount} with step-by-step visual guides</p>
           </div>
         </section>
 
