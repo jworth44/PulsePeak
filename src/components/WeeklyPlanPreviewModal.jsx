@@ -294,7 +294,7 @@ export default function WeeklyPlanPreviewModal({ planPayload, onClose, onUpgrade
 
           {isPremium ? (
             <article className="weekly-plan-block">
-              <p className="section-label">Execution priorities</p>
+              <p className="section-label">This week's focus</p>
               <span className="section-chip">Actions</span>
               <strong>What to actually do this week</strong>
               <ul className="plan-list">
@@ -307,9 +307,9 @@ export default function WeeklyPlanPreviewModal({ planPayload, onClose, onUpgrade
 
           {isPremium ? (
             <article className="weekly-plan-block">
-              <p className="section-label">Plan rationale</p>
+              <p className="section-label">Why this plan</p>
               <span className="section-chip">Why</span>
-              <strong>Why Premium feels different</strong>
+              <strong>Why your week looks like this</strong>
               <ul className="plan-list">
                 {weeklyRationale.map((item) => (
                   <li key={item}>{item}</li>
@@ -327,8 +327,8 @@ export default function WeeklyPlanPreviewModal({ planPayload, onClose, onUpgrade
               <strong>{accessTier === "trial_active" ? "Your full weekly plan is active during the trial." : "Your full weekly plan is active."}</strong>
               <p className="muted">
                 {accessTier === "trial_active"
-                  ? `Your trial includes adaptive rationale, execution priorities, and richer weekly adjustments${user?.trialEndsLabel ? ` until ${user.trialEndsLabel}` : ""}. Then it renews yearly at $119.99/year unless canceled before trial ends.`
-                  : "Your plan includes adaptive rationale, execution priorities, and weekly adjustments built from your latest data."}
+                  ? `Your trial includes the full adaptive plan, the reasons behind it, and richer weekly adjustments${user?.trialEndsLabel ? ` until ${user.trialEndsLabel}` : ""}. It then renews yearly at $119.99/year unless you cancel before it ends.`
+                  : "Your full adaptive plan, the reasons behind it, and weekly adjustments — all built from your latest training data."}
               </p>
             </div>
           </div>
