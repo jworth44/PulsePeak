@@ -1631,6 +1631,33 @@ input:focus, select:focus, textarea:focus {
 .wir-share:hover { filter: brightness(1.08); }
 .wir-share:active { transform: scale(0.98); }
 
+/* Forward-momentum CTA — reflection into action. Primary; Share becomes secondary. */
+.wir-actions { margin-top: 22px; display: flex; flex-direction: column; gap: 10px; }
+.wir-next {
+  width: 100%;
+  padding: 13px 20px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--grad-pulse, linear-gradient(135deg, var(--accent), var(--accent-hover)));
+  color: var(--accent-contrast);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px -10px var(--accent-ring);
+  transition: filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.wir-next:hover { filter: brightness(1.08); }
+.wir-next:active { transform: scale(0.98); }
+.wir-empty .wir-next { width: auto; margin-top: 18px; padding: 11px 22px; }
+.wir-actions .wir-share {
+  margin-top: 0;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+  box-shadow: none;
+}
+.wir-actions .wir-share:hover { filter: none; background: rgba(255, 255, 255, 0.1); }
+
 @media (max-width: 480px) {
   .wir-hero-value { font-size: 2.6rem; }
   .wir-stat strong { font-size: 1.2rem; }

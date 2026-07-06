@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { apiRequest } from "../api/client";
 import { useAuth } from "../state/AuthContext";
 import useModalA11y from "../hooks/useModalA11y";
@@ -32,6 +33,12 @@ function recordLine(record, unit) {
 export default function WeekInReview({ open, onClose }) {
   const { token, dashboard } = useAuth();
   const dialogRef = useModalA11y(onClose);
+  const navigate = useNavigate();
+  // Reflection should create momentum — close the recap and head into training.
+  const goTrain = () => {
+    onClose?.();
+    navigate("/workouts");
+  };
   const [review, setReview] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -116,6 +123,9 @@ export default function WeekInReview({ open, onClose }) {
           <div className="wir-empty">
             <p className="wir-hero-label">No sessions logged yet this week.</p>
             <p className="wir-muted">Complete your first workout and your recap fills in — streak, volume, records and all.</p>
+            <button className="wir-next" type="button" onClick={goTrain}>
+              Start a workout →
+            </button>
           </div>
         ) : null}
 
@@ -186,9 +196,14 @@ export default function WeekInReview({ open, onClose }) {
         ) : null}
 
         {review && review.hasActivity ? (
-          <button className="wir-share" type="button" onClick={onShare}>
-            {shareState === "copied" ? "Copied to clipboard ✓" : shareState === "shared" ? "Shared ✓" : "Share my week"}
-          </button>
+          <div className="wir-actions">
+            <button className="wir-next" type="button" onClick={goTrain}>
+              Start this week strong →
+            </button>
+            <button className="wir-share" type="button" onClick={onShare}>
+              {shareState === "copied" ? "Copied ✓" : shareState === "shared" ? "Shared ✓" : "Share my week"}
+            </button>
+          </div>
         ) : null}
       </div>
     </div>
