@@ -30,6 +30,22 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-06 · Experience Composition — journey momentum, no dead ends ✅** —
+  Owner mission: think in journeys not pages; every action creates forward
+  momentum; a completed workout should flow into recovery; the app should make
+  decisions the user shouldn't have to. **Two marquee flow fixes:** (1) the
+  workout-completion state dead-ended at a single "Return" button → added a
+  primary "Cool down & recover →" that closes the session and navigates to
+  /mobility (workout → recovery, the day's natural next step). (2) "Start today's
+  session" navigated to /workouts to *re-pick* a session the dashboard already
+  recommended → now opens that session's modal in place; also fixed the
+  underlying dead code (recommendedWorkout was only ever set to null — the pool
+  loaded but the top pick was never taken; now `pool[0]`). Journey now flows:
+  dashboard → Start today's session (opens recommended) → complete → celebrate →
+  Cool down & recover → /mobility. Evidence: build 0; qa:launch 18/18; browser
+  e2e both flows. Commits `7fc7c08`, `cc82a6f`. Remaining journey polish:
+  mobility→reflection hook, week-in-review→forward CTA, return-tomorrow loop.
+
 - **2026-07-06 · Product Composition — dashboard reduced to one hero + journey ✅** —
   Owner "Creative Director" mission: compose experiences not cards; every screen
   ONE hero; remove competing focal points; judge from screenshots. The dashboard
