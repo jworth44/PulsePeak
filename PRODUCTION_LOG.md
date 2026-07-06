@@ -30,6 +30,24 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-06 · Excellence — stop asserting a nutrition deficit the user never logged ✅**
+  (`14410a1`) — Tracing the "Recovery through better fueling" theme to its root
+  (not just the one reason string) exposed a systemic honesty bug: the weekly plan
+  derived its theme from a *protein gap* = `goal − logged`, and for any user who
+  hasn't logged food yet (every new user; anyone before their first meal) `logged
+  = 0`, so the gap always equals the full goal. Result: `getWeeklyFocus` returned
+  "Recovery through better fueling" and the plan strategy asserted *"Your current
+  protein intake is 150g short of goal"* as fact — from **zero** evidence, and
+  contradicting the recommended training session. Fix: one hoisted `nutritionTracked`
+  flag (mode on AND calories/protein actually logged) now gates every
+  nutrition-derived plan branch (weeklyFocus protein/water + plan focusReason); a
+  `hasTrainingHistory` split gives a brand-new user *"Build your first week of
+  consistency around <goal>"* instead of *"Rebuild…"* (nothing to rebuild yet).
+  Evidence: live e2e — fresh bodybuilding user gets a goal-based plan; the SAME
+  user after logging a real low-protein meal (144g short) correctly gets the
+  fueling focus + deficit message, so the claim only shows with real data behind
+  it. Plan screenshot + strategy panel + clean console; build 0; qa:launch 18/18.
+
 - **2026-07-06 · Excellence — fix "today's session" reason contradicting its title ✅**
   (`4e3f9a4`) — Judging the new-user dashboard from a screenshot (per the
   "judge from screenshots" directive) exposed a real incoherence the copy pass
