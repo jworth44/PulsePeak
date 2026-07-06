@@ -589,17 +589,20 @@ export function buildLaunchSafeWeeklyCheckInState(data = null) {
   // does not keep asking for a check-in that already exists.
   const currentWeekKey = getWeekKey();
   const checkIns = data && Array.isArray(data.weeklyCheckIns) ? data.weeklyCheckIns : [];
+  const submittedThisWeek = checkIns.some((entry) => entry?.weekKey === currentWeekKey);
   return {
     currentWeekKey,
-    submittedThisWeek: checkIns.some((entry) => entry?.weekKey === currentWeekKey),
-    title: "Launch baseline active",
-    summary: "Weekly coaching and adjustment guidance are disabled for this launch baseline.",
-    freeSummary: "Core training flows remain available without weekly coaching overlays.",
-    premiumSummary: "Core training flows remain available without weekly coaching overlays.",
+    submittedThisWeek,
+    title: submittedThisWeek ? "This week's check-in is in" : "How did this week go?",
+    summary: submittedThisWeek
+      ? "Thanks — logging how the week felt keeps your training honest and your trends grounded in reality."
+      : "Take a few seconds to log how the week felt — energy, recovery, and how the plan landed. It keeps your progress honest.",
+    freeSummary: "Your check-ins feed the consistency score and trends on this page.",
+    premiumSummary: "Your check-ins feed the consistency score and trends on this page.",
     whatWentWell: [],
     needsTightening: [],
     nextWeekAdjustments: [],
-    todayConnection: "Use the core workout, mobility, and recovery flows directly.",
+    todayConnection: "Log it, then jump into today's session from the dashboard.",
     premiumReasoning: "",
     coachingEnabled: COACHING_RUNTIME_ENABLED
   };
