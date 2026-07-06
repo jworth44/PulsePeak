@@ -584,16 +584,16 @@ export default function DashboardPage() {
           </Panel>
         ) : null}
 
-        {(workoutMomentum.currentStreakDays > 0 || workoutMomentum.weeklyCompletionCount > 0) ? (
+        {summary.streakStatus && (summary.streakStatus.streak > 0 || summary.streakStatus.weeklyCompleted > 0) ? (
           <div className="momentum-strip">
             <span className="momentum-badge">
-              {workoutMomentum.currentStreakDays} day{workoutMomentum.currentStreakDays === 1 ? "" : "s"} current streak
+              {summary.streakStatus.streak} day{summary.streakStatus.streak === 1 ? "" : "s"} current streak
             </span>
             <span className="momentum-badge">
-              {workoutMomentum.longestStreakDays} day{workoutMomentum.longestStreakDays === 1 ? "" : "s"} best streak
+              {summary.streakStatus.longestStreak} day{summary.streakStatus.longestStreak === 1 ? "" : "s"} best streak
             </span>
             <span className="momentum-badge">
-              {workoutMomentum.weeklyCompletionCount} session{workoutMomentum.weeklyCompletionCount === 1 ? "" : "s"} this week
+              {summary.streakStatus.weeklyCompleted} session{summary.streakStatus.weeklyCompleted === 1 ? "" : "s"} this week
             </span>
           </div>
         ) : null}

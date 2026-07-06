@@ -10,7 +10,7 @@ import { useAuth } from "../state/AuthContext";
 import { getPremiumCapabilitySummary, getPremiumComparisonSummary, getPremiumOutcomeLayer, hasFullWorkoutAccess } from "../../shared/entitlements";
 
 export default function ProgressPage() {
-  const { user, accessTier, workoutMemory, workoutMomentum, workoutMilestones } = useAuth();
+  const { user, accessTier, workoutMemory, workoutMilestones } = useAuth();
   const { data, summary, loading, error: loadError, mutate } = useDashboardData();
   const { busy: checkoutBusy, startUpgradeCheckout } = useUpgradeCheckout();
   const [error, setError] = React.useState("");
@@ -45,6 +45,10 @@ export default function ProgressPage() {
   }
 
   const bestStreak = summary.habits.reduce((best, habit) => Math.max(best, habit.streak), 0);
+  // Canonical training streak — the same freeze-protected value the dashboard
+  // StreakCard, milestones, and insights use. Never derive streak from the
+  // client-side momentum record here (it can diverge from the real logged data).
+  const streakStatus = summary.streakStatus || {};
   const weeklyCheckIn = summary.weeklyCheckIn;
   const latestCheckIn = weeklyCheckIn?.latestCheckIn;
   const hasProgressAccess = hasFullWorkoutAccess(accessTier);
@@ -144,8 +148,8 @@ export default function ProgressPage() {
             <p className="muted">Your daily score pulls training, recovery, hydration, and nutrition into one signal so progress feels connected instead of scattered.</p>
           </div>
           <div className="module-note">
-            <strong>{workoutMomentum.currentStreakDays} day current streak</strong>
-            <p className="muted">Training streak and recent activity now reflect actual completed sessions instead of a disconnected summary signal.</p>
+            <strong>{streakStatus.streak || 0} day current streak</strong>
+            <p className="muted">Your training streak, freeze-protected so a single rest day doesn't reset your momentum.</p>
           </div>
           <div className="module-note">
             <strong>{performanceSignals.summaryLine}</strong>
@@ -177,15 +181,15 @@ export default function ProgressPage() {
           <div className="insight-list">
             <div className="insight-chip">
               <strong>Current streak</strong>
-              <p className="muted">{workoutMomentum.currentStreakDays} consecutive active day{workoutMomentum.currentStreakDays === 1 ? "" : "s"}</p>
+              <p className="muted">{streakStatus.streak || 0} day{(streakStatus.streak || 0) === 1 ? "" : "s"}</p>
             </div>
             <div className="insight-chip">
               <strong>Longest streak</strong>
-              <p className="muted">{Math.max(workoutMomentum.longestStreakDays, bestStreak)} day{Math.max(workoutMomentum.longestStreakDays, bestStreak) === 1 ? "" : "s"}</p>
+              <p className="muted">{streakStatus.longestStreak || 0} day{(streakStatus.longestStreak || 0) === 1 ? "" : "s"}</p>
             </div>
             <div className="insight-chip">
               <strong>Sessions this week</strong>
-              <p className="muted">{workoutMomentum.weeklyCompletionCount}</p>
+              <p className="muted">{streakStatus.weeklyCompleted ?? 0}</p>
             </div>
           </div>
         </Panel>

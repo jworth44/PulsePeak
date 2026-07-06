@@ -1362,10 +1362,19 @@ function runStreakStatusAudit() {
   s = buildStreakStatus({ workouts: [dayWorkout(5)] });
   push("stale-broken", s.streak === 0 && s.state === "broken");
 
+  // longestStreak uses the SAME freeze semantics and must never be < current
+  // (that would be a visible contradiction). A big past run must be captured.
+  s = buildStreakStatus({ workouts: [0, 2, 4, 7, 13, 17, 24].map(dayWorkout) });
+  push("longest-consistent-alive-pattern", s.streak === 3 && s.longestStreak === 3);
+  s = buildStreakStatus({ workouts: [0, 10, 11, 12, 13, 14, 15, 16].map(dayWorkout) });
+  push("longest-captures-past-run", s.streak === 1 && s.longestStreak === 7);
+  s = buildStreakStatus({ workouts: [0, 1, 2, 3, 4].map(dayWorkout) });
+  push("longest-ge-current-invariant", s.longestStreak >= s.streak && s.longestStreak === 5);
+
   const failed = checks.filter((c) => !c.ok);
   recordScenario("streak-status", {
     pass: failed.length === 0,
-    note: "buildStreakStatus: freeze-protected streak is deterministic; active/at_risk/broken/none states correct; freeze buffer bounded."
+    note: "buildStreakStatus: freeze-protected streak deterministic; states correct; freeze buffer bounded; longestStreak uses same semantics and is always >= current (no cross-screen contradiction)."
   });
   if (failed.length) {
     recordBlocker(`Streak status checks failed: ${failed.map((c) => c.name).join(", ")}`);

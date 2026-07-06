@@ -3497,9 +3497,9 @@ const STREAK_FREEZE_ALLOWANCE = 2;
 // streak breaks. Bridged days do NOT count toward the streak length, and only
 // gaps that fall BETWEEN trained days count as freezes used (trailing misses
 // after the oldest streak day bridge to nothing and are not charged).
-function computeStreakWithFreezes(workouts, freezeAllowance) {
+function computeStreakWithFreezes(workouts, freezeAllowance, nowMs = Date.now()) {
   const trained = new Set((workouts || []).map((workout) => String(workout.loggedAt).slice(0, 10)));
-  const dateAt = (index) => new Date(Date.now() - index * DAY_MS).toISOString().slice(0, 10);
+  const dateAt = (index) => new Date(nowMs - index * DAY_MS).toISOString().slice(0, 10);
 
   let streak = 0;
   let misses = 0;
@@ -3531,6 +3531,21 @@ function computeStreakWithFreezes(workouts, freezeAllowance) {
   return { streak, freezesUsed };
 }
 
+// Longest freeze-protected streak ever, using the SAME semantics as the current
+// streak (each trained day is treated as an "anchor today"). Guarantees
+// longest >= current, so the two can never contradict on screen.
+function computeLongestStreak(workouts, freezeAllowance) {
+  const trainedDates = [...new Set((workouts || []).map((workout) => String(workout.loggedAt).slice(0, 10)))];
+  let best = 0;
+  for (const date of trainedDates) {
+    const anchorMs = new Date(`${date}T12:00:00.000Z`).getTime();
+    if (!Number.isFinite(anchorMs)) continue;
+    const { streak } = computeStreakWithFreezes(workouts, freezeAllowance, anchorMs);
+    if (streak > best) best = streak;
+  }
+  return best;
+}
+
 // Retention-facing streak status: current streak (freeze-protected), how much of
 // the freeze buffer is spent, and the loop state (active / at_risk / broken /
 // none) used to pick the right reinforcement + return-prompt copy client-side.
@@ -3552,6 +3567,7 @@ export function buildStreakStatus(data) {
 
   return {
     streak,
+    longestStreak: Math.max(streak, computeLongestStreak(workouts, STREAK_FREEZE_ALLOWANCE)),
     freezesTotal: STREAK_FREEZE_ALLOWANCE,
     freezesUsed,
     freezesRemaining: Math.max(0, STREAK_FREEZE_ALLOWANCE - freezesUsed),
