@@ -904,6 +904,11 @@ export function buildWeeklyPlan(data, totals, habits, completion, workouts = [])
   const proteinGap = Math.max(data.goals.protein - totals.protein, 0);
   const calorieGap = Math.max(data.goals.calories - totals.calories, 0);
   const waterGap = Math.max(data.goals.water - data.waterIntake, 0);
+  // A nutrition "gap" is only meaningful once the user has actually logged
+  // something to fall short against. Before their first meal (every new user)
+  // the gap equals the whole goal — that is absence-of-data, not a deficit, so
+  // it must not drive plan copy or the weekly focus.
+  const nutritionTracked = profile.nutritionMode !== "off" && (totals.protein > 0 || totals.calories > 0);
   const completedHabitCount = habits.filter((habit) => habit.completedToday).length;
   const habitCompletionRate = habits.length ? completedHabitCount / habits.length : 0;
   const topHabit = [...habits].sort((left, right) => right.streak - left.streak)[0];
@@ -938,6 +943,11 @@ export function buildWeeklyPlan(data, totals, habits, completion, workouts = [])
     profile,
     proteinGap,
     waterGap,
+    nutritionTracked,
+    // Distinguish a brand-new user (nothing to "rebuild") from a returning one
+    // who has slipped, so the weekly focus doesn't imply lost consistency that
+    // never existed.
+    hasTrainingHistory: recentWorkoutDays > 0 || (data.weeklyHistory?.length || 0) > 0,
     lowRecovery,
     weeklyTrend,
     completion
@@ -958,9 +968,9 @@ export function buildWeeklyPlan(data, totals, habits, completion, workouts = [])
       ? "Blend gym and home sessions based on your schedule, energy, and equipment access."
       : `Lean on ${preferredEnvironment} sessions this week so the plan matches your actual setup.`;
   const focusReason =
-    proteinGap >= 25
+    nutritionTracked && proteinGap >= 25
       ? `Your current protein intake is ${proteinGap}g short of goal, so better fueling is the fastest way to improve recovery quality.`
-      : waterGap >= 0.5
+      : nutritionTracked && waterGap >= 0.5
         ? `Hydration is still ${waterGap.toFixed(1)}L short, so the week needs cleaner execution before extra intensity.`
         : lowRecovery
           ? "Sleep, energy, or injury context says this week should protect progress instead of forcing volume."
@@ -1779,17 +1789,17 @@ function getNutritionEmphasis({ profile, data, proteinGap, calorieGap, waterGap,
   return `Keep meals repeatable and protein-forward so training recovery stays automatic. A practical protein lane is ${nutritionPlanning.proteinRangeLabel}.`;
 }
 
-function getWeeklyFocus({ profile, proteinGap, waterGap, lowRecovery, weeklyTrend, completion }) {
+function getWeeklyFocus({ profile, proteinGap, waterGap, nutritionTracked, hasTrainingHistory, lowRecovery, weeklyTrend, completion }) {
   if (profile.goalType === "injury_recovery") {
     return "Move safely while restoring confidence";
   }
   if (profile.goalType === "mobility") {
     return "Build daily mobility consistency";
   }
-  if (proteinGap >= 25) {
+  if (nutritionTracked && proteinGap >= 25) {
     return "Recovery through better fueling";
   }
-  if (waterGap >= 0.5) {
+  if (nutritionTracked && waterGap >= 0.5) {
     return "Hydration consistency";
   }
   if (lowRecovery) {
@@ -1797,6 +1807,9 @@ function getWeeklyFocus({ profile, proteinGap, waterGap, lowRecovery, weeklyTren
   }
   if (weeklyTrend === "up" || completion >= 80) {
     return `Build on current momentum for ${formatGoalType(profile.goalType).toLowerCase()}`;
+  }
+  if (!hasTrainingHistory) {
+    return `Build your first week of consistency around ${formatGoalType(profile.goalType).toLowerCase()}`;
   }
   return `Rebuild consistency around ${formatGoalType(profile.goalType).toLowerCase()}`;
 }
