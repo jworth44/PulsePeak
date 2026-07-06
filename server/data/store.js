@@ -476,6 +476,11 @@ export function summarizeDashboard(data) {
   data = normalizeWellnessData(data);
   const today = new Date().toISOString().slice(0, 10);
   const workouts = sortWorkoutsDesc((data.workouts || []).map(normalizeWorkout));
+  // Compute streak + insights here, while `data` is freshly normalized — some
+  // downstream builders mutate data.workouts, which would starve these if run later.
+  const streakStatus = buildStreakStatus(data);
+  const insights = buildInsights(data, { now: Date.now() });
+  const nextBestAction = buildNextBestAction(insights);
   const totals = {
     calories: (data.meals || []).reduce((sum, meal) => sum + meal.calories, 0),
     protein: (data.meals || []).reduce((sum, meal) => sum + meal.protein, 0),
@@ -517,7 +522,9 @@ export function summarizeDashboard(data) {
     totals,
     completion,
     workoutStreak: calculateWorkoutStreak(workouts),
-    streakStatus: buildStreakStatus(data),
+    streakStatus,
+    personalInsights: insights,
+    nextBestAction,
     recentWorkouts: workouts.slice(0, 3),
     savedWorkouts: sortSavedWorkoutsDesc(data.savedWorkouts || []),
     latestExerciseLoads: buildLatestExerciseLoads(workouts),
@@ -3109,6 +3116,327 @@ export function buildWeekInReview(data, options = {}) {
     consistency: typeof completion === "number" ? completion : null,
     weeklyGoal: { completed: workoutsCompleted, target: weeklyGoalTarget },
     hasActivity: workoutsCompleted > 0
+  };
+}
+
+// ---------------------------------------------------------------------------
+// ATTENTIVE INSIGHT ENGINE
+// Turns real logged data into personal, evidence-backed observations. Every
+// generator is gated on sufficient real data — if the data doesn't support a
+// claim, the insight is simply not produced (nothing is ever fabricated).
+// Insights carry evidence, confidence, an explainable reason, and an action;
+// they are ranked by priority x confidence and recomputed live on each load.
+// ---------------------------------------------------------------------------
+const INSIGHT_MAJOR_GROUPS = ["chest", "back", "legs", "shoulders", "arms", "core"];
+const INSIGHT_CONFIDENCE_WEIGHT = { high: 1, medium: 0.72, low: 0.45 };
+const INSIGHT_DAY_NAMES = ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"];
+
+function insightDaysSince(iso, nowMs) {
+  const time = new Date(iso).getTime();
+  if (!Number.isFinite(time)) return null;
+  return Math.floor((nowMs - time) / DAY_MS);
+}
+
+function normalizeInsightGroup(name) {
+  const value = String(name || "").toLowerCase();
+  if (/chest|pec|bench/.test(value)) return "chest";
+  if (/back|lat|row|pulldown|deadlift/.test(value)) return "back";
+  if (/leg|quad|glute|hamstring|calf|squat|lunge/.test(value)) return "legs";
+  if (/shoulder|delt|overhead|military/.test(value)) return "shoulders";
+  if (/bicep|tricep|\barm\b|curl|pushdown/.test(value)) return "arms";
+  if (/core|\bab\b|abs|oblique|plank/.test(value)) return "core";
+  return null;
+}
+
+export function buildInsights(data, options = {}) {
+  const nowMs = options.now || Date.now();
+  const wellness = normalizeWellnessData(data);
+  const workouts = sortWorkoutsDesc((wellness.workouts || []).map(normalizeWorkout));
+  const insights = [];
+  const add = (insight) => {
+    if (insight) insights.push(insight);
+  };
+
+  // Not enough history to read patterns — say so honestly and point forward.
+  if (workouts.length < 2) {
+    add({
+      id: "activation",
+      category: "activation",
+      priority: 100,
+      confidence: "high",
+      title: workouts.length === 0 ? "Let's get your first session in" : "One more session unlocks your patterns",
+      message:
+        workouts.length === 0
+          ? "Log your first workout and PulsePeak starts learning how you train — your records, best days, and momentum."
+          : "Log one more session and PulsePeak can start spotting your trends, records, and best training days.",
+      evidence: `${workouts.length} session${workouts.length === 1 ? "" : "s"} logged so far`,
+      action: { label: "Start a workout", to: "/workouts" },
+      reason: "There isn't enough history yet to read your patterns — this is the honest next step."
+    });
+    return insights;
+  }
+
+  const exerciseHistory = buildExerciseHistory(workouts);
+  const streak = buildStreakStatus(data);
+  const lastWorkout = workouts[0];
+  const daysSinceLast = insightDaysSince(lastWorkout.loggedAt, nowMs);
+
+  // Comeback — you've trained before but have been away.
+  if (daysSinceLast !== null && daysSinceLast >= 4) {
+    add({
+      id: "comeback",
+      category: "comeback",
+      priority: 92,
+      confidence: "high",
+      title: `Welcome back — it's been ${daysSinceLast} days`,
+      message: `Your last session was ${daysSinceLast} days ago. Ease back in with something familiar and rebuild momentum.`,
+      evidence: `Last workout: ${lastWorkout.name}`,
+      action: { label: "Start a workout", to: "/workouts" },
+      reason: `You've trained before but haven't logged in ${daysSinceLast} days.`
+    });
+  }
+
+  // Streak risk — active streak, not trained today.
+  if (streak.state === "at_risk" && streak.streak >= 1) {
+    add({
+      id: "streak-risk",
+      category: "streak",
+      priority: 96,
+      confidence: "high",
+      title: `Your ${streak.streak}-day streak is on the line`,
+      message: `Train today to keep your ${streak.streak}-day streak alive.${
+        streak.freezesRemaining > 0
+          ? ` You have ${streak.freezesRemaining} freeze${streak.freezesRemaining === 1 ? "" : "s"} left, but a session is the sure thing.`
+          : ""
+      }`,
+      evidence: `${streak.streak}-day streak · not trained today`,
+      action: { label: "Train today", to: "/workouts" },
+      reason: "You have an active streak and haven't trained yet today."
+    });
+  }
+
+  // PR opportunity — a recently-trained lift with a clear best to chase.
+  const prCandidate = exerciseHistory
+    .filter(
+      (entry) =>
+        entry.bestWeight &&
+        entry.lastPerformedAt &&
+        insightDaysSince(entry.lastPerformedAt, nowMs) <= 14 &&
+        entry.entries.length >= 2
+    )
+    .sort((a, b) => (b.bestWeight || 0) - (a.bestWeight || 0))[0];
+  if (prCandidate) {
+    const last = prCandidate.entries[0];
+    add({
+      id: `pr-op-${prCandidate.name}`,
+      category: "pr_opportunity",
+      priority: 82,
+      confidence: "high",
+      title: `Ready for a ${prCandidate.name} PR?`,
+      message: `Last time you hit ${last?.weight} lb${last?.repsCompleted ? ` × ${last.repsCompleted}` : ""}. Your best is ${prCandidate.bestWeight} lb — today could be the day you beat it.`,
+      evidence: `Best ${prCandidate.bestWeight} lb · last ${last?.weight} lb`,
+      action: { label: "Start a session", to: "/workouts" },
+      reason: `You've trained ${prCandidate.name} in the last two weeks and have a clear personal best to chase.`
+    });
+  }
+
+  // Neglected major muscle group — trained before, but overdue.
+  const groupLast = new Map();
+  workouts.forEach((workout) => {
+    (workout.exercises || []).forEach((exercise) => {
+      const group = normalizeInsightGroup(exercise.muscleGroup) || normalizeInsightGroup(exercise.name);
+      if (!group) return;
+      const time = new Date(workout.loggedAt).getTime();
+      if (!groupLast.has(group) || time > groupLast.get(group)) {
+        groupLast.set(group, time);
+      }
+    });
+  });
+  let neglected = null;
+  for (const group of INSIGHT_MAJOR_GROUPS) {
+    if (!groupLast.has(group)) continue; // never trained -> not "neglected"
+    const days = Math.floor((nowMs - groupLast.get(group)) / DAY_MS);
+    if (days >= 8 && (!neglected || days > neglected.days)) {
+      neglected = { group, days };
+    }
+  }
+  if (neglected) {
+    add({
+      id: `neglected-${neglected.group}`,
+      category: "balance",
+      priority: 76,
+      confidence: "medium",
+      title: `Your ${neglected.group} is overdue`,
+      message: `You haven't trained ${neglected.group} in ${neglected.days} days. A ${neglected.group} session would rebalance your week.`,
+      evidence: `${neglected.days} days since your last ${neglected.group} work`,
+      action: { label: `Train ${neglected.group}`, to: "/workouts" },
+      reason: `You train ${neglected.group} normally, but it's been ${neglected.days} days.`
+    });
+  }
+
+  // Recent strength improvement — earliest vs latest weighted set for a lift.
+  const improved = exerciseHistory
+    .map((entry) => {
+      const weighted = entry.entries.filter((item) => Number(item.weight) > 0);
+      if (weighted.length < 3) return null;
+      const latest = Number(weighted[0].weight);
+      const earliest = Number(weighted[weighted.length - 1].weight);
+      if (!(latest > earliest)) return null;
+      return {
+        name: entry.name,
+        gain: latest - earliest,
+        latest,
+        earliest,
+        days: insightDaysSince(weighted[weighted.length - 1].loggedAt, nowMs)
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.gain - a.gain)[0];
+  if (improved) {
+    const weeks = Math.max(1, Math.round((improved.days || 7) / 7));
+    add({
+      id: `improved-${improved.name}`,
+      category: "progress",
+      priority: 68,
+      confidence: "high",
+      title: `Your ${improved.name} is climbing`,
+      message: `Up ${improved.gain} lb — from ${improved.earliest} to ${improved.latest} lb over about ${weeks} week${weeks === 1 ? "" : "s"}. Keep the pressure on.`,
+      evidence: `${improved.earliest} → ${improved.latest} lb`,
+      action: { label: "See progress", to: "/progress" },
+      reason: `${improved.name} has moved up across your recent sessions.`
+    });
+  }
+
+  // Weekly momentum — this week vs your best of the prior three weeks.
+  const weekCount = (weeksAgo) =>
+    workouts.filter((workout) => {
+      const days = insightDaysSince(workout.loggedAt, nowMs);
+      return days !== null && days >= weeksAgo * 7 && days < (weeksAgo + 1) * 7;
+    }).length;
+  const thisWeek = weekCount(0);
+  const priorBestWeek = Math.max(weekCount(1), weekCount(2), weekCount(3));
+  if (thisWeek >= 1 && priorBestWeek >= 2 && thisWeek + 1 > priorBestWeek && thisWeek <= priorBestWeek) {
+    add({
+      id: "weekly-momentum",
+      category: "momentum",
+      priority: 72,
+      confidence: "high",
+      title: "One session from your best week in a month",
+      message: `You've logged ${thisWeek} this week. One more beats your best of the last month (${priorBestWeek}).`,
+      evidence: `This week ${thisWeek} · recent best ${priorBestWeek}`,
+      action: { label: "Log a session", to: "/workouts" },
+      reason: "Your session count this week is one short of your recent best."
+    });
+  }
+
+  // Monthly volume trend. Requires a real baseline in BOTH months (≥2 sessions
+  // each) so a ramp-up from a near-empty month isn't dressed up as a "+400%
+  // trend", and skips implausibly large swings that are ramps, not trends.
+  const windowWorkouts = (startDaysAgo, endDaysAgo) =>
+    workouts.filter((workout) => {
+      const days = insightDaysSince(workout.loggedAt, nowMs);
+      return days !== null && days >= endDaysAgo && days < startDaysAgo;
+    });
+  const thisMonthWorkouts = windowWorkouts(30, 0);
+  const lastMonthWorkouts = windowWorkouts(60, 30);
+  const thisMonthVol = thisMonthWorkouts.reduce((sum, workout) => sum + sessionVolume(workout), 0);
+  const lastMonthVol = lastMonthWorkouts.reduce((sum, workout) => sum + sessionVolume(workout), 0);
+  if (thisMonthWorkouts.length >= 2 && lastMonthWorkouts.length >= 2 && thisMonthVol > 0 && lastMonthVol > 0) {
+    const pct = Math.round(((thisMonthVol - lastMonthVol) / lastMonthVol) * 100);
+    if (Math.abs(pct) >= 15 && Math.abs(pct) <= 100) {
+      add({
+        id: "volume-trend",
+        category: "progress",
+        priority: 60,
+        confidence: "medium",
+        title: pct > 0 ? `Volume up ${pct}% this month` : `Volume down ${Math.abs(pct)}% this month`,
+        message:
+          pct > 0
+            ? `You've moved ${pct}% more weight than last month — the work is compounding.`
+            : `Your training volume is down ${Math.abs(pct)}% vs last month. Worth a look if it wasn't a planned deload.`,
+        evidence: `${Math.round(thisMonthVol).toLocaleString()} vs ${Math.round(lastMonthVol).toLocaleString()} lb`,
+        action: { label: "See progress", to: "/progress" },
+        reason: "Comparing your total training volume this month against last month."
+      });
+    }
+  }
+
+  // Plateau — same top weight on a lift for 3+ recent sessions.
+  const plateau = exerciseHistory
+    .map((entry) => {
+      const weighted = entry.entries.filter((item) => Number(item.weight) > 0).slice(0, 4);
+      if (weighted.length < 3) return null;
+      const weights = weighted.map((item) => Number(item.weight));
+      return weights.every((weight) => weight === weights[0])
+        ? { name: entry.name, weight: weights[0], count: weighted.length }
+        : null;
+    })
+    .filter(Boolean)[0];
+  if (plateau) {
+    add({
+      id: `plateau-${plateau.name}`,
+      category: "plateau",
+      priority: 54,
+      confidence: "medium",
+      title: `${plateau.name} has stalled`,
+      message: `You've hit ${plateau.weight} lb on ${plateau.name} for ${plateau.count} sessions straight. Try one more rep, a small load bump, or a tempo change to break through.`,
+      evidence: `${plateau.weight} lb × ${plateau.count} sessions`,
+      action: { label: "Start a session", to: "/workouts" },
+      reason: `${plateau.name} hasn't progressed in your last ${plateau.count} logged sets.`
+    });
+  }
+
+  // Best training day of the week (last ~8 weeks).
+  const recentForDays = workouts.filter((workout) => {
+    const days = insightDaysSince(workout.loggedAt, nowMs);
+    return days !== null && days <= 56;
+  });
+  if (recentForDays.length >= 5) {
+    const counts = {};
+    recentForDays.forEach((workout) => {
+      const day = new Date(workout.loggedAt).getDay();
+      counts[day] = (counts[day] || 0) + 1;
+    });
+    const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+    if (top && top[1] >= 3 && top[1] / recentForDays.length >= 0.34) {
+      add({
+        id: "best-day",
+        category: "pattern",
+        priority: 46,
+        confidence: "medium",
+        title: `${INSIGHT_DAY_NAMES[Number(top[0])]} are your day`,
+        message: `You've trained on ${INSIGHT_DAY_NAMES[Number(top[0])]} more than any other day lately — ${top[1]} of your last ${recentForDays.length} sessions. Lean into what works.`,
+        evidence: `${top[1]} of ${recentForDays.length} recent sessions`,
+        action: null,
+        reason: "Your logged sessions cluster on this weekday."
+      });
+    }
+  }
+
+  insights.sort(
+    (a, b) =>
+      b.priority * INSIGHT_CONFIDENCE_WEIGHT[b.confidence] - a.priority * INSIGHT_CONFIDENCE_WEIGHT[a.confidence]
+  );
+  return insights;
+}
+
+// The single most urgent, actionable thing to do next, derived from the ranked
+// insights (falls back to an honest generic when nothing specific applies).
+export function buildNextBestAction(insights = []) {
+  const actionable = insights.find((insight) => insight.action && insight.action.to);
+  if (!actionable) {
+    return {
+      title: "Start today's session",
+      message: "Pick a workout and keep your momentum going.",
+      to: "/workouts",
+      reason: "Training is the highest-value thing you can do right now."
+    };
+  }
+  return {
+    title: actionable.action.label,
+    message: actionable.title,
+    to: actionable.action.to,
+    reason: actionable.reason
   };
 }
 

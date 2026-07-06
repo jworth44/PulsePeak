@@ -17,7 +17,8 @@
 | **Week in Review** | **Wow-Factor Phase 3 DONE ✅** — `GET /api/week-in-review` + `buildWeekInReview` (rolling 7-day: workouts, streak, total volume, exercises, PRs earned this week, consistency, weekly-goal progress — all derived, never faked). Premium `WeekInReview` recap modal (Volt hero volume, stat grid, goal/consistency bars, PR list, Web-Share + clipboard fallback), dashboard entry "See your week in review". Browser-verified with real data (6,720 lb, 2 records). QA `week-in-review` (7 cases) |
 | **Retention loop** | **Wow-Factor Phase 4 DONE ✅** — `buildStreakStatus` (freeze-protected streak, deterministic; states active/at_risk/broken/none) in `summary.streakStatus`. `StreakCard` on dashboard: 🔥 flame + streak, **streak-freeze concept** (buffer bridges up to 2 missed days), adaptive return-prompt/reinforcement copy (loss-aversion at-risk edge), weekly-goal bar. Streak-milestone `CelebrationOverlay` auto-fires at 3/7/14/30… (once, localStorage-guarded, resets if streak breaks). Fixed a real `navigator.vibrate`-without-gesture console warning. Browser + QA `streak-status` (6 cases) verified |
 | **Differentiation** | **Wow-Factor Phase 5 DONE ✅** — brutally-honest re-review appended to `PRODUCT_DIFFERENTIATION.md`. Verdict moved from "no reason to exist" → **"a real, defensible reason on the emotion/retention/delight axis"** ("the fitness app that celebrates your progress"), a genuine market gap. Remaining pillars are owner-gated: the **Living Coach** (Anthropic API key/$) and native/wearable reach. **Wow-Factor program (Phases 1–5) COMPLETE** |
-| **Active unit** | none (Wow-Factor program complete) |
+| **Attentive intelligence** | **Insight Engine LIVE ✅** — `buildInsights` (honest, evidence-gated): PR opportunity, strength progress, neglected muscle group, comeback, streak risk, weekly momentum, volume trend, plateau, best-training-day; sparse/new user → activation-only (no fabrication); each insight carries evidence + reason + action. `buildNextBestAction`. Dashboard opens with a personalized **"For You Today"** section (`TodayForYou`) — first thing the user sees is specific to their real history. Mission 1 recent-work re-verified independently (all PASS). QA `insight-engine` (10 cases). Browser-verified rich + new-user (honest activation) |
+| **Active unit** | Alive Product — differentiation re-answer (Mission 5) |
 | **Next unit / owner gates** | **Living Coach** = the last differentiator, **blocked on owner enabling an Anthropic API key** (real per-call money). Other autonomous options: input-integrity (red-team P1), CI (#4). Owner-gated: persistence P0 `/tmp` (infra), native/wearable. See `PRODUCT_DIFFERENTIATION.md` re-review + `RED_TEAM_AUDIT.md` §8 |
 | **Open escaped defect** | Arnold Press exercise media has baked-in text ("3. ARNOLD PRESS / THUMBNAIL") — regen via Gemini in a media unit (VG-001) |
 | **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
@@ -27,6 +28,34 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-05 · Alive Product — attentive insight engine + personalized dashboard ✅** —
+  Owner: make PulsePeak *attentive*, not decorative — it should notice, remember,
+  connect patterns, and give timely personal feedback from REAL data only.
+  **Mission 1 (verify):** an independent QA agent adversarially re-proved PR
+  detection, false-PR prevention, Week-in-Review arithmetic, streak+freeze (8
+  cases), milestone triggering, duplicate-celebration prevention, and perf/leaks
+  — all PASS, no discrepancies, nothing to fix. **Missions 2+4 (engine):**
+  `buildInsights(data)` + `buildNextBestAction` in `store.js` — an honest,
+  evidence-gated contextual engine: PR opportunity ("last time 185×5, best 185 —
+  beat it"), strength progress ("+30 lb over 3 weeks"), neglected muscle group
+  ("back overdue 13 days"), comeback, streak risk, weekly momentum, monthly
+  volume trend, plateau, best-training-day. Every insight carries evidence, a
+  confidence, an explainable reason, and an action; ranked by priority×confidence.
+  **Honesty is enforced:** a group never trained is never "neglected"; a ramp-up
+  from a near-empty month is not dressed as a "+400% trend" (gated to a real
+  baseline); sparse/new users get ONLY an honest activation message ("Log one
+  more session and I'll start spotting patterns"). **Mission 3 (dashboard):**
+  `TodayForYou` renders the ranked insights as the FIRST thing on the dashboard —
+  personal, not generic. **Verification caught a real bug:** the summary already
+  had an `insights` key (coaching tips); my duplicate key was silently clobbered
+  in the object literal → renamed to `personalInsights`; also moved the compute
+  early because a downstream builder mutates `data.workouts`. **Mission 6:**
+  browser-verified rich-history user (real PR/progress/balance insights) AND
+  new user (honest activation only, no fabrication); 0 console errors. QA
+  `insight-engine` scenario (10 cases: sparse→activation, evidence+reason on
+  every insight, PR/progress/neglected detection, no untrained-group or ramp-up
+  fabrication, actionable next-best-action). Evidence: build exit 0; qa:launch
+  **17/17**, 0 blockers, 0 warnings.
 - **2026-07-05 · Wow-Factor Phase 5 — product differentiation re-review ✅ (PROGRAM COMPLETE)** —
   Owner: after building the moments/retention work, re-answer honestly "why use
   PulsePeak instead of Strong / Hevy / Fitbod / Nike / Centr / Apple?" — and if

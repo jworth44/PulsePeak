@@ -56,7 +56,9 @@ const {
   sanitizeUser,
   detectPersonalRecords,
   buildWeekInReview,
-  buildStreakStatus
+  buildStreakStatus,
+  buildInsights,
+  buildNextBestAction
 } = await import("../server/data/store.js");
 const {
   getWorkoutLibraryForProfile,
@@ -1370,6 +1372,61 @@ function runStreakStatusAudit() {
   }
 }
 
+// The attentive insight engine must be honest: no insight without real data
+// support, sparse users get only the activation message, and every emitted
+// insight carries evidence + a reason.
+function runInsightEngineAudit() {
+  const checks = [];
+  const push = (name, ok) => checks.push({ name, ok });
+  const DAY = 24 * 60 * 60 * 1000;
+  const iso = (daysAgo) => new Date(Date.now() - daysAgo * DAY).toISOString();
+  const ex = (name, weight, reps, group) => ({ name, weight, repsCompleted: reps, reps: String(reps), sets: 3, muscleGroup: group, equipment: "barbell" });
+  const wk = (name, daysAgo, exercises) => ({ name, type: "strength", focus: "push", duration: 45, intensity: "Moderate", exercises, loggedAt: iso(daysAgo) });
+
+  // Empty + sparse → ONLY the honest activation insight, nothing fabricated.
+  let ins = buildInsights({ workouts: [] });
+  push("empty-only-activation", ins.length === 1 && ins[0].category === "activation");
+  ins = buildInsights({ workouts: [wk("First", 0, [ex("Bench Press", 135, 8, "Chest")])] });
+  push("sparse-only-activation", ins.length === 1 && ins[0].category === "activation");
+
+  // Rich history → real insights, every one carries evidence + reason.
+  const rich = [
+    wk("Push A", 0, [ex("Bench Press", 185, 5, "Chest")]),
+    wk("Push B", 2, [ex("Bench Press", 180, 6, "Chest")]),
+    wk("Push C", 7, [ex("Bench Press", 175, 6, "Chest")]),
+    wk("Push D", 16, [ex("Bench Press", 165, 8, "Chest")]),
+    wk("Legs", 4, [ex("Squat", 225, 5, "Legs")]),
+    wk("Back", 12, [ex("Barbell Row", 135, 8, "Back")])
+  ];
+  ins = buildInsights({ workouts: rich });
+  push("rich-has-insights", ins.length >= 2 && !ins.some((i) => i.category === "activation"));
+  push("all-insights-have-evidence-and-reason", ins.every((i) => i.evidence && i.reason && i.title && i.message));
+  push("detects-pr-opportunity", ins.some((i) => i.category === "pr_opportunity"));
+  push("detects-strength-progress", ins.some((i) => i.category === "progress" && /climbing/i.test(i.title)));
+  push("detects-neglected-back", ins.some((i) => i.id === "neglected-back"));
+
+  // Honesty: a group never trained is NOT reported as "neglected".
+  push("no-neglected-for-untrained-group", !ins.some((i) => i.id === "neglected-shoulders" || i.id === "neglected-arms"));
+
+  // Volume-trend must NOT fire as a huge % when the prior month was near-empty
+  // (ramp-up dressed as a trend). Prior month here has only 1 session.
+  push("no-implausible-volume-trend", !ins.some((i) => i.id === "volume-trend"));
+
+  // Next best action is always actionable with a reason.
+  const nba = buildNextBestAction(ins);
+  push("next-best-action-actionable", Boolean(nba && nba.to && nba.reason));
+
+  const failed = checks.filter((c) => !c.ok);
+  report.insightSample = buildInsights({ workouts: rich }).map((i) => ({ id: i.id, title: i.title }));
+  recordScenario("insight-engine", {
+    pass: failed.length === 0,
+    note: "buildInsights: honest (sparse→activation only, no untrained-group/ramp-up fabrication); every insight carries evidence + reason; next-best-action actionable."
+  });
+  if (failed.length) {
+    recordBlocker(`Insight engine checks failed: ${failed.map((c) => c.name).join(", ")}`);
+  }
+}
+
 const server = startServer();
 let browser;
 
@@ -1392,6 +1449,7 @@ try {
   runPrDetectionAudit();
   runWeekInReviewAudit();
   runStreakStatusAudit();
+  runInsightEngineAudit();
   await runPwaAssetAudit();
   await runBrowserCoverage(browser);
   // After browser coverage — the auth rate-limit burst must not starve the

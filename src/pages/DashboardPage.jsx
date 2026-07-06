@@ -5,6 +5,7 @@ import CelebrationOverlay from "../components/CelebrationOverlay";
 import EmptyStateCard from "../components/EmptyStateCard";
 import HabitList from "../components/HabitList";
 import StreakCard from "../components/StreakCard";
+import TodayForYou from "../components/TodayForYou";
 import WeekInReview from "../components/WeekInReview";
 import Panel from "../components/Panel";
 import ProgressRing from "../components/ProgressRing";
@@ -428,6 +429,8 @@ export default function DashboardPage() {
 
   return (
     <div className="page-grid page-grid-tight">
+      <TodayForYou insights={summary.personalInsights} />
+
       <section className="today-hero">
         <div className="today-hero-copy">
           <p className="badge">Today</p>

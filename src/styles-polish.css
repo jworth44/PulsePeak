@@ -1176,6 +1176,122 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* ===================================================================== */
+/* FOR YOU TODAY — the attentive insight engine, made visible             */
+/* ===================================================================== */
+.foryou { margin-bottom: 4px; }
+.foryou-eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--volt);
+}
+.foryou-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 22px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(26, 29, 33, 0.98), rgba(14, 15, 18, 0.98));
+  border: 1px solid var(--border-strong);
+  overflow: hidden;
+}
+/* Category accent bar down the left edge. */
+.foryou-hero::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--accent);
+}
+.foryou-cat-pr_opportunity::before,
+.foryou-cat-progress::before,
+.foryou-cat-momentum::before { background: var(--volt); }
+.foryou-cat-streak::before,
+.foryou-cat-comeback::before { background: var(--accent); }
+.foryou-cat-plateau::before { background: var(--warning, #f5a524); }
+.foryou-hero-body { flex: 1 1 auto; min-width: 0; }
+.foryou-tag {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+  padding: 3px 8px;
+  margin-bottom: 8px;
+}
+.foryou-tag-sm { margin-bottom: 6px; }
+.foryou-hero-title { display: block; font-size: 1.2rem; letter-spacing: -0.01em; color: var(--text-primary); }
+.foryou-hero-msg { margin: 5px 0 0; font-size: 0.9rem; line-height: 1.4; color: var(--text-secondary); }
+.foryou-hero-evidence {
+  margin: 8px 0 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+.foryou-cta {
+  flex: 0 0 auto;
+  padding: 11px 18px;
+  border-radius: var(--radius-full);
+  background: var(--grad-pulse, linear-gradient(135deg, var(--accent), var(--accent-hover)));
+  color: var(--accent-contrast);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 8px 22px -12px var(--accent-ring);
+  transition: filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.foryou-cta:hover { filter: brightness(1.08); }
+.foryou-cta:active { transform: scale(0.97); }
+
+.foryou-list { margin-top: 10px; display: grid; gap: 8px; }
+.foryou-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+.foryou-item-body { flex: 1 1 auto; min-width: 0; }
+.foryou-item-body strong { display: block; font-size: 0.92rem; color: var(--text-primary); letter-spacing: -0.01em; }
+.foryou-item-body p { margin: 3px 0 0; font-size: 0.82rem; line-height: 1.35; color: var(--text-secondary); }
+.foryou-evidence-chip {
+  display: inline-block;
+  margin-top: 7px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  background: var(--bg-inset);
+  border-radius: var(--radius-xs);
+  padding: 2px 7px;
+}
+.foryou-link {
+  flex: 0 0 auto;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-hover);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.foryou-link:hover { text-decoration: underline; }
+
+@media (max-width: 640px) {
+  .foryou-hero { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .foryou-cta { width: 100%; text-align: center; }
+  .foryou-item { flex-wrap: wrap; }
+}
+
+/* ===================================================================== */
 /* STREAK CARD — the retention loop's home surface                        */
 /* ===================================================================== */
 .streak-card {
