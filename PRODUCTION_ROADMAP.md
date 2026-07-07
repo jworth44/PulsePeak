@@ -189,6 +189,12 @@ media review · commit · production-log line · roadmap update. Then the next b
     Per §5, verify structure/contrast via snapshot+inspect+QA each checkpoint; **taste-
     level pixels get an owner ~2-min visual pass at the C3 boundary** (or do in a fresh
     screenshot-capable session — capture is wedged this session).
+    - *A11y audited clean* (shell + Today): single H1 → ordered H2/H3/H4, `<main>`
+      present, all interactive elements have accessible names, navs labeled, hidden nav
+      correctly out of the a11y tree per viewport. **One semantic fix to fold in here:**
+      the For You *hero title* is a `<strong>`, so the screen's most important content
+      isn't in the heading outline — promote it to an `<h2>` (watch the UA margins) when
+      restyling the hero.
 - C4–C12 — queued.
 
 ---
