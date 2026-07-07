@@ -152,18 +152,30 @@ media review · commit · production-log line · roadmap update. Then the next b
     `DESIGN_SYSTEM.md`** from the retired v2 "Peak" system to the actual CD V2 Midnight/
     Daylight/Ember tokens in code (single source of truth); confirmed reduced-motion +
     focus-visible are robust. build 0, qa 18/18, 0 blockers/warnings.
-- **C2 Product Shell** — 🔨 ~85% (core done, small tail remains).
-  - *2a Core shell* — ✅ DONE: `AppShell.jsx` rebuilt to the 4-door centered shell
-    (Today · Train · Progress · You); desktop sidebar retired → sticky top pill; mobile
-    bottom tab bar; one centered `.app-column` both viewports; contextual `.section-subnav`
-    surfaces each door's sub-pages (nothing stranded, `hiddenModules`-aware); safe-area
-    insets. QA scenarios migrated to the new shell; Daylight tier-label contrast fixed.
-    Verified on a fresh :3007 server (real authed user): both viewports + both themes,
-    correct active states, zero horizontal scroll. build 0, qa 18/18, 0 console errors.
-  - *2b C2 tail* — remove the now-dead `.sidebar*` / `.nav-link` / `.sidebar-submenu-link`
-    CSS (~200 lines across styles.css + styles-polish.css) and confirm the loading shell
-    fits the centered column. Small; behind the regression guard.
-- C3–C12 — queued.
+- **C2 Product Shell** — ✅ DONE (100%).
+  - *2a Core shell* — ✅ DONE (`f1d8de3`): `AppShell.jsx` rebuilt to the 4-door centered
+    shell (Today · Train · Progress · You); desktop sidebar retired → sticky top pill;
+    mobile bottom tab bar; one centered `.app-column` both viewports; contextual
+    `.section-subnav` surfaces each door's sub-pages (nothing stranded, `hiddenModules`-
+    aware); safe-area insets. QA scenarios migrated; Daylight tier-label contrast fixed.
+  - *2b Duplicate-nav fix* — ✅ DONE (`7c9b12f`): the shell's `.section-subnav` now owns
+    the "You" section nav on every viewport, so the in-page `.settings-menu-nav` (mobile-
+    only) was a duplicate → hidden on all viewports. Loading shell confirmed independent
+    of the shell (standalone `.screen-center` splash) — no change needed.
+  - *2c Dead-CSS removal* — ✅ DONE: deleted all now-inert `.sidebar*` / `.nav-link` /
+    `.tier-pill` rules (~260 lines across styles.css + styles-polish.css), keeping the
+    live selectors they shared rules with (`.hero-copy h2`, `.settings-layout`,
+    `.settings-menu-button`, `.help-sidebar*`). Provably render-neutral (zero matching
+    elements); shell verified byte-identical after removal.
+  - Verified throughout on a fresh :3007 server (real authed user): both viewports +
+    both themes, correct active states, zero horizontal scroll, 0 console errors. build
+    0, qa 18/18, 0 blockers/warnings. (`--sidebar-*` design tokens left in place — shared
+    with the theme files, harmless.)
+- **C3 Today (Dashboard V5)** — ▶ NEXT. The flagship screen: one contextual hero + quiet
+  sections (dissolve the bordered panel stack), three-tier disclosure, editorial voice.
+  Pixel-heavy → per §5 playbook, self-verify real screenshots at each checkpoint (both
+  themes, desktop+mobile); a fresh session is ideal if screenshot capture is wedged.
+- C4–C12 — queued.
 
 ---
 

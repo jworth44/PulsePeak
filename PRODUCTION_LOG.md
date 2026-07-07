@@ -23,7 +23,7 @@
 | **Attentive intelligence** | **Insight Engine LIVE ✅** — `buildInsights` (honest, evidence-gated): PR opportunity, strength progress, neglected muscle group, comeback, streak risk, weekly momentum, volume trend, plateau, best-training-day; sparse/new user → activation-only (no fabrication); each insight carries evidence + reason + action. `buildNextBestAction`. Dashboard opens with a personalized **"For You Today"** section (`TodayForYou`) — first thing the user sees is specific to their real history. Mission 1 recent-work re-verified independently (all PASS). QA `insight-engine` (10 cases). Browser-verified rich + new-user (honest activation) |
 | **Positioning** | **Mission 5 re-answer done** (`PRODUCT_DIFFERENTIATION.md`): *"PulsePeak is the fitness app that actually pays attention — it turns your training data into personal momentum."* Now **product-proven** (insight engine + celebrations + retention loop all live). Remaining differentiator: Living Coach (owner API key). |
 | **Design V3 polish** | **IN PROGRESS** — premium product-polish pass (owner: "Apple-worthy craft, less noise/more clarity, one focal point"). **Units 1–4 done:** dashboard hierarchy (For You Today focal; fixed empty-badge + grid dead-space; killed conflicting streak stat; sidebar declutter) · sidebar submenu gated + global heading scale 2.85→2.3rem · premium auth first-impression (screen-blend logo, 7→4-line headline, honest copy) · **onboarding + global badge/logo fix** (`.badge`/`.section-chip`/`.tier-pill` now hug their text everywhere — killed the 922px empty-badge boxes app-wide; screen-blend logo on onboarding + loading screen). Coach + Progress filler/placeholder copy already removed in the correctness sweep. **New-user empty states verified good** (dashboard leads with warm activation hero; Progress has honest empty-state CTAs) — the "wall of zeros" critique is resolved. All qa:launch 18/18. **Remaining audit:** exercise library · nutrition · settings · modals · premium/paywall · thin "Keep the week moving" panel |
-| **Active unit** | **CD V2 build — C1 Foundation ✅ COMPLETE (1a/1b/1c). Next: C2 Product Shell** (remove sidebar → bottom tab bar + centered top pill; Today/Train/Progress/You; safe areas). C2+ are visual → verify with real screenshots in a fresh session per roadmap playbook. |
+| **Active unit** | **CD V2 build — C1 Foundation ✅ + C2 Product Shell ✅ COMPLETE.** Sidebar retired → 4-door centered shell (Today/Train/Progress/You), top pill (desktop) + bottom tab bar (mobile), contextual section sub-nav, dead sidebar CSS removed. **Next: C3 Today (Dashboard V5)** — pixel-heavy, verify with real screenshots in a fresh session per roadmap §5 playbook. |
 | **Next unit / owner gates** | After C2: C3 Today → C4 Train → C5 Exercise → C6–C10 → C11 media → C12 launch. Owner-only blockers (unchanged): live Stripe, deploy + persistent DB (P0 `/tmp`), domain/DNS, legal, Anthropic key (Living Coach), Gemini media re-shoot. |
 | **Open escaped defect** | Arnold Press exercise media has baked-in text ("3. ARNOLD PRESS / THUMBNAIL") — regen via Gemini in a media unit (VG-001) |
 | **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
@@ -32,6 +32,16 @@
 ---
 
 One line per unit: date · what · why · evidence. Newest first.
+
+- **2026-07-07 · Capability 2 tail — remove dead sidebar CSS ✅** (`<pending>`) — Deleted all
+  now-inert `.sidebar*` / `.nav-link` / `.tier-pill` rules (~260 lines across `styles.css` +
+  `styles-polish.css`) left behind when the sidebar was retired, keeping the live selectors they
+  shared multi-selector rules with (`.hero-copy h2`/`.panel h3`/…, `.settings-layout`,
+  `.settings-menu-button`, `.help-sidebar*`). Provably render-neutral (every removed selector
+  matched zero elements); confirmed the shell renders byte-identical afterward (topbar/pill/column/
+  subnav all present, active states correct, 0 h-scroll, 0 console errors). `--sidebar-*` design
+  tokens left in place (shared with the theme files). build 0; qa:launch 18/18, 0 blockers/warnings.
+  **C2 Product Shell now 100% complete. NEXT = C3 Today (Dashboard V5).**
 
 - **2026-07-07 · Capability 2 Product Shell (core) — retire the sidebar → 4-door centered shell ✅**
   (`<pending>`) — Rebuilt `AppShell.jsx` to CD V2 §Structure. **Desktop sidebar retired**; both
