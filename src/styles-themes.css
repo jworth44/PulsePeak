@@ -423,3 +423,157 @@
     radial-gradient(circle at top right, rgba(31, 138, 99, 0.1), transparent 42%),
     linear-gradient(135deg, #eff7f1, #eaf3ec);
 }
+
+/* -------------------------------------------------------------------- *
+ * LIBERTY — red, white & blue (USA). A patriotic LIGHT theme            *
+ * (owner-requested theme #4). Crisp white paper + navy ink; royal blue  *
+ * #1d4ed8 = brand/structure, patriotic red #c8102e = energy. The hero   *
+ * wash blooms red (left) + blue (right) over white so it reads          *
+ * red-white-blue on load. Light structure like Daylight/Blossom.        *
+ * -------------------------------------------------------------------- */
+:root[data-theme="liberty"] {
+  color-scheme: light;
+  --theme-name: "PulsePeak Liberty";
+
+  --ink-rgb: 22, 35, 63;
+  --card-rgb: 255, 255, 255;
+  --card-alt-rgb: 244, 247, 252;
+  --accent-rgb: 29, 78, 216;
+  --chart-rgb: 200, 16, 46;
+  --premium-rgb: 10, 49, 97;
+  --sidebar-rgb: 240, 244, 250;
+  --overlay-rgb: 250, 252, 255;
+
+  /* Crisp white / cool-paper layers */
+  --app-background: #f6f8fc;
+  --app-background-strong: #ffffff;
+  --bg-sunken: #e9eef7;
+  --bg-elevated: #ffffff;
+  --bg-overlay: #ffffff;
+  --bg-inset: #eef2f9;
+  --sidebar-background: rgba(240, 244, 250, 0.92);
+  --main-surface-background: rgba(240, 244, 250, 0.82);
+  --surface: rgba(255, 255, 255, 0.97);
+  --surface-strong: #ffffff;
+  --card-background: rgba(255, 255, 255, 0.97);
+  --secondary-card-background: #f4f7fc;
+
+  /* Navy ink */
+  --text-primary: #16233f;
+  --text-secondary: #4a5878;
+  --text-muted: #5f6a89;
+  --text-inverse: #ffffff;
+  --text-on-card: #16233f;
+  --sidebar-text: #16233f;
+  --sidebar-muted: #4a5878;
+
+  /* Accent — royal/navy Blue (brand + structure) */
+  --accent-400: #4d7ce8;
+  --accent-500: #1d4ed8;
+  --accent-600: #1e40af;
+  --accent-700: #1e3a8a;
+  --accent-color: #1d4ed8;
+  --accent: #1d4ed8;
+  --accent-hover: #1e40af;
+  --accent-active: #1e3a8a;
+  --accent-soft: rgba(29, 78, 216, 0.13);
+  --accent-ring: rgba(29, 78, 216, 0.4);
+  --accent-contrast: #ffffff;
+  --ring-accent: #1d4ed8;
+  --chart-accent: #c8102e;
+
+  /* "Volt" -> patriotic Red (energy / highlight) */
+  --volt: #c8102e;
+  --volt-bright: #e11d2f;
+  --volt-soft: rgba(200, 16, 46, 0.12);
+  --volt-glow: rgba(200, 16, 46, 0.3);
+  --premium-highlight: #0a3161;
+
+  /* Semantic */
+  --success: #1f8a63;
+  --success-soft: rgba(31, 138, 99, 0.13);
+  --warning: #b5801c;
+  --warning-soft: rgba(181, 128, 28, 0.13);
+  --danger: #c8102e;
+  --danger-soft: rgba(200, 16, 46, 0.12);
+  --info: #1d4ed8;
+  --info-soft: rgba(29, 78, 216, 0.13);
+
+  --data-high: #1f8a63;
+  --data-mid: #b5801c;
+  --data-low: #c8102e;
+  --data-strain: #c8102e;
+  --data-cardio: #1d4ed8;
+  --data-volt: #c8102e;
+  --data-track: rgba(22, 35, 63, 0.08);
+
+  /* Navy hairline borders */
+  --border-color: rgba(22, 35, 63, 0.1);
+  --border-subtle: rgba(22, 35, 63, 0.07);
+  --border-default: rgba(22, 35, 63, 0.1);
+  --border-strong: rgba(22, 35, 63, 0.18);
+  --border-accent: rgba(29, 78, 216, 0.45);
+  --hairline-top: rgba(255, 255, 255, 0.9);
+
+  /* Buttons / surfaces */
+  --button-text: #ffffff;
+  --secondary-button-background: rgba(29, 78, 216, 0.08);
+  --secondary-button-background-hover: rgba(29, 78, 216, 0.14);
+  --secondary-button-text: #1e3a8a;
+  --ghost-button-background: rgba(22, 35, 63, 0.04);
+  --ghost-button-background-hover: rgba(22, 35, 63, 0.08);
+  --ghost-button-text: #16233f;
+  --surface-dark: #f4f7fc;
+
+  /* Gradients — the red→navy→blue patriotic signature */
+  --grad-pulse: linear-gradient(115deg, #cf142b 0%, #1e3a8a 55%, #2563eb 100%);
+  --grad-volt: linear-gradient(135deg, #e11d2f 0%, #b31942 100%);
+  --grad-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 42%);
+  --grad-glow-red: radial-gradient(60% 60% at 50% 40%, rgba(200, 16, 46, 0.12) 0%, transparent 70%);
+  --grad-area-red: linear-gradient(180deg, rgba(29, 78, 216, 0.2) 0%, rgba(29, 78, 216, 0) 100%);
+  --button-background: var(--grad-pulse);
+  --button-hover: linear-gradient(115deg, #b3122a, #1d4ed8);
+
+  /* Elevation — white sheen + navy shadow */
+  --elev-1: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 1px 2px rgba(16, 35, 80, 0.08), 0 2px 8px rgba(16, 35, 80, 0.08);
+  --elev-2: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 4px 12px rgba(16, 35, 80, 0.1), 0 8px 24px rgba(16, 35, 80, 0.09);
+  --elev-3: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 8px 24px rgba(16, 35, 80, 0.12), 0 16px 48px rgba(16, 35, 80, 0.1);
+  --elev-4: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 24px 64px rgba(16, 35, 80, 0.16);
+  --glow-red: 0 0 0 1px var(--accent-ring), 0 0 24px rgba(29, 78, 216, 0.2);
+  --glow-volt: 0 0 0 1px var(--volt-glow), 0 0 28px rgba(200, 16, 46, 0.24);
+  --panel-shadow: 0 24px 60px -30px rgba(16, 35, 80, 0.3);
+  --soft-shadow: 0 16px 40px -26px rgba(16, 35, 80, 0.22);
+
+  /* Composed backgrounds — red (left) + blue (right) over white = patriotic */
+  --hero-gradient:
+    radial-gradient(circle at top left, rgba(200, 16, 46, 0.22), transparent 50%),
+    radial-gradient(circle at top right, rgba(29, 78, 216, 0.24), transparent 52%),
+    radial-gradient(circle at 50% 122%, rgba(200, 16, 46, 0.14), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f4f7fc 48%, #e6ecf6 100%);
+  --card-glow:
+    radial-gradient(circle at top right, rgba(29, 78, 216, 0.06), transparent 42%),
+    linear-gradient(180deg, #ffffff, #f5f8fd);
+  --callout-glow:
+    radial-gradient(circle at top right, rgba(200, 16, 46, 0.07), transparent 44%),
+    linear-gradient(135deg, #ffffff, #f4f7fc);
+  --focus-glow:
+    radial-gradient(circle at top right, rgba(29, 78, 216, 0.08), transparent 44%),
+    linear-gradient(135deg, #ffffff, #f4f7fc);
+  --success-glow:
+    radial-gradient(circle at top right, rgba(31, 138, 99, 0.1), transparent 44%),
+    linear-gradient(135deg, #eff7f1, #eaf3ec);
+}
+
+/* Liberty patriotic accents: a subtle red→blue stripe along the top edge of
+   primary cards + the For You hero rail, so red and blue both read on every
+   surface (not just buttons). Scoped to the theme; other themes keep their
+   neutral hairline. */
+:root[data-theme="liberty"] .panel::after,
+:root[data-theme="liberty"] .today-hero::after {
+  height: 2px;
+  background: linear-gradient(90deg, #c8102e 0%, #c8102e 42%, #1d4ed8 58%, #1d4ed8 100%) !important;
+  opacity: 0.9;
+}
+:root[data-theme="liberty"] .foryou-hero::before {
+  background: linear-gradient(180deg, #c8102e 0%, #1d4ed8 100%);
+}
