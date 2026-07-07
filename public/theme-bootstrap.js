@@ -4,15 +4,17 @@
 (function () {
   try {
     var pref = localStorage.getItem("pulsepeak-theme");
-    if (pref !== "daylight" && pref !== "midnight" && pref !== "twilight" && pref !== "system") pref = "midnight";
-    var light =
-      pref === "daylight" ||
-      (pref === "system" && window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches);
-    // Twilight is a concrete dark theme; system still resolves to daylight/midnight.
-    var theme = pref === "twilight" ? "twilight" : light ? "daylight" : "midnight";
+    if (pref !== "daylight" && pref !== "midnight" && pref !== "blossom" && pref !== "system") pref = "midnight";
+    // Concrete themes apply directly; "system" resolves to daylight/midnight.
+    var theme =
+      pref === "blossom" || pref === "daylight" || pref === "midnight"
+        ? pref
+        : window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
+        ? "daylight"
+        : "midnight";
     document.documentElement.dataset.theme = theme;
     var meta = document.querySelector('meta[name="theme-color"]');
-    var themeColor = { daylight: "#ede6d8", midnight: "#17130f", twilight: "#160a3d" };
+    var themeColor = { daylight: "#ede6d8", midnight: "#17130f", blossom: "#f7f1fb" };
     if (meta) meta.setAttribute("content", themeColor[theme] || "#17130f");
   } catch (e) {}
 })();

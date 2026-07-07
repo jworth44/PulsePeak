@@ -251,17 +251,31 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
 }
 
 /* ---- Chips, pills, badges ------------------------------------------- */
+/* NOTE: .insight-chip and .stat-pill are NOT pills — they are multi-line
+   stat/note CARDS (label + value/text) used on Coach/Progress/Plan/modals.
+   A full pill radius turned them into oval "blobs" with top-jammed text.
+   Only true single-line labels belong in this pill group. */
 .badge,
-.insight-chip,
 .section-chip,
 .tier-pill,
 .exercise-signal-pill,
-.library-depth-note,
-.stat-pill {
+.library-depth-note {
   border-radius: var(--radius-full) !important;
   border: 1px solid var(--border-subtle) !important;
   background: rgba(var(--ink-rgb), 0.05) !important;
   letter-spacing: 0.04em;
+}
+
+/* Stat/note cards: proper card radius + content vertically centered so the
+   text sits beautifully when the flex row stretches cards to equal height
+   (was a full-pill blob with text jammed to the top). */
+.insight-chip,
+.stat-pill {
+  border-radius: var(--radius-md) !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
 }
 /* These pills sit on a neutral ink tint, so their text must be a neutral ink
    colour too. The base .badge pinned var(--accent-contrast) (near-white) which
