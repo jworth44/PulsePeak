@@ -544,8 +544,10 @@
   --panel-shadow: 0 24px 60px -30px rgba(16, 35, 80, 0.3);
   --soft-shadow: 0 16px 40px -26px rgba(16, 35, 80, 0.22);
 
-  /* Composed backgrounds — red (left) + blue (right) over white = patriotic */
+  /* Composed backgrounds — a tiled navy STAR FIELD + red (left) + blue (right)
+     glows over white = stars & stripes. */
   --hero-gradient:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cg fill='%230a3161' fill-opacity='0.06'%3E%3Cpath transform='translate(24,26)' d='M0,-6 1.41,-1.94 5.71,-1.85 2.28,0.74 3.53,4.85 0,2.4 -3.53,4.85 -2.28,0.74 -5.71,-1.85 -1.41,-1.94Z'/%3E%3Cpath transform='translate(72,70)' d='M0,-6 1.41,-1.94 5.71,-1.85 2.28,0.74 3.53,4.85 0,2.4 -3.53,4.85 -2.28,0.74 -5.71,-1.85 -1.41,-1.94Z'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 96px 96px repeat,
     radial-gradient(circle at top left, rgba(200, 16, 46, 0.22), transparent 50%),
     radial-gradient(circle at top right, rgba(29, 78, 216, 0.24), transparent 52%),
     radial-gradient(circle at 50% 122%, rgba(200, 16, 46, 0.14), transparent 55%),
@@ -564,16 +566,49 @@
     linear-gradient(135deg, #eff7f1, #eaf3ec);
 }
 
-/* Liberty patriotic accents: a subtle red→blue stripe along the top edge of
-   primary cards + the For You hero rail, so red and blue both read on every
-   surface (not just buttons). Scoped to the theme; other themes keep their
-   neutral hairline. */
+/* ---- Liberty: LITERAL stars & stripes banners (theme-scoped) --------- *
+ * A real flag ribbon (blue star canton + red/white stripes) pinned under
+ * the sticky header + at the foot of the content, plus red/white striped
+ * card tops. Bold "USA" energy; other themes are untouched.             */
+
+/* The flag ribbon: reused as a background on the header + content foot. */
+:root[data-theme="liberty"] .app-topbar::after,
+:root[data-theme="liberty"] .app-column::after {
+  content: "";
+  display: block;
+  height: 14px;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='92' height='14'%3E%3Crect width='92' height='14' fill='%230a3161'/%3E%3Cg fill='%23ffffff'%3E%3Cpath transform='translate(11,4) scale(0.5)' d='M0,-6 1.41,-1.94 5.71,-1.85 2.28,0.74 3.53,4.85 0,2.4 -3.53,4.85 -2.28,0.74 -5.71,-1.85 -1.41,-1.94Z'/%3E%3Cpath transform='translate(31,4) scale(0.5)' d='M0,-6 1.41,-1.94 5.71,-1.85 2.28,0.74 3.53,4.85 0,2.4 -3.53,4.85 -2.28,0.74 -5.71,-1.85 -1.41,-1.94Z'/%3E%3Cpath transform='translate(51,4) scale(0.5)' d='M0,-6 1.41,-1.94 5.71,-1.85 2.28,0.74 3.53,4.85 0,2.4 -3.53,4.85 -2.28,0.74 -5.71,-1.85 -1.41,-1.94Z'/%3E%3Cpath transform='translate(71,4) scale(0.5)' d='M0,-6 1.41,-1.94 5.71,-1.85 2.28,0.74 3.53,4.85 0,2.4 -3.53,4.85 -2.28,0.74 -5.71,-1.85 -1.41,-1.94Z'/%3E%3Cpath transform='translate(21,10) scale(0.5)' d='M0,-6 1.41,-1.94 5.71,-1.85 2.28,0.74 3.53,4.85 0,2.4 -3.53,4.85 -2.28,0.74 -5.71,-1.85 -1.41,-1.94Z'/%3E%3Cpath transform='translate(41,10) scale(0.5)' d='M0,-6 1.41,-1.94 5.71,-1.85 2.28,0.74 3.53,4.85 0,2.4 -3.53,4.85 -2.28,0.74 -5.71,-1.85 -1.41,-1.94Z'/%3E%3Cpath transform='translate(61,10) scale(0.5)' d='M0,-6 1.41,-1.94 5.71,-1.85 2.28,0.74 3.53,4.85 0,2.4 -3.53,4.85 -2.28,0.74 -5.71,-1.85 -1.41,-1.94Z'/%3E%3Cpath transform='translate(81,10) scale(0.5)' d='M0,-6 1.41,-1.94 5.71,-1.85 2.28,0.74 3.53,4.85 0,2.4 -3.53,4.85 -2.28,0.74 -5.71,-1.85 -1.41,-1.94Z'/%3E%3C/g%3E%3C/svg%3E") left center / 92px 14px no-repeat,
+    repeating-linear-gradient(180deg, #b31942 0 2px, #ffffff 2px 4px);
+  box-shadow: 0 2px 6px -2px rgba(16, 35, 80, 0.35);
+  pointer-events: none;
+}
+/* Pin the header ribbon just below the sticky bar so it rides along on scroll. */
+:root[data-theme="liberty"] .app-topbar {
+  position: sticky;
+}
+:root[data-theme="liberty"] .app-topbar::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translateY(100%);
+  z-index: 6;
+}
+/* A second flag ribbon closing the content column. */
+:root[data-theme="liberty"] .app-column::after {
+  margin: 28px calc(-1 * var(--space-4, 16px)) 4px;
+  border-radius: 3px;
+}
+
+/* Card tops become red/white flag stripes; the For You rail flies the flag. */
 :root[data-theme="liberty"] .panel::after,
 :root[data-theme="liberty"] .today-hero::after {
-  height: 2px;
-  background: linear-gradient(90deg, #c8102e 0%, #c8102e 42%, #1d4ed8 58%, #1d4ed8 100%) !important;
-  opacity: 0.9;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, #c8102e 0 14px, #ffffff 14px 28px) !important;
+  opacity: 0.92;
 }
 :root[data-theme="liberty"] .foryou-hero::before {
-  background: linear-gradient(180deg, #c8102e 0%, #1d4ed8 100%);
+  width: 6px;
+  background: repeating-linear-gradient(180deg, #c8102e 0 4px, #ffffff 4px 8px);
 }
