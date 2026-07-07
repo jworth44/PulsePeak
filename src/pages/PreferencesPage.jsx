@@ -78,7 +78,7 @@ export default function PreferencesPage() {
   };
 
   return (
-    <div className="page-grid">
+    <div className="page-grid editorial-sections">
       <section className="module-page-hero">
         <div>
           <p className="badge">Settings</p>
