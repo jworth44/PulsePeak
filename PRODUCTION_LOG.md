@@ -33,6 +33,16 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-07 · CD V2 §Voice — kill dev/system language in copy ✅** (`<pending>`) — App-wide
+  scan for developer/clinical phrasing in *rendered* text (not the per-screen eyebrow-composition
+  question, which each screen's C6–C10 rebuild owns). Fixed the two clear offenders CD V2 flagged:
+  ExerciseLibraryPage "**Source-of-truth exercise cards**" → "Every movement, with a visual guide";
+  PlanPage "Use the support tools that keep **the system** practical" → "Tools that keep your week
+  practical". Both verified live (new titles render, old strings gone, 0 h-scroll, 0 console
+  errors); no other dev-language survived the visible-text scan. build 0; qa:launch 18/18, 0
+  blockers/warnings. (Loop iteration — non-pixel verifiable progress while C3 pixel packaging waits
+  for a screenshot-capable session.)
+
 - **2026-07-07 · Capability 3 Today (3a) — editorial-voice slice + audit ✅** (`<pending>`) —
   Audited the Today screen: its **logic + copy are already sound** (honest activation hero with
   real "0 sessions logged" evidence, goal-based session reason with no fabricated deficit, warm

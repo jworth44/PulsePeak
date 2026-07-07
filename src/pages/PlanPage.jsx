@@ -558,7 +558,7 @@ export default function PlanPage() {
         </div>
       </Panel>
 
-      <Panel eyebrow="Tools" title="Use the support tools that keep the system practical">
+      <Panel eyebrow="Tools" title="Tools that keep your week practical">
         <div className="section-context">
           <span className="section-context-label">Support layer</span>
           <p>These tools keep history, progression, recovery, and daily decisions easy to return to without turning the app into clutter.</p>

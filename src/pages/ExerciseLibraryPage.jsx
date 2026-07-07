@@ -215,7 +215,7 @@ export default function ExerciseLibraryPage() {
           </div>
         </Panel>
 
-        <Panel eyebrow="Exercise library" title="Source-of-truth exercise cards">
+        <Panel eyebrow="Exercise library" title="Every movement, with a visual guide">
           <div className="section-context compact-section-context">
             <span className="section-context-label">Visible results</span>
             <p>
