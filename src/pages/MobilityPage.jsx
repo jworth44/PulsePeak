@@ -457,7 +457,7 @@ export default function MobilityPage() {
 
       <Panel eyebrow="Choose your mode" title="Browse one support mode at a time">
         <div className="section-context">
-          <span className="section-context-label">{isSearchMode ? "Search results" : "Today&apos;s support"}</span>
+          <span className="section-context-label">{isSearchMode ? "Search results" : "Today's support"}</span>
           <p>{isSearchMode ? "Search spans every support family and groups the matches below so you can jump directly into the right category." : getModeSupportCopy(effectiveCategory)}</p>
         </div>
 

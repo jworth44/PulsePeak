@@ -379,7 +379,7 @@ export default function PlanPage() {
       </div>
 
       {weeklyStructure?.days?.length ? (
-        <Panel eyebrow="This week&apos;s structure" title="A simple shape for the week">
+        <Panel eyebrow="This week's structure" title="A simple shape for the week">
           <div className="weekly-structure-grid">
             {weeklyStructure.days.map((entry) => {
               const isTodayFocus = recommendedWorkout && normalizeFocusKey(recommendedWorkout.focus || recommendedWorkout.focusLabel) === normalizeFocusKey(entry.focus || entry.label);
@@ -395,7 +395,7 @@ export default function PlanPage() {
           </div>
         </Panel>
       ) : (
-        <Panel eyebrow="This week&apos;s structure" title="A simple shape for the week">
+        <Panel eyebrow="This week's structure" title="A simple shape for the week">
           <div className="module-note">
             <strong>{continuityContext.title}</strong>
             <p className="support-copy">{continuityContext.detail}</p>
