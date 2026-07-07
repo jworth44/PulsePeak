@@ -5,8 +5,8 @@
 | | |
 |---|---|
 | **State** | Pre–Production Complete (0 of 2 states granted) |
-| **Last verified** | 2026-07-06 — build exit 0 · qa:launch **18/18** · 0 blockers · **0 warnings** · systemic honesty audit live-verified (fresh user → Coach "Not logged yet", no fabricated notes; honest plan copy; after POST /api/recovery real values appear) · media audit `qa:media` = 16/49 sets at standard (register logged) |
-| **Design direction** | **⏸️ Design-V3 implementation HALTED by owner 2026-07-06 — the design *language* itself is the problem (reads developer-built).** Superseded by **`CREATIVE_DIRECTION.md` v1.0 (proposal)**: editorial coach not control panel; one warm Ember accent (retire red+lime); Daylight/Midnight warm themes (retire cool near-black); remove sidebar → 4 bottom tabs; full-bleed 4:5 media tiles + swipeable guide sequence; modals→sheets; media re-shoot standard. Awaiting owner approval to begin the token→component→shell→screens rebuild. |
+| **Last verified** | 2026-07-07 — build exit 0 · qa:launch **18/18** · 0 blockers · **0 warnings** (C1-1c checkpoint) |
+| **Design direction** | **✅ CD V2 implementation AUTHORIZED (owner 2026-07-07) — building per `CREATIVE_DIRECTION_V2.md` + `PRODUCTION_ROADMAP.md` (12 capabilities C1–C12).** Editorial coach not control panel; one warm accent (Ember/Pine, red+lime retired); two EQUAL first-class themes Midnight/Daylight (cool near-black retired); remove sidebar → 4 bottom tabs (Today/Train/Progress/You); full-bleed 4:5 media tiles + swipeable guide; modals→sheets; three-tier disclosure; media re-shoot standard. **Progress: C1 Foundation ✅ (1a tokens+themes `64db540`, 1b retire-legacy `2f28038`, 1c tracking+doc). NEXT = C2 Product Shell.** |
 | **Media quality (owner top priority)** | **`MEDIA_AUDIT_REGISTER.md` + `npm run qa:media`** — only **16/49** photo sets at 1536×1024; 3 resolutions + 3 aspect ratios; 5 broken sub-thumbnail sets; 5 baked-text sets; 33 orphaned dirs; inconsistent models/lighting/grade. Full re-shoot to the §10 media standard = Gemini/owner-cost-gated program. |
 | **Honesty (Product Excellence Standard clause)** | **Systemic "never infer state from absence of data" audit DONE ✅** (`HONESTY_AUDIT.md`) — all LIVE offenders fixed at root (seed fabrication, recovery `recoveryLogged` flag, plan gap-copy gating, habit/trust/workout copy). buildInsights verified honest. Dead twins flagged. |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
@@ -23,8 +23,8 @@
 | **Attentive intelligence** | **Insight Engine LIVE ✅** — `buildInsights` (honest, evidence-gated): PR opportunity, strength progress, neglected muscle group, comeback, streak risk, weekly momentum, volume trend, plateau, best-training-day; sparse/new user → activation-only (no fabrication); each insight carries evidence + reason + action. `buildNextBestAction`. Dashboard opens with a personalized **"For You Today"** section (`TodayForYou`) — first thing the user sees is specific to their real history. Mission 1 recent-work re-verified independently (all PASS). QA `insight-engine` (10 cases). Browser-verified rich + new-user (honest activation) |
 | **Positioning** | **Mission 5 re-answer done** (`PRODUCT_DIFFERENTIATION.md`): *"PulsePeak is the fitness app that actually pays attention — it turns your training data into personal momentum."* Now **product-proven** (insight engine + celebrations + retention loop all live). Remaining differentiator: Living Coach (owner API key). |
 | **Design V3 polish** | **IN PROGRESS** — premium product-polish pass (owner: "Apple-worthy craft, less noise/more clarity, one focal point"). **Units 1–4 done:** dashboard hierarchy (For You Today focal; fixed empty-badge + grid dead-space; killed conflicting streak stat; sidebar declutter) · sidebar submenu gated + global heading scale 2.85→2.3rem · premium auth first-impression (screen-blend logo, 7→4-line headline, honest copy) · **onboarding + global badge/logo fix** (`.badge`/`.section-chip`/`.tier-pill` now hug their text everywhere — killed the 922px empty-badge boxes app-wide; screen-blend logo on onboarding + loading screen). Coach + Progress filler/placeholder copy already removed in the correctness sweep. **New-user empty states verified good** (dashboard leads with warm activation hero; Progress has honest empty-state CTAs) — the "wall of zeros" critique is resolved. All qa:launch 18/18. **Remaining audit:** exercise library · nutrition · settings · modals · premium/paywall · thin "Keep the week moving" panel |
-| **Active unit** | **Design V3 polish** (premium craft pass) — units 1–4 committed; continuing screen-by-screen |
-| **Next unit / owner gates** | **Living Coach** = the last differentiator, **blocked on owner enabling an Anthropic API key** (real per-call money). Other autonomous options: input-integrity (red-team P1), CI (#4). Owner-gated: persistence P0 `/tmp` (infra), native/wearable. See `PRODUCT_DIFFERENTIATION.md` re-review + `RED_TEAM_AUDIT.md` §8 |
+| **Active unit** | **CD V2 build — C1 Foundation ✅ COMPLETE (1a/1b/1c). Next: C2 Product Shell** (remove sidebar → bottom tab bar + centered top pill; Today/Train/Progress/You; safe areas). C2+ are visual → verify with real screenshots in a fresh session per roadmap playbook. |
+| **Next unit / owner gates** | After C2: C3 Today → C4 Train → C5 Exercise → C6–C10 → C11 media → C12 launch. Owner-only blockers (unchanged): live Stripe, deploy + persistent DB (P0 `/tmp`), domain/DNS, legal, Anthropic key (Living Coach), Gemini media re-shoot. |
 | **Open escaped defect** | Arnold Press exercise media has baked-in text ("3. ARNOLD PRESS / THUMBNAIL") — regen via Gemini in a media unit (VG-001) |
 | **Owner gates pending** | none — next owner decision arrives at live Stripe keys (after Premium Complete) |
 | **Owner gates pending** | none |
@@ -32,6 +32,22 @@
 ---
 
 One line per unit: date · what · why · evidence. Newest first.
+
+- **2026-07-07 · Capability 1 Foundation (1c) — tracking-token system + DESIGN_SYSTEM refresh ✅**
+  (`<pending>`) — Closed the C1 tail. (1) Added the CD V2 **size-specific type-tracking token
+  system** to `styles.css` `:root` (`--track-display/-heading/-body/-numeral/-caps/-caps-loose`)
+  — one named scale so screens stop hand-tuning `letter-spacing`; wired the hero display
+  headings (`--track-display`) and the shared tabular-numeral block (`--track-numeral`) to it
+  (byte-identical values, so zero visual change — indirection only). Later capabilities adopt
+  the tokens in their own scope (no big-bang refactor, per roadmap R2). (2) Rewrote
+  `DESIGN_SYSTEM.md` end-to-end from the retired v2 "Peak" system (which it still misdescribed —
+  Pulse Red + Volt lime + cool near-black) to the **actual CD V2 Midnight/Daylight/Ember token
+  system in code** (both palettes tabled, theme resolution, tracking system, reduced-motion +
+  focus-visible confirmed) — restores single-source-of-truth. (3) Confirmed reduced-motion
+  (global transition/animation kill + JS-hook guards) and `:focus-visible` rings are already
+  robust. Evidence: build 0; qa:launch 18/18, 0 blockers/warnings. No new color/background rule
+  → leak/contrast scan cannot regress; browser pixel-verify reserved for the visual capabilities
+  (C2+) per the roadmap playbook (and this session's :3001 is held by another chat).
 
 - **2026-07-07 · Capability 1 Foundation (1b) — retire old language + Daylight parity ✅**
   (`2f28038`) — Deleted the 5 dead novelty-theme CSS blocks and retired ALL remaining

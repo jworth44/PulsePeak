@@ -30,7 +30,7 @@ body {
 [class*="score"] strong {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
-  letter-spacing: -0.01em;
+  letter-spacing: var(--track-numeral);
 }
 
 /* ---- Atmospheric backdrop -------------------------------------------- */

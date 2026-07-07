@@ -138,7 +138,7 @@ Standard · media at commercial quality or queued · QA green · a11y · perf ·
 *Each capability closes with: build ✓ · qa ✓ · browser (desktop+mobile, both themes) ✓ · a11y ·
 media review · commit · production-log line · roadmap update. Then the next begins immediately.*
 
-- **C1 Foundation** — 🔨 ~90% (core complete, small tail remains).
+- **C1 Foundation** — ✅ DONE (100%).
   - *1a Token system + two equal themes + system support + literal tokenization* — ✅ DONE
     (`64db540`): Midnight + Daylight; build 0, qa 18/18, both themes verified.
   - *1b Retire the old design language + Daylight parity* — ✅ DONE (`2f28038`): deleted
@@ -146,10 +146,17 @@ media review · commit · production-log line · roadmap update. Then the next b
     surface near-blacks flip per theme; Daylight leak-scan clean on Dashboard + Coach
     (0 dark-fills / 0 low-contrast); themes are equal, default is a one-constant owner
     choice. build 0, qa 18/18.
-  - *1c C1 tail (before C2)* — refresh `DESIGN_SYSTEM.md` to the CD V2 Midnight/Daylight
-    system; apply size-specific typography tracking (CD V2 §type); confirm reduced-motion
-    + focus-visible tokens. Small.
-- C2–C12 — queued.
+  - *1c C1 tail* — ✅ DONE: added the CD V2 **size-specific type-tracking token system**
+    (`--track-display/-heading/-body/-numeral/-caps/-caps-loose`) and wired hero display
+    + tabular numerals to it (byte-identical values → no visual change); **rewrote
+    `DESIGN_SYSTEM.md`** from the retired v2 "Peak" system to the actual CD V2 Midnight/
+    Daylight/Ember tokens in code (single source of truth); confirmed reduced-motion +
+    focus-visible are robust. build 0, qa 18/18, 0 blockers/warnings.
+- **C2 Product Shell** — ▶ NEXT. Remove the desktop sidebar; one centered content column
+  both viewports; bottom tab bar (mobile) / centered top pill (desktop) with 4 doors
+  **Today · Train · Progress · You**; safe-area insets; loading shell. Visual → verify
+  with real screenshots (both themes, desktop+mobile) in a fresh session per §5 playbook.
+- C3–C12 — queued.
 
 ---
 

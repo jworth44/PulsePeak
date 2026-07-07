@@ -180,6 +180,15 @@
   --radius-lg: 20px;
   --radius-xl: 28px;
   --radius-full: 9999px;
+
+  /* Typography — size-specific tracking (CD V2 §type: tighten large, loosen
+     small). One named system so screens stop hand-tuning letter-spacing. */
+  --track-display: -0.02em; /* hero display / big numerals */
+  --track-heading: -0.01em; /* h2 / h3 section headings */
+  --track-body: 0; /* body + UI (Instrument Sans reads best at 0) */
+  --track-numeral: -0.01em; /* tabular metrics — tighten for density */
+  --track-caps: 0.08em; /* small uppercase labels — loosen */
+  --track-caps-loose: 0.14em; /* the smallest overlines / eyebrows */
 }
 
 
@@ -531,7 +540,7 @@ select {
 .auth-hero h1 {
   font-size: clamp(1.9rem, 3.2vw, 2.7rem);
   line-height: 1.04;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--track-display);
   max-width: 15ch;
 }
 
