@@ -109,6 +109,13 @@ own media) and finishes as a dedicated sweep for anything owner-gated.
 - **R4 — Media dependency (C11).** Cinematic heroes/guides need real photography (owner-cost-
   gated Gemini re-shoot). *Mitigation:* every hero ships as a **designed tile now**, upgrades to
   photo later; the media production queue tracks exactly what owner-generation is needed.
+  - **Daylight media mismatch (owner review 2026-07-07, item #7):** the exercise/onboarding
+    photos are shot on **dark backgrounds**, which clash with the Daylight paper canvas ("doesn't
+    match the vibe"). The re-shoot must produce **theme-appropriate media** (or a light-ground
+    variant) so photography reads on both Daylight and the dark themes. Also fold in the
+    **onboarding brand-logo washout** on Daylight (`.onboarding-brand-logo` uses
+    `mix-blend-mode: screen`, built for a dark canvas → near-invisible on paper; needs a
+    transparent-PNG logo or a per-theme treatment). Deferred to the C11 media phase per owner.
 - **R5 — QA gate breadth.** `qa:launch` (18 scenarios) + `qa:media` must stay green through a
   ground-up visual change. *Mitigation:* build + qa after every capability; expand coverage when a
   defect class appears.
