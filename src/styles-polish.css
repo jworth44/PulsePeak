@@ -1576,13 +1576,13 @@ input:focus, select:focus, textarea:focus {
   font-weight: 600;
 }
 
-/* Settings: the in-page section menu duplicates the sidebar submenu on desktop,
-   but is the only section nav on mobile (sidebar hidden). Show it only below the
-   sidebar breakpoint, and let the content span full width on desktop. */
-@media (min-width: 1081px) {
-  .settings-menu-nav { display: none; }
-  .settings-layout { grid-template-columns: minmax(0, 1fr); }
-}
+/* Settings: the in-page section menu is now fully replaced by the CD V2 shell's
+   .section-subnav (the "You" door surfaces Account/Preferences/Appearance/
+   Modules on every viewport), so hide the old menu everywhere to avoid a
+   duplicate nav on mobile, and let the settings content span full width.
+   (The now-dead .settings-menu-nav markup is removed with the C10 settings pass.) */
+.settings-menu-nav { display: none; }
+.settings-layout { grid-template-columns: minmax(0, 1fr); }
 
 /* Post-workout completion — forward momentum into recovery, not a dead end. */
 .workout-complete-actions {
