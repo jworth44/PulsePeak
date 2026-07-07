@@ -11,6 +11,44 @@ concepts, no competitor research.
 
 ---
 
+## Execution Protocol (grounded in real capabilities)
+
+*The unit of work is the **Product Capability**, not the session. But be honest about mechanics.*
+
+1. **Capability = completion boundary; checkpoint = mechanism.** A capability is done only when it
+   meets the Product Excellence Standard DoD (both themes · mobile+tablet+desktop · media
+   reviewed or queued · a11y · perf · honesty · consistency · build 0 · qa green · adversarial
+   self-review · browser-structure verified). Within it, work proceeds in **committed green
+   checkpoints** — safe resume points, never stopping goals.
+2. **Honest mechanics.** Execution happens in triggered turns with finite context; a capability
+   usually spans several turns. Bridge them by committing every green checkpoint (nothing lost)
+   and keeping the plan here (survives context compaction). Cross-turn **unattended** running
+   requires a re-trigger (`/loop`, a scheduled task, or "continue") — it is a mode the owner
+   switches on, not a default.
+3. **REGRESSION GUARD (hard rule — never go backwards).** A checkpoint may be committed ONLY if:
+   build exits 0 · `qa:launch` green-count ≥ the last green count (never fewer scenarios passing)
+   · zero new console errors · the Daylight+Midnight leak/contrast scan is no worse · no legacy
+   palette reintroduced. If anything regresses, fix before committing. This mechanically enforces
+   "improve throughout, never regress."
+4. **Parallelization.** Single-threaded, by me: ALL visual/design/composition implementation (one
+   coherent language). Background agents ONLY for read-only analysis that cannot fracture design
+   (media audit · a11y/contrast scan · docs · research · QA sweeps · dead-code/consistency audit);
+   their output is advisory — I serialize any change into the one design myself.
+5. **⚠️ Pixel-honesty caveat (critical for "premium").** Screenshot capture currently hangs in this
+   environment, so I verify structure, tokens, WCAG contrast, layout, QA, and logic — **not
+   rendered pixels.** Unattended, I guarantee correctness/consistency/contrast/no-regression, NOT
+   taste-level visual polish. **Guardrail:** at each capability boundary, a ~2-minute owner visual
+   pass (app open in both themes, desktop + mobile) — or a one-time fix to restore screenshot
+   capture so I can self-verify pixels. Until then this is the honest ceiling of premium-unattended.
+6. **Living roadmap.** Anchored to capabilities + %-complete, re-estimated continuously. Any
+   calendar figure is a derived, clearly-caveated view — never the anchor.
+7. **Efficiency.** Commit every green checkpoint; build once + qa once per checkpoint (no redundant
+   runs); overlap read-only verification via background agents during implementation; treat the
+   approved concept artifacts as the build spec (don't re-decide design); prefer computed-style +
+   QA verification (fast, precise) over slow screenshot loops.
+
+---
+
 ## How this roadmap is sequenced (my determination)
 
 **Guiding logic:** build the *foundation the whole app inherits* first (tokens, shell), then the
