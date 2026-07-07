@@ -1916,3 +1916,10 @@ input:focus, select:focus, textarea:focus {
    exposed since the launch card dissolved to a section. Use the theme-aware
    secondary token so it stays legible on both grounds. */
 .today-page .lead-copy { color: var(--text-secondary); }
+
+/* Streak-freeze reassurance line: the base rule pins a hardcoded ice-blue
+   (#7db8ff) that scores only ~1.9:1 on Daylight paper (fails AA). The cool
+   --info token is theme-aware but still ~4.1:1 on paper for this 12px text.
+   Use the theme-aware secondary token (AA in both themes) — the ❄️ glyph
+   already carries the "freeze" cue, so the tint isn't load-bearing. */
+.today-page .streak-freeze { color: var(--text-secondary); }
