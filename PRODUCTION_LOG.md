@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **State** | Pre–Production Complete (0 of 2 states granted) |
-| **Last verified** | 2026-07-07 — build exit 0 · qa:launch **18/18** · 0 blockers · **0 warnings** · 0 console errors (owner-review round: Daylight parity + Twilight theme; verified in Chrome across Today/Plan/Preferences/Appearance/Module-Visibility, 3 themes, AA-clean) |
+| **Last verified** | 2026-07-07 — build exit 0 · qa:launch **18/18** · 0 blockers · **0 warnings** · 0 console errors (owner-review round 2: **Blossom** light theme replaces Twilight + site-wide card-positioning fixes; verified in Chrome across Today/Coach/Progress/Workouts, AA-clean, top-jam scan 39→0) |
 | **Design direction** | **✅ CD V2 implementation AUTHORIZED (owner 2026-07-07) — building per `CREATIVE_DIRECTION_V2.md` + `PRODUCTION_ROADMAP.md` (12 capabilities C1–C12).** Editorial coach not control panel; one warm accent (Ember/Pine, red+lime retired); two EQUAL first-class themes Midnight/Daylight (cool near-black retired); remove sidebar → 4 bottom tabs (Today/Train/Progress/You); full-bleed 4:5 media tiles + swipeable guide; modals→sheets; three-tier disclosure; media re-shoot standard. **Progress: C1 Foundation ✅ · C2 Product Shell ✅ (4-door centered shell, sidebar retired) · C3 Today ✅ (Dashboard V5 — one hero + quiet sections, `c51c4a8`/`0beef0b`). NEXT = C4 Train (session flow).** |
 | **Media quality (owner top priority)** | **`MEDIA_AUDIT_REGISTER.md` + `npm run qa:media`** — only **16/49** photo sets at 1536×1024; 3 resolutions + 3 aspect ratios; 5 broken sub-thumbnail sets; 5 baked-text sets; 33 orphaned dirs; inconsistent models/lighting/grade. Full re-shoot to the §10 media standard = Gemini/owner-cost-gated program. |
 | **Honesty (Product Excellence Standard clause)** | **Systemic "never infer state from absence of data" audit DONE ✅** (`HONESTY_AUDIT.md`) — all LIVE offenders fixed at root (seed fabrication, recovery `recoveryLogged` flag, plan gap-copy gating, habit/trust/workout copy). buildInsights verified honest. Dead twins flagged. |
@@ -33,6 +33,22 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-07 · Owner-review round 2 — Blossom light theme + card-positioning consistency ✅**
+  (`2ed4e95` + `acc081e`) — Owner: the dark "Twilight" read as "just another dark theme" (not
+  enough colour/attraction); + text mis-positioned in cards. **THEME:** redesigned per owner's
+  pick (bright & airy light) into **Blossom** — a soft lavender/blush LIGHT theme with a vivid
+  violet #7c3aed → magenta #c026d3 → pink signature on buttons/nav/progress bars (full light token
+  block replacing Twilight; renamed across themes.js/THEME_COLOR/bootstrap; contrast-tuned:
+  --text-muted deepened + gradient pink end deepened so white button text clears AA). **POSITIONING
+  (site-wide):** (1) `.insight-chip`/`.stat-pill` were multi-line stat CARDS trapped in the pill
+  group's `border-radius:9999px` → rendered as oval "blobs" with top-jammed text (owner
+  screenshot) — removed from the pill group + flex-column-center; (2) `.selector-pill` tiles pinned
+  156px min-height + align-content:start → title(+desc) jammed at top with ~60px void (39 tiles) —
+  centered content, compact focus chips shrunk to a 72px tile. *Why:* the packaging must be
+  beautifully positioned + vibrant, not developer-built. *Evidence:* Chrome across Blossom
+  Today/Coach/Progress/Workouts + Midnight (no regression); low-contrast sweep 0, top-jam scan
+  39→0; build 0 · qa:launch 18/18. Content-rich `.module-card-clickable` left top-aligned (correct;
+  even-ing trailing buttons = optional follow-up).
 - **2026-07-07 · Owner-review round — Daylight parity + Twilight theme ✅** (`c0eb134` +
   `f95ec81`) — Owner reviewed the app in Daylight and flagged 7 items on the not-yet-restyled
   module/settings/onboarding screens. **#1** page-hero titles were a hardcoded #fff→#cfd3d9
