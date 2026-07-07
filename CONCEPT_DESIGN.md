@@ -108,6 +108,15 @@ point," "earned color," "honesty," and the warm Midnight/Ember language — they
   media dependency de-risked and the honesty constitution intact.
 
 **Status:** Dashboard V5 is the candidate to prototype when implementation is authorized.
+Shown in **both viewports** (desktop centered-column, no sidebar · mobile bottom-tab):
+https://claude.ai/code/artifact/30bfb707-124e-419c-8f26-7a7f14f7a256
+
+**Themes (system-wide decision, owner-approved direction):** two first-class themes designed
+together — **Daylight** (warm paper `#ede6d8`, default) and **Midnight** (warm graphite
+`#17130f`) — sharing the one Ember accent and the cinematic session photo (which stays rich in
+both). Live toggle across desktop + mobile:
+https://claude.ai/code/artifact/af4d3ecc-9d8c-4fed-a7d2-a3576bc35363 . Implements via the app's
+existing `data-theme` system + theme picker; can follow the OS light/dark setting; both meet AA.
 
 ---
 
