@@ -1959,3 +1959,23 @@ input:focus, select:focus, textarea:focus {
   margin-top: 22px;
   align-self: start;
 }
+
+/* ===================================================================== */
+/* EXERCISE LIBRARY — editorial pass (Visual Implementation Directive)    */
+/* Dissolve the search/filters + results control PANELS into quiet         */
+/* sections: hierarchy from type + space, not bordered boxes. Page-scoped. */
+/* ===================================================================== */
+.exercise-library-page .panel {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  backdrop-filter: none !important;
+}
+.exercise-library-page .panel::after { display: none !important; }
+.exercise-library-page .panel-heading { margin-bottom: 16px; }
+.exercise-library-result-count {
+  margin: 0 0 20px;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}

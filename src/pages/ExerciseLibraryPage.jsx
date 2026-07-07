@@ -121,7 +121,7 @@ export default function ExerciseLibraryPage() {
 
   return (
     <>
-      <div className="page-grid page-grid-tight">
+      <div className="page-grid page-grid-tight exercise-library-page">
         <section className="module-page-hero exercise-library-hero">
           <div className="today-hero-copy">
             <p className="section-label">Exercise Library</p>
@@ -137,7 +137,7 @@ export default function ExerciseLibraryPage() {
           </div>
         </section>
 
-        <Panel eyebrow="Search and filters" title="Find the exact movement you need">
+        <Panel title="Find the exact movement you need">
           <div className="exercise-library-filter-stack">
             <label className="form-field exercise-library-search">
               <span>Search exercises</span>
@@ -215,15 +215,12 @@ export default function ExerciseLibraryPage() {
           </div>
         </Panel>
 
-        <Panel eyebrow="Exercise library" title="Every movement, with a visual guide">
-          <div className="section-context compact-section-context">
-            <span className="section-context-label">Visible results</span>
-            <p>
-              {search.trim()
-                ? `${filteredEntries.length} exercises match the current search.`
-                : `${filteredEntries.length} exercises match the current search and filters.`}
-            </p>
-          </div>
+        <Panel title="Every movement, with a visual guide">
+          <p className="exercise-library-result-count">
+            {search.trim()
+              ? `${filteredEntries.length} exercises match the current search.`
+              : `${filteredEntries.length} exercises match the current search and filters.`}
+          </p>
           {filteredEntries.length ? (
             <div className="module-card-grid">
             {filteredEntries.map((entry) => (
