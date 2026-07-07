@@ -26,8 +26,10 @@ export const THEME_OPTIONS = [
 ];
 
 export const THEME_STORAGE_KEY = "pulsepeak-theme";
-// Default preference. Kept as Midnight until Daylight reaches full parity across
-// every capability (then promoted to the CD V2 default at the C12 launch gate).
+// The default theme for a brand-new user. Daylight and Midnight are EQUAL,
+// first-class themes — either can be the default by changing only this value
+// (or set it to "system"). The final default is an owner decision after
+// real-world evaluation; both themes are held to full parity regardless.
 export const FALLBACK_THEME = "midnight";
 
 const THEME_COLOR = { daylight: "#ede6d8", midnight: "#17130f" };
