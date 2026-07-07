@@ -5,7 +5,7 @@ export default function Panel({ eyebrow, title, actions, children, className = "
     <section className={`panel ${className}`.trim()} {...props}>
       <div className="panel-heading">
         <div>
-          <p className="section-label">{eyebrow}</p>
+          {eyebrow ? <p className="section-label">{eyebrow}</p> : null}
           <h3>{title}</h3>
         </div>
         {actions}

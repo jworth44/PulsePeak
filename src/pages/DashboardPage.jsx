@@ -460,7 +460,6 @@ export default function DashboardPage() {
       {/* Supporting the hero: the one concrete action — start today's session. */}
       <section className="today-launch">
         <div className="today-launch-copy">
-          <p className="badge">Today's session</p>
           <h2>{workoutEngine?.recommendedFocusLabel || todayFocus?.title || "Your next session"}</h2>
           <p className="lead-copy">{workoutEngine?.recommendationReason || todayFocus?.reason || "Pick a session that fits your setup and keep the week moving."}</p>
         </div>
@@ -481,7 +480,7 @@ export default function DashboardPage() {
       ) : null}
 
       {summary.habits.length > 0 && (
-        <Panel eyebrow="Daily habits" title="Small wins that keep the week on track">
+        <Panel title="Small wins that keep the week on track">
           <HabitList habits={summary.habits} onToggle={toggleHabit} />
         </Panel>
       )}

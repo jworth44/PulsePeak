@@ -33,6 +33,20 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-07 · Capability 3 Today (3a) — editorial-voice slice + audit ✅** (`<pending>`) —
+  Audited the Today screen: its **logic + copy are already sound** (honest activation hero with
+  real "0 sessions logged" evidence, goal-based session reason with no fabricated deficit, warm
+  time-aware greeting, one contextual hero + one primary action) — verified live for a fresh
+  no-data bodybuilding user. So C3's real remaining work is the **visual packaging** (CD V2's own
+  diagnosis). Shipped the non-pixel editorial slice: made `Panel`'s eyebrow **conditional** (kills
+  empty `.section-label` overlines app-wide) and removed the two reflexive uppercase overlines on
+  Today (the "Today's session" `.badge` and the "Daily habits" eyebrow → CD V2 "overlines rare,
+  sentence-case heading + space"). Verified via snapshot/inspect/QA (badge gone, headings + lead
+  intact, 0 empty labels, 0 h-scroll, 0 console errors; QA exercises many eyebrow panels). build 0;
+  qa:launch 18/18, 0 blockers/warnings. **Remaining C3 = pixel packaging** (dissolve bordered panel
+  stack → quiet sections, one-accent audit, spacing, three-tier disclosure) — screenshot capture is
+  wedged this session, so taste-level pixels want an owner ~2-min pass or a fresh session.
+
 - **2026-07-07 · Capability 2 tail — remove dead sidebar CSS ✅** (`<pending>`) — Deleted all
   now-inert `.sidebar*` / `.nav-link` / `.tier-pill` rules (~260 lines across `styles.css` +
   `styles-polish.css`) left behind when the sidebar was retired, keeping the live selectors they

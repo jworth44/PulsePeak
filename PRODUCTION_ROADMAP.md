@@ -171,10 +171,24 @@ media review · commit · production-log line · roadmap update. Then the next b
     both themes, correct active states, zero horizontal scroll, 0 console errors. build
     0, qa 18/18, 0 blockers/warnings. (`--sidebar-*` design tokens left in place — shared
     with the theme files, harmless.)
-- **C3 Today (Dashboard V5)** — ▶ NEXT. The flagship screen: one contextual hero + quiet
-  sections (dissolve the bordered panel stack), three-tier disclosure, editorial voice.
-  Pixel-heavy → per §5 playbook, self-verify real screenshots at each checkpoint (both
-  themes, desktop+mobile); a fresh session is ideal if screenshot capture is wedged.
+- **C3 Today (Dashboard V5)** — 🔨 in progress.
+  - *Audit* — ✅ the Today screen's **logic + copy are already sound**: honest activation
+    hero ("Let's get your first session in" / evidence "0 sessions logged so far"),
+    goal-based session reason (no fabricated deficit), warm time-aware greeting, one
+    contextual hero + one primary action ("Start today's session"). C3's real remaining
+    work is the **visual packaging** — exactly CD V2's diagnosis (logic premium, packaging
+    developer-built).
+  - *3a Editorial voice (non-pixel slice)* — ✅ DONE: made `Panel`'s eyebrow conditional
+    (no more empty `.section-label` overlines app-wide), removed the reflexive "Today's
+    session" `.badge` and the "Daily habits" eyebrow (CD V2: overlines rare → sentence-case
+    heading + space). Verified via snapshot/inspect/QA (badge gone, headings intact, 0
+    empty labels, 0 h-scroll, 0 console errors). build 0, qa 18/18.
+  - *3b Packaging (pixel-heavy — needs eyes)* — REMAINING: dissolve the bordered panel
+    stack (Habits/Streak/launch) into quiet sections; one-accent audit; section spacing/
+    rhythm; three-tier disclosure on any metric; confirm the one-hero composition reads.
+    Per §5, verify structure/contrast via snapshot+inspect+QA each checkpoint; **taste-
+    level pixels get an owner ~2-min visual pass at the C3 boundary** (or do in a fresh
+    screenshot-capable session — capture is wedged this session).
 - C4–C12 — queued.
 
 ---
