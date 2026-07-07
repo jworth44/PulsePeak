@@ -33,6 +33,20 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-07 · Capability 1 Foundation (1b) — retire old language + Daylight parity ✅**
+  (`2f28038`) — Deleted the 5 dead novelty-theme CSS blocks and retired ALL remaining
+  legacy palette literals (base `:root` cool-black + the full old red/lime accent hex
+  ramp → CD V2; cool surface near-blacks for `.app-main`/`.sidebar`/modals →
+  `var(--overlay-rgb)` so they flip per theme; hardcoded pink/cream text →
+  tokens). **Zero legacy palette references remain in `src`.** Reframed themes as
+  EQUAL first-class (owner clarification): either Daylight or Midnight can be the
+  default via one constant; final choice is the owner's after real-world evaluation.
+  Evidence: build 0; qa:launch 18/18, 0 blockers/warnings; automated Daylight
+  leak-scan (luminance + WCAG contrast) on live pages — Dashboard 0/0, Coach 0/0;
+  Midnight surfaces confirmed dark via the same token. Also produced the
+  **launch timeline** in `PRODUCTION_ROADMAP.md` (M1 engineering-complete ~22–23
+  sessions; M2 publish gated on owner-only infra/Stripe/domain/legal/media).
+
 - **2026-07-07 · Capability 1 Foundation (1a) — CD V2 token system + two themes ✅**
   (`64db540`) — Implementation of the approved Creative Direction V2 began. New
   `src/styles-themes.css` defines two first-class themes with distinct palettes:

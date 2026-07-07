@@ -94,13 +94,59 @@ Standard · media at commercial quality or queued · QA green · a11y · perf ·
 *Each capability closes with: build ✓ · qa ✓ · browser (desktop+mobile, both themes) ✓ · a11y ·
 media review · commit · production-log line · roadmap update. Then the next begins immediately.*
 
-- **C1 Foundation** — 🔨 IN PROGRESS.
-  - *1a Token system + two themes + system support + literal tokenization* — ✅ DONE
-    (`64db540`): Midnight default + Daylight; build 0, qa 18/18, both themes verified.
-  - *1b Component sweep (retire legacy patterns) + Daylight parity hardening* — next.
-    Includes: delete the dead novelty-theme CSS blocks in styles.css; sweep remaining
-    hardcoded dark hexes; verify every screen in Daylight; then promote Daylight to
-    default (CD V2) once parity holds.
+- **C1 Foundation** — 🔨 ~90% (core complete, small tail remains).
+  - *1a Token system + two equal themes + system support + literal tokenization* — ✅ DONE
+    (`64db540`): Midnight + Daylight; build 0, qa 18/18, both themes verified.
+  - *1b Retire the old design language + Daylight parity* — ✅ DONE (`2f28038`): deleted
+    the 5 dead novelty-theme blocks; **zero legacy palette references remain in src**;
+    surface near-blacks flip per theme; Daylight leak-scan clean on Dashboard + Coach
+    (0 dark-fills / 0 low-contrast); themes are equal, default is a one-constant owner
+    choice. build 0, qa 18/18.
+  - *1c C1 tail (before C2)* — refresh `DESIGN_SYSTEM.md` to the CD V2 Midnight/Daylight
+    system; apply size-specific typography tracking (CD V2 §type); confirm reduced-motion
+    + focus-visible tokens. Small.
 - C2–C12 — queued.
+
+---
+
+## Timeline to launch (estimate — living, updates as reality lands)
+
+**Unit = one focused build session** (a substantial working turn, e.g. C1-1a or C1-1b was
+one each). Wall-clock depends on (a) how many sessions we run per day and (b) owner-only
+blockers, which I cannot clear. I estimate *effort*; you control *cadence*.
+
+| Capability | Remaining effort (sessions) | Cumulative |
+|---|---:|---:|
+| C1 Foundation (tail 1c) | 0.5 | 0.5 |
+| C2 Product Shell | 2 | 2.5 |
+| C3 Today | 2 | 4.5 |
+| C4 Train (most complex) | 3.5 | 8 |
+| C5 Exercise (+ media review) | 3 | 11 |
+| C7 Coach | 1.5 | 12.5 |
+| C6 Progress | 1.5 | 14 |
+| C8 Recovery | 1.5 | 15.5 |
+| C9 Nutrition | 1.5 | 17 |
+| C10 Commercial | 2.5 | 19.5 |
+| C11 Media Excellence (my part) | 1.5 | 21 |
+| C12 Launch Readiness | 1.5 | ~22.5 |
+
+**→ Milestone M1 — "Engineering complete":** ~22–23 build sessions. All 12 capabilities at
+the Standard, QA green, both themes at parity, media either fixed or itemized in the owner
+production queue. **Calendar:** ~**2.5–3 weeks** at ~2 sessions/working-day, or ~**4–5 weeks**
+at ~1/day.
+
+**→ Milestone M2 — "Commercially published":** M1 **plus owner-only tasks**, which can run in
+parallel with late engineering:
+- Persistent DB + deploy (Railway) · live Stripe keys + enable billing · domain/DNS + origins
+  · legal (privacy/terms) sign-off — together ~**2–4 owner-days** if done promptly.
+- **Media re-shoot** (Gemini, owner-cost-gated) — the biggest variable; can be **phased**
+  (ship with designed tiles, upgrade to photography per family) so it does *not* block launch.
+- Optional: Anthropic key (Living Coach), App Store/Play accounts (only if beyond web PWA).
+
+**Realistic publish:** a **web-PWA soft launch ~1 week after M1** if the owner clears infra/
+Stripe/domain/legal promptly and media ships phased (designed tiles first). A fully
+re-photographed launch is gated on the media program's pace. **Net: ~4–6 weeks to a
+credible commercial web launch** under an active cadence, with the exact date set by session
+frequency + owner-blocker turnaround. Updated after each capability.
 
 *(This section is updated as each capability completes.)*
