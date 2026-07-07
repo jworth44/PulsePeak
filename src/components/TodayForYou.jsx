@@ -39,7 +39,7 @@ export default function TodayForYou({ insights = [] }) {
       <div className={`foryou-hero foryou-cat-${hero.category}`}>
         <div className="foryou-hero-body">
           <span className="foryou-tag">{CATEGORY_LABEL[hero.category] || "Insight"}</span>
-          <strong className="foryou-hero-title">{hero.title}</strong>
+          <h2 className="foryou-hero-title">{hero.title}</h2>
           <p className="foryou-hero-msg">{hero.message}</p>
           {hero.evidence ? <p className="foryou-hero-evidence">{hero.evidence}</p> : null}
         </div>

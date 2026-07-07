@@ -1844,3 +1844,75 @@ input:focus, select:focus, textarea:focus {
   .module-card-clickable:hover,
   .today-sequence-card:hover { transform: none; }
 }
+
+/* ===================================================================== */
+/* C3 TODAY — editorial packaging (CD V2 §Structure: "sections, not cards")*/
+/* Diagnosis: the screen led with one good For You hero, then stacked ~4  */
+/* equally-weighted bordered cards under it (launch / streak / habits),    */
+/* so nothing receded and nothing led. Fix: keep the hero as the single    */
+/* elevated focal point and dissolve everything below it into quiet        */
+/* sections separated by hairline rules. Scoped to .today-page so the      */
+/* not-yet-restyled screens keep their current styling.                    */
+/* ===================================================================== */
+
+/* Rhythm: comfortable, even spacing for the greeting -> hero opener.
+   The supporting sections carry their own top-divider + padding rhythm. */
+.today-page.page-grid-tight { gap: 20px; }
+
+/* Dissolve the below-hero stack: strip the card chrome, replace with a
+   quiet top hairline + generous space so each block reads as a section. */
+.today-page .today-launch,
+.today-page .streak-card,
+.today-page .today-habits {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border-top: 1px solid var(--border-subtle) !important;
+  padding: 24px 2px 2px !important;
+  margin: 0 !important;
+}
+/* Remove the panels' top edge-light hairline on these dissolved sections. */
+.today-page .today-launch::after,
+.today-page .today-habits::after { display: none !important; }
+
+/* The habits section heading now stands on space, not a boxed panel. */
+.today-page .today-habits .panel-heading { margin-bottom: 16px; }
+
+/* Habit tiles: quiet, still tappable — no more boxes-in-a-box. Lighter
+   surface + hairline; the completed (success) state stays semantic. */
+.today-page .habit-card {
+  background: rgba(var(--ink-rgb), 0.02) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-md) !important;
+  transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.today-page .habit-card:hover {
+  background: rgba(var(--ink-rgb), 0.05) !important;
+  border-color: var(--border-strong) !important;
+}
+
+/* The For You hero is now the one focal surface. Demote its eyebrow from a
+   loud accent overline to a quiet muted label (CD V2: overlines rare /
+   de-emphasize; keep accent for the bar + CTA only). */
+.today-page .foryou-eyebrow {
+  /* Quieter than the old loud accent overline, but --text-secondary (not
+     --text-muted) so this small uppercase label still clears WCAG AA on the
+     Daylight paper ground, not just on Midnight. */
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+/* Hero title is now an <h2> (a11y: the screen's key content is in the
+   heading outline). Neutralize the UA heading margins; keep the visual. */
+.today-page .foryou-hero-title {
+  margin: 0;
+  font-weight: 700;
+}
+
+/* The session reason must read in both themes. The base .lead-copy pins a
+   dark-theme grey (#cfd3d9) that all but vanishes on Daylight paper — now
+   exposed since the launch card dissolved to a section. Use the theme-aware
+   secondary token so it stays legible on both grounds. */
+.today-page .lead-copy { color: var(--text-secondary); }

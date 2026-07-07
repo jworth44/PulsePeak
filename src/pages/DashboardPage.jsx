@@ -449,7 +449,7 @@ export default function DashboardPage() {
       : "Let's build some momentum today.";
 
   return (
-    <div className="page-grid page-grid-tight">
+    <div className="page-grid page-grid-tight today-page">
       <header className="dash-greeting">
         <h1 className="dash-greeting-title">{timeGreeting}, {firstName}</h1>
         <p className="dash-greeting-sub">{greetingSubline}</p>
@@ -480,7 +480,7 @@ export default function DashboardPage() {
       ) : null}
 
       {summary.habits.length > 0 && (
-        <Panel title="Small wins that keep the week on track">
+        <Panel className="today-habits" title="Small wins that keep the week on track">
           <HabitList habits={summary.habits} onToggle={toggleHabit} />
         </Panel>
       )}

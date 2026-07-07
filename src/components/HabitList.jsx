@@ -16,7 +16,6 @@ export default function HabitList({ habits, onToggle }) {
           }}
         >
           <div>
-            <p className="section-label">Habit streak</p>
             <h4>{habit.name}</h4>
             <p className="muted">{habit.target}</p>
           </div>
