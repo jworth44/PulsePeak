@@ -94,7 +94,13 @@ Standard · media at commercial quality or queued · QA green · a11y · perf ·
 *Each capability closes with: build ✓ · qa ✓ · browser (desktop+mobile, both themes) ✓ · a11y ·
 media review · commit · production-log line · roadmap update. Then the next begins immediately.*
 
-- **C1 Foundation** — 🔨 IN PROGRESS (started 2026-07-07).
+- **C1 Foundation** — 🔨 IN PROGRESS.
+  - *1a Token system + two themes + system support + literal tokenization* — ✅ DONE
+    (`64db540`): Midnight default + Daylight; build 0, qa 18/18, both themes verified.
+  - *1b Component sweep (retire legacy patterns) + Daylight parity hardening* — next.
+    Includes: delete the dead novelty-theme CSS blocks in styles.css; sweep remaining
+    hardcoded dark hexes; verify every screen in Daylight; then promote Daylight to
+    default (CD V2) once parity holds.
 - C2–C12 — queued.
 
 *(This section is updated as each capability completes.)*

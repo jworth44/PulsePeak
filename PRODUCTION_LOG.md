@@ -33,6 +33,26 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-07 · Capability 1 Foundation (1a) — CD V2 token system + two themes ✅**
+  (`64db540`) — Implementation of the approved Creative Direction V2 began. New
+  `src/styles-themes.css` defines two first-class themes with distinct palettes:
+  **Midnight** (warm graphite + Ember, the `:root` default) and **Daylight**
+  (warm paper + Pine, `[data-theme="daylight"]`), imported last to override the
+  retired cool-black + red/lime "Peak v2" palette. Retired the 6 novelty themes →
+  `themes.js` exposes System / Daylight / Midnight with real `prefers-color-scheme`
+  support + a sync listener; fixed a latent load bug (stored preference was
+  ignored). CSP-safe pre-paint bootstrap (`public/theme-bootstrap.js`) prevents a
+  theme flash. Tokenized ~160 hardcoded palette literals across the two
+  stylesheets (white-alpha → `--ink-rgb`, cool-card → `--card-rgb`, old red/lime →
+  `--accent-rgb`, incl. the `body::before` backdrop) + ProgressRing gradient so the
+  whole app follows the theme. Evidence: build 0; qa:launch **18/18**, 0
+  blockers/warnings; both themes verified on real rendered elements via computed
+  styles (Midnight warm cards + ember; Daylight paper cards + pine + espresso +
+  warm hairlines); clean default load, 0 console errors. Screenshots unavailable in
+  this preview env (renderer compositor hang) — verified via computed styles + qa.
+  **Remaining C1 (1b):** component sweep for legacy-language survivors + Daylight
+  parity hardening before promoting Daylight to the CD V2 default.
+
 - **2026-07-06 · Learn-before-creating — design research + Creative Direction V2 ✅**
   (`c8cddce`) — Owner: "do not redesign yet; first become an expert in premium
   consumer product design," then "expand to the foundational principles," then
