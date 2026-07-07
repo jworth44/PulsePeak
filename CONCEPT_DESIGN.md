@@ -111,12 +111,18 @@ point," "earned color," "honesty," and the warm Midnight/Ember language — they
 Shown in **both viewports** (desktop centered-column, no sidebar · mobile bottom-tab):
 https://claude.ai/code/artifact/30bfb707-124e-419c-8f26-7a7f14f7a256
 
-**Themes (system-wide decision, owner-approved direction):** two first-class themes designed
-together — **Daylight** (warm paper `#ede6d8`, default) and **Midnight** (warm graphite
-`#17130f`) — sharing the one Ember accent and the cinematic session photo (which stays rich in
-both). Live toggle across desktop + mobile:
-https://claude.ai/code/artifact/af4d3ecc-9d8c-4fed-a7d2-a3576bc35363 . Implements via the app's
-existing `data-theme` system + theme picker; can follow the OS light/dark setting; both meet AA.
+**Themes (system-wide decision, owner-directed):** two first-class themes with **distinct,
+non-overlapping palettes** — owner explicitly wants **no colour shared between light and dark**.
+- **Daylight** (default): warm paper `#ede6d8` + **Pine** accent `#1f6b5c` (deep evergreen);
+  session hero is a deep-pine cinematic gradient; ink warm espresso `#2b2116`.
+- **Midnight**: warm graphite `#17130f` + **Ember** accent `#d9573a`; hero is a dark-ember
+  gradient; ink warm cream `#f2ece1`.
+- Cohesion comes from the shared **type pairing, one-column composition, and honesty rules** —
+  NOT a shared hue (superseded the earlier "share the Ember accent + photo across both" idea).
+  Trade-off noted: one-accent-across-modes gives instant brand recognition; two identities is a
+  deliberate owner choice. Both meet AA; implements via the app's existing `data-theme` system;
+  can follow the OS light/dark setting. Live toggle (desktop + mobile):
+  https://claude.ai/code/artifact/af4d3ecc-9d8c-4fed-a7d2-a3576bc35363
 
 ---
 
