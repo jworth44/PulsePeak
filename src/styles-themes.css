@@ -589,21 +589,6 @@
   flex: 0 0 auto;
 }
 
-/* The flag hero band — a big, unmistakable US flag across the top of the
-   content: a real flag patch on the left that flows into its own stripes. */
-:root[data-theme="liberty"] .app-column::before {
-  content: "";
-  display: block;
-  height: 74px;
-  margin: 0 0 22px;
-  border-radius: 12px;
-  background:
-    url("/us-flag.svg") left center / auto 100% no-repeat,
-    repeating-linear-gradient(180deg, #b31942 0 5.7px, #ffffff 5.7px 11.4px);
-  box-shadow: var(--elev-2), inset 0 0 0 1px rgba(255, 255, 255, 0.14);
-  overflow: hidden;
-}
-
 /* A slim persistent flag ribbon riding under the sticky header. */
 :root[data-theme="liberty"] .app-topbar {
   position: sticky;
@@ -628,8 +613,4 @@
   height: 4px;
   background: repeating-linear-gradient(90deg, #ef2b3d 0 15px, #ffffff 15px 30px) !important;
   opacity: 0.95;
-}
-:root[data-theme="liberty"] .foryou-hero::before {
-  width: 6px;
-  background: repeating-linear-gradient(180deg, #ef2b3d 0 5px, #ffffff 5px 10px);
 }
