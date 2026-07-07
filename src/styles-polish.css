@@ -62,7 +62,11 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
   font-size: clamp(1.7rem, 2.7vw, 2.3rem);
   line-height: 1.12;
   letter-spacing: -0.02em;
-  background: linear-gradient(180deg, #ffffff 0%, #cfd3d9 130%);
+  /* THEME-AWARE title sheen. Was hardcoded #ffffff→#cfd3d9 — great on Midnight
+     but invisible on Daylight paper. Drive the gradient off the ink tokens so
+     it reads on both grounds (near-white sheen on Midnight, near-black on
+     Daylight) while keeping the subtle top-down premium fade. */
+  background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 165%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -72,7 +76,7 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
 .today-hero-copy h2 {
   font-size: clamp(1.5rem, 2vw, 1.8rem);
   letter-spacing: -0.015em;
-  background: linear-gradient(180deg, #ffffff 0%, #cfd3d9 130%);
+  background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 165%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -110,7 +114,9 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
 }
 
 .support-copy, .muted { color: var(--text-secondary); line-height: 1.55; }
-.lead-copy { color: #cfd3d9; font-size: 1.02rem; line-height: 1.5; }
+/* Theme-aware lead copy. Was a pinned dark-theme grey (#cfd3d9) that vanished on
+   Daylight paper on every hero subtitle — now the theme secondary token. */
+.lead-copy { color: var(--text-secondary); font-size: 1.02rem; line-height: 1.5; }
 
 /* ---- App frame & main scroll area ------------------------------------ */
 /* NOTE: never add filter/backdrop-filter/transform/will-change here — it
@@ -257,6 +263,13 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
   background: rgba(var(--ink-rgb), 0.05) !important;
   letter-spacing: 0.04em;
 }
+/* These pills sit on a neutral ink tint, so their text must be a neutral ink
+   colour too. The base .badge pinned var(--accent-contrast) (near-white) which
+   vanished on both the faint tint and Daylight paper — the "ghost pill" tell.
+   Use the theme-aware secondary token (AA on both grounds). */
+.badge,
+.section-chip,
+.tier-pill { color: var(--text-secondary) !important; }
 /* Eyebrow/label pills must hug their text, not stretch to fill a grid/flex
    parent (that produced full-width empty badge boxes on onboarding, dashboard,
    auth, coach, etc.). Scoped to labels — never stat-pills/insight-chips, which
