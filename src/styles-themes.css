@@ -443,19 +443,20 @@
   --sidebar-rgb: 8, 22, 50;
   --overlay-rgb: 12, 30, 66;
 
-  /* Deep navy background layers */
+  /* Navy background layers — kept translucent so the red/white/blue streak
+     backdrop shows through the frosted (backdrop-blur) surfaces. */
   --app-background: #0a1a3a;
   --app-background-strong: #0d2148;
   --bg-sunken: #071630;
   --bg-elevated: #13264d;
   --bg-overlay: #182f5c;
   --bg-inset: #0a1c3f;
-  --sidebar-background: rgba(8, 22, 50, 0.92);
-  --main-surface-background: rgba(9, 24, 54, 0.7);
-  --surface: rgba(19, 38, 77, 0.9);
-  --surface-strong: rgba(26, 48, 92, 0.97);
-  --card-background: rgba(19, 38, 77, 0.9);
-  --secondary-card-background: rgba(26, 48, 92, 0.92);
+  --sidebar-background: rgba(8, 22, 50, 0.72);
+  --main-surface-background: rgba(9, 24, 54, 0.32);
+  --surface: rgba(17, 34, 70, 0.62);
+  --surface-strong: rgba(26, 48, 92, 0.8);
+  --card-background: rgba(17, 34, 70, 0.62);
+  --secondary-card-background: rgba(26, 48, 92, 0.66);
 
   /* Bright ink on navy */
   --text-primary: #f2f6fd;
@@ -544,12 +545,18 @@
   --panel-shadow: 0 24px 60px -28px rgba(1, 5, 16, 0.95);
   --soft-shadow: 0 16px 40px -24px rgba(1, 5, 16, 0.8);
 
-  /* Composed backgrounds — navy + bold red/blue glows + diagonal streaks */
+  /* Composed backgrounds — a full-bleed RED / WHITE / BLUE streak field over a
+     lighter, more transparent navy. Several diagonal streaks of varying width
+     read as dynamic motion (the "streaks" look). */
   --hero-gradient:
-    linear-gradient(122deg, transparent 28%, rgba(239, 43, 61, 0.16) 31%, transparent 35%, transparent 39%, rgba(255, 255, 255, 0.08) 41%, transparent 43%, rgba(59, 130, 246, 0.22) 47%, transparent 53%),
-    radial-gradient(circle at 88% 6%, rgba(239, 43, 61, 0.34), transparent 40%),
-    radial-gradient(circle at 6% 96%, rgba(59, 130, 246, 0.4), transparent 46%),
-    linear-gradient(160deg, #0a1a3a 0%, #0b1f47 52%, #071630 100%);
+    linear-gradient(118deg, transparent 3%, rgba(239, 43, 61, 0.55) 8%, rgba(239, 43, 61, 0) 17%),
+    linear-gradient(118deg, transparent 13%, rgba(255, 255, 255, 0.24) 18%, rgba(255, 255, 255, 0) 24%),
+    linear-gradient(118deg, transparent 21%, rgba(59, 130, 246, 0.6) 27%, rgba(59, 130, 246, 0) 38%),
+    linear-gradient(118deg, transparent 40%, rgba(239, 43, 61, 0.3) 45%, rgba(239, 43, 61, 0) 52%),
+    linear-gradient(118deg, transparent 58%, rgba(255, 255, 255, 0.16) 62%, rgba(255, 255, 255, 0) 67%),
+    linear-gradient(118deg, transparent 68%, rgba(59, 130, 246, 0.5) 75%, rgba(59, 130, 246, 0) 86%),
+    linear-gradient(118deg, transparent 84%, rgba(239, 43, 61, 0.4) 90%, rgba(239, 43, 61, 0) 97%),
+    linear-gradient(158deg, #0d2150 0%, #0a1b40 52%, #081530 100%);
   --card-glow:
     radial-gradient(circle at top right, rgba(59, 130, 246, 0.16), transparent 40%),
     linear-gradient(180deg, rgba(26, 48, 92, 0.95), rgba(19, 38, 77, 0.92));
@@ -565,6 +572,19 @@
 }
 
 /* ---- Liberty: the actual US flag + full-colour patriotic chrome ------ */
+
+/* Let the red/white/blue streak backdrop show through the main scroll area
+   (kept dark enough for white text). Background only — NEVER a filter on
+   .app-main (that would break fixed modal positioning). */
+:root[data-theme="liberty"] .app-main {
+  background: rgba(10, 24, 54, 0.1) !important;
+}
+
+/* The fixed full-viewport backdrop is painted by body::before — point it at the
+   red/white/blue streak field (default body::before uses only blue glows). */
+:root[data-theme="liberty"] body::before {
+  background: var(--hero-gradient) !important;
+}
 
 /* Eyebrows/labels: a bright, AA-safe blue on the navy ground. */
 :root[data-theme="liberty"] .section-label,
@@ -589,28 +609,10 @@
   flex: 0 0 auto;
 }
 
-/* A slim persistent flag ribbon riding under the sticky header. */
-:root[data-theme="liberty"] .app-topbar {
-  position: sticky;
-}
-:root[data-theme="liberty"] .app-topbar::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 6px;
-  transform: translateY(100%);
-  z-index: 6;
-  pointer-events: none;
-  background: repeating-linear-gradient(90deg, #b31942 0 26px, #ffffff 26px 52px, #1d4ed8 52px 78px);
-  box-shadow: 0 2px 8px -2px rgba(1, 5, 16, 0.6);
-}
-
-/* Card tops fly red/white flag stripes. */
+/* Owner: no applied stripe bars anywhere — the patriotic colour comes from the
+   background streaks instead. Suppress the card top-edge bar entirely. (The
+   under-header ribbon was removed too.) */
 :root[data-theme="liberty"] .panel::after,
 :root[data-theme="liberty"] .today-hero::after {
-  height: 4px;
-  background: repeating-linear-gradient(90deg, #ef2b3d 0 15px, #ffffff 15px 30px) !important;
-  opacity: 0.95;
+  display: none !important;
 }
