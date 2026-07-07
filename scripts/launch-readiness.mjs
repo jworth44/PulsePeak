@@ -612,13 +612,16 @@ async function runBrowserCoverage(browser) {
 
   await withAuthedPage(browser, freeLogin.token, async (page, bucket) => {
     await assertDashboardRenders(page);
-    await page.locator(".sidebar").waitFor({ timeout: 10000 });
-    await page.locator(".sidebar-brand h1").filter({ hasText: "PulsePeak" }).waitFor({ timeout: 10000 });
-    await page.locator(".sidebar-nav-shell").waitFor({ timeout: 10000 });
-    await page.getByRole("button", { name: "Dashboard" }).waitFor({ timeout: 10000 });
-    await page.getByRole("button", { name: "Training" }).waitFor({ timeout: 10000 });
-    await page.getByRole("button", { name: "Training" }).click();
-    await page.getByRole("link", { name: "Exercise Library" }).waitFor({ timeout: 10000 });
+    // CD V2 shell: desktop primary nav is the centered top pill (no sidebar).
+    await page.locator(".app-topbar").waitFor({ timeout: 10000 });
+    await page.locator(".app-brand-word").filter({ hasText: "PulsePeak" }).waitFor({ timeout: 10000 });
+    await page.locator(".primary-pill").waitFor({ timeout: 10000 });
+    expect((await page.locator(".sidebar").count()) === 0, "Retired sidebar still rendered in the CD V2 shell.");
+    await page.locator(".primary-pill").getByRole("link", { name: "Today" }).waitFor({ timeout: 10000 });
+    // The Train door opens the training section, whose sub-nav exposes its pages.
+    await page.locator(".primary-pill").getByRole("link", { name: "Train" }).click();
+    await page.getByText(/choose your setup, pick your focus/i).waitFor({ timeout: 15000 });
+    await page.locator(".section-subnav").getByRole("link", { name: "Exercise Library" }).waitFor({ timeout: 10000 });
     await assertRouteRenders(page, "/workouts", /choose your setup, pick your focus/i);
     await page.getByRole("button", { name: "Quick session" }).click();
     await page.getByText(/visible results/i).waitFor({ timeout: 10000 });
@@ -874,9 +877,10 @@ async function runBrowserCoverage(browser) {
     }
 
     await assertDashboardRenders(page);
-    // Bottom tab bar is the mobile primary nav; desktop sidebar must be hidden.
+    // Bottom tab bar is the mobile primary nav; desktop top pill must be hidden.
     await page.locator(".mobile-tabbar").waitFor({ state: "visible", timeout: 10000 });
-    expect(!(await page.locator(".sidebar").isVisible()), "Desktop sidebar is visible at 390px mobile viewport.");
+    expect(!(await page.locator(".app-topbar").isVisible()), "Desktop top bar is visible at 390px mobile viewport.");
+    expect((await page.locator(".sidebar").count()) === 0, "Retired sidebar still rendered at mobile viewport.");
     await assertNoHorizontalScroll("dashboard");
 
     const mobileRoutes = [
@@ -898,9 +902,9 @@ async function runBrowserCoverage(browser) {
     // Tab navigation must actually route.
     await page.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
     await page.locator(".mobile-tabbar").waitFor({ state: "visible", timeout: 10000 });
-    await page.locator(".mobile-tab", { hasText: "Workouts" }).click();
+    await page.locator(".mobile-tab", { hasText: "Train" }).click();
     await page.getByText(/choose your setup, pick your focus/i).waitFor({ timeout: 15000 });
-    expect(page.url().includes("/workouts"), `Mobile tab did not navigate to /workouts. URL: ${page.url()}`);
+    expect(page.url().includes("/workouts"), `Mobile Train tab did not navigate to /workouts. URL: ${page.url()}`);
 
     recordScenario("mobile-viewport-shell", {
       pass: bucket.consoleErrors.length === 0 && bucket.pageErrors.length === 0,

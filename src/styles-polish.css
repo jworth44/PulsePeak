@@ -606,13 +606,189 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
 }
 
 /* ===================================================================== */
+/* CD V2 PRODUCT SHELL — centered column + desktop top pill              */
+/* Four doors (Today · Train · Progress · You). The sidebar is retired;   */
+/* on desktop the primary nav is a centered pill in a sticky top bar, on  */
+/* mobile it is the fixed bottom tab bar below. One centered column both. */
+/* ===================================================================== */
+.app-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 850;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(var(--overlay-rgb), 0.9), rgba(var(--overlay-rgb), 0.72));
+  border-bottom: 1px solid var(--border-subtle);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.app-topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 12px clamp(16px, 4vw, 28px);
+}
+
+.app-brand {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  min-width: 0;
+}
+.app-brand-word {
+  font-family: "Space Grotesk", "Instrument Sans", sans-serif;
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: var(--track-display);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.primary-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--elev-1);
+}
+.primary-pill-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 15px;
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+.primary-pill-link svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+.primary-pill-link:hover {
+  color: var(--text-primary);
+  background: var(--secondary-button-background);
+}
+.primary-pill-link.active {
+  color: var(--accent-contrast);
+  background: var(--accent);
+  box-shadow: 0 1px 10px -2px var(--accent-ring);
+}
+.primary-pill-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.topbar-profile {
+  flex: 0 0 auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  padding: 6px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--secondary-button-background);
+  color: var(--text-primary);
+  cursor: pointer;
+  max-width: 190px;
+  transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.topbar-profile:hover {
+  background: var(--secondary-button-background-hover);
+  border-color: var(--border-default);
+}
+.topbar-profile:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.topbar-profile-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.15;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.topbar-profile-tier {
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  /* secondary (not muted) so the tiny tier label clears WCAG AA on the
+     Daylight paper canvas as well as Midnight. */
+  color: var(--text-secondary);
+}
+
+/* One centered content column, both viewports. Generous max-width for the
+   shell scaffold; individual screens tighten to the editorial column. */
+.app-column {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* Contextual secondary nav — a door's sub-pages, so nothing is stranded. */
+.section-subnav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--space-5);
+  padding-bottom: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.section-subnav::-webkit-scrollbar { display: none; }
+.section-subnav-link {
+  flex: 0 0 auto;
+  padding: 7px 14px;
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-size: 0.83rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
+  transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.section-subnav-link:hover {
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+.section-subnav-link.active {
+  color: var(--accent-contrast);
+  background: var(--accent);
+  border-color: transparent;
+}
+.section-subnav-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===================================================================== */
 /* MOBILE BOTTOM TAB BAR — hidden on desktop, primary nav on mobile      */
 /* ===================================================================== */
 .mobile-tabbar { display: none; }
 
 @media (max-width: 1080px) {
-  /* Hide the desktop sidebar; the bottom bar takes over. */
-  .sidebar { display: none !important; }
+  /* Hide the desktop top pill; the bottom tab bar takes over as primary nav. */
+  .app-topbar { display: none; }
 
   /* Give the main scroll area room so content clears the fixed bar. */
   .app-main {

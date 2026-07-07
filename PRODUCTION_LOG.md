@@ -33,6 +33,29 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-07 · Capability 2 Product Shell (core) — retire the sidebar → 4-door centered shell ✅**
+  (`<pending>`) — Rebuilt `AppShell.jsx` to CD V2 §Structure. **Desktop sidebar retired**; both
+  viewports now share **one centered content column** and **four primary doors — Today · Train ·
+  Progress · You** — rendered as a centered top pill in a sticky top bar (desktop) and the fixed
+  bottom tab bar (mobile). Each door that owns sub-pages surfaces them as a **contextual secondary
+  nav** at the top of the column, so the 9→4 collapse strands **nothing**: Train → Workouts/Plan/
+  Exercise Library/Mobility/Nutrition; Progress → Progress/Coach; You → Account/Preferences/
+  Appearance/Module Visibility (all `hiddenModules`-aware; the Progress door drops if both its
+  pages are hidden). Safe-area insets (top pill + bottom bar); one `user` icon added, dead icons
+  removed. Updated the two shell QA scenarios (`free-user-shell-and-settings`, `mobile-viewport-
+  shell`) from sidebar assertions to the top-pill/section-subnav/no-sidebar reality. Fixed the
+  Daylight `topbar-profile-tier` micro-label contrast (`--text-muted` 2.87 → `--text-secondary`
+  5.58, AA). **Verified (fresh :3007 server, real authed user):** desktop top pill = 4 doors +
+  correct active door/sub-item across Today/Train/Exercise Library/Progress/Coach/You; mobile
+  (375px) = top bar hidden, fixed bottom bar 4 doors, sub-nav scrolls, **zero horizontal scroll**;
+  both themes rendered correctly (Daylight topbar = light paper + ink hairline; active pill/subnav
+  = pine, not ember — confirmed after a clean full reload; the mid-session JS `dataset.theme`-swap
+  gives stale recalcs, so themes must be verified via bootstrap reload). Screenshot capture was
+  environmentally wedged this session (not the app — DOM/snapshot/inspect all fine); taste-level
+  pixels → owner 2-min pass at the C2 boundary. build 0; qa:launch 18/18, 0 blockers/warnings; 0
+  console errors. **C2 tail (next checkpoint):** delete the now-dead `.sidebar*` / `.nav-link` /
+  `.sidebar-submenu-link` CSS (~200 lines) + confirm the loading shell fits the new column.
+
 - **2026-07-07 · Capability 1 Foundation (1c) — tracking-token system + DESIGN_SYSTEM refresh ✅**
   (`<pending>`) — Closed the C1 tail. (1) Added the CD V2 **size-specific type-tracking token
   system** to `styles.css` `:root` (`--track-display/-heading/-body/-numeral/-caps/-caps-loose`)

@@ -152,10 +152,17 @@ media review · commit · production-log line · roadmap update. Then the next b
     `DESIGN_SYSTEM.md`** from the retired v2 "Peak" system to the actual CD V2 Midnight/
     Daylight/Ember tokens in code (single source of truth); confirmed reduced-motion +
     focus-visible are robust. build 0, qa 18/18, 0 blockers/warnings.
-- **C2 Product Shell** — ▶ NEXT. Remove the desktop sidebar; one centered content column
-  both viewports; bottom tab bar (mobile) / centered top pill (desktop) with 4 doors
-  **Today · Train · Progress · You**; safe-area insets; loading shell. Visual → verify
-  with real screenshots (both themes, desktop+mobile) in a fresh session per §5 playbook.
+- **C2 Product Shell** — 🔨 ~85% (core done, small tail remains).
+  - *2a Core shell* — ✅ DONE: `AppShell.jsx` rebuilt to the 4-door centered shell
+    (Today · Train · Progress · You); desktop sidebar retired → sticky top pill; mobile
+    bottom tab bar; one centered `.app-column` both viewports; contextual `.section-subnav`
+    surfaces each door's sub-pages (nothing stranded, `hiddenModules`-aware); safe-area
+    insets. QA scenarios migrated to the new shell; Daylight tier-label contrast fixed.
+    Verified on a fresh :3007 server (real authed user): both viewports + both themes,
+    correct active states, zero horizontal scroll. build 0, qa 18/18, 0 console errors.
+  - *2b C2 tail* — remove the now-dead `.sidebar*` / `.nav-link` / `.sidebar-submenu-link`
+    CSS (~200 lines across styles.css + styles-polish.css) and confirm the loading shell
+    fits the centered column. Small; behind the regression guard.
 - C3–C12 — queued.
 
 ---
