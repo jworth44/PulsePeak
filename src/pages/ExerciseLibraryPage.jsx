@@ -245,14 +245,8 @@ export default function ExerciseLibraryPage() {
                   </div>
                 </div>
                 <h4>{entry.name}</h4>
-                <div className="exercise-library-card-meta">
-                  <p className="support-copy"><strong>Pattern:</strong> {entry.movementPattern}</p>
-                  <p className="support-copy"><strong>Equipment:</strong> {entry.equipmentDisplay}</p>
-                  <p className="support-copy"><strong>Primary muscles:</strong> {entry.primaryMuscleGroup}</p>
-                  <p className="support-copy"><strong>Difficulty:</strong> {entry.difficulty} · <strong>Joint stress:</strong> {entry.jointStress}</p>
-                </div>
-                <p className="exercise-library-card-status">
-                  {getGuideStatusLabel(entry, { visualModelPreference })}
+                <p className="exercise-library-card-line">
+                  {[entry.equipmentDisplay, entry.primaryMuscleGroup].filter(Boolean).join(" · ")}
                 </p>
                 <div className="module-card-actions">
                   <button
