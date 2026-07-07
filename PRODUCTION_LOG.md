@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **State** | Pre–Production Complete (0 of 2 states granted) |
-| **Last verified** | 2026-07-07 — build exit 0 · qa:launch **18/18** · 0 blockers · **0 warnings** · 0 console errors. **CD V2 RATIFIED** + `VISUAL_IMPLEMENTATION_DIRECTIVE.md` is now governing (editorial/restraint; two identities Daylight/Midnight). Today confirmed directive-compliant; **C5 editorial pass started** — Exercise Library control panels dissolved into quiet sections (verified Daylight+Midnight). Themes Liberty(#4, →reference) + Blossom(#3) retained per owner. |
+| **Last verified** | 2026-07-07 — build exit 0 · qa:launch **18/18** · 0 blockers · **0 warnings** · 0 console errors. **CD V2 RATIFIED** + `VISUAL_IMPLEMENTATION_DIRECTIVE.md` governing. **EDITORIAL PASS COMPLETE across every main screen** (via `/loop`): Today ✓, Exercise Library + cards ✓, Movement Guide ✓, Train (Workouts+Mobility) ✓, Coach ✓, Progress ✓, Nutrition ✓, Plan ✓, You/Settings ✓ — control-panel chrome dissolved into quiet sections, all verified Daylight+Midnight. REMAINING (fresh session, screenshot-reliable): Onboarding/Auth editorial, Liberty→reference polish, Blossom text tweaks, final sweep. Themes Liberty(#4)+Blossom(#3) retained per owner. |
 | **Design direction** | **✅ CD V2 implementation AUTHORIZED (owner 2026-07-07) — building per `CREATIVE_DIRECTION_V2.md` + `PRODUCTION_ROADMAP.md` (12 capabilities C1–C12).** Editorial coach not control panel; one warm accent (Ember/Pine, red+lime retired); two EQUAL first-class themes Midnight/Daylight (cool near-black retired); remove sidebar → 4 bottom tabs (Today/Train/Progress/You); full-bleed 4:5 media tiles + swipeable guide; modals→sheets; three-tier disclosure; media re-shoot standard. **Progress: C1 Foundation ✅ · C2 Product Shell ✅ (4-door centered shell, sidebar retired) · C3 Today ✅ (Dashboard V5 — one hero + quiet sections, `c51c4a8`/`0beef0b`). NEXT = C4 Train (session flow).** |
 | **Media quality (owner top priority)** | **`MEDIA_AUDIT_REGISTER.md` + `npm run qa:media`** — only **16/49** photo sets at 1536×1024; 3 resolutions + 3 aspect ratios; 5 broken sub-thumbnail sets; 5 baked-text sets; 33 orphaned dirs; inconsistent models/lighting/grade. Full re-shoot to the §10 media standard = Gemini/owner-cost-gated program. |
 | **Honesty (Product Excellence Standard clause)** | **Systemic "never infer state from absence of data" audit DONE ✅** (`HONESTY_AUDIT.md`) — all LIVE offenders fixed at root (seed fabrication, recovery `recoveryLogged` flag, plan gap-copy gating, habit/trust/workout copy). buildInsights verified honest. Dead twins flagged. |
@@ -32,6 +32,20 @@
 ---
 
 One line per unit: date · what · why · evidence. Newest first.
+
+- **2026-07-07 · CD V2 EDITORIAL PASS across all main screens ✅** (`/loop`: `ea42a00` directive →
+  `dc8ea9d` `535eeec` `420c4de` `ec09a44` `02b653e` `86272f7` `832fbdb`) — Owner ratified CD V2 +
+  the Visual Implementation Directive (editorial/restraint, "designed not assembled", story-first,
+  hierarchy from type not borders, merge/dissolve cards, remove noise). Systematically dissolved
+  the "control-panel / boxes-in-boxes" chrome into quiet sections on **Exercise Library** (+ cards
+  now image-first, not database records), **Movement Guide** (coaching manual, Start/Move/Peak/
+  Finish leads), **Train** (Workouts+Mobility), **Coach**, **Progress**, **Nutrition**, **Plan**,
+  and **You/Settings** (all 4 sub-pages). **Today** was already compliant. Page-scoped hooks
+  (`.exercise-library-page`, `.train-editorial-page`, `.editorial-sections`) so nothing global
+  fractured; nested callouts/stat-chips keep just enough framing (not over-flattened). *Evidence:*
+  each verified in Chrome in BOTH flagship identities (Daylight+Midnight); build 0, qa:launch 18/18
+  every checkpoint. Screenshot capture began wedging (very long session) → remaining visual polish
+  (Onboarding/Auth, Liberty→reference, Blossom text, final sweep) deferred to a fresh session.
 
 - **2026-07-07 · Owner-review round 2 — Blossom light theme + card-positioning consistency ✅**
   (`2ed4e95` + `acc081e`) — Owner: the dark "Twilight" read as "just another dark theme" (not
