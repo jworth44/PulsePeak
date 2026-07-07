@@ -99,7 +99,7 @@ export default function DashboardControlsPanel() {
         })}
       </div>
       {status ? <p className="muted">{status}</p> : null}
-      <button className="primary-button" disabled={saving} type="button" onClick={saveControls}>
+      <button className="primary-button module-control-save" disabled={saving} type="button" onClick={saveControls}>
         {saving ? "Saving..." : "Save visibility"}
       </button>
     </Panel>

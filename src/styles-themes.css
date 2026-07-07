@@ -280,3 +280,148 @@
     radial-gradient(circle at top right, rgba(31, 138, 99, 0.1), transparent 36%),
     linear-gradient(135deg, #eff6ef, #eaf1e8);
 }
+
+/* -------------------------------------------------------------------- *
+ * TWILIGHT — deep indigo dusk + Violet→Magenta→Rose (dark)             *
+ * A vibrant third theme (owner-requested), palette drawn from the      *
+ * CertiCerts brand: violet #7c3aed → magenta #d6299a → rose #fb7185    *
+ * over a deep indigo-violet canvas. Dark structure like Midnight.      *
+ * -------------------------------------------------------------------- */
+:root[data-theme="twilight"] {
+  color-scheme: dark;
+  --theme-name: "PulsePeak Twilight";
+
+  --ink-rgb: 240, 235, 252;
+  --card-rgb: 39, 22, 74;
+  --card-alt-rgb: 50, 30, 92;
+  --accent-rgb: 124, 58, 237;
+  --chart-rgb: 217, 70, 239;
+  --premium-rgb: 245, 240, 255;
+  --sidebar-rgb: 18, 8, 46;
+  --overlay-rgb: 23, 10, 64;
+
+  /* Background layers — deep indigo-violet dusk (never grey/graphite) */
+  --app-background: #160a3d;
+  --app-background-strong: #1f0f52;
+  --bg-sunken: #100628;
+  --bg-elevated: #271650;
+  --bg-overlay: #2e1a5c;
+  --bg-inset: #12082e;
+  --sidebar-background: rgba(18, 8, 46, 0.92);
+  --main-surface-background: rgba(20, 10, 44, 0.82);
+  --surface: rgba(39, 22, 74, 0.92);
+  --surface-strong: rgba(50, 30, 92, 0.97);
+  --card-background: rgba(39, 22, 74, 0.92);
+  --secondary-card-background: rgba(50, 30, 92, 0.9);
+
+  /* Lilac-white ink */
+  --text-primary: #f1ecfb;
+  --text-secondary: #c3b6df;
+  --text-muted: #9184b3;
+  --text-inverse: #170a40;
+  --text-on-card: #f1ecfb;
+  --sidebar-text: #f1ecfb;
+  --sidebar-muted: #c3b6df;
+
+  /* The one accent — Violet (magenta→rose gradient carries the signature) */
+  --accent-400: #9a6bf5;
+  --accent-500: #7c3aed;
+  --accent-600: #6d28d9;
+  --accent-700: #5b21b6;
+  --accent-color: #7c3aed;
+  --accent: #7c3aed;
+  --accent-hover: #9a6bf5;
+  --accent-active: #6d28d9;
+  --accent-soft: rgba(124, 58, 237, 0.16);
+  --accent-ring: rgba(124, 58, 237, 0.45);
+  --accent-contrast: #f7f2ff;
+  --ring-accent: #7c3aed;
+  --chart-accent: #d946ef;
+
+  /* "Volt" -> the signature Rose so achievements pop pink */
+  --volt: #fb7185;
+  --volt-bright: #fda4af;
+  --volt-soft: rgba(251, 113, 133, 0.18);
+  --volt-glow: rgba(251, 113, 133, 0.45);
+  --premium-highlight: #f9a8d4;
+
+  /* Semantic (kept distinct from the violet/rose brand) */
+  --success: #34d399;
+  --success-soft: rgba(52, 211, 153, 0.16);
+  --warning: #fbbf24;
+  --warning-soft: rgba(251, 191, 36, 0.16);
+  --danger: #fb6d6d;
+  --danger-soft: rgba(251, 109, 109, 0.16);
+  --info: #22d3ee;
+  --info-soft: rgba(34, 211, 238, 0.16);
+
+  /* Readiness / data-viz */
+  --data-high: #34d399;
+  --data-mid: #fbbf24;
+  --data-low: #fb6d6d;
+  --data-strain: #7c3aed;
+  --data-cardio: #d946ef;
+  --data-volt: #fb7185;
+  --data-track: rgba(240, 235, 252, 0.08);
+
+  /* Lilac hairline borders */
+  --border-color: rgba(240, 235, 252, 0.1);
+  --border-subtle: rgba(240, 235, 252, 0.06);
+  --border-default: rgba(240, 235, 252, 0.1);
+  --border-strong: rgba(240, 235, 252, 0.16);
+  --border-accent: rgba(124, 58, 237, 0.5);
+  --hairline-top: rgba(240, 235, 252, 0.08);
+
+  /* Buttons / surfaces */
+  --button-text: #f7f2ff;
+  --secondary-button-background: rgba(240, 235, 252, 0.07);
+  --secondary-button-background-hover: rgba(240, 235, 252, 0.12);
+  --secondary-button-text: #f1ecfb;
+  --ghost-button-background: rgba(240, 235, 252, 0.05);
+  --ghost-button-background-hover: rgba(240, 235, 252, 0.1);
+  --ghost-button-text: #f1ecfb;
+  --surface-dark: #271650;
+
+  /* Gradients — the violet→magenta→rose signature */
+  --grad-pulse: linear-gradient(118deg, #7c3aed 0%, #d6299a 58%, #fb7185 100%);
+  --grad-volt: linear-gradient(135deg, #fda4af 0%, #fb7185 100%);
+  --grad-surface: linear-gradient(180deg, rgba(240, 235, 252, 0.05) 0%, rgba(240, 235, 252, 0) 42%);
+  --grad-glow-red: radial-gradient(60% 60% at 50% 40%, rgba(124, 58, 237, 0.24) 0%, transparent 70%);
+  --grad-area-red: linear-gradient(180deg, rgba(124, 58, 237, 0.34) 0%, rgba(124, 58, 237, 0) 100%);
+  --button-background: var(--grad-pulse);
+  --button-hover: linear-gradient(118deg, #8b4ef0, #d6299a);
+
+  /* Elevation — lilac hairline highlight + deep violet shadows */
+  --elev-1: inset 0 1px 0 0 rgba(240, 235, 252, 0.08), 0 1px 2px rgba(8, 3, 24, 0.5), 0 2px 8px rgba(8, 3, 24, 0.4);
+  --elev-2: inset 0 1px 0 0 rgba(240, 235, 252, 0.1), 0 4px 12px rgba(8, 3, 24, 0.5), 0 8px 24px rgba(8, 3, 24, 0.4);
+  --elev-3: inset 0 1px 0 0 rgba(240, 235, 252, 0.12), 0 8px 24px rgba(8, 3, 24, 0.55), 0 16px 48px rgba(8, 3, 24, 0.45);
+  --elev-4: inset 0 1px 0 0 rgba(240, 235, 252, 0.14), 0 24px 64px rgba(6, 2, 18, 0.66);
+  --glow-red: 0 0 0 1px var(--accent-ring), 0 0 24px rgba(124, 58, 237, 0.4);
+  --glow-volt: 0 0 0 1px var(--volt-glow), 0 0 28px rgba(251, 113, 133, 0.42);
+  --panel-shadow: 0 24px 60px -28px rgba(6, 2, 20, 0.9);
+  --soft-shadow: 0 16px 40px -24px rgba(6, 2, 20, 0.72);
+
+  /* Composed backgrounds — violet + fuchsia radials over deep indigo dusk */
+  --hero-gradient:
+    radial-gradient(circle at top left, rgba(124, 58, 237, 0.28), transparent 32%),
+    radial-gradient(circle at top right, rgba(217, 70, 239, 0.16), transparent 34%),
+    linear-gradient(180deg, #100628 0%, #160a3d 48%, #1f0f52 100%);
+  --card-glow:
+    radial-gradient(circle at top right, rgba(124, 58, 237, 0.2), transparent 32%),
+    linear-gradient(180deg, rgba(50, 30, 92, 0.98), rgba(39, 22, 74, 0.94));
+  --callout-glow:
+    radial-gradient(circle at top right, rgba(217, 70, 239, 0.16), transparent 34%),
+    linear-gradient(135deg, rgba(48, 27, 88, 0.97), rgba(39, 22, 74, 0.95));
+  --focus-glow:
+    radial-gradient(circle at top right, rgba(124, 58, 237, 0.16), transparent 34%),
+    linear-gradient(135deg, rgba(48, 27, 88, 0.97), rgba(39, 22, 74, 0.95));
+  --success-glow:
+    radial-gradient(circle at top right, rgba(52, 211, 153, 0.16), transparent 34%),
+    linear-gradient(135deg, rgba(20, 40, 40, 0.97), rgba(22, 20, 52, 0.95));
+}
+
+/* Twilight: accent eyebrow labels need a lighter violet on the dark-indigo
+   ground — the brand violet (#7c3aed) only reaches ~3:1 there (fails AA).
+   #a78bfa clears AA on canvas + cards while staying clearly on-brand. Applies
+   to the not-yet-restyled pages that still use accent-tinted .section-label. */
+:root[data-theme="twilight"] .section-label { color: #a78bfa; }

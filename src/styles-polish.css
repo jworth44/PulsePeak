@@ -1936,3 +1936,12 @@ input:focus, select:focus, textarea:focus {
    Use the theme-aware secondary token (AA in both themes) — the ❄️ glyph
    already carries the "freeze" cue, so the tint isn't load-bearing. */
 .today-page .streak-freeze { color: var(--text-secondary); }
+
+/* ---- Settings: Module Visibility save button -------------------------- */
+/* The "Save visibility" button followed the module list flush, touching the
+   last row card (owner review #4). Give it clear separation and let it hug
+   its label rather than butt against the card above. */
+.module-control-save {
+  margin-top: 22px;
+  align-self: start;
+}
