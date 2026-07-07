@@ -6,8 +6,12 @@ experiences), not pages. Under the Product Excellence Standard + CD V2. Updated 
 implementation changes understanding.*
 
 **Status:** ACTIVE — implementation authorized 2026-07-07. Discovery / architecture / research /
-concept phases are CLOSED. Design authority = `CREATIVE_DIRECTION_V2.md`. No CD V3, no new
-concepts, no competitor research.
+concept phases are CLOSED. Design authority = `CREATIVE_DIRECTION_V2.md`, operationalized by
+`VISUAL_IMPLEMENTATION_DIRECTIVE.md` (owner-approved 2026-07-07 — the editorial/restraint feel
+target: *designed, not assembled*; story-first; type-not-borders hierarchy; merge cards; two
+premium identities Daylight/Midnight with NO shared accents; remove noise relentlessly). No CD V3,
+no new concepts, no competitor research. **Every capability closes only when it meets that feel in
+BOTH flagship identities (Daylight + Midnight).**
 
 ---
 
