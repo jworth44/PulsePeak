@@ -33,6 +33,25 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-06 · Learn-before-creating — design research + Creative Direction V2 ✅**
+  (`c8cddce`) — Owner: "do not redesign yet; first become an expert in premium
+  consumer product design," then "expand to the foundational principles," then
+  "compare vs PulsePeak, only then write CD V2." Ran two adversarially-verified
+  deep-research passes — (A) 13 premium products (27 sources, 25 claims verified
+  3-0) and (B) the canonical design disciplines (22 confirmed, **3 refuted**) —
+  captured in `DESIGN_PRINCIPLES_STUDY.md` (12 cited principles + a durable
+  framework; the 3 refuted claims recorded so they're never used as fact: no
+  ≤200ms motion cap, no "minimalism measurably improves performance," no
+  "variable reward makes habits stick"). Then `CREATIVE_DIRECTION_V2.md`: V1's
+  instinct held; V2 audits PulsePeak vs the verified principles (diagnosis: the
+  logic is already premium, the *packaging* is developer-built), corrects V1's
+  refuted claims (spring model over fixed ms; restraint justified by hierarchy
+  not performance; streaks as an ethics constraint), and sharpens color into an
+  LCH semantic system, disclosure into a named three-tier rule, and type tracking
+  into size-specific. **Proposal only — no app code changed; redesign
+  implementation remains owner-gated.** Evidence: both research reports verified;
+  docs committed; tree clean.
+
 - **2026-07-06 · Creative Direction v1.0 — challenge the design language (PROPOSAL) ✅**
   (`ad666a3`) — Owner halted Design-V3 implementation: the problem is the design
   *language*, not spacing/type/hierarchy — it still reads developer-built. Produced
