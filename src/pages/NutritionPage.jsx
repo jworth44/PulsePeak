@@ -107,7 +107,7 @@ export default function NutritionPage() {
   };
 
   return (
-    <div className="page-grid page-grid-tight">
+    <div className="page-grid page-grid-tight editorial-sections">
       <section className="module-page-hero">
         <div>
           <p className="badge">Nutrition</p>
