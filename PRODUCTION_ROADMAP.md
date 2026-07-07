@@ -171,7 +171,7 @@ media review · commit · production-log line · roadmap update. Then the next b
     both themes, correct active states, zero horizontal scroll, 0 console errors. build
     0, qa 18/18, 0 blockers/warnings. (`--sidebar-*` design tokens left in place — shared
     with the theme files, harmless.)
-- **C3 Today (Dashboard V5)** — 🔨 in progress.
+- **C3 Today (Dashboard V5)** — ✅ DONE (100%).
   - *Audit* — ✅ the Today screen's **logic + copy are already sound**: honest activation
     hero ("Let's get your first session in" / evidence "0 sessions logged so far"),
     goal-based session reason (no fabricated deficit), warm time-aware greeting, one
@@ -183,19 +183,29 @@ media review · commit · production-log line · roadmap update. Then the next b
     session" `.badge` and the "Daily habits" eyebrow (CD V2: overlines rare → sentence-case
     heading + space). Verified via snapshot/inspect/QA (badge gone, headings intact, 0
     empty labels, 0 h-scroll, 0 console errors). build 0, qa 18/18.
-  - *3b Packaging (pixel-heavy — needs eyes)* — REMAINING: dissolve the bordered panel
-    stack (Habits/Streak/launch) into quiet sections; one-accent audit; section spacing/
-    rhythm; three-tier disclosure on any metric; confirm the one-hero composition reads.
-    Per §5, verify structure/contrast via snapshot+inspect+QA each checkpoint; **taste-
-    level pixels get an owner ~2-min visual pass at the C3 boundary** (or do in a fresh
-    screenshot-capable session — capture is wedged this session).
-    - *A11y audited clean* (shell + Today): single H1 → ordered H2/H3/H4, `<main>`
-      present, all interactive elements have accessible names, navs labeled, hidden nav
-      correctly out of the a11y tree per viewport. **One semantic fix to fold in here:**
-      the For You *hero title* is a `<strong>`, so the screen's most important content
-      isn't in the heading outline — promote it to an `<h2>` (watch the UA margins) when
-      restyling the hero.
-- C4–C12 — queued.
+  - *3b Packaging (pixel-heavy)* — ✅ DONE (`c51c4a8` + `0beef0b`): dissolved the below-
+    hero bordered card stack (launch / streak / habits) into **quiet sections** — stripped
+    card bg/border/shadow/radius, replaced with a top hairline rule + 24px rhythm; the For
+    You hero stays the **one elevated focal surface** (CD V2 "sections, not cards"). Habit
+    tiles softened to quiet tappable surfaces (no more boxes-in-a-box); removed the
+    redundant per-tile "Habit streak" overline; demoted the "For you today" eyebrow from a
+    loud accent overline to a quiet `--text-secondary` label. Scoped to a new `.today-page`
+    class so the not-yet-restyled screens are untouched. **A11y fix landed:** For You hero
+    title `<strong>` → `<h2>` (key content now in the heading outline; UA margins reset).
+    **Three contrast defects fixed** (both-theme AA): session reason `.lead-copy` (pinned a
+    dark-theme grey that vanished on paper), the eyebrow (my own `--text-muted` regression,
+    2.87 → 5.58 on paper), and the streak-freeze line (hardcoded ice-blue 1.9:1 → theme
+    token). One-accent audit: already Ember/Pine at the token layer (C1); removed the one
+    remaining redundant accent overline. Three-tier disclosure = N/A on Today (its only
+    metrics — weekly-goal + streak — already render at the glance tier; drill-in lives in
+    C6 Progress).
+    - **Verified with real screenshots** (Chrome MCP, screenshot capture was wedged in the
+      preview MCP even fresh — drove a connected Chrome instead): both themes × both states
+      (fresh no-data + active-streak with-data) on desktop, plus true 375px mobile
+      structurally (no horizontal scroll, sections stack, habits single-column, bottom tab
+      bar). Clean heading outline (H1→H2→H2→H3→H4, no skips). build 0 · qa:launch 18/18,
+      0 blockers/warnings · 0 console errors · both themes AA on all key text.
+- C4–C12 — queued. **C4 Train (session flow) is next on the critical path.**
 
 ---
 

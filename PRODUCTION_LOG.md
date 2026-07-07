@@ -5,8 +5,8 @@
 | | |
 |---|---|
 | **State** | Pre–Production Complete (0 of 2 states granted) |
-| **Last verified** | 2026-07-07 — build exit 0 · qa:launch **18/18** · 0 blockers · **0 warnings** (C1-1c checkpoint) |
-| **Design direction** | **✅ CD V2 implementation AUTHORIZED (owner 2026-07-07) — building per `CREATIVE_DIRECTION_V2.md` + `PRODUCTION_ROADMAP.md` (12 capabilities C1–C12).** Editorial coach not control panel; one warm accent (Ember/Pine, red+lime retired); two EQUAL first-class themes Midnight/Daylight (cool near-black retired); remove sidebar → 4 bottom tabs (Today/Train/Progress/You); full-bleed 4:5 media tiles + swipeable guide; modals→sheets; three-tier disclosure; media re-shoot standard. **Progress: C1 Foundation ✅ (1a tokens+themes `64db540`, 1b retire-legacy `2f28038`, 1c tracking+doc). NEXT = C2 Product Shell.** |
+| **Last verified** | 2026-07-07 — build exit 0 · qa:launch **18/18** · 0 blockers · **0 warnings** · 0 console errors (C3-3b checkpoint; both themes × both data states verified via Chrome screenshots, 375px mobile no-h-scroll, both-theme AA) |
+| **Design direction** | **✅ CD V2 implementation AUTHORIZED (owner 2026-07-07) — building per `CREATIVE_DIRECTION_V2.md` + `PRODUCTION_ROADMAP.md` (12 capabilities C1–C12).** Editorial coach not control panel; one warm accent (Ember/Pine, red+lime retired); two EQUAL first-class themes Midnight/Daylight (cool near-black retired); remove sidebar → 4 bottom tabs (Today/Train/Progress/You); full-bleed 4:5 media tiles + swipeable guide; modals→sheets; three-tier disclosure; media re-shoot standard. **Progress: C1 Foundation ✅ · C2 Product Shell ✅ (4-door centered shell, sidebar retired) · C3 Today ✅ (Dashboard V5 — one hero + quiet sections, `c51c4a8`/`0beef0b`). NEXT = C4 Train (session flow).** |
 | **Media quality (owner top priority)** | **`MEDIA_AUDIT_REGISTER.md` + `npm run qa:media`** — only **16/49** photo sets at 1536×1024; 3 resolutions + 3 aspect ratios; 5 broken sub-thumbnail sets; 5 baked-text sets; 33 orphaned dirs; inconsistent models/lighting/grade. Full re-shoot to the §10 media standard = Gemini/owner-cost-gated program. |
 | **Honesty (Product Excellence Standard clause)** | **Systemic "never infer state from absence of data" audit DONE ✅** (`HONESTY_AUDIT.md`) — all LIVE offenders fixed at root (seed fabrication, recovery `recoveryLogged` flag, plan gap-copy gating, habit/trust/workout copy). buildInsights verified honest. Dead twins flagged. |
 | **Engine matrix** | **6 of 6 engines ✅** — all engines E2E-verified via `engine-depth-e2e` |
@@ -33,6 +33,21 @@
 
 One line per unit: date · what · why · evidence. Newest first.
 
+- **2026-07-07 · Capability 3 Today (3b) — dissolve the card stack → quiet sections ✅**
+  (`c51c4a8` + `0beef0b`) — The flagship pixel packaging. The Today screen led with a good
+  For You hero, then stacked ~4 equally-weighted bordered cards under it (launch / streak /
+  habits, the last containing three more bordered habit tiles) so nothing receded and nothing
+  led — CD V2's "developer-built packaging" tell. Dissolved the below-hero stack into quiet
+  sections (stripped bg/border/shadow/radius → top hairline + 24px rhythm); kept the For You
+  hero as the one elevated focal surface; softened habit tiles + removed the redundant per-tile
+  "Habit streak" overline; demoted the "For you today" eyebrow to a quiet label. Scoped to a new
+  `.today-page` class (other screens untouched). **A11y:** hero title `<strong>` → `<h2>`.
+  **Fixed 3 both-theme AA contrast defects** (session reason, my own eyebrow regression, the
+  streak-freeze ice-blue). *Why:* CD V2 §Structure "sections, not cards" + one-focal-point;
+  the equal-weight card stack was the screen's biggest developer-built tell. *Evidence:* real
+  Chrome screenshots — both themes × fresh + active-streak states on desktop; true 375px mobile
+  (no h-scroll, sections stack, habits single-col); clean heading outline; build 0 · qa:launch
+  18/18 · 0 console errors · both-theme AA on all key text. C3 Today now 100% → NEXT = C4 Train.
 - **2026-07-07 · CD V2 §Voice — kill dev/system language in copy ✅** (`<pending>`) — App-wide
   scan for developer/clinical phrasing in *rendered* text (not the per-screen eyebrow-composition
   question, which each screen's C6–C10 rebuild owns). Fixed the two clear offenders CD V2 flagged:
