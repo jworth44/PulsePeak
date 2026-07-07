@@ -1989,3 +1989,23 @@ input:focus, select:focus, textarea:focus {
   font-size: 0.86rem;
   line-height: 1.4;
 }
+
+/* ===================================================================== */
+/* MOVEMENT GUIDE — a coaching manual, not documentation (directive)      */
+/* Dissolve the nested bordered blocks into quiet sections separated by    */
+/* space; quiet the section labels so the visual reference + the           */
+/* Start/Mid/Peak/Finish sequence lead. Scoped to the guide modal.         */
+/* ===================================================================== */
+.movement-detail-modal .movement-detail-block {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  backdrop-filter: none !important;
+}
+.movement-detail-modal .movement-detail-block::after { display: none !important; }
+.movement-detail-modal .movement-detail-stack { gap: 34px; }
+.movement-detail-modal .movement-detail-block > .section-label {
+  color: var(--text-muted) !important;
+  opacity: 0.9;
+}
