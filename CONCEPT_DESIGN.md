@@ -19,11 +19,11 @@ tradeoffs* → critique → synthesize the winner → log the verdict here.
 
 | # | Surface | Concepts | Status |
 |---|---|---|---|
-| 1 | **Today / Dashboard** | V2 One-Verb · V3 Coach's-Brief · V4 Readiness-Glance | **Concepts + critique done → synthesis = "V5"** |
-| 2 | Workout Session (live) | — | queued |
-| 3 | Workout Completion | — | queued |
-| 4 | Exercise Library | — | queued |
-| 5 | Exercise Guide | — | queued |
+| 1 | **Today / Dashboard** | V2 One-Verb · V3 Coach's-Brief · V4 Readiness-Glance | **Done → winner "V5"** ([board](https://claude.ai/code/artifact/0fbd2608-63fc-488f-8f8f-2250b7710e88) · [V5](https://claude.ai/code/artifact/d0df0d48-a65f-49dd-82a9-eba94495b068)) |
+| 2 | **Workout Session (live)** | A The-Set · B Card-Flow · C Between-Sets | **Done → winner "Session V4"** ([board](https://claude.ai/code/artifact/9e4b35a5-d4e8-4bdb-af97-1ecbbdad645b)) |
+| 3 | **Exercise Library** | A Editorial-Grid · B Coach's-Index · C Encyclopedia | **Done → winner "Library V4"** ([board](https://claude.ai/code/artifact/03ed29ba-589d-472f-af8f-16aedb4b83ab)) |
+| 4 | **Exercise Guide** | A Cinematic-Sequence · B Scrolling-Teacher · C Loop+Tabs | **Done → winner "Guide V4"** ([board](https://claude.ai/code/artifact/26865de7-e575-420d-b850-7886cf32bac8)) |
+| 5 | Workout Completion | — | queued |
 | 6 | Coach | — | queued |
 | 7 | Progress | — | queued |
 | 8 | Recovery | — | queued |
@@ -108,5 +108,73 @@ point," "earned color," "honesty," and the warm Midnight/Ember language — they
   media dependency de-risked and the honesty constitution intact.
 
 **Status:** Dashboard V5 is the candidate to prototype when implementation is authorized.
-Next surfaces: Workout Session, Exercise Library, Exercise Guide (the media-heavy trio),
-then Coach/Progress/Recovery/Nutrition, then Navigation/Premium/Onboarding/Auth/Settings.
+
+---
+
+## Surface 2 — Workout Session (live)
+
+Board: **https://claude.ai/code/artifact/9e4b35a5-d4e8-4bdb-af97-1ecbbdad645b**
+Scenario: *Incline DB Press, set 2 of 4*, in a Chest + Triceps session. The screen is read
+sweaty, at arm's length, one-handed, between sets.
+
+- **A "The Set"** — one set, full screen; huge tabular `70 lb × 8`, one Log button. *Principles:
+  one focal point, glance readability. +unmissable from the rack. −loses session context.*
+- **B "Card Flow"** — done → doing → next as a flowing card stack; the active exercise expands
+  to its set rows. *Progressive disclosure + continuity. +best sense of progress. −active set
+  smaller/less arm's-length.*
+- **C "Between Sets"** — rest (≈60% of a session) becomes the moment: countdown + next target +
+  one cue + a single earned haptic. *Causality/Utility, anticipation. +turns dead time into
+  coaching. −only covers the rest state; half a screen alone.*
+
+**Critique → winner "Session V4":** the three are *states of one screen*, not rivals. **Card
+Flow frame** (B) + **the active card rendered as "The Set"** (A, big tabular, one Log button) +
+**rest takes over** after logging (C, one haptic at rest-end). **Honesty guard:** "last time ·
+65 × 8" and any suggested load show only from real logged sets; a first-ever session shows no
+"last time" rather than inventing one.
+
+---
+
+## Surface 3 — Exercise Library
+
+Board: **https://claude.ai/code/artifact/03ed29ba-589d-472f-af8f-16aedb4b83ab**
+Replaces today's database record-cards (`PATTERN/EQUIPMENT/MUSCLES/JOINT STRESS`) + filter panel.
+
+- **A "Editorial Grid"** — full-bleed 4:5 movement tiles; long tail gets designed placeholder
+  tiles. *Photo-is-product. +beautiful, tactile. −flat; no intent guidance.*
+- **B "Coach's Index"** — browse by intent via rails ("For today · push", "Warm up shoulders").
+  *Ambiguous/task-based IA, anticipation. +most helpful for discovery. −needs curated rails;
+  honesty risk on "for today".*
+- **C "Encyclopedia"** — search-first hero + quiet filter chips + elegant result list.
+  *Recognition, information scent. +fastest to a known movement. −utilitarian; nothing to
+  discover.*
+
+**Critique → winner "Library V4":** **Editorial tiles as the ground** (A) + **one honest intent
+rail on top** (B, a single "For today" rail, not a wall) + **search that collapses the grid into
+C's elegant list** on typing. Metadata lives *inside the guide*, never a matrix on browse.
+**Honesty guard:** the "For today" rail appears only with a real recommendation basis; otherwise
+it's simply absent.
+
+---
+
+## Surface 4 — Exercise Guide
+
+Board: **https://claude.ai/code/artifact/26865de7-e575-420d-b850-7886cf32bac8**
+Replaces today's grid of tiny `STEP 1/2/3` cards + labeled visual box + metadata matrix.
+
+- **A "Cinematic Sequence"** — full-bleed swipeable/auto-loop Start→Movement→Peak→Finish, one
+  cue per frame. *Photo teaches, shared-element from the tile. +most premium instructional
+  photography. −short cues may under-explain for a first-timer.*
+- **B "Scrolling Teacher"** — a vertical editorial lesson: hero, then each phase shot + cue as
+  you scroll. *Progressive scroll disclosure. +teaches thoroughly. −long for a returning skim.*
+- **C "Loop + Tabs"** — looping 4-frame + How-to / Muscles / Swaps tabs. *Compact 3-tier.
+  +tidiest. −tabs hide the how-to behind a tap.*
+
+**Critique → winner "Guide V4":** **cinematic loop as hero** (A) with **the lesson scrolling
+openly beneath** (B: Setup/Execution prose → inline metadata → alternatives). **Rejected:** C's
+tabs — hiding "How to perform" fails the first-timer; the three tiers become *vertical depth*
+(sequence → prose → metadata), not hidden tabs. Honesty: "your last set / notes" only when real.
+
+---
+
+**Next surfaces:** Workout Completion, Coach, Progress, Recovery, Nutrition, then Navigation,
+Premium, Onboarding, Auth, Settings.
