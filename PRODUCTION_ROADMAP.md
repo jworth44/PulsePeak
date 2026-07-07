@@ -34,12 +34,18 @@ concepts, no competitor research.
    coherent language). Background agents ONLY for read-only analysis that cannot fracture design
    (media audit · a11y/contrast scan · docs · research · QA sweeps · dead-code/consistency audit);
    their output is advisory — I serialize any change into the one design myself.
-5. **⚠️ Pixel-honesty caveat (critical for "premium").** Screenshot capture currently hangs in this
-   environment, so I verify structure, tokens, WCAG contrast, layout, QA, and logic — **not
-   rendered pixels.** Unattended, I guarantee correctness/consistency/contrast/no-regression, NOT
-   taste-level visual polish. **Guardrail:** at each capability boundary, a ~2-minute owner visual
-   pass (app open in both themes, desktop + mobile) — or a one-time fix to restore screenshot
-   capture so I can self-verify pixels. Until then this is the honest ceiling of premium-unattended.
+5. **Pixel verification — diagnosed playbook.** Screenshot capture is available in a FRESH session
+   and **wedges only after a very long session** (renderer/compositor capture path exhausts while
+   JS/DOM/a11y/network keep working). Confirmed 2026-07-07: not the app, not the build (renders +
+   snapshots fine), not fixable by server/tab restart. **Playbook:**
+   - Do the **visual capabilities (C3 Today, C4 Train, C5 Exercise) in a fresh session** so I
+     self-verify **real screenshots** at every checkpoint (both themes, desktop + mobile).
+   - A **hung screenshot mid-session is the signal to start a fresh session** (resets the renderer).
+   - **Mid-session fallback verification** (always valid): `preview_snapshot` (exact rendered
+     text/roles/hierarchy) + computed-style WCAG-contrast/leak scans + QA + console. Covers
+     correctness/structure/content/contrast; only taste-level pixel polish needs eyes.
+   - **Guardrail when capture is down:** a ~2-minute owner visual pass at the capability boundary.
+   So the "premium-unattended" ceiling is real only in long sessions; fresh sessions close it.
 6. **Living roadmap.** Anchored to capabilities + %-complete, re-estimated continuously. Any
    calendar figure is a derived, clearly-caveated view — never the anchor.
 7. **Efficiency.** Commit every green checkpoint; build once + qa once per checkpoint (no redundant
