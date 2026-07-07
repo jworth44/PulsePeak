@@ -451,12 +451,12 @@
   --bg-elevated: #13264d;
   --bg-overlay: #182f5c;
   --bg-inset: #0a1c3f;
-  --sidebar-background: rgba(8, 22, 50, 0.72);
-  --main-surface-background: rgba(9, 24, 54, 0.32);
-  --surface: rgba(17, 34, 70, 0.62);
-  --surface-strong: rgba(26, 48, 92, 0.8);
-  --card-background: rgba(17, 34, 70, 0.62);
-  --secondary-card-background: rgba(26, 48, 92, 0.66);
+  --sidebar-background: rgba(8, 22, 50, 0.86);
+  --main-surface-background: rgba(9, 24, 54, 0.24);
+  --surface: rgba(15, 31, 64, 0.86);
+  --surface-strong: rgba(24, 44, 86, 0.92);
+  --card-background: rgba(15, 31, 64, 0.86);
+  --secondary-card-background: rgba(22, 42, 82, 0.86);
 
   /* Bright ink on navy */
   --text-primary: #f2f6fd;
@@ -467,28 +467,28 @@
   --sidebar-text: #f2f6fd;
   --sidebar-muted: #b7c6e2;
 
-  /* Accent — Blue (brand); deep enough that white text on solid-accent pills
-     and buttons clears WCAG AA (the brighter #3b82f6 only hit 3.68). */
-  --accent-400: #60a5fa;
-  --accent-500: #2563eb;
-  --accent-600: #1d4ed8;
-  --accent-700: #1e3a8a;
-  --accent-color: #2563eb;
-  --accent: #2563eb;
-  --accent-hover: #3b82f6;
-  --accent-active: #1d4ed8;
-  --accent-soft: rgba(59, 130, 246, 0.2);
-  --accent-ring: rgba(59, 130, 246, 0.55);
+  /* Accent — RED (brand); the primary colour everywhere (pills, buttons,
+     badges, icons). White text on solid #e11d2f clears AA (~4.8). */
+  --accent-400: #ff6069;
+  --accent-500: #e11d2f;
+  --accent-600: #c0182c;
+  --accent-700: #9e1424;
+  --accent-color: #e11d2f;
+  --accent: #e11d2f;
+  --accent-hover: #ff3b47;
+  --accent-active: #c0182c;
+  --accent-soft: rgba(225, 29, 47, 0.2);
+  --accent-ring: rgba(225, 29, 47, 0.55);
   --accent-contrast: #ffffff;
-  --ring-accent: #3b82f6;
-  --chart-accent: #ff3b4e;
+  --ring-accent: #e11d2f;
+  --chart-accent: #ff4d5e;
 
-  /* Volt -> bright patriotic Red (energy) */
-  --volt: #ff4d5e;
-  --volt-bright: #ff7381;
-  --volt-soft: rgba(255, 77, 94, 0.22);
-  --volt-glow: rgba(255, 77, 94, 0.55);
-  --premium-highlight: #93c5fd;
+  /* Volt -> a brighter red so achievements glow the same brand hue */
+  --volt: #ff3b47;
+  --volt-bright: #ff6069;
+  --volt-soft: rgba(255, 59, 71, 0.22);
+  --volt-glow: rgba(255, 59, 71, 0.55);
+  --premium-highlight: #7fb0ff;
 
   /* Semantic (on dark navy) */
   --success: #34d399;
@@ -513,7 +513,7 @@
   --border-subtle: rgba(240, 244, 251, 0.09);
   --border-default: rgba(240, 244, 251, 0.12);
   --border-strong: rgba(240, 244, 251, 0.22);
-  --border-accent: rgba(59, 130, 246, 0.6);
+  --border-accent: rgba(225, 29, 47, 0.6);
   --hairline-top: rgba(240, 244, 251, 0.12);
 
   /* Buttons / surfaces */
@@ -526,14 +526,14 @@
   --ghost-button-text: #f2f6fd;
   --surface-dark: #0d2148;
 
-  /* Gradients — bold red->blue */
-  --grad-pulse: linear-gradient(120deg, #ef2b3d 0%, #c0182c 30%, #1d4ed8 70%, #3b82f6 100%);
-  --grad-volt: linear-gradient(135deg, #ff6070 0%, #ef2b3d 100%);
+  /* Gradients — bold RED */
+  --grad-pulse: linear-gradient(120deg, #ff3b47 0%, #e11d2f 46%, #b3122a 100%);
+  --grad-volt: linear-gradient(135deg, #ff6069 0%, #e11d2f 100%);
   --grad-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 42%);
-  --grad-glow-red: radial-gradient(60% 60% at 50% 40%, rgba(239, 43, 61, 0.4) 0%, transparent 70%);
-  --grad-area-red: linear-gradient(180deg, rgba(59, 130, 246, 0.4) 0%, rgba(59, 130, 246, 0) 100%);
+  --grad-glow-red: radial-gradient(60% 60% at 50% 40%, rgba(225, 29, 47, 0.4) 0%, transparent 70%);
+  --grad-area-red: linear-gradient(180deg, rgba(225, 29, 47, 0.4) 0%, rgba(225, 29, 47, 0) 100%);
   --button-background: var(--grad-pulse);
-  --button-hover: linear-gradient(120deg, #ff3b4e, #2563eb);
+  --button-hover: linear-gradient(120deg, #ff3b47, #c0182c);
 
   /* Elevation — deep navy shadows + light hairline */
   --elev-1: inset 0 1px 0 0 rgba(240, 244, 251, 0.08), 0 1px 2px rgba(2, 8, 23, 0.5), 0 2px 8px rgba(2, 8, 23, 0.4);
@@ -577,20 +577,25 @@
    (kept dark enough for white text). Background only — NEVER a filter on
    .app-main (that would break fixed modal positioning). */
 :root[data-theme="liberty"] .app-main {
-  background: rgba(10, 24, 54, 0.1) !important;
+  background: rgba(10, 22, 50, 0.32) !important;
 }
 
-/* The fixed full-viewport backdrop is painted by body::before — point it at the
-   red/white/blue streak field (default body::before uses only blue glows). */
+/* The fixed full-viewport backdrop (body::before) flies a large US flag ghosted
+   into the top-left, fading into deep navy — plus a soft red glow. */
 :root[data-theme="liberty"] body::before {
-  background: var(--hero-gradient) !important;
+  background:
+    linear-gradient(112deg, rgba(9, 20, 46, 0.34) 0%, rgba(9, 20, 46, 0.8) 40%, #0a1a3a 64%),
+    url("/us-flag.svg") left -30px top -24px / 780px auto no-repeat,
+    radial-gradient(circle at 92% 6%, rgba(225, 29, 47, 0.16), transparent 42%),
+    linear-gradient(158deg, #0c1c42 0%, #0a1836 55%, #081530 100%) !important;
 }
 
-/* Eyebrows/labels: a bright, AA-safe blue on the navy ground. */
+/* Eyebrows/labels: a bright, AA-safe RED on the navy ground (matches the
+   reference — all overlines are red). */
 :root[data-theme="liberty"] .section-label,
 :root[data-theme="liberty"] .foryou-eyebrow,
 :root[data-theme="liberty"] .today-hero-copy .badge {
-  color: #8bb4ff !important;
+  color: #ff6b6f !important;
 }
 
 /* A real US flag flying next to the wordmark — visible on every page. */
@@ -610,9 +615,20 @@
 }
 
 /* Owner: no applied stripe bars anywhere — the patriotic colour comes from the
-   background streaks instead. Suppress the card top-edge bar entirely. (The
-   under-header ribbon was removed too.) */
+   background flag + a footer banner. Suppress the card top-edge bar entirely. */
 :root[data-theme="liberty"] .panel::after,
 :root[data-theme="liberty"] .today-hero::after {
   display: none !important;
+}
+
+/* "STRONGER EVERY DAY. BUILT IN AMERICA." — a flag banner closing every page. */
+:root[data-theme="liberty"] .app-column::after {
+  content: "";
+  display: block;
+  width: 100%;
+  aspect-ratio: 1200 / 160;
+  margin: 34px 0 6px;
+  border-radius: 14px;
+  background: url("/us-banner.svg") center / cover no-repeat;
+  box-shadow: var(--elev-2), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }

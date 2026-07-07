@@ -33,7 +33,7 @@ export const THEME_OPTIONS = [
     value: "liberty",
     label: "Liberty",
     mood: "Red, white & blue — bold, immersive & patriotic",
-    chips: ["#0a1a3a", "#ef2b3d", "#3b82f6"]
+    chips: ["#0a1a3a", "#e11d2f", "#ffffff"]
   }
 ];
 
