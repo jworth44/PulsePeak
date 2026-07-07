@@ -38,7 +38,7 @@ export const THEME_STORAGE_KEY = "pulsepeak-theme";
 // real-world evaluation; both themes are held to full parity regardless.
 export const FALLBACK_THEME = "midnight";
 
-const THEME_COLOR = { daylight: "#ede6d8", midnight: "#17130f", blossom: "#f7f1fb" };
+const THEME_COLOR = { daylight: "#ede6d8", midnight: "#17130f", blossom: "#f1e6fc" };
 
 export function normalizeThemePreference(value) {
   return THEME_OPTIONS.some((option) => option.value === value) ? value : FALLBACK_THEME;

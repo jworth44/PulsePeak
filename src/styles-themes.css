@@ -293,27 +293,27 @@
   --theme-name: "PulsePeak Blossom";
 
   --ink-rgb: 46, 26, 58;
-  --card-rgb: 253, 248, 255;
-  --card-alt-rgb: 249, 242, 253;
+  --card-rgb: 251, 245, 255;
+  --card-alt-rgb: 245, 236, 253;
   --accent-rgb: 124, 58, 237;
   --chart-rgb: 192, 38, 211;
   --premium-rgb: 88, 28, 135;
-  --sidebar-rgb: 244, 235, 250;
-  --overlay-rgb: 254, 249, 255;
+  --sidebar-rgb: 238, 226, 250;
+  --overlay-rgb: 253, 247, 255;
 
-  /* Soft lavender / blush paper layers */
-  --app-background: #f7f1fb;
-  --app-background-strong: #fdf8ff;
-  --bg-sunken: #eee5f6;
-  --bg-elevated: #fdf7ff;
-  --bg-overlay: #fef9ff;
-  --bg-inset: #f0e8f8;
-  --sidebar-background: rgba(244, 235, 250, 0.92);
-  --main-surface-background: rgba(244, 235, 250, 0.82);
-  --surface: rgba(253, 248, 255, 0.96);
+  /* Saturated lavender / lilac paper layers (Ladies #2 — more colour) */
+  --app-background: #f1e6fc;
+  --app-background-strong: #faf3ff;
+  --bg-sunken: #e7d9f6;
+  --bg-elevated: #fbf5ff;
+  --bg-overlay: #fcf6ff;
+  --bg-inset: #e9dcf8;
+  --sidebar-background: rgba(238, 226, 250, 0.92);
+  --main-surface-background: rgba(238, 226, 250, 0.82);
+  --surface: rgba(251, 245, 255, 0.96);
   --surface-strong: #ffffff;
-  --card-background: rgba(253, 248, 255, 0.96);
-  --secondary-card-background: #f9f2fd;
+  --card-background: rgba(251, 245, 255, 0.96);
+  --secondary-card-background: #f4e9fd;
 
   /* Deep plum ink */
   --text-primary: #2e1a3a;
@@ -335,8 +335,8 @@
   --accent: #7c3aed;
   --accent-hover: #6d28d9;
   --accent-active: #5b21b6;
-  --accent-soft: rgba(124, 58, 237, 0.12);
-  --accent-ring: rgba(124, 58, 237, 0.35);
+  --accent-soft: rgba(124, 58, 237, 0.17);
+  --accent-ring: rgba(124, 58, 237, 0.42);
   --accent-contrast: #ffffff;
   --ring-accent: #7c3aed;
   --chart-accent: #c026d3;
@@ -404,20 +404,21 @@
   --panel-shadow: 0 24px 60px -30px rgba(88, 28, 135, 0.3);
   --soft-shadow: 0 16px 40px -26px rgba(88, 28, 135, 0.24);
 
-  /* Composed backgrounds — violet + magenta + pink radials over lavender paper */
+  /* Composed backgrounds — stronger violet + magenta + pink radials (Ladies #2) */
   --hero-gradient:
-    radial-gradient(circle at top left, rgba(124, 58, 237, 0.12), transparent 40%),
-    radial-gradient(circle at top right, rgba(217, 70, 239, 0.1), transparent 42%),
-    linear-gradient(180deg, #fdf7ff 0%, #f7f1fb 48%, #eee5f6 100%);
+    radial-gradient(circle at top left, rgba(124, 58, 237, 0.2), transparent 42%),
+    radial-gradient(circle at top right, rgba(217, 70, 239, 0.18), transparent 44%),
+    radial-gradient(circle at 50% 118%, rgba(236, 72, 153, 0.16), transparent 50%),
+    linear-gradient(180deg, #faf3ff 0%, #f1e6fc 48%, #e7d9f6 100%);
   --card-glow:
-    radial-gradient(circle at top right, rgba(124, 58, 237, 0.07), transparent 40%),
-    linear-gradient(180deg, #fffdff, #f9f2fd);
+    radial-gradient(circle at top right, rgba(124, 58, 237, 0.11), transparent 42%),
+    linear-gradient(180deg, #fdfaff, #f5ecfe);
   --callout-glow:
-    radial-gradient(circle at top right, rgba(217, 70, 239, 0.08), transparent 42%),
-    linear-gradient(135deg, #fdf8ff, #f7f0fc);
+    radial-gradient(circle at top right, rgba(217, 70, 239, 0.14), transparent 44%),
+    linear-gradient(135deg, #fbf5ff, #f2e7fc);
   --focus-glow:
-    radial-gradient(circle at top right, rgba(124, 58, 237, 0.08), transparent 42%),
-    linear-gradient(135deg, #fdf8ff, #f7f0fc);
+    radial-gradient(circle at top right, rgba(124, 58, 237, 0.13), transparent 44%),
+    linear-gradient(135deg, #fbf5ff, #f2e7fc);
   --success-glow:
     radial-gradient(circle at top right, rgba(31, 138, 99, 0.1), transparent 42%),
     linear-gradient(135deg, #eff7f1, #eaf3ec);

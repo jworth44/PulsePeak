@@ -14,7 +14,7 @@
         : "midnight";
     document.documentElement.dataset.theme = theme;
     var meta = document.querySelector('meta[name="theme-color"]');
-    var themeColor = { daylight: "#ede6d8", midnight: "#17130f", blossom: "#f7f1fb" };
+    var themeColor = { daylight: "#ede6d8", midnight: "#17130f", blossom: "#f1e6fc" };
     if (meta) meta.setAttribute("content", themeColor[theme] || "#17130f");
   } catch (e) {}
 })();
