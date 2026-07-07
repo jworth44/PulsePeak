@@ -6,6 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { AuthProvider } from "./state/AuthContext";
 import "./styles.css";
 import "./styles-polish.css";
+import "./styles-themes.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

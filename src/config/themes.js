@@ -1,56 +1,86 @@
+// Creative Direction V2 — two first-class themes + "match system".
+// Daylight (warm paper + pine) and Midnight (warm graphite + ember) are the
+// only themes; the six legacy novelty themes are retired. Tokens live in
+// src/styles-themes.css. Midnight is the shipping default while Daylight is
+// hardened to parity per-capability (see PRODUCTION_ROADMAP.md, risk R1).
+
 export const THEME_OPTIONS = [
   {
-    value: "solar-crest",
-    label: "PulsePeak Core",
-    mood: "Signature red, black, and white",
-    chips: ["#ef202d", "#050505", "#f5f5f5"]
+    value: "system",
+    label: "Match system",
+    mood: "Follows your device's light or dark setting",
+    chips: ["#ede6d8", "#17130f", "#d9573a"]
   },
   {
-    value: "gamma-forge",
-    label: "Gamma Forge",
-    mood: "Dense power and recovery",
-    chips: ["#1a8a43", "#0f1d13", "#89d76d"]
+    value: "daylight",
+    label: "Daylight",
+    mood: "Warm paper & pine — bright and editorial",
+    chips: ["#ede6d8", "#1f6b5c", "#2b2116"]
   },
   {
-    value: "velvet-mischief",
-    label: "Velvet Mischief",
-    mood: "Electric contrast and edge",
-    chips: ["#6f2cff", "#131313", "#7ddc36"]
-  },
-  {
-    value: "liberty-signal",
-    label: "Liberty Signal",
-    mood: "Clean discipline and drive",
-    chips: ["#0d3973", "#f5f8fc", "#c83242"]
-  },
-  {
-    value: "amazon-flare",
-    label: "Amazon Flare",
-    mood: "Warm premium intensity",
-    chips: ["#8c1f2d", "#ca8f18", "#f6ecda"]
-  },
-  {
-    value: "crimson-orbit",
-    label: "Crimson Orbit",
-    mood: "Dark focus and precision",
-    chips: ["#6d1136", "#15111f", "#d96aa4"]
+    value: "midnight",
+    label: "Midnight",
+    mood: "Warm graphite & ember — calm and focused",
+    chips: ["#17130f", "#d9573a", "#f2ece1"]
   }
 ];
 
 export const THEME_STORAGE_KEY = "pulsepeak-theme";
-export const FALLBACK_THEME = "solar-crest";
+// Default preference. Kept as Midnight until Daylight reaches full parity across
+// every capability (then promoted to the CD V2 default at the C12 launch gate).
+export const FALLBACK_THEME = "midnight";
+
+const THEME_COLOR = { daylight: "#ede6d8", midnight: "#17130f" };
 
 export function normalizeThemePreference(value) {
   return THEME_OPTIONS.some((option) => option.value === value) ? value : FALLBACK_THEME;
 }
 
+function prefersLight() {
+  return typeof window !== "undefined" && typeof window.matchMedia === "function"
+    ? window.matchMedia("(prefers-color-scheme: light)").matches
+    : false;
+}
+
+// Resolve a preference (system | daylight | midnight) to a concrete theme.
+export function resolveTheme(preference) {
+  const pref = normalizeThemePreference(preference);
+  return pref === "system" ? (prefersLight() ? "daylight" : "midnight") : pref;
+}
+
 export function getStoredThemePreference() {
+  if (typeof window === "undefined") return FALLBACK_THEME;
   return normalizeThemePreference(window.localStorage.getItem(THEME_STORAGE_KEY));
 }
 
+// Apply a preference: set the concrete theme on <html>, persist the preference,
+// and keep the browser theme-color in sync. Returns the concrete theme applied.
 export function applyThemePreference(value) {
-  const theme = normalizeThemePreference(value);
-  document.documentElement.dataset.theme = theme;
-  window.localStorage.setItem(THEME_STORAGE_KEY, theme);
-  return theme;
+  const preference = normalizeThemePreference(value);
+  const resolved = resolveTheme(preference);
+  document.documentElement.dataset.theme = resolved;
+  window.localStorage.setItem(THEME_STORAGE_KEY, preference);
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta && THEME_COLOR[resolved]) meta.setAttribute("content", THEME_COLOR[resolved]);
+  return resolved;
+}
+
+// When the preference is "match system", re-resolve as the OS setting flips.
+// Returns an unsubscribe function.
+export function initThemeSync() {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+    return () => {};
+  }
+  const query = window.matchMedia("(prefers-color-scheme: light)");
+  const handler = () => {
+    if (getStoredThemePreference() === "system") {
+      applyThemePreference("system");
+    }
+  };
+  if (query.addEventListener) query.addEventListener("change", handler);
+  else if (query.addListener) query.addListener(handler);
+  return () => {
+    if (query.removeEventListener) query.removeEventListener("change", handler);
+    else if (query.removeListener) query.removeListener(handler);
+  };
 }

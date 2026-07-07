@@ -1,0 +1,282 @@
+/* ==================================================================== *
+ * PulsePeak — Creative Direction V2 theme layer                         *
+ * Two first-class themes with DISTINCT, non-overlapping palettes.       *
+ *   · Midnight  = warm graphite + Ember   (the :root default)           *
+ *   · Daylight  = warm paper + Pine        ([data-theme="daylight"])    *
+ * Cohesion comes from type + composition + honesty, not a shared hue.   *
+ * Imported LAST (after styles.css + styles-polish.css) so it overrides  *
+ * the retired "Peak v2 cool-black + red/lime" palette. Structural       *
+ * tokens (spacing, radius, motion, type) are inherited from styles.css. *
+ * See CREATIVE_DIRECTION_V2.md + DESIGN_PRINCIPLES_STUDY.md.            *
+ * ==================================================================== */
+
+/* -------------------------------------------------------------------- *
+ * MIDNIGHT — default (warm graphite + Ember)                           *
+ * -------------------------------------------------------------------- */
+:root {
+  color-scheme: dark;
+  --theme-name: "PulsePeak Midnight";
+
+  --ink-rgb: 242, 236, 225;
+  --card-rgb: 34, 28, 22;
+  --card-alt-rgb: 43, 36, 28;
+  --accent-rgb: 217, 87, 58;
+  --chart-rgb: 240, 112, 78;
+  --premium-rgb: 255, 244, 239;
+  --sidebar-rgb: 17, 13, 9;
+  --overlay-rgb: 17, 13, 10;
+
+  /* Background layers — warm graphite (never cool blue-black) */
+  --app-background: #17130f;
+  --app-background-strong: #211b15;
+  --bg-sunken: #110d0a;
+  --bg-elevated: #241d16;
+  --bg-overlay: #2b241c;
+  --bg-inset: #140f0b;
+  --sidebar-background: rgba(17, 13, 9, 0.92);
+  --main-surface-background: rgba(20, 15, 11, 0.82);
+  --surface: rgba(34, 28, 22, 0.92);
+  --surface-strong: rgba(43, 36, 28, 0.97);
+  --card-background: rgba(34, 28, 22, 0.92);
+  --secondary-card-background: rgba(43, 36, 28, 0.9);
+
+  /* Warm off-white ink */
+  --text-primary: #f2ece1;
+  --text-secondary: #bcb2a4;
+  --text-muted: #8b8175;
+  --text-inverse: #17130f;
+  --text-on-card: #f2ece1;
+  --sidebar-text: #f2ece1;
+  --sidebar-muted: #bcb2a4;
+
+  /* The one accent — Ember */
+  --accent-400: #f0704e;
+  --accent-500: #d9573a;
+  --accent-600: #bf4225;
+  --accent-700: #8f2f18;
+  --accent-color: #d9573a;
+  --accent: #d9573a;
+  --accent-hover: #f0704e;
+  --accent-active: #bf4225;
+  --accent-soft: rgba(217, 87, 58, 0.14);
+  --accent-ring: rgba(217, 87, 58, 0.4);
+  --accent-contrast: #fff4ef;
+  --ring-accent: #d9573a;
+  --chart-accent: #f0704e;
+
+  /* "Volt" retired -> a brighter Ember so achievements glow the same hue */
+  --volt: #f0704e;
+  --volt-bright: #ff8b6a;
+  --volt-soft: rgba(240, 112, 78, 0.16);
+  --volt-glow: rgba(255, 139, 106, 0.42);
+  --premium-highlight: #ff8b6a;
+
+  /* Semantic (kept distinct from the brand accent) */
+  --success: #4ba36f;
+  --success-soft: rgba(75, 163, 111, 0.16);
+  --warning: #e0a53b;
+  --warning-soft: rgba(224, 165, 59, 0.16);
+  --danger: #e0655a;
+  --danger-soft: rgba(224, 101, 90, 0.16);
+  --info: #59a5c9;
+  --info-soft: rgba(89, 165, 201, 0.16);
+
+  /* Readiness / data-viz */
+  --data-high: #6f9e5f;
+  --data-mid: #e0a53b;
+  --data-low: #e0655a;
+  --data-strain: #d9573a;
+  --data-cardio: #f0704e;
+  --data-volt: #f0704e;
+  --data-track: rgba(242, 236, 225, 0.08);
+
+  /* Warm hairline borders */
+  --border-color: rgba(242, 236, 225, 0.1);
+  --border-subtle: rgba(242, 236, 225, 0.06);
+  --border-default: rgba(242, 236, 225, 0.1);
+  --border-strong: rgba(242, 236, 225, 0.16);
+  --border-accent: rgba(217, 87, 58, 0.5);
+  --hairline-top: rgba(242, 236, 225, 0.08);
+
+  /* Buttons / surfaces */
+  --button-text: #fff4ef;
+  --secondary-button-background: rgba(242, 236, 225, 0.07);
+  --secondary-button-background-hover: rgba(242, 236, 225, 0.12);
+  --secondary-button-text: #f2ece1;
+  --ghost-button-background: rgba(242, 236, 225, 0.05);
+  --ghost-button-background-hover: rgba(242, 236, 225, 0.1);
+  --ghost-button-text: #f2ece1;
+  --surface-dark: #241d16;
+
+  /* Gradients */
+  --grad-pulse: linear-gradient(135deg, #f0704e 0%, #d9573a 46%, #a83c22 100%);
+  --grad-volt: linear-gradient(135deg, #ff9a72 0%, #f0704e 100%);
+  --grad-surface: linear-gradient(180deg, rgba(242, 236, 225, 0.045) 0%, rgba(242, 236, 225, 0) 42%);
+  --grad-glow-red: radial-gradient(60% 60% at 50% 40%, rgba(217, 87, 58, 0.22) 0%, transparent 70%);
+  --grad-area-red: linear-gradient(180deg, rgba(217, 87, 58, 0.34) 0%, rgba(217, 87, 58, 0) 100%);
+  --button-background: var(--grad-pulse);
+  --button-hover: linear-gradient(135deg, #ff7a58, #d9573a);
+
+  /* Elevation — warm hairline highlight + warm shadows */
+  --elev-1: inset 0 1px 0 0 rgba(242, 236, 225, 0.07), 0 1px 2px rgba(20, 12, 6, 0.4), 0 2px 8px rgba(20, 12, 6, 0.3);
+  --elev-2: inset 0 1px 0 0 rgba(242, 236, 225, 0.09), 0 4px 12px rgba(20, 12, 6, 0.45), 0 8px 24px rgba(20, 12, 6, 0.34);
+  --elev-3: inset 0 1px 0 0 rgba(242, 236, 225, 0.11), 0 8px 24px rgba(20, 12, 6, 0.5), 0 16px 48px rgba(20, 12, 6, 0.4);
+  --elev-4: inset 0 1px 0 0 rgba(242, 236, 225, 0.13), 0 24px 64px rgba(15, 9, 5, 0.62);
+  --glow-red: 0 0 0 1px var(--accent-ring), 0 0 24px rgba(217, 87, 58, 0.35);
+  --glow-volt: 0 0 0 1px var(--volt-glow), 0 0 28px rgba(255, 139, 106, 0.4);
+  --panel-shadow: 0 24px 60px -28px rgba(12, 8, 4, 0.9);
+  --soft-shadow: 0 16px 40px -24px rgba(12, 8, 4, 0.7);
+
+  /* Composed backgrounds — Ember radials over warm graphite */
+  --hero-gradient:
+    radial-gradient(circle at top left, rgba(217, 87, 58, 0.18), transparent 30%),
+    radial-gradient(circle at top right, rgba(240, 112, 78, 0.05), transparent 32%),
+    linear-gradient(180deg, #110d0a 0%, #17130f 48%, #211b15 100%);
+  --card-glow:
+    radial-gradient(circle at top right, rgba(217, 87, 58, 0.15), transparent 32%),
+    linear-gradient(180deg, rgba(43, 36, 28, 0.98), rgba(34, 28, 22, 0.94));
+  --callout-glow:
+    radial-gradient(circle at top right, rgba(217, 87, 58, 0.15), transparent 34%),
+    linear-gradient(135deg, rgba(40, 33, 25, 0.97), rgba(34, 28, 22, 0.95));
+  --focus-glow:
+    radial-gradient(circle at top right, rgba(240, 112, 78, 0.12), transparent 34%),
+    linear-gradient(135deg, rgba(40, 33, 25, 0.97), rgba(34, 28, 22, 0.95));
+  --success-glow:
+    radial-gradient(circle at top right, rgba(75, 163, 111, 0.16), transparent 34%),
+    linear-gradient(135deg, rgba(24, 30, 24, 0.97), rgba(19, 21, 17, 0.95));
+}
+
+/* -------------------------------------------------------------------- *
+ * DAYLIGHT — warm paper + Pine (light)                                 *
+ * -------------------------------------------------------------------- */
+:root[data-theme="daylight"] {
+  color-scheme: light;
+  --theme-name: "PulsePeak Daylight";
+
+  --ink-rgb: 43, 33, 22;
+  --card-rgb: 248, 243, 234;
+  --card-alt-rgb: 244, 239, 228;
+  --accent-rgb: 31, 107, 92;
+  --chart-rgb: 44, 138, 118;
+  --premium-rgb: 18, 64, 54;
+  --sidebar-rgb: 237, 230, 216;
+  --overlay-rgb: 251, 247, 239;
+
+  /* Warm paper layers */
+  --app-background: #ede6d8;
+  --app-background-strong: #f4efe4;
+  --bg-sunken: #e4dccd;
+  --bg-elevated: #f8f3ea;
+  --bg-overlay: #fbf7ef;
+  --bg-inset: #e8e1d3;
+  --sidebar-background: rgba(237, 230, 216, 0.92);
+  --main-surface-background: rgba(237, 230, 216, 0.82);
+  --surface: rgba(248, 243, 234, 0.96);
+  --surface-strong: #fdfaf3;
+  --card-background: rgba(248, 243, 234, 0.96);
+  --secondary-card-background: #f4efe4;
+
+  /* Warm espresso ink */
+  --text-primary: #2b2116;
+  --text-secondary: #6d6252;
+  --text-muted: #9c9280;
+  --text-inverse: #f8f3ea;
+  --text-on-card: #2b2116;
+  --sidebar-text: #2b2116;
+  --sidebar-muted: #6d6252;
+
+  /* The one accent — Pine */
+  --accent-400: #2c8a76;
+  --accent-500: #1f6b5c;
+  --accent-600: #17564a;
+  --accent-700: #124036;
+  --accent-color: #1f6b5c;
+  --accent: #1f6b5c;
+  --accent-hover: #2c8a76;
+  --accent-active: #17564a;
+  --accent-soft: rgba(31, 107, 92, 0.14);
+  --accent-ring: rgba(31, 107, 92, 0.35);
+  --accent-contrast: #f2f7f4;
+  --ring-accent: #1f6b5c;
+  --chart-accent: #2c8a76;
+
+  /* "Volt" -> a brighter Pine */
+  --volt: #2c8a76;
+  --volt-bright: #3aa98f;
+  --volt-soft: rgba(44, 138, 118, 0.16);
+  --volt-glow: rgba(58, 169, 143, 0.36);
+  --premium-highlight: #1f6b5c;
+
+  /* Semantic (deepened for contrast on paper) */
+  --success: #1f8a63;
+  --success-soft: rgba(31, 138, 99, 0.14);
+  --warning: #b5801c;
+  --warning-soft: rgba(181, 128, 28, 0.14);
+  --danger: #bf4433;
+  --danger-soft: rgba(191, 68, 51, 0.13);
+  --info: #2f7fb0;
+  --info-soft: rgba(47, 127, 176, 0.13);
+
+  --data-high: #1f8a63;
+  --data-mid: #b5801c;
+  --data-low: #bf4433;
+  --data-strain: #1f6b5c;
+  --data-cardio: #2c8a76;
+  --data-volt: #2c8a76;
+  --data-track: rgba(43, 33, 22, 0.08);
+
+  /* Warm ink hairline borders */
+  --border-color: rgba(43, 33, 22, 0.12);
+  --border-subtle: rgba(43, 33, 22, 0.08);
+  --border-default: rgba(43, 33, 22, 0.12);
+  --border-strong: rgba(43, 33, 22, 0.2);
+  --border-accent: rgba(31, 107, 92, 0.5);
+  --hairline-top: rgba(255, 255, 255, 0.7);
+
+  /* Buttons / surfaces */
+  --button-text: #f2f7f4;
+  --secondary-button-background: rgba(43, 33, 22, 0.05);
+  --secondary-button-background-hover: rgba(43, 33, 22, 0.1);
+  --secondary-button-text: #2b2116;
+  --ghost-button-background: rgba(43, 33, 22, 0.04);
+  --ghost-button-background-hover: rgba(43, 33, 22, 0.08);
+  --ghost-button-text: #2b2116;
+  --surface-dark: #f4efe4;
+
+  /* Gradients */
+  --grad-pulse: linear-gradient(135deg, #2c8a76 0%, #1f6b5c 60%, #124036 100%);
+  --grad-volt: linear-gradient(135deg, #3aa98f 0%, #2c8a76 100%);
+  --grad-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 42%);
+  --grad-glow-red: radial-gradient(60% 60% at 50% 40%, rgba(31, 107, 92, 0.14) 0%, transparent 70%);
+  --grad-area-red: linear-gradient(180deg, rgba(31, 107, 92, 0.22) 0%, rgba(31, 107, 92, 0) 100%);
+  --button-background: var(--grad-pulse);
+  --button-hover: linear-gradient(135deg, #37a08a, #1f6b5c);
+
+  /* Elevation — light sheen top + soft warm shadow */
+  --elev-1: inset 0 1px 0 0 rgba(255, 255, 255, 0.7), 0 1px 2px rgba(60, 42, 24, 0.08), 0 2px 8px rgba(60, 42, 24, 0.08);
+  --elev-2: inset 0 1px 0 0 rgba(255, 255, 255, 0.7), 0 4px 12px rgba(60, 42, 24, 0.1), 0 8px 24px rgba(60, 42, 24, 0.09);
+  --elev-3: inset 0 1px 0 0 rgba(255, 255, 255, 0.7), 0 8px 24px rgba(60, 42, 24, 0.12), 0 16px 48px rgba(60, 42, 24, 0.1);
+  --elev-4: inset 0 1px 0 0 rgba(255, 255, 255, 0.7), 0 24px 64px rgba(60, 42, 24, 0.16);
+  --glow-red: 0 0 0 1px var(--accent-ring), 0 0 24px rgba(31, 107, 92, 0.22);
+  --glow-volt: 0 0 0 1px var(--volt-glow), 0 0 28px rgba(58, 169, 143, 0.28);
+  --panel-shadow: 0 24px 60px -30px rgba(60, 42, 24, 0.34);
+  --soft-shadow: 0 16px 40px -26px rgba(60, 42, 24, 0.26);
+
+  /* Composed backgrounds — Pine radials over warm paper */
+  --hero-gradient:
+    radial-gradient(circle at top left, rgba(31, 107, 92, 0.1), transparent 32%),
+    radial-gradient(circle at top right, rgba(44, 138, 118, 0.06), transparent 34%),
+    linear-gradient(180deg, #f4efe4 0%, #ede6d8 48%, #e4dccd 100%);
+  --card-glow:
+    radial-gradient(circle at top right, rgba(31, 107, 92, 0.08), transparent 34%),
+    linear-gradient(180deg, #fdfaf3, #f6f1e8);
+  --callout-glow:
+    radial-gradient(circle at top right, rgba(31, 107, 92, 0.08), transparent 36%),
+    linear-gradient(135deg, #faf5ec, #f4efe4);
+  --focus-glow:
+    radial-gradient(circle at top right, rgba(44, 138, 118, 0.09), transparent 36%),
+    linear-gradient(135deg, #faf5ec, #f4efe4);
+  --success-glow:
+    radial-gradient(circle at top right, rgba(31, 138, 99, 0.1), transparent 36%),
+    linear-gradient(135deg, #eff6ef, #eaf1e8);
+}

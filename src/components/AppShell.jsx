@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../state/AuthContext";
-import { FALLBACK_THEME, applyThemePreference } from "../config/themes";
+import { applyThemePreference, getStoredThemePreference, initThemeSync } from "../config/themes";
 import InstallPrompt from "./InstallPrompt";
 
 export default function AppShell({ children }) {
@@ -67,7 +67,8 @@ export default function AppShell({ children }) {
   const [activeGroup, setActiveGroup] = useState(() => getGroupForRoute(location, navGroups) || "training");
 
   useLayoutEffect(() => {
-    applyThemePreference(document.documentElement.dataset.theme || FALLBACK_THEME);
+    applyThemePreference(getStoredThemePreference());
+    return initThemeSync();
   }, []);
 
   useEffect(() => {

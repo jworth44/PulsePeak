@@ -40,7 +40,8 @@ export default function PreferencesPage() {
   };
 
   const changeTheme = (nextTheme) => {
-    setTheme(applyThemePreference(nextTheme));
+    applyThemePreference(nextTheme);
+    setTheme(nextTheme);
   };
 
   const updateProfilePreference = async (patch, key) => {

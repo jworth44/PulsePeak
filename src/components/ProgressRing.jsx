@@ -24,12 +24,12 @@ export default function ProgressRing({ value }) {
       <svg viewBox="0 0 120 120" aria-hidden="true">
         <defs>
           <linearGradient id="pp-ring-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#ff4d5f" />
-            <stop offset="100%" stopColor="#d6172e" />
+            <stop offset="0%" stopColor="var(--accent-400)" />
+            <stop offset="100%" stopColor="var(--accent-600)" />
           </linearGradient>
           <linearGradient id="pp-ring-gradient-volt" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#d8ff6b" />
-            <stop offset="100%" stopColor="#a3e635" />
+            <stop offset="0%" stopColor="var(--volt-bright)" />
+            <stop offset="100%" stopColor="var(--volt)" />
           </linearGradient>
         </defs>
         <circle className="ring-track" cx="60" cy="60" r="48" />
