@@ -67,7 +67,7 @@ export default function CoachPage() {
   };
 
   return (
-    <div className="page-grid">
+    <div className="page-grid editorial-sections">
       <Panel eyebrow="Coach summary" title="Use the coach to decide what matters most next">
         <div className="module-note">
           <strong>Your clearest next move, read from your real training.</strong>

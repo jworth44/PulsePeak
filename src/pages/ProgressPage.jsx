@@ -134,7 +134,7 @@ export default function ProgressPage() {
   };
 
   return (
-    <div className="page-grid">
+    <div className="page-grid editorial-sections">
       {error ? <div className="status-banner">{error}</div> : null}
       {status ? <div className="status-banner">{status}</div> : null}
 

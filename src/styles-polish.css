@@ -2030,3 +2030,24 @@ input:focus, select:focus, textarea:focus {
   padding: 0 !important;
 }
 .train-editorial-page .section-context-label { color: var(--text-muted) !important; }
+
+/* ===================================================================== */
+/* INSIGHT pages (Coach + Progress + …) — editorial pass (directive)       */
+/* Dissolve the stacked widget PANELS + section-context box-in-boxes into  */
+/* quiet sections; the insight-chips stay as the quiet at-a-glance data.   */
+/* ===================================================================== */
+.editorial-sections .panel {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  backdrop-filter: none !important;
+}
+.editorial-sections .panel::after { display: none !important; }
+.editorial-sections .section-context {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.editorial-sections .section-context-label { color: var(--text-muted) !important; }
