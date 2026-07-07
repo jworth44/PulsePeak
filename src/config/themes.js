@@ -32,8 +32,8 @@ export const THEME_OPTIONS = [
   {
     value: "liberty",
     label: "Liberty",
-    mood: "Red, white & blue — bold and patriotic",
-    chips: ["#c8102e", "#f6f8fc", "#1d4ed8"]
+    mood: "Red, white & blue — bold, immersive & patriotic",
+    chips: ["#0a1a3a", "#ef2b3d", "#3b82f6"]
   }
 ];
 
@@ -44,7 +44,7 @@ export const THEME_STORAGE_KEY = "pulsepeak-theme";
 // real-world evaluation; both themes are held to full parity regardless.
 export const FALLBACK_THEME = "midnight";
 
-const THEME_COLOR = { daylight: "#ede6d8", midnight: "#17130f", blossom: "#f1e6fc", liberty: "#f6f8fc" };
+const THEME_COLOR = { daylight: "#ede6d8", midnight: "#17130f", blossom: "#f1e6fc", liberty: "#0a1a3a" };
 
 export function normalizeThemePreference(value) {
   return THEME_OPTIONS.some((option) => option.value === value) ? value : FALLBACK_THEME;
