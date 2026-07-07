@@ -428,7 +428,7 @@ export default function WorkoutsPage() {
   };
 
   return (
-    <div className="page-grid page-grid-tight">
+    <div className="page-grid page-grid-tight train-editorial-page">
       <section className="module-page-hero">
         <div>
           <p className="badge">Workouts</p>

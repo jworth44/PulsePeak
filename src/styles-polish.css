@@ -2009,3 +2009,24 @@ input:focus, select:focus, textarea:focus {
   color: var(--text-muted) !important;
   opacity: 0.9;
 }
+
+/* ===================================================================== */
+/* TRAIN family (Workouts + Mobility) — editorial pass (directive)        */
+/* Dissolve the stacked control PANELS + section-context box-in-boxes into */
+/* quiet sections; hierarchy from type + space, not bordered chrome.       */
+/* ===================================================================== */
+.train-editorial-page .panel {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  backdrop-filter: none !important;
+}
+.train-editorial-page .panel::after { display: none !important; }
+.train-editorial-page .section-context {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.train-editorial-page .section-context-label { color: var(--text-muted) !important; }

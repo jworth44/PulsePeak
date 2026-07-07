@@ -389,7 +389,7 @@ export default function MobilityPage() {
   };
 
   return (
-    <div className="page-grid page-grid-tight">
+    <div className="page-grid page-grid-tight train-editorial-page">
       <section className="module-page-hero">
         <div className="mobility-hero-copy">
           <p className="badge">Mobility</p>
