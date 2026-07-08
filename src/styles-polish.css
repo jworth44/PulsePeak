@@ -2176,13 +2176,25 @@ input:focus, select:focus, textarea:focus {
   backdrop-filter: none !important;
 }
 
-/* Brand mark: a modest, restrained lockup — not a 300px billboard (CD V2:
-   remove noise / navigation recedes). This also shrinks the logo PNG's baked
-   black box, which reads as a dark rectangle on the Daylight paper ground.
-   The proper fix (a transparent-PNG logo that sits on either theme) is the
-   C11 media item; this keeps it tasteful in the meantime. */
-.onboarding-editorial .onboarding-brand-logo,
-.auth-editorial .auth-brand-logo { width: min(100%, 184px) !important; }
+/* Brand mark (C11 #3): the old logo was a baked JPEG (white-on-black, faked
+   transparency via mix-blend-mode:screen) that vanished on the light themes.
+   No transparent/dark asset exists and there's no local image tooling, so use
+   a clean themeable TEXT wordmark instead — the same treatment the app header
+   already uses (.app-brand-word). "Peak" carries the one warm accent (a nod to
+   the original two-tone red PEAK); both tokens adapt per theme, so it reads on
+   Midnight/Daylight/Blossom/Liberty with zero washout. If a heartbeat-logo
+   graphic is wanted, it needs a real transparent PNG (+ a light-theme variant)
+   supplied by the owner. */
+.brand-wordmark {
+  margin: 0;
+  font-family: "Space Grotesk", "Instrument Sans", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.55rem, 4.5vw, 1.95rem);
+  letter-spacing: var(--track-display);
+  color: var(--text-primary);
+  line-height: 1;
+}
+.brand-wordmark-accent { color: var(--accent); }
 
 /* ===================================================================== */
 /* MODULE PAGE HEADERS — dissolve the boxed hero (consistency sweep)       */

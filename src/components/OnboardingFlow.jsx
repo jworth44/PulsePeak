@@ -35,7 +35,7 @@ const STEP_TITLES = [
 ];
 
 const ONBOARDING_STEP_MEDIA = {
-  0: { src: "/media/onboarding/onboarding-2.jpg", alt: "PulsePeak welcome setup preview" },
+  0: { src: "/media/onboarding/onboarding-1.jpg", alt: "Training with dumbbells in a bright gym" },
   1: { src: "/media/onboarding/onboarding-4.jpg", alt: "PulsePeak app mode setup preview" },
   2: { src: "/media/onboarding/onboarding-6.jpg", alt: "PulsePeak goal selection setup preview" },
   3: { src: "/media/onboarding/onboarding-11.jpg", alt: "PulsePeak training setup preview" },
@@ -242,7 +242,9 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
   return (
     <div className="onboarding-shell onboarding-editorial">
       <section className="onboarding-panel onboarding-hero">
-        <img className="onboarding-brand-logo" src={BRAND_LOGO} alt="PulsePeak" />
+        <p className="brand-wordmark onboarding-brand-word" aria-label="PulsePeak">
+          Pulse<span className="brand-wordmark-accent">Peak</span>
+        </p>
         <p className="badge">{mode === "onboarding" ? "Tailored setup" : "Preferences"}</p>
         <h1>
           {mode === "onboarding"

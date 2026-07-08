@@ -29,7 +29,9 @@ export default function AuthPage() {
     <div className="auth-shell auth-editorial">
       <section className="auth-hero">
         <div className="auth-brand">
-          <img className="auth-brand-logo" src={BRAND_LOGO} alt="PulsePeak" />
+          <p className="brand-wordmark auth-brand-word" aria-label="PulsePeak">
+            Pulse<span className="brand-wordmark-accent">Peak</span>
+          </p>
         </div>
         <p className="badge">Personal training, remembered</p>
         <h1>Build better health momentum with a fitness workspace that remembers you.</h1>

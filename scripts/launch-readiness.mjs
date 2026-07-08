@@ -546,7 +546,7 @@ async function runBrowserCoverage(browser) {
     collectNormalUsageErrors(page, bucket);
     await page.goto(baseUrl, { waitUntil: "networkidle" });
     await page.getByRole("heading", { name: /build better health momentum/i }).waitFor({ timeout: 15000 });
-    expect(await page.locator(".auth-brand-logo").count(), "Auth page did not render full logo.");
+    expect(await page.locator(".auth-brand-word").count(), "Auth page did not render brand wordmark.");
     expect((await page.locator(".sidebar").count()) === 0, "Unauthenticated auth page rendered sidebar.");
     await page.goto(`${baseUrl}/definitely-not-a-route`, { waitUntil: "networkidle" });
     await page.getByRole("heading", { name: /build better health momentum/i }).waitFor({ timeout: 15000 });
@@ -562,7 +562,7 @@ async function runBrowserCoverage(browser) {
     await page.goto(`${baseUrl}/workouts`, { waitUntil: "networkidle" });
     await page.getByRole("heading", { name: /set up pulsepeak once/i }).waitFor({ timeout: 15000 });
     expect(page.url().includes("/onboarding"), "Onboarding-gated user was not forced onto onboarding route.");
-    expect(await page.locator(".onboarding-brand-logo").count(), "Onboarding page did not render full logo.");
+    expect(await page.locator(".onboarding-brand-word").count(), "Onboarding page did not render brand wordmark.");
     recordScenario("onboarding-gate", {
       pass: bucket.consoleErrors.length === 0 && bucket.pageErrors.length === 0,
       consoleErrors: bucket.consoleErrors,
