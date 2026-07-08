@@ -2197,3 +2197,39 @@ input:focus, select:focus, textarea:focus {
   border-radius: 0 !important;
   color: var(--text-secondary) !important;
 }
+
+/* ===================================================================== */
+/* C4 SESSION MODAL — dissolve the metadata matrix (first slice)          */
+/* The workout session opened with a 4-chip "database record" matrix      */
+/* (Type / Duration / Setup / Intensity) — CD V2's exact "metadata        */
+/* matrix / control panel" tell. Dissolve the chip boxes into a quiet     */
+/* wrapped metadata strip: a tiny caption label + a prominent value,      */
+/* separated by space, no boxes. Scoped to the session modal so the       */
+/* shared .insight-chip elsewhere (Coach/Progress) is untouched. The      */
+/* interactive parts of the modal (checkboxes/swaps/complete) are NOT     */
+/* touched. Both themes. */
+.workout-session-modal .detail-grid {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 6px 30px;
+  margin-bottom: 18px;
+}
+.workout-session-modal .detail-grid .insight-chip {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  gap: 1px;
+}
+.workout-session-modal .detail-grid .insight-chip strong {
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+.workout-session-modal .detail-grid .insight-chip .muted {
+  color: var(--text-primary) !important;
+  font-size: 0.98rem;
+}
