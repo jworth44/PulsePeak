@@ -2160,3 +2160,40 @@ input:focus, select:focus, textarea:focus {
    C11 media item; this keeps it tasteful in the meantime. */
 .onboarding-editorial .onboarding-brand-logo,
 .auth-editorial .auth-brand-logo { width: min(100%, 184px) !important; }
+
+/* ===================================================================== */
+/* MODULE PAGE HEADERS — dissolve the boxed hero (consistency sweep)       */
+/* Workouts / Plan / Exercise Library / Mobility / Nutrition / Settings    */
+/* wrapped their page title + subcopy in a bordered, shadowed, tinted card */
+/* — the "assembled" look CD V2 rejects, and inconsistent with Today,      */
+/* whose page header is plain editorial type. The page .panel blocks were  */
+/* already dissolved by the editorial passes; this header used a separate  */
+/* `.module-page-hero` class and escaped it. Dissolve the box so the title */
+/* reads as type on the page. Only override .module-page-hero (NOT the     */
+/* shared .today-hero base rule). Both themes. */
+.module-page-hero {
+  border: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+/* Keep the 2-column layout only where a second column is actually used
+   (Plan actions / Library stat / Mobility quick-actions); let title-only
+   heroes (Workouts / Nutrition / Settings) run full width instead of
+   leaving an empty right column (the dead space the box used to frame). */
+.module-page-hero:not(:has(> :nth-child(2))) { grid-template-columns: 1fr !important; }
+/* Quiet the hero eyebrow to a plain label, matching the dissolved header +
+   the onboarding/auth + Today treatment. 5 heroes use a `.badge` pill and one
+   (Exercise Library) uses a red `.section-label` — quiet BOTH so all six
+   module headers read consistently (scoped to the hero only; the accent
+   section-labels elsewhere on Coach/Progress are untouched). --text-secondary
+   keeps it AA on both grounds. */
+.module-page-hero .badge,
+.module-page-hero .section-label {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  color: var(--text-secondary) !important;
+}
