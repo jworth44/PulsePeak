@@ -434,61 +434,62 @@
   color-scheme: dark;
   --theme-name: "PulsePeak Liberty";
 
-  --ink-rgb: 240, 244, 251;
-  --card-rgb: 19, 38, 77;
-  --card-alt-rgb: 26, 48, 92;
-  --accent-rgb: 59, 130, 246;
-  --chart-rgb: 239, 43, 61;
-  --premium-rgb: 191, 219, 254;
-  --sidebar-rgb: 8, 22, 50;
-  --overlay-rgb: 12, 30, 66;
+  --ink-rgb: 247, 247, 243;
+  --card-rgb: 16, 40, 71;
+  --card-alt-rgb: 20, 52, 90;
+  --accent-rgb: 214, 40, 57;
+  --chart-rgb: 214, 40, 57;
+  --premium-rgb: 183, 192, 204;
+  --sidebar-rgb: 7, 22, 42;
+  --overlay-rgb: 8, 28, 51;
 
-  /* Navy background layers — kept translucent so the red/white/blue streak
-     backdrop shows through the frosted (backdrop-blur) surfaces. */
-  --app-background: #0a1a3a;
-  --app-background-strong: #0d2148;
-  --bg-sunken: #071630;
-  --bg-elevated: #13264d;
-  --bg-overlay: #182f5c;
-  --bg-inset: #0a1c3f;
-  --sidebar-background: rgba(8, 22, 50, 0.86);
-  --main-surface-background: rgba(9, 24, 54, 0.24);
-  --surface: rgba(15, 31, 64, 0.86);
-  --surface-strong: rgba(24, 44, 86, 0.92);
-  --card-background: rgba(15, 31, 64, 0.86);
-  --secondary-card-background: rgba(22, 42, 82, 0.86);
+  /* Deep midnight navy — warm, not cold (American editorial spec:
+     #07162A / #081C33 / #0A1F38). Layered depth via #102847 / #14345A. */
+  --app-background: #081c33;
+  --app-background-strong: #0a1f38;
+  --bg-sunken: #07162a;
+  --bg-elevated: #102847;
+  --bg-overlay: #14345a;
+  --bg-inset: #081c33;
+  --sidebar-background: rgba(7, 22, 42, 0.88);
+  --main-surface-background: rgba(8, 28, 51, 0.24);
+  --surface: rgba(16, 40, 71, 0.86);
+  --surface-strong: rgba(20, 52, 90, 0.92);
+  --card-background: rgba(16, 40, 71, 0.9);
+  --secondary-card-background: rgba(20, 52, 90, 0.88);
 
-  /* Bright ink on navy */
-  --text-primary: #f2f6fd;
-  --text-secondary: #b7c6e2;
-  --text-muted: #8ea1c6;
-  --text-inverse: #0a1a3a;
-  --text-on-card: #f2f6fd;
-  --sidebar-text: #f2f6fd;
-  --sidebar-muted: #b7c6e2;
+  /* Warm white ink on navy — never pure white (spec #F7F7F3); muted silver
+     for supporting text (spec #B7C0CC / #A8B4C2). */
+  --text-primary: #f7f7f3;
+  --text-secondary: #b7c0cc;
+  --text-muted: #93a0af;
+  --text-inverse: #081c33;
+  --text-on-card: #f7f7f3;
+  --sidebar-text: #f7f7f3;
+  --sidebar-muted: #b7c0cc;
 
   /* Accent — RED (brand); the primary colour everywhere (pills, buttons,
      badges, icons). White text on solid #e11d2f clears AA (~4.8). */
-  --accent-400: #ff6069;
-  --accent-500: #e11d2f;
-  --accent-600: #c0182c;
-  --accent-700: #9e1424;
-  --accent-color: #e11d2f;
-  --accent: #e11d2f;
-  --accent-hover: #ff3b47;
-  --accent-active: #c0182c;
-  --accent-soft: rgba(225, 29, 47, 0.2);
-  --accent-ring: rgba(225, 29, 47, 0.55);
+  --accent-400: #e24450;
+  --accent-500: #d62839;
+  --accent-600: #c9252d;
+  --accent-700: #a81e28;
+  --accent-color: #d62839;
+  --accent: #d62839;
+  --accent-hover: #e23744;
+  --accent-active: #c9252d;
+  --accent-soft: rgba(214, 40, 57, 0.2);
+  --accent-ring: rgba(214, 40, 57, 0.55);
   --accent-contrast: #ffffff;
-  --ring-accent: #e11d2f;
-  --chart-accent: #ff4d5e;
+  --ring-accent: #d62839;
+  --chart-accent: #e24450;
 
-  /* Volt -> a brighter red so achievements glow the same brand hue */
-  --volt: #ff3b47;
-  --volt-bright: #ff6069;
-  --volt-soft: rgba(255, 59, 71, 0.22);
-  --volt-glow: rgba(255, 59, 71, 0.55);
-  --premium-highlight: #7fb0ff;
+  /* Volt -> performance red so achievements glow the same brand hue */
+  --volt: #e23744;
+  --volt-bright: #e8505b;
+  --volt-soft: rgba(226, 55, 68, 0.22);
+  --volt-glow: rgba(226, 55, 68, 0.5);
+  --premium-highlight: #b7c0cc;
 
   /* Semantic (on dark navy) */
   --success: #34d399;
@@ -497,77 +498,72 @@
   --warning-soft: rgba(251, 191, 36, 0.2);
   --danger: #ff5468;
   --danger-soft: rgba(255, 84, 104, 0.2);
-  --info: #60a5fa;
-  --info-soft: rgba(96, 165, 250, 0.2);
+  /* Spec: never bright saturated blue — informational blue muted to steel. */
+  --info: #9db0c6;
+  --info-soft: rgba(157, 176, 198, 0.2);
 
   --data-high: #34d399;
   --data-mid: #fbbf24;
   --data-low: #ff5468;
-  --data-strain: #ff3b4e;
-  --data-cardio: #3b82f6;
-  --data-volt: #ff4d5e;
-  --data-track: rgba(240, 244, 251, 0.12);
+  --data-strain: #e23744;
+  --data-cardio: #7c93b0;
+  --data-volt: #e24450;
+  --data-track: rgba(247, 247, 243, 0.12);
 
-  /* Light hairline borders */
-  --border-color: rgba(240, 244, 251, 0.12);
-  --border-subtle: rgba(240, 244, 251, 0.09);
-  --border-default: rgba(240, 244, 251, 0.12);
-  --border-strong: rgba(240, 244, 251, 0.22);
-  --border-accent: rgba(225, 29, 47, 0.6);
-  --hairline-top: rgba(240, 244, 251, 0.12);
+  /* Hairline borders — muted silver on navy (spec supporting colour). */
+  --border-color: rgba(183, 192, 204, 0.16);
+  --border-subtle: rgba(183, 192, 204, 0.1);
+  --border-default: rgba(183, 192, 204, 0.16);
+  --border-strong: rgba(183, 192, 204, 0.28);
+  --border-accent: rgba(214, 40, 57, 0.6);
+  --hairline-top: rgba(247, 247, 243, 0.1);
 
   /* Buttons / surfaces */
   --button-text: #ffffff;
-  --secondary-button-background: rgba(240, 244, 251, 0.09);
-  --secondary-button-background-hover: rgba(240, 244, 251, 0.16);
-  --secondary-button-text: #f2f6fd;
-  --ghost-button-background: rgba(240, 244, 251, 0.06);
-  --ghost-button-background-hover: rgba(240, 244, 251, 0.12);
-  --ghost-button-text: #f2f6fd;
-  --surface-dark: #0d2148;
+  --secondary-button-background: rgba(183, 192, 204, 0.1);
+  --secondary-button-background-hover: rgba(183, 192, 204, 0.18);
+  --secondary-button-text: #f7f7f3;
+  --ghost-button-background: rgba(183, 192, 204, 0.07);
+  --ghost-button-background-hover: rgba(183, 192, 204, 0.14);
+  --ghost-button-text: #f7f7f3;
+  --surface-dark: #0a1f38;
 
-  /* Gradients — bold RED */
-  --grad-pulse: linear-gradient(120deg, #ff3b47 0%, #e11d2f 46%, #b3122a 100%);
-  --grad-volt: linear-gradient(135deg, #ff6069 0%, #e11d2f 100%);
-  --grad-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 42%);
-  --grad-glow-red: radial-gradient(60% 60% at 50% 40%, rgba(225, 29, 47, 0.4) 0%, transparent 70%);
-  --grad-area-red: linear-gradient(180deg, rgba(225, 29, 47, 0.4) 0%, rgba(225, 29, 47, 0) 100%);
+  /* Gradients — performance RED */
+  --grad-pulse: linear-gradient(120deg, #e23744 0%, #d62839 46%, #b31f2a 100%);
+  --grad-volt: linear-gradient(135deg, #e8505b 0%, #d62839 100%);
+  --grad-surface: linear-gradient(180deg, rgba(247, 247, 243, 0.05) 0%, rgba(247, 247, 243, 0) 42%);
+  --grad-glow-red: radial-gradient(60% 60% at 50% 40%, rgba(214, 40, 57, 0.38) 0%, transparent 70%);
+  --grad-area-red: linear-gradient(180deg, rgba(214, 40, 57, 0.38) 0%, rgba(214, 40, 57, 0) 100%);
   --button-background: var(--grad-pulse);
-  --button-hover: linear-gradient(120deg, #ff3b47, #c0182c);
+  --button-hover: linear-gradient(120deg, #e23744, #c9252d);
 
   /* Elevation — deep navy shadows + light hairline */
-  --elev-1: inset 0 1px 0 0 rgba(240, 244, 251, 0.08), 0 1px 2px rgba(2, 8, 23, 0.5), 0 2px 8px rgba(2, 8, 23, 0.4);
-  --elev-2: inset 0 1px 0 0 rgba(240, 244, 251, 0.1), 0 4px 12px rgba(2, 8, 23, 0.55), 0 8px 24px rgba(2, 8, 23, 0.42);
-  --elev-3: inset 0 1px 0 0 rgba(240, 244, 251, 0.12), 0 8px 24px rgba(2, 8, 23, 0.6), 0 16px 48px rgba(2, 8, 23, 0.5);
-  --elev-4: inset 0 1px 0 0 rgba(240, 244, 251, 0.14), 0 24px 64px rgba(1, 5, 16, 0.7);
-  --glow-red: 0 0 0 1px var(--accent-ring), 0 0 26px rgba(59, 130, 246, 0.4);
-  --glow-volt: 0 0 0 1px var(--volt-glow), 0 0 30px rgba(255, 77, 94, 0.45);
-  --panel-shadow: 0 24px 60px -28px rgba(1, 5, 16, 0.95);
-  --soft-shadow: 0 16px 40px -24px rgba(1, 5, 16, 0.8);
+  --elev-1: inset 0 1px 0 0 rgba(247, 247, 243, 0.07), 0 1px 2px rgba(2, 8, 20, 0.5), 0 2px 8px rgba(2, 8, 20, 0.4);
+  --elev-2: inset 0 1px 0 0 rgba(247, 247, 243, 0.09), 0 4px 12px rgba(2, 8, 20, 0.55), 0 8px 24px rgba(2, 8, 20, 0.42);
+  --elev-3: inset 0 1px 0 0 rgba(247, 247, 243, 0.1), 0 8px 24px rgba(2, 8, 20, 0.6), 0 16px 48px rgba(2, 8, 20, 0.5);
+  --elev-4: inset 0 1px 0 0 rgba(247, 247, 243, 0.12), 0 24px 64px rgba(1, 5, 14, 0.7);
+  --glow-red: 0 0 0 1px var(--accent-ring), 0 0 26px rgba(214, 40, 57, 0.38);
+  --glow-volt: 0 0 0 1px var(--volt-glow), 0 0 30px rgba(226, 55, 68, 0.42);
+  --panel-shadow: 0 24px 60px -28px rgba(1, 5, 14, 0.95);
+  --soft-shadow: 0 16px 40px -24px rgba(1, 5, 14, 0.8);
 
-  /* Composed backgrounds — a full-bleed RED / WHITE / BLUE streak field over a
-     lighter, more transparent navy. Several diagonal streaks of varying width
-     read as dynamic motion (the "streaks" look). */
+  /* Composed backgrounds — SUBTLE per the American editorial spec: a deep warm
+     navy gradient with a soft red spotlight. No loud red/white/blue streaks —
+     the patriotism is felt (the faded top-left flag on body::before), not
+     decorated across the content. */
   --hero-gradient:
-    linear-gradient(118deg, transparent 3%, rgba(239, 43, 61, 0.55) 8%, rgba(239, 43, 61, 0) 17%),
-    linear-gradient(118deg, transparent 13%, rgba(255, 255, 255, 0.24) 18%, rgba(255, 255, 255, 0) 24%),
-    linear-gradient(118deg, transparent 21%, rgba(59, 130, 246, 0.6) 27%, rgba(59, 130, 246, 0) 38%),
-    linear-gradient(118deg, transparent 40%, rgba(239, 43, 61, 0.3) 45%, rgba(239, 43, 61, 0) 52%),
-    linear-gradient(118deg, transparent 58%, rgba(255, 255, 255, 0.16) 62%, rgba(255, 255, 255, 0) 67%),
-    linear-gradient(118deg, transparent 68%, rgba(59, 130, 246, 0.5) 75%, rgba(59, 130, 246, 0) 86%),
-    linear-gradient(118deg, transparent 84%, rgba(239, 43, 61, 0.4) 90%, rgba(239, 43, 61, 0) 97%),
-    linear-gradient(158deg, #0d2150 0%, #0a1b40 52%, #081530 100%);
+    radial-gradient(120% 90% at 16% -4%, rgba(214, 40, 57, 0.1), transparent 48%),
+    linear-gradient(158deg, #0a1f38 0%, #081c33 54%, #07162a 100%);
   --card-glow:
-    radial-gradient(circle at top right, rgba(59, 130, 246, 0.16), transparent 40%),
-    linear-gradient(180deg, rgba(26, 48, 92, 0.95), rgba(19, 38, 77, 0.92));
+    linear-gradient(180deg, rgba(20, 52, 90, 0.95), rgba(16, 40, 71, 0.92));
   --callout-glow:
-    radial-gradient(circle at top right, rgba(239, 43, 61, 0.18), transparent 42%),
-    linear-gradient(135deg, rgba(24, 46, 90, 0.96), rgba(19, 38, 77, 0.94));
+    radial-gradient(circle at top right, rgba(214, 40, 57, 0.16), transparent 42%),
+    linear-gradient(135deg, rgba(20, 52, 90, 0.96), rgba(16, 40, 71, 0.94));
   --focus-glow:
-    radial-gradient(circle at top right, rgba(59, 130, 246, 0.2), transparent 42%),
-    linear-gradient(135deg, rgba(24, 46, 90, 0.96), rgba(19, 38, 77, 0.94));
+    radial-gradient(circle at top right, rgba(214, 40, 57, 0.14), transparent 42%),
+    linear-gradient(135deg, rgba(20, 52, 90, 0.96), rgba(16, 40, 71, 0.94));
   --success-glow:
-    radial-gradient(circle at top right, rgba(52, 211, 153, 0.18), transparent 42%),
+    radial-gradient(circle at top right, rgba(52, 211, 153, 0.16), transparent 42%),
     linear-gradient(135deg, rgba(16, 46, 52, 0.96), rgba(14, 36, 60, 0.94));
 }
 
@@ -577,17 +573,21 @@
    (kept dark enough for white text). Background only — NEVER a filter on
    .app-main (that would break fixed modal positioning). */
 :root[data-theme="liberty"] .app-main {
-  background: rgba(10, 22, 50, 0.32) !important;
+  background: rgba(8, 28, 51, 0.32) !important;
 }
 
 /* The fixed full-viewport backdrop (body::before) flies a large US flag ghosted
    into the top-left, fading into deep navy — plus a soft red glow. */
 :root[data-theme="liberty"] body::before {
+  /* Spec: the flag is FELT, not decorated — a faded texture in the top-left
+     corner that only reads if you look closely. Fade it out fast + keep it
+     faint so it never competes with the hero text. */
   background:
-    linear-gradient(112deg, rgba(9, 20, 46, 0.34) 0%, rgba(9, 20, 46, 0.8) 40%, #0a1a3a 64%),
-    url("/us-flag.svg") left -30px top -24px / 780px auto no-repeat,
-    radial-gradient(circle at 92% 6%, rgba(225, 29, 47, 0.16), transparent 42%),
-    linear-gradient(158deg, #0c1c42 0%, #0a1836 55%, #081530 100%) !important;
+    linear-gradient(116deg, rgba(7, 22, 42, 0.62) 0%, rgba(7, 22, 42, 0.92) 26%, #081c33 42%),
+    linear-gradient(190deg, transparent 0%, rgba(7, 22, 42, 0.75) 30%, #081c33 46%),
+    url("/us-flag.svg") left -40px top -30px / 620px auto no-repeat,
+    radial-gradient(circle at 92% 6%, rgba(214, 40, 57, 0.13), transparent 42%),
+    linear-gradient(158deg, #0a1f38 0%, #081c33 55%, #07162a 100%) !important;
 }
 
 /* Eyebrows/labels: a bright, AA-safe RED on the navy ground (matches the
