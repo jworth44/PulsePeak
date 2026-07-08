@@ -710,6 +710,22 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
   margin: 0 auto;
 }
 
+/* Mobile gutter (owner item #1). At <=780px the app was full-bleed (.app-main
+   padding: 0 0 16px), so plain-type content — greeting, hero titles, dissolved
+   section headers/body — hugged the screen edge at x:0 while card text sat
+   inset by its own padding. Give the content column a consistent 16px
+   horizontal gutter so nothing touches the edge; this reproduces on mobile the
+   same content-inset relationship desktop already has (section headers at the
+   column edge, card text inset further). box-sizing:border-box keeps it inside
+   the viewport (no horizontal scroll). Respects the notch in landscape. */
+@media (max-width: 780px) {
+  .app-column {
+    box-sizing: border-box;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+}
+
 /* Contextual secondary nav — a door's sub-pages, so nothing is stranded. */
 .section-subnav {
   display: flex;
