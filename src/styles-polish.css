@@ -2233,3 +2233,21 @@ input:focus, select:focus, textarea:focus {
   color: var(--text-primary) !important;
   font-size: 0.98rem;
 }
+
+/* Session guidance callouts (START HERE + OPTIONAL WARM-UP) opened as two
+   glowy/tinted boxes stacked above the current-exercise hero, burying the one
+   thing that should lead during a live session. Dissolve them into quiet
+   sections (hairline + space) so the current-exercise card + phase list lead;
+   the guidance text is kept, just de-emphasized (CD V2: one hero, hierarchy
+   from type not chrome). The current-exercise card stays the elevated hero and
+   the interactive exercise cards keep their boundaries. Scoped to the modal. */
+.workout-session-modal .workout-start-callout,
+.workout-session-modal .workout-support-block {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 16px 0 0 !important;
+  margin: 4px 0 0 !important;
+  border-top: 1px solid var(--border-subtle) !important;
+}
