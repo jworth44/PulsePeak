@@ -237,9 +237,47 @@ media review · commit · production-log line · roadmap update. Then the next b
   settings restyle; the logo transparent-PNG + onboarding gym-photo baked "BD
   FITNESS" logo are **C11 media** items (now slightly more visible on Daylight
   paper since the surrounding chrome was removed).
-- C4–C9, C11–C12 — queued. **C4 Train (session flow) is next on the critical path.**
-  Remaining editorial tail from the last session: Liberty→reference polish +
-  Blossom text tweaks + a final cross-screen consistency sweep.
+- **Consistency sweep** (autonomous `/loop`, 2026-07-08) — clearing editorial
+  stragglers that escaped the page-scoped `.panel` dissolves:
+  - `e0c6091` — **`.focus-step` false-hover killed app-wide.** It's a plain
+    uppercase eyebrow label everywhere (Coach / workout+movement+plan modals /
+    onboarding / review; 21 spans, none wrapping an image) yet the polish
+    override gave every one a chip bg + `translateY(-3px)` hover. Now quiet type,
+    `--text-secondary` (AA both themes). Verified Coach both themes.
+  - `51a6c21` — **boxed module page headers dissolved.** `.module-page-hero`
+    (Workouts/Plan/Exercise Library/Mobility/Nutrition/Settings) boxed its title
+    in a bordered/shadowed card, inconsistent with Today's plain-type header.
+    Dissolved (scoped, not the shared `.today-hero` rule); kept 2-col only where a
+    2nd column is used (`:not(:has(> :nth-child(2)))` runs title-only heroes full
+    width, killing the empty right column); quieted the eyebrow (`.badge` ×5 +
+    Exercise Library's red `.section-label`) so all six match. Verified all four
+    variants both themes + mobile.
+- **C4 Train — first slice** `f2d5a1f` — reached the live session modal (Dashboard
+  → "Start today's session") and dissolved its **4-chip metadata matrix**
+  (Type/Duration/Setup/Intensity) into a quiet strip; scoped to
+  `.workout-session-modal`. Verified live modal both themes. **C4 remaining is the
+  bulk of the capability** (XL): guidance callouts (intentional `--focus-glow`
+  emphasis → owner judgment), current-exercise hero + phase-list packaging (needs
+  a data-populated session — the free-tier preview shows "0 of 0"), signal pills,
+  progress/complete presentation.
+- C5–C9, C11–C12 — queued.
+
+### ⏳ Owner-gated / owner-judgment queue (surfaced by the autonomous sweep)
+*These are the highest-value remaining moves but each needs your input or gated
+access — I've deliberately NOT changed them blind:*
+1. **Mobile gutter decision.** `.app-main` is `padding: 0 0 16px` at ≤780px — the
+   app is full-bleed on mobile, so plain-type content (greeting, hero titles,
+   dissolved section headers) hugs the screen edge at x:0 while card text is inset
+   ~18px. Pre-existing + app-wide (not a regression). A gutter would inset the
+   full-bleed cards too → a shell-wide aesthetic call; also can't verify blind
+   (mobile screenshots unavailable this environment).
+2. **Accent section-label eyebrows** on Coach/Progress/Plan bodies (loud red/Pine
+   "COACH SUMMARY" etc.) — keep as the brand's one color moment, or quiet to match
+   the dissolved headers? A deliberate taste call.
+3. **C4 session-flow depth** — wants your ~2-min boundary visual pass + a
+   data-populated (trial/premium) session to verify the phase list.
+4. **Liberty → reference polish + Blossom text tweaks** — need your reference board.
+5. **C11 media** — logo transparent-PNG + onboarding "BD FITNESS" baked photo.
 
 ---
 
