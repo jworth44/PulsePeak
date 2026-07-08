@@ -477,7 +477,7 @@ export default function WorkoutDetailModal({
                         <span className="exercise-signal-pill">{exercise.muscleGroup}</span>
                         {exercise.lastLoad?.weight ? <span className="exercise-signal-pill">Used in your last session: {exercise.lastLoad.weight}</span> : null}
                         {exercise.rehabSafe ? <span className="exercise-signal-pill">Joint-friendly option</span> : null}
-                        {exercise.availableSwapCount ? <span className="exercise-signal-pill">{exercise.availableSwapCount} alternatives available</span> : null}
+                        {exercise.availableSwapCount ? <span className="exercise-signal-pill">{exercise.availableSwapCount} alternative{exercise.availableSwapCount === 1 ? "" : "s"} available</span> : null}
                       </div>
 
                       <div className="workout-load-grid" onClick={(event) => event.stopPropagation()}>
@@ -515,7 +515,7 @@ export default function WorkoutDetailModal({
 
                       {swapOptions.length > 1 ? (
                         <label className="exercise-swap-picker" onClick={(event) => event.stopPropagation()}>
-                          Swap exercise{exercise.availableSwapCount ? ` (${exercise.availableSwapCount} options)` : ""}
+                          Swap exercise{exercise.availableSwapCount ? ` (${exercise.availableSwapCount} option${exercise.availableSwapCount === 1 ? "" : "s"})` : ""}
                           <select value={selectedBySlot[slotKey] || exercise.name} onChange={(event) => handleSwap(exercise, event.target.value)}>
                             {swapOptions.map((option) => (
                               <option key={`${slotKey}-${option.name}`} value={option.name}>
@@ -523,9 +523,6 @@ export default function WorkoutDetailModal({
                               </option>
                             ))}
                           </select>
-                          {exercise.familyOptionCount > 3 ? (
-                            <span className="support-copy">More options in this movement family are ready when you want variety.</span>
-                          ) : null}
                         </label>
                       ) : null}
                     </article>
