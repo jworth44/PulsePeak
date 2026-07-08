@@ -252,30 +252,51 @@ media review · commit · production-log line · roadmap update. Then the next b
     width, killing the empty right column); quieted the eyebrow (`.badge` ×5 +
     Exercise Library's red `.section-label`) so all six match. Verified all four
     variants both themes + mobile.
-- **C4 Train — first slice** `f2d5a1f` — reached the live session modal (Dashboard
-  → "Start today's session") and dissolved its **4-chip metadata matrix**
-  (Type/Duration/Setup/Intensity) into a quiet strip; scoped to
-  `.workout-session-modal`. Verified live modal both themes. **C4 remaining is the
-  bulk of the capability** (XL): guidance callouts (intentional `--focus-glow`
-  emphasis → owner judgment), current-exercise hero + phase-list packaging (needs
-  a data-populated session — the free-tier preview shows "0 of 0"), signal pills,
-  progress/complete presentation.
+- **C4 Train — advancing** (session modal now in good editorial shape):
+  - `f2d5a1f` — dissolved the **4-chip metadata matrix** (Type/Duration/Setup/
+    Intensity) into a quiet strip; scoped to `.workout-session-modal`.
+  - `eb923ad` — dissolved the two glowy **guidance callouts** (START HERE +
+    OPTIONAL WARM-UP) into quiet hairline sections so the **current-exercise card
+    is the single elevated hero** and the interactive exercise cards keep their
+    boundaries. (Unlocked a data-populated session by granting a *local test user*
+    premium — dev data only, gitignored `db.json`, no real billing — to verify.)
+  - **Full flow verified end-to-end** (open → 5 exercises → complete → logged →
+    streak). Both slices hold throughout. WeekInReview modal = appropriately
+    designed (stat recap, not a metadata matrix) — left as-is. The completion
+    celebration (Wow-Factor P1-2) didn't render under synthetic completion — built
+    with care, left alone.
+  - *C4 remaining:* exercise-card density (interactive — careful), celebration
+    trigger under real interaction, complete-button presentation.
+- **App-wide CD V2: accent eyebrows quieted** `c7942d8` — global
+  `.section-label { color: var(--accent) }` stamped the loud accent on every
+  section eyebrow; changed to `--text-secondary` so hierarchy comes from type not
+  colour (accent reserved for CTAs/active states). Headings now lead. Intentional
+  accents keep their overrides (featured tier `--volt`). Verified Coach + Progress
+  + auth both themes, 0 contrast fails. **One-line reversible** if coloured
+  eyebrows are preferred.
 - C5–C9, C11–C12 — queued.
 
 ### ⏳ Owner-gated / owner-judgment queue (surfaced by the autonomous sweep)
 *These are the highest-value remaining moves but each needs your input or gated
 access — I've deliberately NOT changed them blind:*
-1. **Mobile gutter decision.** `.app-main` is `padding: 0 0 16px` at ≤780px — the
-   app is full-bleed on mobile, so plain-type content (greeting, hero titles,
-   dissolved section headers) hugs the screen edge at x:0 while card text is inset
-   ~18px. Pre-existing + app-wide (not a regression). A gutter would inset the
-   full-bleed cards too → a shell-wide aesthetic call; also can't verify blind
-   (mobile screenshots unavailable this environment).
-2. **Accent section-label eyebrows** on Coach/Progress/Plan bodies (loud red/Pine
-   "COACH SUMMARY" etc.) — keep as the brand's one color moment, or quiet to match
-   the dissolved headers? A deliberate taste call.
-3. **C4 session-flow depth** — wants your ~2-min boundary visual pass + a
-   data-populated (trial/premium) session to verify the phase list.
+1. **Mobile gutter decision** (the single biggest remaining known issue). `.app-main`
+   is `padding: 0 0 16px` at ≤780px — a **deliberate full-bleed-card choice** — so
+   plain-type content (greeting, hero titles, dissolved section headers) hugs the
+   screen edge at x:0 while card text is inset ~18px. My editorial dissolves
+   *exposed* this more (they removed card padding from now-plain sections). The
+   standard fix — a ~16px horizontal gutter on `.app-main` — would inset the
+   full-bleed cards too, i.e. it overrides the deliberate full-bleed aesthetic
+   (full-bleed vs. consistent gutter is a real premium-design fork). Not a
+   clear-cut defect, and **cannot be visually verified in this environment**
+   (Chrome ext won't go <500px; `preview_screenshot` wedges) — so it's genuinely
+   an owner call on a real device.
+2. **~~Accent section-label eyebrows~~** ✅ DONE `c7942d8` — quieted to
+   `--text-secondary` per CD V2 (you delegated "you decide"). One-line reversible
+   to `var(--accent)` if you prefer coloured eyebrows.
+3. **C4 session-flow depth** — the modal packaging is now good (metadata + guidance
+   dissolved, hero elevated, verified via a local premium-unlock). Remaining depth
+   (celebration under real interaction, exercise-card density) wants your ~2-min
+   visual pass; billing stays owner-gated for real users.
 4. **Liberty → reference polish + Blossom text tweaks** — need your reference board.
 5. **C11 media** — logo transparent-PNG + onboarding "BD FITNESS" baked photo.
 
