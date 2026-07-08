@@ -109,8 +109,15 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
   letter-spacing: 0.16em;
   font-size: 0.68rem;
   font-weight: 700;
-  color: var(--accent);
-  opacity: 0.95;
+  /* CD V2: brand from layout/type/composition, NOT colour; overlines are rare
+     and de-emphasized, and the one warm accent is reserved for CTAs / active
+     states / key highlights — not stamped on every section eyebrow. Quiet the
+     general section-label to a neutral secondary token so hierarchy comes from
+     the uppercase/tracked/weighted TYPE, not accent colour. (Intentional accent
+     eyebrows keep their own more-specific overrides, e.g. the featured upgrade
+     tier's --volt.) --text-secondary also clears WCAG AA better than the accent
+     on both grounds. Reversible one-liner if the owner prefers coloured eyebrows. */
+  color: var(--text-secondary);
 }
 
 .support-copy, .muted { color: var(--text-secondary); line-height: 1.55; }
