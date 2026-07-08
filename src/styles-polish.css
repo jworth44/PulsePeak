@@ -461,21 +461,23 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
   border-radius: 14px;
 }
 
+/* .focus-step is a small uppercase EYEBROW LABEL everywhere it renders in the
+   current app (Coach, the workout / movement / plan modals, onboarding, the
+   review step) — always a plain <span>, never an image container (the old
+   `.focus-step img` card treatment matched nothing). The old chip background +
+   border + translateY(-3px) hover made these non-interactive labels look
+   clickable — the same false affordance flagged on onboarding, but app-wide.
+   Keep it as quiet type per CD V2: no chip, no border, no hover-lift.
+   --text-secondary keeps it AA on any ground / both themes. */
 .focus-step {
-  background:
-    linear-gradient(180deg, rgba(var(--ink-rgb), 0.04), rgba(var(--ink-rgb), 0)),
-    rgba(var(--overlay-rgb), 0.92) !important;
-  border: 1px solid var(--border-subtle) !important;
-  border-radius: var(--radius-md) !important;
-  overflow: hidden;
-  transition: transform 0.24s var(--ease-out), border-color 0.24s var(--ease-out);
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  overflow: visible;
+  color: var(--text-secondary) !important;
+  transition: none;
 }
-.focus-step:hover { transform: translateY(-3px); border-color: var(--border-accent) !important; }
-.focus-step img {
-  border-radius: 10px !important;
-  width: 100%;
-  object-fit: cover;
-}
+.focus-step:hover { transform: none !important; border-color: transparent !important; }
 
 /* ===================================================================== */
 /* DATA VISUALIZATION — rings, bars, lines                               */
