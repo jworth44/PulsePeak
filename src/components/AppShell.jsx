@@ -28,6 +28,7 @@ export default function AppShell({ children }) {
     const trainItems = [
       { to: "/workouts", label: "Workouts" },
       { to: "/plan", label: "Plan" },
+      { to: "/workout-library", label: "Workout Library" },
       { to: "/exercise-library", label: "Exercise Library" },
       shows("mobility") ? { to: "/mobility", label: "Mobility" } : null,
       shows("nutrition") ? { to: "/nutrition", label: "Nutrition" } : null
@@ -197,7 +198,7 @@ function matchAny(pathname, routes) {
 function doorForPath(location) {
   const { pathname } = location;
   if (pathname === "/") return "today";
-  if (matchAny(pathname, ["/workouts", "/plan", "/exercise-library", "/mobility", "/nutrition"])) return "train";
+  if (matchAny(pathname, ["/workouts", "/plan", "/workout-library", "/exercise-library", "/mobility", "/nutrition"])) return "train";
   if (matchAny(pathname, ["/progress", "/coach"])) return "progress";
   if (pathname === "/preferences" || pathname.startsWith("/preferences/")) return "you";
   return null;

@@ -2286,3 +2286,224 @@ input:focus, select:focus, textarea:focus {
   margin: 4px 0 0 !important;
   border-top: 1px solid var(--border-subtle) !important;
 }
+
+/* ===================================================================== */
+/* WORKOUT LIBRARY — production-ready browse framework                    */
+/* Token-driven so it inherits every theme (Liberty-forward per owner):   */
+/* cards feel like premium equipment (rounded, hairline edge, soft depth, */
+/* accent on intent); muscle/type media that isn't approved yet renders a */
+/* clean "awaiting approved media" production state — never fake imagery.  */
+/* ===================================================================== */
+.workout-library-page .library-section.panel { padding: 0 !important; }
+
+/* Header: back · title · search toggle */
+.library-topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.library-topbar-title {
+  margin: 0;
+  flex: 1 1 auto;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1.5rem, 3.4vw, 2rem);
+  letter-spacing: var(--track-display);
+  color: var(--text-primary);
+}
+.library-back,
+.library-filter-toggle {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+.library-back:hover,
+.library-filter-toggle:hover { color: var(--text-primary); border-color: var(--border-strong); }
+.library-filter-toggle.is-open { color: var(--accent-contrast); background: var(--accent); border-color: transparent; }
+.library-back:focus-visible,
+.library-filter-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Search */
+.library-search { display: grid; gap: 6px; }
+.library-search-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
+  color: var(--text-muted);
+}
+.library-search-field input {
+  flex: 1 1 auto;
+  border: none;
+  background: none;
+  padding: 12px 0;
+  color: var(--text-primary);
+  font: inherit;
+  outline: none;
+}
+.library-search-count { margin: 0; font-size: 0.85rem; color: var(--text-secondary); }
+
+/* Section rhythm */
+.workout-library-page .library-section { display: grid; gap: 14px; }
+.workout-library-page .library-section .section-context { display: grid; gap: 2px; }
+
+/* Equipment grid — compact icon cards */
+.library-equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+.library-equipment-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
+  box-shadow: var(--elev-1);
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+.library-equipment-card:hover { transform: translateY(-2px); border-color: var(--border-accent); }
+.library-equipment-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.library-equipment-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm, 10px);
+  background: rgba(var(--accent-rgb), 0.12);
+  color: var(--accent);
+}
+.library-equipment-label { font-weight: 600; font-size: 0.95rem; line-height: 1.2; }
+
+/* Muscle + type grids */
+.library-muscle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+}
+.library-type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.library-muscle-card,
+.library-type-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
+  box-shadow: var(--elev-1);
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text-primary);
+  transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.library-muscle-card:hover,
+.library-type-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
+.library-muscle-card:focus-visible,
+.library-type-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Media frame + the approved image */
+.library-media {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg-sunken, rgba(0,0,0,0.12));
+}
+.library-media-muscle { aspect-ratio: 4 / 5; }
+.library-media-type { aspect-ratio: 16 / 10; }
+.library-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+.library-media img.is-loaded { opacity: 1; }
+
+/* Loading skeleton (approved image still loading) */
+.library-media-loading {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(var(--ink-rgb), 0.04) 30%, rgba(var(--ink-rgb), 0.1) 50%, rgba(var(--ink-rgb), 0.04) 70%);
+  background-size: 200% 100%;
+  animation: library-shimmer 1.3s ease-in-out infinite;
+}
+@keyframes library-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Awaiting-approved-media production state — honest, intentional, never fake */
+.library-media-awaiting {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--text-muted);
+  background:
+    repeating-linear-gradient(135deg, rgba(var(--ink-rgb), 0.03) 0 10px, transparent 10px 20px),
+    linear-gradient(180deg, rgba(var(--card-alt-rgb), 0.5), rgba(var(--card-rgb), 0.5));
+}
+.library-media-awaiting-text {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Card body */
+.library-media-body { display: grid; gap: 3px; padding: 12px 14px; }
+.library-media-label { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 1rem; }
+.library-media-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4; }
+.library-type-card { position: relative; }
+.library-media-cta {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* Empty + coverage note */
+.library-empty { display: grid; gap: 10px; justify-items: start; }
+.library-media-note { margin: 4px 0 0; font-size: 0.85rem; }
+
+@media (max-width: 640px) {
+  .library-equipment-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+  .library-muscle-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .library-type-grid { grid-template-columns: 1fr; }
+}

@@ -8,6 +8,7 @@ import PlanPage from "./pages/PlanPage";
 import MobilityPage from "./pages/MobilityPage";
 import WorkoutsPage from "./pages/WorkoutsPage";
 import ExerciseLibraryPage from "./pages/ExerciseLibraryPage";
+import WorkoutLibraryPage from "./pages/WorkoutLibraryPage";
 import NutritionPage from "./pages/NutritionPage";
 import ProgressPage from "./pages/ProgressPage";
 import CoachPage from "./pages/CoachPage";
@@ -64,6 +65,7 @@ export default function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/plan" element={<PlanPage />} />
           <Route path="/exercise-library" element={<ExerciseLibraryPage />} />
+          <Route path="/workout-library" element={<WorkoutLibraryPage />} />
           <Route path="/mobility" element={<MobilityPage />} />
           <Route path="/workouts" element={<WorkoutsPage />} />
           <Route

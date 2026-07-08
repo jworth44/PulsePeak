@@ -104,3 +104,42 @@ e.g. `sumo-deadlift`, `romanian-deadlift` → `deadlift`). So "174 visual guides
 
 Re-run `npm run qa:media` after each batch; target: 0 HIGH/MED, one resolution,
 one aspect ratio.
+
+---
+
+## Workout Library — required production media (added 2026-07-08)
+
+The Workout Library (`/workout-library`, `src/config/workoutLibrary.js`) is a
+**complete production framework**. Browse-by-equipment is icon-based UI (no media
+needed). The two media-backed sections render an honest **"awaiting approved
+media"** production state until each asset below is approved. To publish an
+approved, QA-passed asset, add its path to `WORKOUT_LIBRARY_MEDIA` (key → path);
+it drops straight into the finished layout. Files live under
+`public/media/workout-library/`. Coverage: **0 of 14 approved.**
+
+**Muscle-group diagrams** (8) — key `muscle-*`, framed 4:5, consistent anatomical
+render, red-highlighted target muscle on a deep-navy ground (matches the Liberty
+American-editorial language), transparent or navy background, no text baked in:
+- `muscle-chest` → `/media/workout-library/muscle/chest.png` — Chest
+- `muscle-back` → `.../muscle/back.png` — Back
+- `muscle-shoulders` → `.../muscle/shoulders.png` — Shoulders
+- `muscle-arms` → `.../muscle/arms.png` — Arms
+- `muscle-legs` → `.../muscle/legs.png` — Legs
+- `muscle-glutes` → `.../muscle/glutes.png` — Glutes
+- `muscle-core` → `.../muscle/core.png` — Core
+- `muscle-full-body` → `.../muscle/full-body.png` — Full Body
+
+**Workout-type photography** (6) — key `type-*`, framed 16:10, one coherent
+commercial production per the American editorial spec (professional gym, dark
+background, directional lighting, high contrast, real athletes/effort,
+consistent grade, no AI artifacts, no baked text):
+- `type-strength` → `/media/workout-library/type/strength.jpg` — Strength
+- `type-hypertrophy` → `.../type/hypertrophy.jpg` — Hypertrophy
+- `type-strength-endurance` → `.../type/strength-endurance.jpg` — Strength Endurance
+- `type-power` → `.../type/power.jpg` — Power
+- `type-conditioning` → `.../type/conditioning.jpg` — Conditioning
+- `type-recovery` → `.../type/recovery.jpg` — Recovery
+
+Every asset must pass the **AI Image QA Gate** before its path is added to
+`WORKOUT_LIBRARY_MEDIA`. `validateLibraryMedia()` fails any published path not
+rooted at `/media/workout-library/`.
