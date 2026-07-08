@@ -26,7 +26,7 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="auth-shell">
+    <div className="auth-shell auth-editorial">
       <section className="auth-hero">
         <div className="auth-brand">
           <img className="auth-brand-logo" src={BRAND_LOGO} alt="PulsePeak" />

@@ -216,7 +216,30 @@ media review · commit · production-log line · roadmap update. Then the next b
       structurally (no horizontal scroll, sections stack, habits single-column, bottom tab
       bar). Clean heading outline (H1→H2→H2→H3→H4, no skips). build 0 · qa:launch 18/18,
       0 blockers/warnings · 0 console errors · both themes AA on all key text.
-- C4–C12 — queued. **C4 Train (session flow) is next on the critical path.**
+- **C10 Commercial — onboarding + auth editorial slice** ✅ (the fresh-session tail
+  queued after the all-screens editorial pass). The setup flow was the loudest
+  "assembled" surface left: two stacked bordered panels + a pill eyebrow + (on
+  Welcome) 8 bordered marketing cards before the first choice (owner: "crowded
+  Welcome card"), and non-interactive label spans inherited a card hover-lift from
+  the exercise-image `.focus-step` override (owner: "non-actionable-card hover").
+  Fix per CD V2: scoped `.onboarding-editorial` / `.auth-editorial` → dissolved the
+  two panels into one quiet centered column (hairline + rhythm, not boxes),
+  **removed the two redundant persistent-hero marketing cards** (declutters every
+  step), dissolved the Welcome value cards + review rows into quiet left-ruled
+  lines / hairline rows, quieted the pill eyebrows to `--text-secondary` labels,
+  and **reset the false hover affordance**. Auth: dissolved the marketing hero to
+  quiet page copy, kept the sign-in card as the ONE elevated action surface (CD V2
+  "one hero + one action"). Logo reduced to a restrained 184px mark. **Interactive
+  choice cards (app-mode / goal / units) correctly keep their tappable box** — only
+  display-only cards dissolved. Verified real screenshots both themes (desktop) +
+  structural (375px mobile: single column, no h-scroll); 0 contrast fails both
+  themes; build 0 · qa:launch 18/18 · 0 console. *Still open in C10:* premium /
+  settings restyle; the logo transparent-PNG + onboarding gym-photo baked "BD
+  FITNESS" logo are **C11 media** items (now slightly more visible on Daylight
+  paper since the surrounding chrome was removed).
+- C4–C9, C11–C12 — queued. **C4 Train (session flow) is next on the critical path.**
+  Remaining editorial tail from the last session: Liberty→reference polish +
+  Blossom text tweaks + a final cross-screen consistency sweep.
 
 ---
 

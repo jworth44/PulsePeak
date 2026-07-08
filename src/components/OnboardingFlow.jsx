@@ -240,7 +240,7 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
   };
 
   return (
-    <div className="onboarding-shell">
+    <div className="onboarding-shell onboarding-editorial">
       <section className="onboarding-panel onboarding-hero">
         <img className="onboarding-brand-logo" src={BRAND_LOGO} alt="PulsePeak" />
         <p className="badge">{mode === "onboarding" ? "Tailored setup" : "Preferences"}</p>
@@ -259,16 +259,6 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
           <strong>
             Step {step + 1} of {totalSteps}: {STEP_TITLES[step]}
           </strong>
-        </div>
-        <div className="onboarding-hero-grid">
-          <div className="onboarding-hero-card">
-            <span className="focus-step">Tailored from day one</span>
-            <strong>Modules, weekly planning, and coach logic start from your real setup instead of a default template.</strong>
-          </div>
-          <div className="onboarding-hero-card">
-            <span className="focus-step">Clearer nutrition and recovery</span>
-            <strong>Body profile, units, and injury inputs make the next step feel more believable immediately.</strong>
-          </div>
         </div>
       </section>
 

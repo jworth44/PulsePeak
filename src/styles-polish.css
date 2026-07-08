@@ -2051,3 +2051,110 @@ input:focus, select:focus, textarea:focus {
   padding: 0 !important;
 }
 .editorial-sections .section-context-label { color: var(--text-muted) !important; }
+
+/* ===================================================================== */
+/* ONBOARDING + AUTH — editorial pass (Visual Implementation Directive)   */
+/* The setup flow was the loudest "assembled" surface left: two stacked   */
+/* bordered panels, a pill eyebrow, and (on Welcome) 8 bordered marketing  */
+/* cards before the first choice — owner: "crowded Welcome card". And the   */
+/* plain uppercase label spans inside those cards inherited a card         */
+/* background + hover-lift from the exercise-image .focus-step override —   */
+/* owner: "non-actionable-card hover". Fix per CD V2: one quiet centered    */
+/* column, hierarchy from type + space, dissolve the boxes, quiet the      */
+/* eyebrows, remove the false affordance. Both themes. Scoped to           */
+/* .onboarding-editorial / .auth-editorial so nothing else shifts.         */
+/* ===================================================================== */
+
+/* Dissolve the two stacked panels into quiet sections in one column. */
+.onboarding-editorial.onboarding-shell { background: none !important; gap: 24px; }
+.onboarding-editorial .onboarding-hero,
+.onboarding-editorial .onboarding-card {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  backdrop-filter: none !important;
+  padding: 0 !important;
+}
+/* The per-step content sits under the persistent hero — separate them with
+   a quiet hairline + rhythm instead of wrapping it in a second boxed panel. */
+.onboarding-editorial .onboarding-card {
+  border-top: 1px solid var(--border-subtle) !important;
+  padding-top: 28px !important;
+  margin-top: 4px !important;
+}
+
+/* Eyebrow: strip the pill; a quiet uppercase label (CD V2: overlines rare +
+   de-emphasized). --text-secondary clears WCAG AA on both grounds. */
+.onboarding-editorial .badge,
+.auth-editorial .badge {
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  color: var(--text-secondary) !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+}
+/* --text-secondary (not --text-muted): these small uppercase labels must clear
+   WCAG AA (4.5) as normal-size text — --text-muted lands ~4.4 on Midnight. */
+.onboarding-editorial .section-label,
+.auth-editorial .section-label { color: var(--text-secondary) !important; }
+
+/* Dissolve the marketing / value cards into quiet left-ruled lines: no box,
+   no false hover. The label + statement read as type, not chrome. */
+.onboarding-editorial .preview-highlight,
+.onboarding-editorial .onboarding-hero-card {
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 0 0 14px !important;
+  border-left: 2px solid var(--border-strong) !important;
+  color: var(--text-on-card);
+}
+
+/* The little uppercase labels inside those cards inherited a card bg + border
+   + hover-lift from the exercise-image .focus-step override. In the setup
+   flow they are plain labels — reset to quiet type and kill the affordance. */
+.onboarding-editorial .focus-step {
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: var(--text-secondary) !important;
+  transform: none !important;
+}
+.onboarding-editorial .focus-step:hover { transform: none !important; }
+
+/* Review step: scannable rows, not boxes. Keep the Edit button; separate
+   rows with a hairline instead of card chrome; no hover lift. */
+.onboarding-editorial .onboarding-review-card {
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 14px 0 !important;
+  border-top: 1px solid var(--border-subtle) !important;
+  align-items: center;
+}
+.onboarding-editorial .onboarding-review-card:hover { transform: none !important; }
+
+/* Step media: a quiet supporting image, softer corners — it supports the
+   copy, it doesn't shout. */
+.onboarding-editorial .onboarding-step-media img { border-radius: var(--radius-md); }
+
+/* Auth: keep the form card as the ONE elevated action surface (CD V2: one
+   hero + one action), and dissolve the marketing hero into quiet page copy. */
+.auth-editorial .auth-hero {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Brand mark: a modest, restrained lockup — not a 300px billboard (CD V2:
+   remove noise / navigation recedes). This also shrinks the logo PNG's baked
+   black box, which reads as a dark rectangle on the Daylight paper ground.
+   The proper fix (a transparent-PNG logo that sits on either theme) is the
+   C11 media item; this keeps it tasteful in the meantime. */
+.onboarding-editorial .onboarding-brand-logo,
+.auth-editorial .auth-brand-logo { width: min(100%, 184px) !important; }
