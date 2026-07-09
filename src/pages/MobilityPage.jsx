@@ -436,6 +436,7 @@ export default function MobilityPage() {
               <button
                 key={entry.id}
                 className={`top-level-entry-card ${active ? "top-level-entry-card-active" : ""} ${recommended ? "top-level-entry-card-recommended" : ""}`}
+                aria-pressed={active}
                 type="button"
                 onClick={() => {
                   if (entry.type === "route") {

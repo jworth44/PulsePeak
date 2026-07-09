@@ -72,6 +72,7 @@ export default function UpgradePrompt({ prompt, onUpgrade, onDismiss, busy = fal
             <button
               key={option.id}
               className={`upgrade-pricing-card ${selectedPlan === option.id ? "upgrade-pricing-card-active" : ""}`}
+              aria-pressed={selectedPlan === option.id}
               disabled={!billingEnabled}
               type="button"
               onClick={() => setSelectedPlan(option.id)}

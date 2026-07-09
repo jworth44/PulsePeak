@@ -227,6 +227,7 @@ export default function ExerciseLibraryPage() {
                   <button
                     key={category.id}
                     className={`exercise-library-category-pill ${active ? "exercise-library-category-pill-active" : ""}`}
+                    aria-pressed={active}
                     type="button"
                     onClick={() => setSelectedCategory(category.label)}
                   >

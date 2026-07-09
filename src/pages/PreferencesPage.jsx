@@ -307,6 +307,7 @@ export default function PreferencesPage() {
                 <button
                   key={option.value}
                   className={`theme-swatch settings-theme-swatch ${theme === option.value ? "theme-swatch-active" : ""}`}
+                  aria-pressed={theme === option.value}
                   type="button"
                   onClick={() => changeTheme(option.value)}
                 >
