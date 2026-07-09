@@ -688,6 +688,38 @@ async function runBrowserCoverage(browser) {
     });
   });
 
+  // Canadian-benchmark surfaces: lock the Today stat row + quick actions and
+  // the Workout Library browse framework (equipment cards, honest media
+  // states, live muscle counts, click-through filter) into the launch gate so
+  // the regression guard enforces them.
+  await withAuthedPage(browser, freeLogin.token, async (page, bucket) => {
+    await assertDashboardRenders(page);
+    await page.locator(".streak-stat-row").waitFor({ timeout: 10000 });
+    expect((await page.locator(".streak-stat").count()) === 3, "Today stat row did not render its 3 stat cardlets.");
+    expect((await page.locator(".quick-action").count()) >= 4, "Today quick-actions row is missing its action tiles.");
+    await page.goto(`${baseUrl}/workout-library`, { waitUntil: "networkidle" });
+    await page.getByRole("heading", { name: "Workout Library" }).waitFor({ timeout: 15000 });
+    expect((await page.locator(".library-equipment-card").count()) === 16, "Workout Library equipment grid did not render 16 cards.");
+    const awaiting = await page.locator(".library-media-awaiting").count();
+    const loadedMedia = await page.locator(".library-media img").count();
+    expect(awaiting + loadedMedia === 14, `Workout Library media tiles must total 14 (awaiting ${awaiting} + loaded ${loadedMedia}).`);
+    // Live muscle counts come from /api/exercise-library — wait for the first.
+    await page.locator(".library-muscle-card .library-media-desc").first().waitFor({ timeout: 15000 });
+    expect(
+      (await page.locator(".library-muscle-card .library-media-desc").count()) === 8,
+      "Muscle-group tiles did not all render live exercise counts."
+    );
+    // Click-through filter: Chest -> a category-filtered Exercise Library.
+    await page.locator(".library-muscle-card").filter({ hasText: "Chest" }).first().click();
+    await page.waitForURL(/\/exercise-library\?category=Chest/, { timeout: 15000 });
+    await page.locator(".exercise-library-result-count").waitFor({ timeout: 15000 });
+    recordScenario("benchmark-surfaces", {
+      pass: bucket.consoleErrors.length === 0 && bucket.pageErrors.length === 0,
+      consoleErrors: bucket.consoleErrors,
+      pageErrors: bucket.pageErrors
+    });
+  });
+
   await withAuthedPage(browser, trialLogin.token, async (page, bucket) => {
     await assertDashboardRenders(page);
     await page.goto(`${baseUrl}/preferences?section=account`, { waitUntil: "networkidle" });
