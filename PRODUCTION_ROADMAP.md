@@ -13,8 +13,11 @@ premium identities Daylight/Midnight with NO shared accents; remove noise relent
 no new concepts, no competitor research. **Every capability closes only when it meets that feel in
 BOTH flagship identities (Daylight + Midnight).**
 
-**⚑ APPROVED VISUAL TARGET (owner, 2026-07-08): the Canadian concept** — see
-`CANADIAN_DESIGN_LANGUAGE.md`. The concept image (Today's Training + Workout Library,
+**⚑ APPROVED VISUAL TARGET (owner, 2026-07-08; v2 ratified 2026-07-09): the Canadian
+concept — canonical directive = `APPROVED_VISUAL_TARGET.md`** (adds the
+RECOGNITION-BEFORE-READING principle — every card identifiable without reading;
+blur test — plus the benchmark decomposition, do-not-redo state, and the
+verification playbook). Palette + expression rules: `CANADIAN_DESIGN_LANGUAGE.md`. The concept image (Today's Training + Workout Library,
 charcoal/crimson/evergreen) is the **benchmark every completed screen is compared against**:
 reproduce the experience (composition · hierarchy · spacing · restraint · typography · emotion),
 never the pixels; if a production screen feels less premium than the concept, keep refining.
