@@ -250,7 +250,13 @@ export default function PreferencesPage() {
                 </article>
                 <article className="module-card">
                   <p className="section-label">Billing & subscription</p>
-                  <h4>{user?.subscriptionPlanInterval ? `${user.subscriptionPlanInterval === "yearly" ? "Yearly" : "Monthly"} plan` : "No active paid plan"}</h4>
+                  <h4>
+                    {user?.subscriptionPlanInterval
+                      ? `${user.subscriptionPlanInterval === "yearly" ? "Yearly" : "Monthly"} plan`
+                      : isPremium
+                        ? "Premium access"
+                        : "No active paid plan"}
+                  </h4>
                   <p className="support-copy">
                     {user?.trialStatus === "canceled" && user?.trialEndsLabel
                       ? `Trial access stays live until ${user.trialEndsLabel}, then the account returns to Free.`
@@ -277,19 +283,25 @@ export default function PreferencesPage() {
                     </button>
                   </div>
                 </article>
-                <article className="module-card">
-                  <p className="section-label">Upgrade options</p>
-                  <h4>Keep the full system available</h4>
-                  <p className="support-copy">Choose yearly to stay on the main trial and renewal path, or use monthly only as a separate direct paid option.</p>
-                  <div className="module-card-actions">
-                    <button className="primary-button" disabled={upgradeBusy} type="button" onClick={() => handleUpgradeClick("yearly", user?.canStartTrial ? "default" : "upgrade_now")}>
-                      {user?.canStartTrial ? "Start 7-day free trial" : "Upgrade yearly"}
-                    </button>
-                    <button className="secondary-button" disabled={upgradeBusy} type="button" onClick={() => handleUpgradeClick("monthly", "upgrade_now")}>
-                      Upgrade monthly
-                    </button>
-                  </div>
-                </article>
+                {/* A premium account has nothing to upgrade to — showing
+                    upgrade CTAs next to "Current plan: Premium" contradicts
+                    the account's own state (owner audit F9). Plan switches
+                    live in the billing portal. */}
+                {!isPremium ? (
+                  <article className="module-card">
+                    <p className="section-label">Upgrade options</p>
+                    <h4>Keep the full system available</h4>
+                    <p className="support-copy">Choose yearly to stay on the main trial and renewal path, or use monthly only as a separate direct paid option.</p>
+                    <div className="module-card-actions">
+                      <button className="primary-button" disabled={upgradeBusy} type="button" onClick={() => handleUpgradeClick("yearly", user?.canStartTrial ? "default" : "upgrade_now")}>
+                        {user?.canStartTrial ? "Start 7-day free trial" : "Upgrade yearly"}
+                      </button>
+                      <button className="secondary-button" disabled={upgradeBusy} type="button" onClick={() => handleUpgradeClick("monthly", "upgrade_now")}>
+                        Upgrade monthly
+                      </button>
+                    </div>
+                  </article>
+                ) : null}
               </div>
               <div className="module-card-actions">
                 <button className="ghost-button" type="button" onClick={logout}>
