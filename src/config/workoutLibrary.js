@@ -68,7 +68,23 @@ export const WORKOUT_TYPES = [
 // after it has passed the AI Image QA Gate. Anything not listed here renders
 // the "awaiting approved media" production state.
 export const WORKOUT_LIBRARY_MEDIA = {
-  // (intentionally empty — awaiting owner-generated, QA-passed assets)
+  // First-pass assets cropped from the owner's approved concept image
+  // (owner-authorized 2026-07-09, approval delegated). Upgraded per-asset by
+  // Gemini generation as the media program continues.
+  "muscle-chest": "/media/workout-library/muscle-chest.png",
+  "muscle-back": "/media/workout-library/muscle-back.png",
+  "muscle-shoulders": "/media/workout-library/muscle-shoulders.png",
+  "muscle-arms": "/media/workout-library/muscle-arms.png",
+  "muscle-legs": "/media/workout-library/muscle-legs.png",
+  "muscle-glutes": "/media/workout-library/muscle-glutes.png",
+  "muscle-core": "/media/workout-library/muscle-core.png",
+  "muscle-full-body": "/media/workout-library/muscle-full-body.png",
+  "type-strength": "/media/workout-library/type-strength.png",
+  "type-hypertrophy": "/media/workout-library/type-hypertrophy.png",
+  "type-strength-endurance": "/media/workout-library/type-strength-endurance.png",
+  "type-power": "/media/workout-library/type-power.png",
+  "type-conditioning": "/media/workout-library/type-conditioning.png",
+  "type-recovery": "/media/workout-library/type-recovery.png"
 };
 
 // Resolve a media key to an approved asset path, or null when none is approved

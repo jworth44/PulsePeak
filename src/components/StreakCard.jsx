@@ -68,6 +68,13 @@ function StatIcon({ name }) {
           <circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none" />
         </svg>
       );
+    case "clock":
+      return (
+        <svg {...p}>
+          <circle cx="12" cy="12" r="8" />
+          <path d="M12 8v4l3 2" />
+        </svg>
+      );
     default:
       return null;
   }
@@ -123,6 +130,17 @@ export default function StreakCard({ status, weeklyTarget = 3, variant }) {
               <div className="streak-goal-bar">
                 <div className="streak-goal-fill" style={{ width: `${goalPct}%` }} />
               </div>
+            </div>
+          </div>
+          {/* Real minutes trained this week — the honest stat in the slot the
+              concept filled with heart rate (which PulsePeak doesn't track). */}
+          <div className="streak-stat">
+            <span className="streak-stat-icon">
+              <StatIcon name="clock" />
+            </span>
+            <div className="streak-stat-body">
+              <span className="streak-stat-value">{status.weeklyMinutes || 0}</span>
+              <span className="streak-stat-label">Minutes this week</span>
             </div>
           </div>
         </div>

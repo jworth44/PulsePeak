@@ -868,6 +868,19 @@ export function countWeeklyLoggedWorkouts(workouts = [], referenceDate = new Dat
     }).length;
 }
 
+// Real minutes trained this week — the sum of logged session durations inside
+// the current week window. Honest by construction: no logged sessions → 0.
+export function sumWeeklyLoggedMinutes(workouts = [], referenceDate = new Date()) {
+  const { start, end } = getWorkoutWeekWindow(referenceDate);
+  return (workouts || [])
+    .map(normalizeWorkout)
+    .filter((workout) => {
+      const loggedAt = new Date(workout.loggedAt);
+      return loggedAt >= start && loggedAt <= end;
+    })
+    .reduce((total, workout) => total + (Number.isFinite(Number(workout.duration)) ? Number(workout.duration) : 0), 0);
+}
+
 export function buildWorkoutAccess(user) {
   const workouts = normalizeWellnessData(user?.data).workouts || [];
   const weeklyLogged = countWeeklyLoggedWorkouts(workouts);
@@ -3702,7 +3715,8 @@ export function buildStreakStatus(data) {
     trainedToday,
     atRisk: state === "at_risk",
     state,
-    weeklyCompleted: countWeeklyLoggedWorkouts(workouts)
+    weeklyCompleted: countWeeklyLoggedWorkouts(workouts),
+    weeklyMinutes: sumWeeklyLoggedMinutes(workouts)
   };
 }
 

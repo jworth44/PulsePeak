@@ -695,7 +695,7 @@ async function runBrowserCoverage(browser) {
   await withAuthedPage(browser, freeLogin.token, async (page, bucket) => {
     await assertDashboardRenders(page);
     await page.locator(".streak-stat-row").waitFor({ timeout: 10000 });
-    expect((await page.locator(".streak-stat").count()) === 3, "Today stat row did not render its 3 stat cardlets.");
+    expect((await page.locator(".streak-stat").count()) === 4, "Today stat row did not render its 4 stat cardlets (streak, workouts, weekly goal, minutes).");
     expect((await page.locator(".quick-action").count()) >= 4, "Today quick-actions row is missing its action tiles.");
     await page.goto(`${baseUrl}/workout-library`, { waitUntil: "networkidle" });
     await page.getByRole("heading", { name: "Workout Library" }).waitFor({ timeout: 15000 });

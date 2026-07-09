@@ -489,10 +489,10 @@ export default function DashboardPage() {
             View full plan <span aria-hidden="true">→</span>
           </button>
         </div>
-        {/* Photo slot: honest awaiting-media state until the owner focus
-            photography passes the QA gate (MEDIA_AUDIT_REGISTER). */}
-        <div aria-hidden="true" className="today-focus-media">
-          <span className="today-focus-media-note">Image in production</span>
+        {/* Owner-approved focus imagery (concept crop, 2026-07-09); upgraded
+            per-asset by the media program. */}
+        <div aria-hidden="true" className="today-focus-media today-focus-media-live">
+          <img alt="" loading="lazy" src="/media/today-focus.png" />
         </div>
       </section>
 
