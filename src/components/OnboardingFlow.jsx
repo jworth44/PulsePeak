@@ -38,7 +38,7 @@ const ONBOARDING_STEP_MEDIA = {
   0: { src: "/media/onboarding-welcome.png", alt: "Athlete pressing dumbbells in a dark premium gym" },
   1: { src: "/media/onboarding-appmode.png", alt: "Athlete reviewing a fitness app between sets" },
   2: { src: "/media/onboarding-goal.png", alt: "Athlete chalking hands before a barbell lift" },
-  3: { src: "/media/onboarding/onboarding-11.jpg", alt: "PulsePeak training setup preview" },
+  3: { src: "/media/onboarding-setup.png", alt: "Home gym corner with bench, dumbbells and barbell" },
   4: { src: "/media/onboarding/onboarding-7.jpg", alt: "PulsePeak nutrition mode setup preview" },
   5: { src: "/media/onboarding/onboarding-10.jpg", alt: "PulsePeak body and recovery setup preview" },
   6: { src: "/media/onboarding/onboarding-9.jpg", alt: "PulsePeak review setup preview" }
