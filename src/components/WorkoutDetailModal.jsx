@@ -289,11 +289,11 @@ export default function WorkoutDetailModal({
   return (
     <>
     <div className="modal-backdrop" role="presentation" onClick={onClose}>
-      <div ref={dialogRef} aria-modal="true" className="modal-card workout-session-modal" role="dialog" onClick={(event) => event.stopPropagation()}>
+      <div ref={dialogRef} aria-modal="true" aria-labelledby="workout-session-title" className="modal-card workout-session-modal" role="dialog" onClick={(event) => event.stopPropagation()}>
         <div className="panel-heading">
           <div>
             <p className="section-label">Workout session</p>
-            <h3>{workout.name}</h3>
+            <h3 id="workout-session-title">{workout.name}</h3>
           </div>
           <div className="module-card-actions">
             {onToggleFavorite ? (
@@ -436,7 +436,12 @@ export default function WorkoutDetailModal({
                     >
                       <div className="exercise-detail-topline">
                         <label className="exercise-check-toggle" onClick={(event) => event.stopPropagation()}>
-                          <input checked={isCompleted} type="checkbox" onChange={() => toggleExerciseComplete(exercise)} />
+                          <input
+                            checked={isCompleted}
+                            type="checkbox"
+                            aria-label={`Mark ${exercise.name} as done`}
+                            onChange={() => toggleExerciseComplete(exercise)}
+                          />
                           <span />
                         </label>
                         <div>
