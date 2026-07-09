@@ -31,13 +31,54 @@ function freezeLine(status) {
   return null;
 }
 
-export default function StreakCard({ status, weeklyTarget = 3 }) {
+export default function StreakCard({ status, weeklyTarget = 3, variant }) {
   if (!status) return null;
   const { emoji, title, sub } = headline(status);
   const freeze = freezeLine(status);
   const goalTarget = Math.max(1, weeklyTarget);
   const goalRemaining = Math.max(0, goalTarget - (status.weeklyCompleted || 0));
   const goalPct = Math.min(100, Math.round(((status.weeklyCompleted || 0) / goalTarget) * 100));
+
+  // "row" variant (Canadian-benchmark stat row, used on Today): the SAME real
+  // streakStatus data as glanceable stat cardlets, with the honest state +
+  // freeze coaching folded into one quiet line beneath — nothing dropped,
+  // nothing fabricated.
+  if (variant === "row") {
+    return (
+      <div className={`streak-card streak-row-card streak-${status.state}`}>
+        <div className="streak-stat-row">
+          <div className="streak-stat">
+            <span className="streak-stat-value">
+              {status.streak > 0 ? <CountUp value={status.streak} /> : 0}
+            </span>
+            <span className="streak-stat-label">Day streak {status.state === "active" ? "🔥" : ""}</span>
+          </div>
+          <div className="streak-stat">
+            <span className="streak-stat-value">{status.weeklyCompleted || 0}</span>
+            <span className="streak-stat-label">
+              Workout{(status.weeklyCompleted || 0) === 1 ? "" : "s"} this week
+            </span>
+          </div>
+          <div className="streak-stat">
+            <span className="streak-stat-value">
+              {Math.min(status.weeklyCompleted || 0, goalTarget)}/{goalTarget}
+            </span>
+            <span className="streak-stat-label">Weekly goal</span>
+            <div className="streak-goal-bar">
+              <div className="streak-goal-fill" style={{ width: `${goalPct}%` }} />
+            </div>
+          </div>
+        </div>
+        <p className="streak-row-context">
+          {sub}
+          {goalRemaining > 0
+            ? ` ${goalRemaining} more session${goalRemaining === 1 ? "" : "s"} hits your weekly goal.`
+            : " Weekly goal complete — everything from here is a bonus."}
+        </p>
+        {freeze ? <p className="streak-freeze">{freeze}</p> : null}
+      </div>
+    );
+  }
 
   return (
     <div className={`streak-card streak-${status.state}`}>

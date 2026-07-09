@@ -476,7 +476,7 @@ export default function DashboardPage() {
       </section>
 
       {summary.streakStatus ? (
-        <StreakCard status={summary.streakStatus} weeklyTarget={weeklySessionTarget} />
+        <StreakCard status={summary.streakStatus} weeklyTarget={weeklySessionTarget} variant="row" />
       ) : null}
 
       {summary.habits.length > 0 && (

@@ -1937,6 +1937,46 @@ input:focus, select:focus, textarea:focus {
 .today-page .today-quick .panel-heading { margin-bottom: 12px; }
 .today-page .today-recent .panel-heading { margin-bottom: 10px; }
 
+/* Stat row (Canadian benchmark): the streak surface as glanceable stat
+   cardlets — deliberate tabular numbers, quiet labels, the weekly-goal bar
+   kept inside its cardlet; state + freeze coaching folds beneath. */
+.streak-stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+.streak-stat {
+  display: grid;
+  gap: 4px;
+  align-content: start;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: rgba(var(--ink-rgb), 0.02);
+}
+.streak-stat-value {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: var(--track-numeral, 0);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+.streak-stat-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.streak-stat .streak-goal-bar { margin-top: 6px; }
+.streak-row-context {
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.streak-row-card .streak-freeze { margin: 4px 0 0; }
+
 /* Quick actions (Canadian benchmark): one tap to the app's real actions.
    Quiet equipment-like tiles — thin icon over a small label. */
 .quick-actions-row {
