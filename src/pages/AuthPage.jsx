@@ -53,10 +53,13 @@ export default function AuthPage() {
         </div>
 
         <div className="auth-toggle">
-          <button className={mode === "login" ? "toggle-active" : ""} aria-pressed={mode === "login"} type="button" onClick={() => setMode("login")}>
+          {/* Switching panels clears the previous panel's error — a stale
+              "Invalid email or password." on the register form misleads
+              (e.g. when the real story is "account already exists"). */}
+          <button className={mode === "login" ? "toggle-active" : ""} aria-pressed={mode === "login"} type="button" onClick={() => { setMode("login"); setError(""); }}>
             Sign in
           </button>
-          <button className={mode === "register" ? "toggle-active" : ""} aria-pressed={mode === "register"} type="button" onClick={() => setMode("register")}>
+          <button className={mode === "register" ? "toggle-active" : ""} aria-pressed={mode === "register"} type="button" onClick={() => { setMode("register"); setError(""); }}>
             Create account
           </button>
         </div>
