@@ -53,10 +53,10 @@ export default function AuthPage() {
         </div>
 
         <div className="auth-toggle">
-          <button className={mode === "login" ? "toggle-active" : ""} type="button" onClick={() => setMode("login")}>
+          <button className={mode === "login" ? "toggle-active" : ""} aria-pressed={mode === "login"} type="button" onClick={() => setMode("login")}>
             Sign in
           </button>
-          <button className={mode === "register" ? "toggle-active" : ""} type="button" onClick={() => setMode("register")}>
+          <button className={mode === "register" ? "toggle-active" : ""} aria-pressed={mode === "register"} type="button" onClick={() => setMode("register")}>
             Create account
           </button>
         </div>

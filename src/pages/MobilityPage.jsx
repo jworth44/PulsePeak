@@ -478,6 +478,7 @@ export default function MobilityPage() {
             <button
               key={category.id}
               className={`selector-pill ${effectiveCategory === category.id ? "selector-pill-active" : ""} ${recommendedCategory === category.id ? "selector-pill-recommended" : ""}`}
+              aria-pressed={effectiveCategory === category.id}
               type="button"
               onClick={() => handleCategorySelect(category.id)}
             >

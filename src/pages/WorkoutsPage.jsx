@@ -505,6 +505,7 @@ export default function WorkoutsPage() {
             <button
               key={option.value}
               className={`goal-card chip-card ${equipmentSelections.includes(option.value) ? "goal-card-active" : ""}`}
+              aria-pressed={equipmentSelections.includes(option.value)}
               type="button"
               onClick={() => toggleEquipmentSelection(option.value)}
             >
@@ -518,6 +519,7 @@ export default function WorkoutsPage() {
             <button
               key={preset.id}
               className={`selector-pill selector-pill-compact ${activePresetId === preset.id ? "selector-pill-active" : ""}`}
+              aria-pressed={activePresetId === preset.id}
               type="button"
               onClick={() => applyWorkoutPreset(preset)}
             >
@@ -544,6 +546,7 @@ export default function WorkoutsPage() {
             <button
               key={category.id}
               className={`selector-pill ${selectedCategory === category.id ? "selector-pill-active" : ""}`}
+              aria-pressed={selectedCategory === category.id}
               type="button"
               onClick={() => setSelectedCategory(category.id)}
             >
@@ -874,6 +877,7 @@ export default function WorkoutsPage() {
         <div className="selector-row">
           <button
             className={`selector-pill ${selectedExerciseCategory === "all" ? "selector-pill-active" : ""}`}
+            aria-pressed={selectedExerciseCategory === "all"}
             type="button"
             onClick={() => setSelectedExerciseCategory("all")}
           >
@@ -884,6 +888,7 @@ export default function WorkoutsPage() {
             <button
               key={category.id}
               className={`selector-pill ${selectedExerciseCategory === category.id ? "selector-pill-active" : ""}`}
+              aria-pressed={selectedExerciseCategory === category.id}
               type="button"
               onClick={() => setSelectedExerciseCategory(category.id)}
             >

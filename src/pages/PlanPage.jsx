@@ -479,6 +479,7 @@ export default function PlanPage() {
         <div className="selector-row">
           <button
             className={`selector-pill ${selectedPlanCategory === "all" ? "selector-pill-active" : ""}`}
+            aria-pressed={selectedPlanCategory === "all"}
             type="button"
             onClick={() => setSelectedPlanCategory("all")}
           >
@@ -489,6 +490,7 @@ export default function PlanPage() {
             <button
               key={category.id}
               className={`selector-pill ${selectedPlanCategory === category.id ? "selector-pill-active" : ""}`}
+              aria-pressed={selectedPlanCategory === category.id}
               type="button"
               onClick={() => setSelectedPlanCategory(category.id)}
             >

@@ -310,6 +310,7 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
                   <button
                     key={option.value}
                     className={`goal-card ${form.appMode === option.value ? "goal-card-active" : ""}`}
+                    aria-pressed={form.appMode === option.value}
                     type="button"
                     onClick={() => updateField("appMode", option.value)}
                   >
@@ -332,6 +333,7 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
                 <button
                   key={option.value}
                   className={`goal-card ${form.goalType === option.value ? "goal-card-active" : ""}`}
+                  aria-pressed={form.goalType === option.value}
                   type="button"
                   onClick={() => {
                     updateField("goalType", option.value);
@@ -404,6 +406,7 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
                 <button
                   key={option.value}
                   className={`goal-card ${form.nutritionMode === option.value ? "goal-card-active" : ""}`}
+                  aria-pressed={form.nutritionMode === option.value}
                   type="button"
                   onClick={() => updateField("nutritionMode", option.value)}
                 >
@@ -422,6 +425,7 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
                   <button
                     key={option.value}
                     className={`goal-card ${form.unitPreference === option.value ? "goal-card-active" : ""}`}
+                    aria-pressed={form.unitPreference === option.value}
                     type="button"
                     onClick={() => updateField("unitPreference", option.value)}
                   >
@@ -521,6 +525,7 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
                     <button
                       key={area}
                       className={`goal-card chip-card ${form.restrictedAreas.includes(area) ? "goal-card-active" : ""}`}
+                      aria-pressed={form.restrictedAreas.includes(area)}
                       type="button"
                       onClick={() => toggleRestrictedArea(area)}
                     >

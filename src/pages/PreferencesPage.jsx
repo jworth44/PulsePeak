@@ -121,6 +121,7 @@ export default function PreferencesPage() {
                   <button
                     key={option.value}
                     className={`goal-card ${profile.appMode === option.value ? "goal-card-active" : ""}`}
+                    aria-pressed={profile.appMode === option.value}
                     disabled={saving === "app-mode"}
                     type="button"
                     onClick={() => updateProfilePreference({ appMode: option.value }, "app-mode")}
@@ -146,6 +147,7 @@ export default function PreferencesPage() {
                   <button
                     key={value}
                     className={`goal-card ${profile.exerciseGuidanceLevel === value ? "goal-card-active" : ""}`}
+                    aria-pressed={profile.exerciseGuidanceLevel === value}
                     disabled={saving === "guidance"}
                     type="button"
                     onClick={() => updateProfilePreference({ exerciseGuidanceLevel: value }, "guidance")}
@@ -158,6 +160,7 @@ export default function PreferencesPage() {
               <div className="chip-toggle-grid">
                 <button
                   className={`goal-card chip-card ${profile.showWarmup !== false ? "goal-card-active" : ""}`}
+                  aria-pressed={profile.showWarmup !== false}
                   disabled={saving === "warmup"}
                   type="button"
                   onClick={() => updateProfilePreference({ showWarmup: profile.showWarmup === false }, "warmup")}
@@ -166,6 +169,7 @@ export default function PreferencesPage() {
                 </button>
                 <button
                   className={`goal-card chip-card ${profile.showCooldown !== false ? "goal-card-active" : ""}`}
+                  aria-pressed={profile.showCooldown !== false}
                   disabled={saving === "cooldown"}
                   type="button"
                   onClick={() => updateProfilePreference({ showCooldown: profile.showCooldown === false }, "cooldown")}
