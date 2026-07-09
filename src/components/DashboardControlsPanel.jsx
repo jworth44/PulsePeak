@@ -90,7 +90,16 @@ export default function DashboardControlsPanel() {
                 <p className="muted">{module.description}</p>
               </div>
               <div className="module-control-actions">
-                <button className={hidden ? "secondary-button" : "primary-button"} type="button" onClick={() => toggleHiddenModule(module.id)}>
+                {/* Quiet row control — accent stays reserved for the ONE
+                    primary action (Save). Five crimson Hide buttons read as
+                    six competing CTAs (audit F10). aria-pressed carries the
+                    hidden state. */}
+                <button
+                  aria-pressed={hidden}
+                  className="secondary-button"
+                  type="button"
+                  onClick={() => toggleHiddenModule(module.id)}
+                >
                   {hidden ? "Show" : "Hide"}
                 </button>
               </div>

@@ -107,7 +107,7 @@ export default function PlanPage() {
   const companionAction = null;
   const continuityContext = {
     title: "Stay consistent this week",
-    detail: "Use the plan page to keep the week organized without layered coaching prompts."
+    detail: "One clear target for the week, so every session knows its job."
   };
   const trustCue = null;
   const smartRotationStatus = null;
@@ -236,7 +236,7 @@ export default function PlanPage() {
           ) : null}
           <div className="module-note">
             <strong>Current phase: Weekly overview</strong>
-            <p className="support-copy">{programPhase?.detail || "Your plan stays visible here without progression overlays."}</p>
+            <p className="support-copy">{programPhase?.detail || "Your full week, laid out before you commit to today."}</p>
           </div>
           <div className="module-note">
             <strong>{weeklyStructure?.summary || continuityContext.title}</strong>
@@ -367,7 +367,7 @@ export default function PlanPage() {
           </div>
           <div className="module-note">
             <strong>Current phase: Weekly overview</strong>
-            <p className="support-copy">{programPhase?.detail || "Plan details stay accessible here without extra coaching signals."}</p>
+            <p className="support-copy">{programPhase?.detail || "The week's structure stays here whenever you need to reorient."}</p>
           </div>
           {summary.resultProjection ? (
             <div className="module-note">

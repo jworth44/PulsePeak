@@ -182,7 +182,7 @@ export default function WorkoutsPage() {
   const companionAction = null;
   const continuityContext = {
     title: "Keep the week moving",
-    detail: "Use the workout library to choose a session that fits your setup without layered coaching prompts."
+    detail: "Every session here already fits your equipment and environment — pick the one that fits today."
   };
   const trustCue = null;
   const smartRotationStatus = null;
