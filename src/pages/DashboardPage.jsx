@@ -485,6 +485,28 @@ export default function DashboardPage() {
         </Panel>
       )}
 
+      {Array.isArray(summary.recentWorkouts) && summary.recentWorkouts.length > 0 ? (
+        <Panel className="today-recent" title="Recent activity">
+          {/* Real logged sessions only (Canadian benchmark item). Photo
+              thumbnails arrive with the media re-shoot — text rows until then,
+              never placeholder imagery. */}
+          <ul className="recent-activity-list">
+            {summary.recentWorkouts.slice(0, 3).map((workout) => (
+              <li className="recent-activity-row" key={workout.id}>
+                <div className="recent-activity-copy">
+                  <strong>{workout.name}</strong>
+                  <span className="muted">
+                    {formatRecentWhen(workout.loggedAt)}
+                    {workout.duration ? ` · ${workout.duration} min` : ""}
+                  </span>
+                </div>
+                <span className="recent-activity-state">Completed</span>
+              </li>
+            ))}
+          </ul>
+        </Panel>
+      ) : null}
+
       {feedback ? <div className="status-banner">{feedback}</div> : null}
 
       {returnGapDays >= 2 ? (
@@ -558,4 +580,19 @@ export default function DashboardPage() {
       />
     </div>
   );
+}
+
+// Human, honest recency for the Recent Activity rows ("Today" / "Yesterday" /
+// "N days ago"); empty string when the timestamp is missing or unparseable.
+// Compares LOCAL CALENDAR DAYS, not 24h buckets — a session logged yesterday
+// evening must read "Yesterday" even at 1am.
+function formatRecentWhen(iso) {
+  if (!iso) return "";
+  const logged = new Date(iso);
+  if (Number.isNaN(logged.getTime())) return "";
+  const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+  const days = Math.round((startOfDay(new Date()) - startOfDay(logged)) / 86400000);
+  if (days <= 0) return "Today";
+  if (days === 1) return "Yesterday";
+  return `${days} days ago`;
 }

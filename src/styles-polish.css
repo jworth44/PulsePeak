@@ -1915,7 +1915,8 @@ input:focus, select:focus, textarea:focus {
    quiet top hairline + generous space so each block reads as a section. */
 .today-page .today-launch,
 .today-page .streak-card,
-.today-page .today-habits {
+.today-page .today-habits,
+.today-page .today-recent {
   background: none !important;
   border: none !important;
   box-shadow: none !important;
@@ -1926,10 +1927,53 @@ input:focus, select:focus, textarea:focus {
 }
 /* Remove the panels' top edge-light hairline on these dissolved sections. */
 .today-page .today-launch::after,
-.today-page .today-habits::after { display: none !important; }
+.today-page .today-habits::after,
+.today-page .today-recent::after { display: none !important; }
 
-/* The habits section heading now stands on space, not a boxed panel. */
+/* The habits/recent section headings now stand on space, not a boxed panel. */
 .today-page .today-habits .panel-heading { margin-bottom: 16px; }
+.today-page .today-recent .panel-heading { margin-bottom: 10px; }
+
+/* Recent activity (Canadian benchmark): quiet rows of real logged sessions —
+   name, honest recency + duration, evergreen Completed state. Thumbnails come
+   with the media re-shoot; never placeholder imagery. */
+.recent-activity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.recent-activity-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 2px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.recent-activity-row:last-child { border-bottom: none; }
+.recent-activity-copy { display: grid; gap: 2px; min-width: 0; }
+.recent-activity-copy strong { font-size: 0.98rem; }
+.recent-activity-copy .muted { font-size: 0.85rem; }
+.recent-activity-state {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--success);
+}
+.recent-activity-state::before {
+  content: "\2713";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--success);
+  font-size: 0.7rem;
+}
 
 /* Habit tiles: quiet, still tappable — no more boxes-in-a-box. Lighter
    surface + hairline; the completed (success) state stays semantic. */
