@@ -171,6 +171,7 @@ export default function MovementDetailModal({ movement, movementId, visualModelP
       <div
         ref={dialogRef}
         aria-modal="true"
+        aria-labelledby="movement-guide-title"
         className="modal-card movement-detail-modal"
         role="dialog"
         onClick={(event) => event.stopPropagation()}
@@ -178,7 +179,7 @@ export default function MovementDetailModal({ movement, movementId, visualModelP
         <div className="panel-heading movement-guide-header">
           <div className="movement-guide-header-copy">
             <p className="section-label">Movement guide</p>
-            <h3 className="movement-guide-title">{exercise.name}</h3>
+            <h3 className="movement-guide-title" id="movement-guide-title">{exercise.name}</h3>
             <div className="movement-guide-header-meta">
               {category ? <span className="movement-guide-meta-pill">{category}</span> : null}
               {equipment.length ? <span className="movement-guide-meta-pill">{equipment.join(", ")}</span> : null}
@@ -474,11 +475,11 @@ function GuideStatusModal({ title, message, onClose }) {
   const dialogRef = useModalA11y(onClose);
   return (
     <div className="modal-backdrop" role="presentation" onClick={onClose}>
-      <div ref={dialogRef} aria-modal="true" className="modal-card movement-detail-modal" role="dialog" onClick={(event) => event.stopPropagation()}>
+      <div ref={dialogRef} aria-modal="true" aria-labelledby="movement-guide-title" className="modal-card movement-detail-modal" role="dialog" onClick={(event) => event.stopPropagation()}>
         <div className="panel-heading movement-guide-header">
           <div className="movement-guide-header-copy">
             <p className="section-label">Movement guide</p>
-            <h3 className="movement-guide-title">{title}</h3>
+            <h3 className="movement-guide-title" id="movement-guide-title">{title}</h3>
           </div>
           <button className="icon-button" type="button" onClick={onClose}>
             Close
