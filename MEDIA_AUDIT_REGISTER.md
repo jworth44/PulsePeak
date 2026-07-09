@@ -164,3 +164,53 @@ training environments, muted backgrounds, Canadian grading):
   benchmark: natural light, muted backgrounds, Canadian production feel.
 - **Brand maple mark** — a stylized functional SVG (`public/maple-leaf.svg`)
   ships now; swap in owner-supplied brand vector if desired.
+
+### PASTE-READY GEMINI GENERATION KIT (added 2026-07-09)
+
+*One image per NEW Gemini chat (per the established pipeline rule). Save each
+result to `N:\Downloads\` with the filename shown; then tell Claude "assets in
+Downloads" — QA, processing, and wiring are automated from there. Shared style
+suffix for EVERY prompt below:*
+
+> …Photorealistic, natural light, muted charcoal/evergreen background, subtle
+> cool Canadian grading, premium editorial fitness photography, no text, no
+> watermark, no logos, dark-toned so warm-white UI text stays readable.
+
+1. `pp-hero-dusk.png` — 1600×900 — "Cinematic Canadian mountain lake at dusk,
+   alpenglow on a snow-capped peak, evergreen treeline, still water
+   reflection, deep charcoal sky, space at left third for headline text…"
+2. `pp-focus-upper.png` — 1200×750 — "Athletic man mid dumbbell row on a bench
+   in a dark premium gym, focused expression, side lit…"
+3. `type-strength.png` — 1280×800 — "Athlete performing a heavy barbell squat
+   in a dark gym, low-bar grind, chalk dust…"
+4. `type-hypertrophy.png` — 1280×800 — "Athlete doing controlled dumbbell
+   curls, muscular definition, moody gym…"
+5. `type-strength-endurance.png` — 1280×800 — "Athlete pushing a battle-rope
+   or air-bike interval, sustained effort…"
+6. `type-power.png` — 1280×800 — "Athlete mid box-jump, explosive movement
+   frozen at peak height…"
+7. `type-conditioning.png` — 1280×800 — "Runner on a forest trail among
+   evergreens, morning mist…"
+8. `type-recovery.png` — 1280×800 — "Athlete in child's pose on a mat in a
+   calm dark studio, one soft window light…"
+9–16. `muscle-chest.png, muscle-back.png, muscle-shoulders.png,
+   muscle-arms.png, muscle-legs.png, muscle-glutes.png, muscle-core.png,
+   muscle-fullbody.png` — 800×1000 each — "3D anatomical male figure,
+   neutral standing pose, matte grey body on dark charcoal ground, ONLY the
+   [chest / back / shoulder / arm / leg / glute / core / full-body]
+   muscles highlighted in glowing crimson red, medical-illustration style,
+   consistent camera angle front view (back view for muscle-back)…"
+17. `pp-maple-leaf.svg/png` — optional brand vector — "Minimal flat crimson
+   maple leaf icon, single color #C6283B, clean geometry…" (or supply your
+   own brand vector).
+
+*Wiring targets (already built, drop-in): hero → `--hero-cinematic` token
+(styles-themes.css); focus → Today focus-card slot; `type-*`/`muscle-*` →
+`WORKOUT_LIBRARY_MEDIA` manifest in `src/config/workoutLibrary.js`; run
+`npm run qa:workout-library` after the drop.*
+
+### ALTERNATE FAST PATH — crop from the owner's concept image
+If the full-resolution concept export is saved to
+`N:\Downloads\pulsepeak-concept.png`, Claude crops hero/focus/type/muscle/
+thumbnail regions directly out of it and wires them as first-pass assets
+(softer than generated originals; upgraded by the kit above later).
