@@ -302,6 +302,13 @@ media review · commit · production-log line · roadmap update. Then the next b
   onboarded a fresh user, SPA-navigated all 9 lazy routes (chunks observed
   loading on demand via the performance API), 0 console errors, 0 failed
   requests. build 0 · qa:launch 19/19 · qa:workout-library PASS.
+  Second slice (`87a06b8`): `loading="lazy"` on the four remaining below-fold
+  image sites (guide step sequence, movement-reference thumbs, session-modal
+  exercise thumbs, nutrition template photos); heroes/logos stay eager. Fonts
+  already optimal (preconnect + display=swap). CSS deliberately NOT split —
+  the three global stylesheets are the token cascade; fracturing them risks
+  theme regressions for ~26 kB gzip. **Perf unit: engineering-tractable items
+  complete.**
 - C5–C9, C11–C12 — queued.
 
 ### ⏳ Owner-gated / owner-judgment queue (surfaced by the autonomous sweep)
