@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import EmptyStateCard from "../components/EmptyStateCard";
 import Panel from "../components/Panel";
 import MovementDetailModal from "../components/MovementDetailModal";
@@ -21,7 +22,30 @@ export default function ExerciseLibraryPage() {
   const [selectedEquipment, setSelectedEquipment] = useState("all");
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
   const [selectedExercise, setSelectedExercise] = useState(null);
+  const [searchParams] = useSearchParams();
   const searchInputRef = useRef(null);
+
+  // Deep-link filters from the Workout Library (or any link): ?category=Chest
+  // selects a muscle category, ?q=Dumbbells / ?equipment=<value> pre-fill the
+  // search / equipment filter. Re-applies whenever the query changes (e.g.
+  // tapping another Workout Library tile) but never fights the user's in-page
+  // filter changes (those don't touch the URL).
+  useEffect(() => {
+    const category = searchParams.get("category");
+    const q = searchParams.get("q");
+    const equipment = searchParams.get("equipment");
+    if (category && LIBRARY_CATEGORY_ORDER.includes(category)) {
+      setSelectedCategory(category);
+      setSearch("");
+    }
+    if (q) {
+      setSearch(q);
+    }
+    if (equipment) {
+      setSelectedEquipment(equipment);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
   const visualModelPreference = data?.profile?.visualModelPreference || "default";
   const openExerciseGuide = (entry) => setSelectedExercise(buildGuideTarget(entry));
 

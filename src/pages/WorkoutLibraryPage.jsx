@@ -8,6 +8,18 @@ import {
   getLibraryMediaCoverage
 } from "../config/workoutLibrary";
 
+// Muscle groups that map 1:1 to an Exercise Library category filter (precise
+// filtering). Arms (biceps/triceps) and Full Body have no single category, so
+// they fall through to a keyword search instead.
+const MUSCLE_TO_CATEGORY = {
+  chest: "Chest",
+  back: "Back",
+  shoulders: "Shoulders",
+  legs: "Legs",
+  glutes: "Glutes",
+  core: "Core"
+};
+
 // ======================================================================
 // WORKOUT LIBRARY — a production-ready browse framework.
 // Browse by equipment (icon UI), muscle group (approved anatomical media),
@@ -32,9 +44,15 @@ export default function WorkoutLibraryPage() {
   const resultCount = equipment.length + muscles.length + types.length;
   const hasResults = resultCount > 0;
 
-  const openResults = (filter) => {
-    const params = new URLSearchParams(filter).toString();
-    navigate(`/exercise-library${params ? `?${params}` : ""}`);
+  // Map a browse tile to the Exercise Library's filters. Muscle groups that
+  // have an exact library category filter to it (precise); everything else
+  // (equipment / workout type / focus / region / arms / full-body) opens a
+  // keyword search — the library's search pool already covers name, category,
+  // muscles and equipment, so this reliably lands on a filtered result set.
+  const openItem = (item) => {
+    const category = item.filter.muscle ? MUSCLE_TO_CATEGORY[item.filter.muscle] : null;
+    const query = category ? { category } : { q: item.label };
+    navigate(`/exercise-library?${new URLSearchParams(query).toString()}`);
   };
 
   return (
@@ -102,7 +120,7 @@ export default function WorkoutLibraryPage() {
                 key={item.id}
                 type="button"
                 className="library-equipment-card"
-                onClick={() => openResults(item.filter)}
+                onClick={() => openItem(item)}
               >
                 <span className="library-equipment-icon" aria-hidden="true">
                   <EquipmentIcon name={item.icon} />
@@ -129,7 +147,7 @@ export default function WorkoutLibraryPage() {
                 src={resolveLibraryMedia(group.media)}
                 aspect="muscle"
                 alt={`${group.label} muscle group`}
-                onClick={() => openResults(group.filter)}
+                onClick={() => openItem(group)}
               />
             ))}
           </div>
@@ -153,7 +171,7 @@ export default function WorkoutLibraryPage() {
                 aspect="type"
                 alt={`${type.label} workout`}
                 cta
-                onClick={() => openResults(type.filter)}
+                onClick={() => openItem(type)}
               />
             ))}
           </div>
