@@ -539,6 +539,16 @@ export default function DashboardPage() {
           <ul className="recent-activity-list">
             {summary.recentWorkouts.slice(0, 3).map((workout) => (
               <li className="recent-activity-row" key={workout.id}>
+                {/* Thumbnail depicts the session's training STYLE (approved
+                    type imagery) — representative, never a fake "photo of
+                    this session". */}
+                <img
+                  alt=""
+                  aria-hidden="true"
+                  className="recent-activity-thumb"
+                  loading="lazy"
+                  src={resolveRecentThumb(workout.name)}
+                />
                 <div className="recent-activity-copy">
                   <strong>{workout.name}</strong>
                   <span className="muted">
@@ -690,6 +700,22 @@ function QuickActionIcon({ name }) {
 // "N days ago"); empty string when the timestamp is missing or unparseable.
 // Compares LOCAL CALENDAR DAYS, not 24h buckets — a session logged yesterday
 // evening must read "Yesterday" even at 1am.
+// Map a logged session's name to the approved workout-type imagery so the
+// Recent Activity thumbnail depicts the training style (benchmark look).
+// Ordered: the first matching pattern wins; strength is the default style.
+const RECENT_THUMB_PATTERNS = [
+  [/recovery|mobility|stretch|yoga/i, "/media/workout-library/type-recovery.png"],
+  [/conditioning|cardio|walk|run|bike/i, "/media/workout-library/type-conditioning.png"],
+  [/power|explosive|jump/i, "/media/workout-library/type-power.png"],
+  [/endurance/i, "/media/workout-library/type-strength-endurance.png"],
+  [/volume|builder|hypertrophy|density|muscle/i, "/media/workout-library/type-hypertrophy.png"]
+];
+
+function resolveRecentThumb(name) {
+  const match = RECENT_THUMB_PATTERNS.find(([pattern]) => pattern.test(name || ""));
+  return match ? match[1] : "/media/workout-library/type-strength.png";
+}
+
 function formatRecentWhen(iso) {
   if (!iso) return "";
   const logged = new Date(iso);
