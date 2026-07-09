@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   EQUIPMENT_FILTERS,
@@ -7,6 +7,8 @@ import {
   resolveLibraryMedia,
   getLibraryMediaCoverage
 } from "../config/workoutLibrary";
+import { apiRequest } from "../api/client";
+import { useAuth } from "../state/AuthContext";
 
 // Muscle groups that map 1:1 to an Exercise Library category filter (precise
 // filtering). Arms (biceps/triceps) and Full Body have no single category, so
@@ -30,8 +32,42 @@ const MUSCLE_TO_CATEGORY = {
 
 export default function WorkoutLibraryPage() {
   const navigate = useNavigate();
+  const { token } = useAuth();
   const [query, setQuery] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [library, setLibrary] = useState(null);
+
+  // Live exercise counts per muscle group (approved-benchmark detail). Real
+  // data from the exercise library; until it loads (or if it fails) the tiles
+  // simply show no count — never a fabricated number.
+  useEffect(() => {
+    if (!token) return;
+    let cancelled = false;
+    apiRequest("/exercise-library", {}, token)
+      .then((payload) => {
+        if (!cancelled) setLibrary(payload);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [token]);
+
+  const muscleCounts = useMemo(() => {
+    if (!library) return null;
+    const byLabel = new Map((library.categories || []).map((c) => [c.label, c.count]));
+    const total = (library.entries || []).length;
+    return {
+      chest: byLabel.get("Chest"),
+      back: byLabel.get("Back"),
+      shoulders: byLabel.get("Shoulders"),
+      arms: (byLabel.get("Biceps") || 0) + (byLabel.get("Triceps") || 0) || undefined,
+      legs: byLabel.get("Legs"),
+      glutes: byLabel.get("Glutes"),
+      core: byLabel.get("Core"),
+      fullBody: total || undefined
+    };
+  }, [library]);
 
   const q = query.trim().toLowerCase();
   const match = (label) => !q || label.toLowerCase().includes(q);
@@ -145,6 +181,11 @@ export default function WorkoutLibraryPage() {
                 key={group.id}
                 className="library-muscle-card"
                 label={group.label}
+                description={
+                  Number.isFinite(muscleCounts?.[group.id])
+                    ? `${muscleCounts[group.id]} exercise${muscleCounts[group.id] === 1 ? "" : "s"}`
+                    : undefined
+                }
                 src={resolveLibraryMedia(group.media)}
                 aspect="muscle"
                 alt={`${group.label} muscle group`}
