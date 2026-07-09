@@ -209,6 +209,46 @@ suffix for EVERY prompt below:*
 `WORKOUT_LIBRARY_MEDIA` manifest in `src/config/workoutLibrary.js`; run
 `npm run qa:workout-library` after the drop.*
 
+### ✅ ULTRA PREMIUM MEDIA — SHIPPED (2026-07-09, owner-authorized create)
+All bounded, high-value media now live in the concept grade:
+- **Today hero** (Maple dusk-mountain, concept crop) · **Today Focus** photo ·
+  **Recent Activity** style thumbnails.
+- **Workout Library**: 8 anatomy muscle figures + 6 workout-type photos
+  (concept crops) — `qa:workout-library` 14/14 approved.
+- **Onboarding**: all 7 steps carry meaning-matched Gemini renders in the dark
+  grade (`onboarding-welcome/appmode/goal/setup/nutrition/recovery/review.png`).
+- **Nutrition**: 3 meal-template photos regenerated dark-grade
+  (`high-protein-breakfast / quick-lunch / protein-gap-snack.png`).
+- **Brand**: maple-leaf mark redrawn (bezier-lobed, reads as a leaf).
+- **Honest data**: 4th Today stat = real minutes trained this week (no fake HR).
+
+### ⛔ EXERCISE-LIBRARY RE-SHOOT — OWNER-COST/SCALE GATE (sized 2026-07-09)
+The Exercise Library's **existing** exercise photos are dark-background and
+**already look consistent + premium on the default Maple/Midnight dark
+themes** (verified live 2026-07-09). The historical "clash" was only ever
+against the light **Daylight** theme. So a full re-shoot is NOT required for
+the Ultra Premium look on the default identity.
+
+Remaining exercise-media work, scoped honestly:
+- **~34 exercises without a real photo** render the honest "text coaching
+  guide" fallback (name on a dark gradient) — could get real dark-grade
+  photos.
+- **174 exercises WITH guides** (≈304 step images total, per the earlier
+  media audit) would need re-shooting only to make the **Daylight** theme
+  fully photo-consistent.
+
+**Why this is an owner gate, not loop work:** at the proven browser-Gemini
+rate (~1.5 min/image incl. generate → clipboard → de-sparkle → wire), even
+just the ~34 missing photos is ~50 min of *continuous* automation on the
+owner's **shared** Gemini Pro account — which is concurrently running the
+Orientra program (an owner `-raw` file landed mid-session). The full ≈300-image
+re-shoot is ~7 hours. That scope + shared-account contention is a cost/priority
+decision only the owner can authorize. **Options for the owner:**
+(a) leave as-is — the default dark themes already look premium;
+(b) authorize the ~34 missing-photo fill (bounded, ~50 min);
+(c) authorize the full re-shoot for Daylight parity (large);
+(d) supply a batch export and Claude wires them (no generation cost).
+
 ### ALTERNATE FAST PATH — crop from the owner's concept image
 If the full-resolution concept export is saved to
 `N:\Downloads\pulsepeak-concept.png`, Claude crops hero/focus/type/muscle/
