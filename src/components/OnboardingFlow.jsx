@@ -40,7 +40,7 @@ const ONBOARDING_STEP_MEDIA = {
   2: { src: "/media/onboarding-goal.png", alt: "Athlete chalking hands before a barbell lift" },
   3: { src: "/media/onboarding-setup.png", alt: "Home gym corner with bench, dumbbells and barbell" },
   4: { src: "/media/onboarding-nutrition.png", alt: "Meal-prep containers with chicken, rice and greens" },
-  5: { src: "/media/onboarding/onboarding-10.jpg", alt: "PulsePeak body and recovery setup preview" },
+  5: { src: "/media/onboarding-recovery.png", alt: "Athlete foam-rolling on a mat in a calm studio" },
   6: { src: "/media/onboarding/onboarding-9.jpg", alt: "PulsePeak review setup preview" }
 };
 
