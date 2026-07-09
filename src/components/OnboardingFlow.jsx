@@ -708,6 +708,30 @@ function validateStep(step, form) {
     return "Add your current weight so PulsePeak can personalize protein and hydration guidance.";
   }
 
+  // Range checks mirror the server bounds (120–230 cm / 80–500 lb canonical)
+  // but run HERE, on this step, in the user's own units — previously a typo
+  // like "511" for 5'11" only failed at the final submit, with the error
+  // quoting centimetre bounds to an imperial user (audit F11).
+  const metric = form.unitPreference === "metric";
+  const storedHeight = convertHeightToStored(form.heightInput, form.unitPreference);
+  if (storedHeight !== null && (storedHeight < 120 || storedHeight > 230)) {
+    return metric
+      ? "Height should be between 120 and 230 cm — double-check the number."
+      : "Height should be between 48 and 90 inches — double-check the number.";
+  }
+  const storedWeight = convertWeightToStored(form.currentWeightInput, form.unitPreference);
+  if (storedWeight !== null && (storedWeight < 80 || storedWeight > 500)) {
+    return metric
+      ? "Current weight should be between 37 and 226 kg — double-check the number."
+      : "Current weight should be between 80 and 500 lb — double-check the number.";
+  }
+  const storedTarget = convertWeightToStored(form.targetWeightInput, form.unitPreference);
+  if (storedTarget !== null && (storedTarget < 80 || storedTarget > 500)) {
+    return metric
+      ? "Target weight should be between 37 and 226 kg — double-check the number."
+      : "Target weight should be between 80 and 500 lb — double-check the number.";
+  }
+
   return "";
 }
 
