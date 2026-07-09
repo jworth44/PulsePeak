@@ -40,11 +40,11 @@ export default function WorkoutLibraryPage() {
 
   // The bar's search affordance is real on every viewport: on desktop the
   // field is always visible and the icon focuses it; on mobile the icon
-  // swaps the title for the field.
-  const onSearchToggle = () => {
-    setFiltersOpen((open) => !open);
-    requestAnimationFrame(() => searchRef.current?.focus());
-  };
+  // swaps the title for the field. Focus lands after React re-renders.
+  const onSearchToggle = () => setFiltersOpen((open) => !open);
+  useEffect(() => {
+    if (filtersOpen) searchRef.current?.focus();
+  }, [filtersOpen]);
 
   // Live exercise counts per muscle group (approved-benchmark detail). Real
   // data from the exercise library; until it loads (or if it fails) the tiles
