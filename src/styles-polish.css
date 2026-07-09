@@ -1916,6 +1916,7 @@ input:focus, select:focus, textarea:focus {
 .today-page .today-launch,
 .today-page .streak-card,
 .today-page .today-habits,
+.today-page .today-quick,
 .today-page .today-recent {
   background: none !important;
   border: none !important;
@@ -1928,11 +1929,45 @@ input:focus, select:focus, textarea:focus {
 /* Remove the panels' top edge-light hairline on these dissolved sections. */
 .today-page .today-launch::after,
 .today-page .today-habits::after,
+.today-page .today-quick::after,
 .today-page .today-recent::after { display: none !important; }
 
-/* The habits/recent section headings now stand on space, not a boxed panel. */
+/* The habits/quick/recent section headings now stand on space, not a boxed panel. */
 .today-page .today-habits .panel-heading { margin-bottom: 16px; }
+.today-page .today-quick .panel-heading { margin-bottom: 12px; }
 .today-page .today-recent .panel-heading { margin-bottom: 10px; }
+
+/* Quick actions (Canadian benchmark): one tap to the app's real actions.
+   Quiet equipment-like tiles — thin icon over a small label. */
+.quick-actions-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+  gap: 10px;
+}
+.quick-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 8px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: rgba(var(--ink-rgb), 0.02);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+.quick-action svg { color: var(--accent); }
+.quick-action:hover {
+  color: var(--text-primary);
+  background: rgba(var(--ink-rgb), 0.05);
+  border-color: var(--border-strong);
+}
+.quick-action:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* Recent activity (Canadian benchmark): quiet rows of real logged sessions —
    name, honest recency + duration, evergreen Completed state. Thumbnails come

@@ -485,6 +485,35 @@ export default function DashboardPage() {
         </Panel>
       )}
 
+      <Panel className="today-quick" title="Quick actions">
+        {/* Canadian-benchmark row: one tap to the real actions the app has —
+            honest labels, no invented features. Mobility hides with its module. */}
+        <div className="quick-actions-row">
+          <button className="quick-action" type="button" onClick={openPrimaryWorkoutAction}>
+            <QuickActionIcon name="play" />
+            <span>Start workout</span>
+          </button>
+          <button className="quick-action" type="button" onClick={() => navigate("/workouts")}>
+            <QuickActionIcon name="log" />
+            <span>Log a session</span>
+          </button>
+          <button className="quick-action" type="button" onClick={() => navigate("/exercise-library")}>
+            <QuickActionIcon name="library" />
+            <span>Exercises</span>
+          </button>
+          {showMobilityDashboard ? (
+            <button className="quick-action" type="button" onClick={() => navigate("/mobility")}>
+              <QuickActionIcon name="mobility" />
+              <span>Mobility</span>
+            </button>
+          ) : null}
+          <button className="quick-action" type="button" onClick={() => navigate("/progress")}>
+            <QuickActionIcon name="checkin" />
+            <span>Weekly check-in</span>
+          </button>
+        </div>
+      </Panel>
+
       {Array.isArray(summary.recentWorkouts) && summary.recentWorkouts.length > 0 ? (
         <Panel className="today-recent" title="Recent activity">
           {/* Real logged sessions only (Canadian benchmark item). Photo
@@ -580,6 +609,60 @@ export default function DashboardPage() {
       />
     </div>
   );
+}
+
+// Thin athletic line icons for the Quick Actions row (decorative — the button
+// labels carry the meaning).
+function QuickActionIcon({ name }) {
+  const p = {
+    viewBox: "0 0 24 24",
+    width: 20,
+    height: 20,
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.8,
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    "aria-hidden": true
+  };
+  switch (name) {
+    case "play":
+      return (
+        <svg {...p}>
+          <circle cx="12" cy="12" r="9" />
+          <path d="M10 8.5v7l6-3.5z" />
+        </svg>
+      );
+    case "log":
+      return (
+        <svg {...p}>
+          <rect x="5" y="4" width="14" height="17" rx="2" />
+          <path d="M9 4.5V3h6v1.5M9 10h6M9 14h6M9 18h3.5" />
+        </svg>
+      );
+    case "library":
+      return (
+        <svg {...p}>
+          <path d="M6.5 8v8M17.5 8v8M4 9.5v5M20 9.5v5M6.5 12h11" />
+        </svg>
+      );
+    case "mobility":
+      return (
+        <svg {...p}>
+          <circle cx="12" cy="5" r="2.1" />
+          <path d="M12 7.5v6M12 9.5l-4.5 2M12 9.5l4.5 2M12 13.5l-3 6.5M12 13.5l3 6.5" />
+        </svg>
+      );
+    case "checkin":
+      return (
+        <svg {...p}>
+          <path d="M4 17l5-5 4 4 7-8" />
+          <path d="M16 8h4v4" />
+        </svg>
+      );
+    default:
+      return null;
+  }
 }
 
 // Human, honest recency for the Recent Activity rows ("Today" / "Yesterday" /
