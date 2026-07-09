@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import EmptyStateCard from "../components/EmptyStateCard";
 import Panel from "../components/Panel";
 import WorkoutDetailModal from "../components/WorkoutDetailModal";
@@ -19,6 +20,7 @@ import { getVisibleLockedWorkoutMessage, hasFullWorkoutAccess } from "../../shar
 import { WORKOUT_DISCOVERY_CATEGORIES, WORKOUT_FILTER_PRESETS, WORKOUT_SORT_OPTIONS } from "../../shared/libraryTaxonomy.js";
 
 export default function WorkoutsPage() {
+  const navigate = useNavigate();
   const { token, accessTier, workoutMemory, recordWorkoutCompletion } = useAuth();
   const { data, summary, loading, error, mutate } = useDashboardData();
   const [workoutEnvironment, setWorkoutEnvironment] = useState("both");
@@ -137,8 +139,20 @@ export default function WorkoutsPage() {
       ),
     [accessTier, currentPlanFocus, equipmentSelections, safeProfile.goalType, workoutEnvironment, workoutLibrary, workoutMemory]
   );
-  const isUsingFilterRecovery = strictDisplayedWorkouts.length === 0 && fallbackDisplayedWorkouts.length > 0;
-  const displayedWorkouts = isUsingFilterRecovery ? fallbackDisplayedWorkouts : strictDisplayedWorkouts;
+  // Safety filters NEVER silently fall back: substituting higher-stress
+  // training under a joint-friendly / 40+ / recovery label is unsafe. Zero
+  // matches under a safety filter shows an honest empty state instead.
+  const safetyFilterActive =
+    ["joint_friendly", "forty_plus", "recovery_day"].includes(selectedCategory) ||
+    selectedJointStress === "low";
+  const isUsingFilterRecovery =
+    strictDisplayedWorkouts.length === 0 && fallbackDisplayedWorkouts.length > 0 && !safetyFilterActive;
+  const displayedWorkouts = strictDisplayedWorkouts.length > 0
+    ? strictDisplayedWorkouts
+    : isUsingFilterRecovery
+      ? fallbackDisplayedWorkouts
+      : [];
+  const safetyEmptyState = safetyFilterActive && strictDisplayedWorkouts.length === 0;
   const globalRecommendedWorkout = null;
   const savedWorkoutKeys = useMemo(
     () => new Set((safeSummary.savedWorkouts || []).map((workout) => String(workout.presetId || workout.id || "").trim()).filter(Boolean)),
@@ -203,12 +217,19 @@ export default function WorkoutsPage() {
     setWorkoutFocus(summary?.workoutEngine?.recommendedFocus || "recommended");
   }, [data?.profile, summary?.workoutEngine?.recommendedFocus]);
 
+  // The category is the primary browse intent: map it to a focus when a
+  // mapping exists, otherwise RESET to recommended. Previously a category
+  // with no mapping inherited the prior category's focus (e.g. Recovery Day
+  // left mobility_recovery pinned), so the next selection filtered a starved
+  // pool and every category looked identical.
   useEffect(() => {
     const mappedFocus = resolveCategoryToFocus(selectedCategory, focusOptions);
-    if (mappedFocus && workoutFocus !== mappedFocus) {
-      setWorkoutFocus(mappedFocus);
-    }
-  }, [focusOptions, selectedCategory, workoutFocus]);
+    setWorkoutFocus((current) => {
+      const next = mappedFocus || "recommended";
+      return current === next ? current : next;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCategory, focusOptions]);
 
   useEffect(() => {
     if (!token) {
@@ -632,6 +653,23 @@ export default function WorkoutsPage() {
             <button className="ghost-button" type="button" onClick={resetWorkoutFilters}>
               Return to recommended path
             </button>
+          </div>
+        ) : safetyEmptyState ? (
+          <div className="module-note">
+            <strong>No sessions meet that safety bar with your current setup.</strong>
+            <p className="support-copy">
+              PulsePeak won&rsquo;t substitute higher-stress training under a
+              joint-friendly, 40+, or recovery label. The guided mobility path
+              is the safe session for today, or widen the other filters.
+            </p>
+            <div className="filter-action-group">
+              <button className="secondary-button" type="button" onClick={() => navigate("/mobility")}>
+                Open guided mobility
+              </button>
+              <button className="ghost-button" type="button" onClick={resetWorkoutFilters}>
+                Reset filters
+              </button>
+            </div>
           </div>
         ) : null}
         {topWorkout ? (
@@ -1216,11 +1254,17 @@ function matchesWorkoutFocus(workout, focus) {
   return String(workout.focus || "").toLowerCase() === String(focus).toLowerCase();
 }
 
+// The "40+" server tag slugifies to "40plus", but the taxonomy id is
+// "forty_plus" — without this alias the 40+ category could never match a
+// single workout for anyone (it always fell into filter recovery).
+const CATEGORY_TAG_SLUG_ALIASES = { forty_plus: "40plus" };
+
 function matchesWorkoutCategory(workout, category) {
-  return (
-    category === "all" ||
-    (workout.categoryTags || []).some((tag) => slugifyDiscoveryTag(tag) === category)
-  );
+  if (category === "all") {
+    return true;
+  }
+  const acceptable = new Set([category, CATEGORY_TAG_SLUG_ALIASES[category]].filter(Boolean));
+  return (workout.categoryTags || []).some((tag) => acceptable.has(slugifyDiscoveryTag(tag)));
 }
 
 function matchesWorkoutDuration(workout, duration) {

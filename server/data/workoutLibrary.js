@@ -1256,9 +1256,19 @@ function deriveWorkoutCategoryTags(templateEntry, filters, exercises, profile) {
   if (profile?.goalType === "fat_loss") tags.add("Fat Loss");
   if (profile?.goalType === "bodybuilding") tags.add("Muscle Building");
   if (profile?.goalType === "strength") tags.add("Strength");
-  if (profile?.ageGroup === "40-49" || profile?.ageGroup === "50+") tags.add("40+");
   tags.add(deriveWorkoutDifficulty(templateEntry));
-  if (deriveWorkoutJointStress(exercises) === "low") tags.add("Joint-Friendly");
+  // Safety tags describe the WORKOUT, never the user. "Joint-Friendly" means
+  // no high-joint-stress movement in the session (strictly all-low was so
+  // rare the category matched nothing and silently fell back to unfiltered
+  // sessions — unsafe under a safety label). "40+" additionally requires the
+  // session itself not be high intensity (smoother pacing, recovery-aware).
+  // The old "40+" tag keyed on the USER's ageGroup, which made the category
+  // mean "everything" for a 40+ user and "nothing" for everyone else.
+  const hasHighStressExercise = (exercises || []).some(
+    (exercise) => exercise.tags?.jointStressLevel === "high"
+  );
+  if (!hasHighStressExercise) tags.add("Joint-Friendly");
+  if (!hasHighStressExercise && templateEntry.intensity !== "High") tags.add("40+");
   return Array.from(tags);
 }
 
