@@ -1502,6 +1502,65 @@ input:focus, select:focus, textarea:focus {
 
 /* (The greeting now lives inside the cinematic hero as its quiet opening line.) */
 
+/* ---- Injury Support chooser (inline context collection) --------------- */
+.injury-chooser { display: grid; gap: 18px; }
+.injury-chooser-step { display: grid; gap: 10px; }
+.injury-chooser-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.injury-chooser-options { display: flex; flex-wrap: wrap; gap: 10px; }
+.injury-chooser-option {
+  flex: 1 1 200px;
+  max-width: 280px;
+  display: grid;
+  gap: 5px;
+  justify-items: start;
+  text-align: left;
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+.injury-chooser-option span { font-size: 0.8rem; line-height: 1.4; color: var(--text-secondary); }
+.injury-chooser-option:hover { border-color: var(--border-strong); }
+.injury-chooser-option.is-selected { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.injury-chooser-pill {
+  padding: 10px 16px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.injury-chooser-pill:hover { border-color: var(--border-strong); }
+.injury-chooser-pill.is-selected {
+  background: var(--accent);
+  border-color: transparent;
+  color: var(--accent-contrast);
+}
+.injury-chooser-option:focus-visible,
+.injury-chooser-pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.injury-chooser-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+.injury-chooser-summary strong { color: var(--text-primary); }
+.injury-library-note { margin: 0; }
+
 /* Recovery -> reflection nudge: the next chapter in the training day. */
 .recovery-next {
   display: flex;

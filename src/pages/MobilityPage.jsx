@@ -615,20 +615,50 @@ export default function MobilityPage() {
               <p className="support-copy">Matches are grouped by category below so you can move straight into the right support library.</p>
             </div>
           ) : effectiveCategory === "injury_support" && !isInjurySupportReady ? (
-            <EmptyStateCard
-              ctaLabel="Start Injury Support"
-              ctaTo="/injury-support"
-              description={
-                selectedIssueType === "none"
-                  ? "Choose whether you are managing an injury or an ache so PulsePeak can narrow the support path."
-                  : selectedIssueType === "injury"
-                    ? "Choose the injury first and PulsePeak will lock the correct body area automatically."
-                    : "Choose a body area and symptom so PulsePeak can narrow the support options."
-              }
-              title="Choose your issue first"
+            <InjurySupportChooser
+              selectedIssueType={selectedIssueType}
+              selectedInjury={selectedInjury}
+              selectedArea={selectedArea}
+              selectedSymptomType={selectedSymptomType}
+              injuryOptions={injuryMappingOptions}
+              areaOptions={acheBodyAreaOptions}
+              symptomOptions={symptomTypeOptions}
+              profileAreas={data?.profile?.restrictedAreas || []}
+              onIssueType={(type) => {
+                setSelectedIssueType(type);
+                setSelectedArea("all");
+                setSelectedInjury("none");
+                setSelectedSymptomType("none");
+              }}
+              onInjury={setSelectedInjury}
+              onArea={setSelectedArea}
+              onSymptom={setSelectedSymptomType}
             />
           ) : (
             <>
+              {effectiveCategory === "injury_support" ? (
+                <div className="injury-chooser-summary">
+                  <span>
+                    Supporting: <strong>{
+                      selectedIssueType === "injury"
+                        ? selectedInjuryMapping?.label || "Injury"
+                        : `${acheBodyAreaOptions.find((option) => option.value === selectedArea)?.label || formatBodyAreaLabel(selectedArea)} · ${symptomTypeOptions.find((option) => option.value === selectedSymptomType)?.label || "Support"}`
+                    }</strong>
+                  </span>
+                  <button
+                    className="text-link"
+                    type="button"
+                    onClick={() => {
+                      setSelectedIssueType("none");
+                      setSelectedArea("all");
+                      setSelectedInjury("none");
+                      setSelectedSymptomType("none");
+                    }}
+                  >
+                    Change
+                  </button>
+                </div>
+              ) : null}
               <div className="module-note">
                 <strong>{categories.find((category) => category.id === effectiveCategory)?.label || "Guided movement support"}</strong>
                 <p className="support-copy">{getGuidedBlockSupportCopy(effectiveCategory)}</p>
@@ -707,18 +737,10 @@ export default function MobilityPage() {
             />
           )
         ) : effectiveCategory === "injury_support" && !isInjurySupportReady ? (
-          <EmptyStateCard
-            ctaLabel="Start Injury Support"
-            ctaTo="/injury-support"
-            description={
-              selectedIssueType === "none"
-                ? "Choose your issue type first so this library can lock onto the right support path."
-                : selectedIssueType === "injury"
-                  ? injurySupportPrompt
-                  : acheSupportPrompt
-            }
-            title="Injury support needs one more step"
-          />
+          <p className="support-copy injury-library-note">
+            The library unlocks automatically once you choose your issue under
+            &ldquo;Start here first&rdquo; above — no extra step after that.
+          </p>
         ) : browseRoutines.length ? (
           <>
             <div className="module-card-grid">
@@ -749,18 +771,28 @@ export default function MobilityPage() {
               </div>
             ) : null}
           </>
+        ) : effectiveCategory === "injury_support" ? (
+          <div className="module-note injury-no-match">
+            <strong>No support matches yet</strong>
+            <p className="support-copy">
+              {selectedIssueType === "injury"
+                ? "No rehab movements match that injury mapping yet — the broader mobility path is the safer next step."
+                : "No movements match that ache pattern yet — the broader mobility path is the safer next step."}
+            </p>
+            <button
+              className="secondary-button"
+              type="button"
+              onClick={() => setSelectedCategory("mobility_stretch")}
+            >
+              Open Mobility &amp; Stretch
+            </button>
+          </div>
         ) : (
           <EmptyStateCard
-            ctaLabel={effectiveCategory === "injury_support" ? "Start Injury Support" : "Start Guided Session"}
-            ctaTo={effectiveCategory === "injury_support" ? "/injury-support" : "/guided-start"}
-            description={
-              effectiveCategory === "injury_support"
-                ? selectedIssueType === "injury"
-                  ? "No rehab movements match that injury mapping yet, so use the broader mobility path for a safer next step."
-                  : "No mobility, stretch, or light rehab movements match that ache pattern yet, so open the broader mobility path instead."
-                : "Clear one filter or open a guided session path to get moving without guessing."
-            }
-            title={effectiveCategory === "injury_support" ? "No support matches yet" : "No movements match these filters"}
+            ctaLabel="Start Guided Session"
+            ctaTo="/guided-start"
+            description="Clear one filter or open a guided session path to get moving without guessing."
+            title="No movements match these filters"
           />
         )}
       </Panel>
@@ -1130,6 +1162,157 @@ function renderMobilityPreview(routine) {
     <div className="library-card-thumb library-card-thumb-placeholder movement-image-fallback">
       <span>{visual.initials}</span>
       <small>{visual.label}</small>
+    </div>
+  );
+}
+
+// The injury-support entry point: collect the user's actual context inline —
+// issue type, then the specific injury or body area + symptom. The movement
+// recommendations change based on these answers; nothing navigates away.
+// (Replaces the old CTA that routed to an interstitial and looped back.)
+function InjurySupportChooser({
+  selectedIssueType,
+  selectedInjury,
+  selectedArea,
+  selectedSymptomType,
+  injuryOptions,
+  areaOptions,
+  symptomOptions,
+  profileAreas,
+  onIssueType,
+  onInjury,
+  onArea,
+  onSymptom
+}) {
+  const profileMatches = (profileAreas || [])
+    .map((area) => String(area || "").toLowerCase())
+    .map((area) => ({
+      area,
+      injury: injuryOptions.find(
+        (option) =>
+          String(option.bodyArea || "").toLowerCase().includes(area) ||
+          String(option.label || "").toLowerCase().includes(area)
+      ),
+      ache: areaOptions.find(
+        (option) =>
+          String(option.value || "").toLowerCase().includes(area) ||
+          String(option.label || "").toLowerCase().includes(area)
+      )
+    }))
+    .filter((match) => match.injury || match.ache);
+
+  return (
+    <div className="injury-chooser">
+      <p className="support-copy">
+        Tell PulsePeak what needs support — the movements change based on your answers.
+      </p>
+
+      {selectedIssueType === "none" && profileMatches.length ? (
+        <div className="injury-chooser-step">
+          <span className="injury-chooser-label">From your profile</span>
+          <div className="injury-chooser-options">
+            {profileMatches.map((match) => (
+              <button
+                key={match.area}
+                type="button"
+                className="injury-chooser-pill"
+                onClick={() => {
+                  if (match.injury) {
+                    onIssueType("injury");
+                    onInjury(match.injury.value);
+                  } else {
+                    onIssueType("ache");
+                    onArea(match.ache.value);
+                  }
+                }}
+              >
+                Support my {match.area}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      <div className="injury-chooser-step">
+        <span className="injury-chooser-label">1 - What are you managing?</span>
+        <div className="injury-chooser-options">
+          <button
+            type="button"
+            aria-pressed={selectedIssueType === "injury"}
+            className={`injury-chooser-option${selectedIssueType === "injury" ? " is-selected" : ""}`}
+            onClick={() => onIssueType("injury")}
+          >
+            <strong>Injury</strong>
+            <span>Diagnosed or suspected — strict movement filtering.</span>
+          </button>
+          <button
+            type="button"
+            aria-pressed={selectedIssueType === "ache"}
+            className={`injury-chooser-option${selectedIssueType === "ache" ? " is-selected" : ""}`}
+            onClick={() => onIssueType("ache")}
+          >
+            <strong>Ache / tightness</strong>
+            <span>Stiff, sore, or tense — targeted relief work.</span>
+          </button>
+        </div>
+      </div>
+
+      {selectedIssueType === "injury" ? (
+        <div className="injury-chooser-step">
+          <span className="injury-chooser-label">2 - Which injury?</span>
+          <div className="injury-chooser-options">
+            {injuryOptions.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                aria-pressed={selectedInjury === option.value}
+                className={`injury-chooser-pill${selectedInjury === option.value ? " is-selected" : ""}`}
+                onClick={() => onInjury(option.value)}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {selectedIssueType === "ache" ? (
+        <div className="injury-chooser-step">
+          <span className="injury-chooser-label">2 - Where do you feel it?</span>
+          <div className="injury-chooser-options">
+            {areaOptions.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                aria-pressed={selectedArea === option.value}
+                className={`injury-chooser-pill${selectedArea === option.value ? " is-selected" : ""}`}
+                onClick={() => onArea(option.value)}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {selectedIssueType === "ache" && selectedArea !== "all" ? (
+        <div className="injury-chooser-step">
+          <span className="injury-chooser-label">3 - What does it feel like?</span>
+          <div className="injury-chooser-options">
+            {symptomOptions.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                aria-pressed={selectedSymptomType === option.value}
+                className={`injury-chooser-pill${selectedSymptomType === option.value ? " is-selected" : ""}`}
+                onClick={() => onSymptom(option.value)}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
