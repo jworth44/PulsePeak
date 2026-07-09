@@ -2553,8 +2553,9 @@ input:focus, select:focus, textarea:focus {
 .library-back:focus-visible,
 .library-filter-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-/* Search */
-.library-search { display: grid; gap: 6px; }
+/* Search — lives in the top bar (benchmark: back · title · search · icon).
+   Desktop: always visible, the icon focuses it. Mobile: the icon swaps the
+   title for the field. */
 .library-search-field {
   display: flex;
   align-items: center;
@@ -2574,11 +2575,17 @@ input:focus, select:focus, textarea:focus {
   font: inherit;
   outline: none;
 }
+.library-topbar-search { flex: 0 1 300px; margin-left: auto; }
+@media (max-width: 720px) {
+  .library-topbar-search { display: none; }
+  .library-topbar.is-searching .library-topbar-search { display: flex; flex: 1 1 auto; }
+  .library-topbar.is-searching .library-topbar-title { display: none; }
+}
 .library-search-count { margin: 0; font-size: 0.85rem; color: var(--text-secondary); }
 
-/* Section rhythm */
+/* Section rhythm — the crimson caps eyebrow IS the section heading. */
 .workout-library-page .library-section { display: grid; gap: 14px; }
-.workout-library-page .library-section .section-context { display: grid; gap: 2px; }
+.library-section-heading { margin: 0; }
 
 /* Equipment grid — compact icon cards */
 .library-equipment-grid {
@@ -2586,18 +2593,21 @@ input:focus, select:focus, textarea:focus {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 12px;
 }
+/* Benchmark equipment card: literal icon centered over the label. */
 .library-equipment-card {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
+  justify-content: center;
+  gap: 11px;
+  padding: 20px 12px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-subtle);
   background: var(--surface);
   box-shadow: var(--elev-1);
   color: var(--text-primary);
   cursor: pointer;
-  text-align: left;
+  text-align: center;
   transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
 }
 .library-equipment-card:hover { transform: translateY(-2px); border-color: var(--border-accent); }
@@ -2607,13 +2617,10 @@ input:focus, select:focus, textarea:focus {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: var(--radius-sm, 10px);
-  background: rgba(var(--accent-rgb), 0.12);
   color: var(--accent);
 }
-.library-equipment-label { font-weight: 600; font-size: 0.95rem; line-height: 1.2; }
+.library-equipment-icon svg { width: 26px; height: 26px; }
+.library-equipment-label { font-weight: 600; font-size: 0.92rem; line-height: 1.2; }
 
 /* Muscle + type grids */
 .library-muscle-grid {

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   EQUIPMENT_FILTERS,
@@ -36,6 +36,15 @@ export default function WorkoutLibraryPage() {
   const [query, setQuery] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [library, setLibrary] = useState(null);
+  const searchRef = useRef(null);
+
+  // The bar's search affordance is real on every viewport: on desktop the
+  // field is always visible and the icon focuses it; on mobile the icon
+  // swaps the title for the field.
+  const onSearchToggle = () => {
+    setFiltersOpen((open) => !open);
+    requestAnimationFrame(() => searchRef.current?.focus());
+  };
 
   // Live exercise counts per muscle group (approved-benchmark detail). Real
   // data from the exercise library; until it loads (or if it fails) the tiles
@@ -93,7 +102,7 @@ export default function WorkoutLibraryPage() {
 
   return (
     <div className="page-grid page-grid-tight workout-library-page editorial-sections">
-      <header className="library-topbar">
+      <header className={`library-topbar${filtersOpen ? " is-searching" : ""}`}>
         <button
           type="button"
           className="library-back"
@@ -103,36 +112,32 @@ export default function WorkoutLibraryPage() {
           <BackIcon />
         </button>
         <h1 className="library-topbar-title">Workout Library</h1>
+        <label className="library-search-field library-topbar-search">
+          <SearchIcon />
+          <input
+            ref={searchRef}
+            type="search"
+            value={query}
+            aria-label="Search equipment, muscle groups, or workout types"
+            placeholder="Search the library"
+            onChange={(event) => setQuery(event.target.value)}
+          />
+        </label>
         <button
           type="button"
           className={`library-filter-toggle${filtersOpen ? " is-open" : ""}`}
           aria-pressed={filtersOpen}
           aria-label="Search the library"
-          onClick={() => setFiltersOpen((open) => !open)}
+          onClick={onSearchToggle}
         >
           <FilterIcon />
         </button>
       </header>
 
-      {filtersOpen ? (
-        <div className="library-search">
-          <label className="library-search-field">
-            <SearchIcon />
-            <input
-              type="search"
-              value={query}
-              autoFocus
-              aria-label="Search equipment, muscle groups, or workout types"
-              placeholder="Search equipment, muscle groups, or workout types"
-              onChange={(event) => setQuery(event.target.value)}
-            />
-          </label>
-          {q ? (
-            <p className="library-search-count">
-              {resultCount} match{resultCount === 1 ? "" : "es"}
-            </p>
-          ) : null}
-        </div>
+      {q ? (
+        <p className="library-search-count">
+          {resultCount} match{resultCount === 1 ? "" : "es"}
+        </p>
       ) : null}
 
       {!hasResults ? (
@@ -145,36 +150,11 @@ export default function WorkoutLibraryPage() {
         </section>
       ) : null}
 
-      {equipment.length ? (
-        <section className="panel library-section">
-          <div className="section-context">
-            <p className="section-label">Browse by equipment</p>
-            <h2>Start with what you have</h2>
-          </div>
-          <div className="library-equipment-grid">
-            {equipment.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                className="library-equipment-card"
-                onClick={() => openItem(item)}
-              >
-                <span className="library-equipment-icon" aria-hidden="true">
-                  <EquipmentIcon name={item.icon} />
-                </span>
-                <span className="library-equipment-label">{item.label}</span>
-              </button>
-            ))}
-          </div>
-        </section>
-      ) : null}
-
+      {/* Benchmark order: muscle groups lead, then equipment, then types.
+          One quiet caps heading per section — the eyebrow IS the heading. */}
       {muscles.length ? (
         <section className="panel library-section">
-          <div className="section-context">
-            <p className="section-label">Browse by muscle group</p>
-            <h2>Target what you're training</h2>
-          </div>
+          <h2 className="section-label library-section-heading">Browse by muscle group</h2>
           <div className="library-muscle-grid">
             {muscles.map((group) => (
               <MediaTile
@@ -196,12 +176,30 @@ export default function WorkoutLibraryPage() {
         </section>
       ) : null}
 
+      {equipment.length ? (
+        <section className="panel library-section">
+          <h2 className="section-label library-section-heading">Browse by equipment</h2>
+          <div className="library-equipment-grid">
+            {equipment.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className="library-equipment-card"
+                onClick={() => openItem(item)}
+              >
+                <span className="library-equipment-icon" aria-hidden="true">
+                  <EquipmentIcon name={item.icon} />
+                </span>
+                <span className="library-equipment-label">{item.label}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
       {types.length ? (
         <section className="panel library-section">
-          <div className="section-context">
-            <p className="section-label">Popular workout types</p>
-            <h2>Train with intent</h2>
-          </div>
+          <h2 className="section-label library-section-heading">Popular workout types</h2>
           <div className="library-type-grid">
             {types.map((type) => (
               <MediaTile
