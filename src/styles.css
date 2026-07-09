@@ -2382,6 +2382,12 @@ select:focus {
   color: var(--muted);
 }
 
+/* Quiet placeholder while a lazy route chunk loads (milliseconds once the
+   PWA has precached; holds vertical space so the page doesn't jump). */
+.route-loading {
+  min-height: 40vh;
+}
+
 .screen-center-branded {
   gap: 14px;
   text-align: center;

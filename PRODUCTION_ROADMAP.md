@@ -289,6 +289,19 @@ media review · commit · production-log line · roadmap update. Then the next b
   accents keep their overrides (featured tier `--volt`). Verified Coach + Progress
   + auth both themes, 0 contrast fails. **One-line reversible** if coloured
   eyebrows are preferred.
+- **Perf: route-level code splitting** (2026-07-09) — measured first: one 512 kB
+  monolithic JS bundle (143 kB gzip; Vite's >500 kB warning firing). Split at the
+  route level (`React.lazy` for every route except the two entry surfaces —
+  AuthPage logged-out, DashboardPage logged-in — which stay eager for fastest
+  first paint) + a stable `vendor` chunk (react/react-dom/react-router-dom) so
+  app changes no longer invalidate cached framework bytes. Result: **first-load
+  JS 512 kB → 311 kB (gzip 143 kB → 93 kB, −35%)**; 20 route chunks load on
+  demand; all chunks still PWA-precached (~863 KiB total, unchanged) so
+  post-install navigation stays instant. Quiet `.route-loading` Suspense
+  fallback (invisible, holds space, role=status). Verified live: registered +
+  onboarded a fresh user, SPA-navigated all 9 lazy routes (chunks observed
+  loading on demand via the performance API), 0 console errors, 0 failed
+  requests. build 0 · qa:launch 19/19 · qa:workout-library PASS.
 - C5–C9, C11–C12 — queued.
 
 ### ⏳ Owner-gated / owner-judgment queue (surfaced by the autonomous sweep)

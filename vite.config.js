@@ -63,6 +63,17 @@ export default defineConfig({
       }
     })
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        // Stable vendor chunk: app-code changes no longer invalidate the
+        // cached React/router bytes between releases.
+        manualChunks: {
+          vendor: ["react", "react-dom", "react-router-dom"]
+        }
+      }
+    }
+  },
   server: {
     host: true,
     port: 5173,

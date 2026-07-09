@@ -1,31 +1,39 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./state/AuthContext";
 import AppShell from "./components/AppShell";
 import AuthPage from "./pages/AuthPage";
 import DashboardPage from "./pages/DashboardPage";
-import PlanPage from "./pages/PlanPage";
-import MobilityPage from "./pages/MobilityPage";
-import WorkoutsPage from "./pages/WorkoutsPage";
-import ExerciseLibraryPage from "./pages/ExerciseLibraryPage";
-import WorkoutLibraryPage from "./pages/WorkoutLibraryPage";
-import NutritionPage from "./pages/NutritionPage";
-import ProgressPage from "./pages/ProgressPage";
-import CoachPage from "./pages/CoachPage";
-import BillingSuccessPage from "./pages/BillingSuccessPage";
-import BillingCancelPage from "./pages/BillingCancelPage";
-import HelpCenterPage from "./pages/HelpCenterPage";
-import OnboardingPage from "./pages/OnboardingPage";
-import PreferencesPage from "./pages/PreferencesPage";
-import FirstSessionRoutePage from "./pages/FirstSessionRoutePage";
-import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
-import TermsPage from "./pages/TermsPage";
-import ContactPage from "./pages/ContactPage";
-import NotFoundPage from "./pages/NotFoundPage";
 import PublicPageLayout from "./components/PublicPageLayout";
 import { usePageTracking } from "./lib/analytics";
 
+// Route-level code splitting: the two entry surfaces (auth, dashboard) stay in
+// the main bundle for the fastest first paint; every other route loads on
+// demand. The PWA precaches all chunks, so post-install navigation is instant.
+const PlanPage = lazy(() => import("./pages/PlanPage"));
+const MobilityPage = lazy(() => import("./pages/MobilityPage"));
+const WorkoutsPage = lazy(() => import("./pages/WorkoutsPage"));
+const ExerciseLibraryPage = lazy(() => import("./pages/ExerciseLibraryPage"));
+const WorkoutLibraryPage = lazy(() => import("./pages/WorkoutLibraryPage"));
+const NutritionPage = lazy(() => import("./pages/NutritionPage"));
+const ProgressPage = lazy(() => import("./pages/ProgressPage"));
+const CoachPage = lazy(() => import("./pages/CoachPage"));
+const BillingSuccessPage = lazy(() => import("./pages/BillingSuccessPage"));
+const BillingCancelPage = lazy(() => import("./pages/BillingCancelPage"));
+const HelpCenterPage = lazy(() => import("./pages/HelpCenterPage"));
+const OnboardingPage = lazy(() => import("./pages/OnboardingPage"));
+const PreferencesPage = lazy(() => import("./pages/PreferencesPage"));
+const FirstSessionRoutePage = lazy(() => import("./pages/FirstSessionRoutePage"));
+const PrivacyPolicyPage = lazy(() => import("./pages/PrivacyPolicyPage"));
+const TermsPage = lazy(() => import("./pages/TermsPage"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
+
 const BRAND_LOGO = "/brand/pulsepeak-main-logo.png";
+
+function RouteFallback() {
+  return <div className="route-loading" role="status" aria-label="Loading" />;
+}
 
 export default function App() {
   const { token, loading, needsOnboarding } = useAuth();
@@ -42,85 +50,91 @@ export default function App() {
 
   if (!token) {
     return (
-      <Routes>
-        <Route path="/privacy" element={<PublicPageLayout><PrivacyPolicyPage /></PublicPageLayout>} />
-        <Route path="/terms" element={<PublicPageLayout><TermsPage /></PublicPageLayout>} />
-        <Route path="/help" element={<PublicPageLayout><HelpCenterPage /></PublicPageLayout>} />
-        <Route path="/contact" element={<PublicPageLayout><ContactPage /></PublicPageLayout>} />
-        <Route path="*" element={<AuthPage />} />
-      </Routes>
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          <Route path="/privacy" element={<PublicPageLayout><PrivacyPolicyPage /></PublicPageLayout>} />
+          <Route path="/terms" element={<PublicPageLayout><TermsPage /></PublicPageLayout>} />
+          <Route path="/help" element={<PublicPageLayout><HelpCenterPage /></PublicPageLayout>} />
+          <Route path="/contact" element={<PublicPageLayout><ContactPage /></PublicPageLayout>} />
+          <Route path="*" element={<AuthPage />} />
+        </Routes>
+      </Suspense>
     );
   }
 
   return (
     needsOnboarding ? (
-      <Routes>
-        <Route path="/onboarding" element={<OnboardingPage />} />
-        <Route path="*" element={<Navigate to="/onboarding" replace />} />
-      </Routes>
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          <Route path="/onboarding" element={<OnboardingPage />} />
+          <Route path="*" element={<Navigate to="/onboarding" replace />} />
+        </Routes>
+      </Suspense>
     ) : (
       <AppShell>
-        <Routes>
-          <Route path="/" element={<DashboardPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/plan" element={<PlanPage />} />
-          <Route path="/exercise-library" element={<ExerciseLibraryPage />} />
-          <Route path="/workout-library" element={<WorkoutLibraryPage />} />
-          <Route path="/mobility" element={<MobilityPage />} />
-          <Route path="/workouts" element={<WorkoutsPage />} />
-          <Route
-            path="/guided-start"
-            element={
-              <FirstSessionRoutePage
-                description="Start with a simple guided session built from your saved setup."
-                startPath="/workouts"
-                title="Guided Start"
-              />
-            }
-          />
-          <Route
-            path="/workout/quick-start"
-            element={
-              <FirstSessionRoutePage
-                description="Begin with a quick-start workout path matched to your current goal."
-                startPath="/workouts"
-                title="Quick Start Workout"
-              />
-            }
-          />
-          <Route
-            path="/workout/strength"
-            element={
-              <FirstSessionRoutePage
-                description="Jump into a strength-focused session path based on your current setup."
-                startPath="/workouts"
-                title="Strength Session"
-              />
-            }
-          />
-          <Route
-            path="/injury-support"
-            element={
-              <FirstSessionRoutePage
-                description="Start with the injury-support path before moving into a full session."
-                startPath="/mobility"
-                title="Injury Support"
-              />
-            }
-          />
-          <Route path="/nutrition" element={<NutritionPage />} />
-          <Route path="/progress" element={<ProgressPage />} />
-          <Route path="/coach" element={<CoachPage />} />
-          <Route path="/help" element={<HelpCenterPage />} />
-          <Route path="/privacy" element={<PrivacyPolicyPage />} />
-          <Route path="/terms" element={<TermsPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/preferences" element={<PreferencesPage />} />
-          <Route path="/onboarding" element={<Navigate to="/" replace />} />
-          <Route path="/billing/success" element={<BillingSuccessPage />} />
-          <Route path="/billing/cancel" element={<BillingCancelPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <Suspense fallback={<RouteFallback />}>
+          <Routes>
+            <Route path="/" element={<DashboardPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/plan" element={<PlanPage />} />
+            <Route path="/exercise-library" element={<ExerciseLibraryPage />} />
+            <Route path="/workout-library" element={<WorkoutLibraryPage />} />
+            <Route path="/mobility" element={<MobilityPage />} />
+            <Route path="/workouts" element={<WorkoutsPage />} />
+            <Route
+              path="/guided-start"
+              element={
+                <FirstSessionRoutePage
+                  description="Start with a simple guided session built from your saved setup."
+                  startPath="/workouts"
+                  title="Guided Start"
+                />
+              }
+            />
+            <Route
+              path="/workout/quick-start"
+              element={
+                <FirstSessionRoutePage
+                  description="Begin with a quick-start workout path matched to your current goal."
+                  startPath="/workouts"
+                  title="Quick Start Workout"
+                />
+              }
+            />
+            <Route
+              path="/workout/strength"
+              element={
+                <FirstSessionRoutePage
+                  description="Jump into a strength-focused session path based on your current setup."
+                  startPath="/workouts"
+                  title="Strength Session"
+                />
+              }
+            />
+            <Route
+              path="/injury-support"
+              element={
+                <FirstSessionRoutePage
+                  description="Start with the injury-support path before moving into a full session."
+                  startPath="/mobility"
+                  title="Injury Support"
+                />
+              }
+            />
+            <Route path="/nutrition" element={<NutritionPage />} />
+            <Route path="/progress" element={<ProgressPage />} />
+            <Route path="/coach" element={<CoachPage />} />
+            <Route path="/help" element={<HelpCenterPage />} />
+            <Route path="/privacy" element={<PrivacyPolicyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/preferences" element={<PreferencesPage />} />
+            <Route path="/onboarding" element={<Navigate to="/" replace />} />
+            <Route path="/billing/success" element={<BillingSuccessPage />} />
+            <Route path="/billing/cancel" element={<BillingCancelPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
       </AppShell>
     )
   );
