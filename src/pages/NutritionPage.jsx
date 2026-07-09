@@ -223,6 +223,7 @@ export default function NutritionPage() {
                         <img
                           alt={getNutritionTemplateMedia(template.id)?.alt || `${template.title} example`}
                           className="nutrition-template-image"
+                          loading="lazy"
                           src={getNutritionTemplateMedia(template.id).image}
                         />
                       ) : null}

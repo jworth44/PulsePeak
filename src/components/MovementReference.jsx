@@ -20,7 +20,7 @@ export default function MovementReference({ movement, onClick, compact = false, 
     <>
       <div className="movement-reference-media" aria-hidden="true">
         {visual.mode === "image" ? (
-          <img alt="" className="movement-reference-thumb exercise-image-contain" src={getExerciseImageSrc(visual.src)} />
+          <img alt="" className="movement-reference-thumb exercise-image-contain" loading="lazy" src={getExerciseImageSrc(visual.src)} />
         ) : (
           <div className="movement-reference-fallback movement-image-fallback">
             <span>{visual.initials}</span>

@@ -305,7 +305,7 @@ export default function MovementDetailModal({ movement, movementId, visualModelP
                             <strong>{step.title}</strong>
                           </div>
                           {!textFirstGuide && sequenceItem.src ? (
-                            <img alt={`${exercise.name} ${step.title.toLowerCase()}`} className="movement-sequence-image exercise-image-contain" src={getExerciseImageSrc(sequenceItem.src)} />
+                            <img alt={`${exercise.name} ${step.title.toLowerCase()}`} className="movement-sequence-image exercise-image-contain" loading="lazy" src={getExerciseImageSrc(sequenceItem.src)} />
                           ) : null}
                           <div className="movement-sequence-text-body">
                             {textFirstGuide ? <span className="movement-sequence-index">{step.title}</span> : null}

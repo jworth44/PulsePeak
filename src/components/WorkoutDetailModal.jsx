@@ -454,7 +454,7 @@ export default function WorkoutDetailModal({
                       <div className="exercise-step-header">
                         <div className={`exercise-visual-thumb ${isActive ? "exercise-visual-thumb-active" : ""}`}>
                           {movementVisual.mode === "image" ? (
-                                  <img alt={movementVisual.alt} className="exercise-visual-thumb-image exercise-image-contain" src={getExerciseImageSrc(movementVisual.src)} />
+                                  <img alt={movementVisual.alt} className="exercise-visual-thumb-image exercise-image-contain" loading="lazy" src={getExerciseImageSrc(movementVisual.src)} />
                           ) : (
                             <div className="exercise-visual-thumb-placeholder movement-image-fallback">
                               <span>{movementVisual.initials}</span>
