@@ -41,7 +41,7 @@ const ONBOARDING_STEP_MEDIA = {
   3: { src: "/media/onboarding-setup.png", alt: "Home gym corner with bench, dumbbells and barbell" },
   4: { src: "/media/onboarding-nutrition.png", alt: "Meal-prep containers with chicken, rice and greens" },
   5: { src: "/media/onboarding-recovery.png", alt: "Athlete foam-rolling on a mat in a calm studio" },
-  6: { src: "/media/onboarding/onboarding-9.jpg", alt: "PulsePeak review setup preview" }
+  6: { src: "/media/onboarding-review.png", alt: "Athlete looking out at dusk mountains from a gym window" }
 };
 
 export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
