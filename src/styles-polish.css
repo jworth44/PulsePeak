@@ -153,6 +153,10 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
   box-shadow: var(--elev-1) !important;
 }
 .panel { padding: 26px 28px !important; }
+/* The onboarding step carries the card surface but had NO padding of its own
+   (the editorial pass zeroed the outer card's padding), so step copy sat on
+   the card edge — owner-reported. Same comfortable inset as a panel. */
+.onboarding-step { padding: 26px 28px !important; }
 
 /* Top edge-light accent hairline on primary panels */
 .panel::after,

@@ -966,6 +966,8 @@ select:focus {
 
 .habit-status {
   text-align: right;
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .auth-shell {
@@ -2811,6 +2813,11 @@ select:focus {
     align-items: flex-start;
   }
 
+  .habit-status {
+    text-align: left;
+    white-space: normal;
+  }
+
   .onboarding-actions {
     flex-direction: column;
   }
@@ -3279,7 +3286,8 @@ select:focus {
      icon) don't jam their text to the top of the 156px card with a big empty
      void below. Cards that fill the tile are unaffected. */
   align-content: center;
-  padding: 0.95rem 1rem 1rem;
+  /* Comfortable inset — card copy must never crowd the card edge. */
+  padding: 1.15rem 1.2rem 1.2rem;
   text-align: left;
   border-radius: 18px;
   border: 1px solid color-mix(in srgb, var(--border-color) 82%, transparent);
