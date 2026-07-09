@@ -448,29 +448,25 @@ export default function DashboardPage() {
       ? `Keep your ${greetingStreak.streak}-day streak alive today.`
       : "Let's build some momentum today.";
 
+  // Benchmark hero copy: the ranked top insight is the most personal, honest
+  // line the engine has; the time-aware subline is the fallback for day one.
+  const heroInsight = Array.isArray(summary.personalInsights) && summary.personalInsights.length > 0
+    ? summary.personalInsights[0]
+    : null;
+  const heroCopy = heroInsight?.message || greetingSubline;
+
   return (
     <div className="page-grid page-grid-tight today-page">
-      <header className="dash-greeting">
-        <h1 className="dash-greeting-title">{timeGreeting}, {firstName}</h1>
-        <p className="dash-greeting-sub">{greetingSubline}</p>
-      </header>
-
-      <TodayForYou insights={summary.personalInsights} />
-
-      {/* Supporting the hero: the one concrete action — start today's session. */}
-      <section className="today-launch">
-        <div className="today-launch-copy">
-          <h2>{workoutEngine?.recommendedFocusLabel || todayFocus?.title || "Your next session"}</h2>
-          <p className="lead-copy">{workoutEngine?.recommendationReason || todayFocus?.reason || "Pick a session that fits your setup and keep the week moving."}</p>
-        </div>
-        <div className="today-launch-actions">
-          {/* Start the recommended session in place — don't send the user to
-              re-pick a workout the dashboard already chose. */}
-          <button className="primary-button" type="button" onClick={openPrimaryWorkoutAction}>
-            Start today's session
-          </button>
-          <button className="text-link" type="button" onClick={() => setShowWeekReview(true)}>
-            See your week in review →
+      {/* Cinematic opener (APPROVED_VISUAL_TARGET): one display headline, one
+          honest supporting line, one action. Backdrop is a designed tile per
+          theme — upgrades to owner photography when the media program lands. */}
+      <section className="today-cinematic">
+        <div className="today-cinematic-content">
+          <p className="today-cinematic-greeting">{timeGreeting}, {firstName}</p>
+          <h1 className="today-cinematic-title">Today&rsquo;s<br />Training</h1>
+          <p className="today-cinematic-copy">{heroCopy}</p>
+          <button className="today-cinematic-cta" type="button" onClick={openPrimaryWorkoutAction}>
+            Start session <span aria-hidden="true">→</span>
           </button>
         </div>
       </section>
@@ -478,6 +474,27 @@ export default function DashboardPage() {
       {summary.streakStatus ? (
         <StreakCard status={summary.streakStatus} weeklyTarget={weeklySessionTarget} variant="row" />
       ) : null}
+
+      <button className="text-link today-week-review-link" type="button" onClick={() => setShowWeekReview(true)}>
+        See your week in review →
+      </button>
+
+      {/* Today's Focus (benchmark): the engine's real session focus + why. */}
+      <section className="today-focus-card">
+        <div className="today-focus-body">
+          <p className="today-focus-eyebrow section-label">Today&rsquo;s focus</p>
+          <h2 className="today-focus-title">{workoutEngine?.recommendedFocusLabel || todayFocus?.title || "Your next session"}</h2>
+          <p className="today-focus-copy">{workoutEngine?.recommendationReason || todayFocus?.reason || "Pick a session that fits your setup and keep the week moving."}</p>
+          <button className="secondary-button today-focus-plan" type="button" onClick={() => navigate("/plan")}>
+            View full plan <span aria-hidden="true">→</span>
+          </button>
+        </div>
+        {/* Photo slot: honest awaiting-media state until the owner focus
+            photography passes the QA gate (MEDIA_AUDIT_REGISTER). */}
+        <div aria-hidden="true" className="today-focus-media">
+          <span className="today-focus-media-note">Image in production</span>
+        </div>
+      </section>
 
       {summary.habits.length > 0 && (
         <Panel className="today-habits" title="Small wins that keep the week on track">
@@ -535,6 +552,10 @@ export default function DashboardPage() {
           </ul>
         </Panel>
       ) : null}
+
+      {/* The rest of the ranked insight rail — the top insight already leads
+          the cinematic hero, so only the follow-on insights render here. */}
+      <TodayForYou insights={(summary.personalInsights || []).slice(1)} listOnly />
 
       {feedback ? <div className="status-banner">{feedback}</div> : null}
 

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <!-- Designed cinematic backdrop for the Maple Today hero (APPROVED_VISUAL_TARGET
+       benchmark: dusk mountain over water, alpenglow on the peak, evergreen
+       darkness, settling into the charcoal page). A designed tile per roadmap
+       R4 — upgrades to owner photography when the media program delivers.
+       Deliberately low-luminance so warm-white display type stays AA. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#222c33"/>
+      <stop offset="0.38" stop-color="#2c363c"/>
+      <stop offset="0.56" stop-color="#4a4038"/>
+      <stop offset="0.66" stop-color="#6d4c35"/>
+      <stop offset="0.74" stop-color="#3a3a3a"/>
+      <stop offset="1" stop-color="#20272b"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.63" cy="0.5" r="0.46">
+      <stop offset="0" stop-color="#e09254" stop-opacity="0.5"/>
+      <stop offset="0.55" stop-color="#d4834a" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#d4834a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#242e33"/>
+      <stop offset="1" stop-color="#1a2124"/>
+    </linearGradient>
+    <linearGradient id="peak" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#252d33"/>
+      <stop offset="0.6" stop-color="#2b333a"/>
+      <stop offset="0.8" stop-color="#463e37"/>
+      <stop offset="1" stop-color="#31343a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+
+  <!-- Far ridge, cool slate -->
+  <path fill="#38414a" opacity="0.85" d="M0 620 L150 560 L310 600 L470 520 L640 590 L780 540 L900 560 L1600 620 L1600 900 L0 900 Z"/>
+
+  <!-- Main peak, right of center: gradient-lit mass (alpenglow on the east
+       shoulder), snow hugging both apexes, a faint warm rim on the lit edge -->
+  <path fill="url(#peak)" d="M620 700 L1010 380 L1090 430 L1180 400 L1440 700 Z"/>
+  <path fill="#c98d5e" opacity="0.3" d="M1180 400 L1440 700 L1404 700 L1166 416 Z"/>
+  <path fill="#e6e1d6" opacity="0.88" d="M1010 380 L1042 406 L1024 413 L1006 405 L988 415 L974 409 Z"/>
+  <path fill="#e6e1d6" opacity="0.62" d="M1180 400 L1206 428 L1188 432 L1170 420 L1156 428 L1150 415 Z"/>
+
+  <!-- Mid ridge sliding behind the treeline -->
+  <path fill="#232b30" d="M0 700 L120 640 L300 690 L480 620 L660 700 L900 660 L1140 710 L1380 660 L1600 706 L1600 900 L0 900 Z"/>
+
+  <!-- Evergreen treeline: jagged, near-black -->
+  <path fill="#141a1a" d="M0 760 L28 726 L52 760 L74 720 L100 760 L128 732 L152 760 L180 716 L208 760 L236 730 L262 760 L292 722 L318 760 L348 734 L372 760 L402 718 L430 760 L458 730 L484 760 L514 724 L540 760 L570 736 L594 760 L624 720 L652 760 L680 732 L706 760 L736 726 L762 760 L792 736 L816 760 L846 718 L874 760 L902 732 L928 760 L958 724 L984 760 L1014 738 L1038 760 L1068 720 L1096 760 L1124 732 L1150 760 L1180 726 L1206 760 L1236 738 L1260 760 L1290 722 L1318 760 L1346 734 L1370 760 L1400 718 L1428 760 L1456 732 L1482 760 L1512 726 L1538 760 L1568 738 L1600 760 L1600 900 L0 900 Z"/>
+
+  <!-- Still water with faint warm reflection under the glow -->
+  <rect y="760" width="1600" height="140" fill="url(#water)"/>
+  <g opacity="0.5">
+    <rect x="880" y="778" width="270" height="3" rx="1.5" fill="#d4834a" opacity="0.22"/>
+    <rect x="930" y="796" width="180" height="2.5" rx="1.25" fill="#d4834a" opacity="0.16"/>
+    <rect x="900" y="814" width="230" height="2.5" rx="1.25" fill="#c98d5e" opacity="0.12"/>
+    <rect x="960" y="836" width="130" height="2" rx="1" fill="#c98d5e" opacity="0.09"/>
+    <rect x="240" y="790" width="160" height="2" rx="1" fill="#c5ccd1" opacity="0.05"/>
+    <rect x="420" y="820" width="120" height="2" rx="1" fill="#c5ccd1" opacity="0.04"/>
+  </g>
+</svg>

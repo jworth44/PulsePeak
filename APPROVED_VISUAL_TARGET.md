@@ -1,4 +1,4 @@
-# PULSEPEAK — APPROVED VISUAL TARGET (v2, owner-ratified 2026-07-09)
+# PULSEPEAK — APPROVED VISUAL TARGET (v2.1, owner-ratified 2026-07-09)
 
 **This document is the visual benchmark for ALL PulsePeak implementation.**
 The owner's concept image (Today's Training + Workout Library, Canadian
@@ -8,6 +8,17 @@ is compared against this benchmark; if a production screen feels less premium
 than the concept, keep refining until it does. Works with
 `CANADIAN_DESIGN_LANGUAGE.md` (palette + expression rules) and
 `PRODUCTION_ROADMAP.md` (sequencing + regression guard).
+
+**v2.1 OWNER SHARPENING (2026-07-09):** for the **Maple theme specifically**,
+the bar is raised from experience-fidelity to **look-identical fidelity** —
+"Maple must look identical to the screenshot; that is the look of a premium
+product." Composition, spacing, type scale, card treatment, iconography and
+color must read as the concept does. The honesty rules below still bind
+(no fabricated avg-HR, no fake media — photography slots ship as designed
+states until owner media passes the QA gate), and the do-not-redo list stands.
+Product maturation continues — visual, interaction, flow, commercial, trust,
+delight — until genuine owner-only blockers; the end of engineering
+optimization is NOT the end of product work.
 
 ---
 

@@ -777,6 +777,18 @@
 
 /* ---- Maple: northern-atmosphere chrome (felt, not decorated) ---------- */
 
+/* Cinematic Today hero (APPROVED_VISUAL_TARGET v2.1): dusk mountain over
+   water, alpenglow behind the peak — a designed tile that upgrades to owner
+   photography. Left scrim keeps the display type AA; the bottom fade settles
+   the scene into the charcoal page exactly as the benchmark does. */
+:root[data-theme="maple"] {
+  --hero-cinematic:
+    linear-gradient(90deg, rgba(26, 31, 34, 0.86) 0%, rgba(26, 31, 34, 0.44) 46%, rgba(26, 31, 34, 0.06) 74%, rgba(26, 31, 34, 0) 100%),
+    linear-gradient(180deg, rgba(32, 39, 43, 0) 58%, rgba(32, 39, 43, 0.72) 88%, #20272b 100%),
+    url("/ca-hero-dusk.svg") center / cover no-repeat,
+    linear-gradient(165deg, #242c31 0%, #1a1f22 100%);
+}
+
 /* Let the mountain-silhouette backdrop breathe through the scroll area. */
 :root[data-theme="maple"] .app-main {
   background: rgba(26, 31, 34, 0.3) !important;

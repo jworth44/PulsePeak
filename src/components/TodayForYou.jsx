@@ -27,8 +27,32 @@ function ActionButton({ action, primary }) {
   );
 }
 
-export default function TodayForYou({ insights = [] }) {
+export default function TodayForYou({ insights = [], listOnly = false }) {
   if (!Array.isArray(insights) || insights.length === 0) return null;
+
+  // List-only: the page hero already features the top insight, so every
+  // insight passed in renders as a quiet row (actions preserved).
+  if (listOnly) {
+    return (
+      <section className="foryou" aria-label="Personal insights for today">
+        <p className="foryou-eyebrow">For you today</p>
+        <div className="foryou-list">
+          {insights.slice(0, 4).map((insight) => (
+            <div className="foryou-item" key={insight.id}>
+              <div className="foryou-item-body">
+                <span className="foryou-tag foryou-tag-sm">{CATEGORY_LABEL[insight.category] || "Insight"}</span>
+                <strong>{insight.title}</strong>
+                <p>{insight.message}</p>
+                {insight.evidence ? <span className="foryou-evidence-chip">{insight.evidence}</span> : null}
+              </div>
+              <ActionButton action={insight.action} />
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   const [hero, ...rest] = insights;
   const secondary = rest.slice(0, 4);
 

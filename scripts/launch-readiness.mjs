@@ -369,10 +369,10 @@ async function assertRouteRenders(page, pathname, matcher, options = {}) {
 async function assertDashboardRenders(page, pathname = "/") {
   await page.goto(`${baseUrl}${pathname}`, { waitUntil: "networkidle" });
   try {
-    // Composed dashboard: the "For You Today" insight rail is the hero, and the
-    // slim "Today's session" launcher is the primary action.
-    await page.locator(".foryou-hero, .today-launch").first().waitFor({ timeout: 15000 });
-    await page.locator(".today-launch").waitFor({ timeout: 15000 });
+    // Composed dashboard: the cinematic "Today's Training" opener is the hero
+    // and its START SESSION button is the primary action (benchmark v2.1).
+    await page.locator(".today-cinematic").waitFor({ timeout: 15000 });
+    await page.locator(".today-cinematic-cta").waitFor({ timeout: 15000 });
   } catch (error) {
     const bodyText = await page.locator("body").innerText().catch(() => "");
     throw new Error(
