@@ -86,6 +86,7 @@ export default function WorkoutLibraryPage() {
               type="search"
               value={query}
               autoFocus
+              aria-label="Search equipment, muscle groups, or workout types"
               placeholder="Search equipment, muscle groups, or workout types"
               onChange={(event) => setQuery(event.target.value)}
             />
@@ -234,21 +235,21 @@ function MediaTile({ className, label, description, src, alt, aspect, cta, onCli
 // ---- Icons (thin, athletic line icons; currentColor) ------------------
 function BackIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M15 18l-6-6 6-6" />
     </svg>
   );
 }
 function FilterIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 5h18M6 12h12M10 19h4" />
     </svg>
   );
 }
 function SearchIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="11" cy="11" r="7" />
       <path d="M21 21l-4.3-4.3" />
     </svg>
