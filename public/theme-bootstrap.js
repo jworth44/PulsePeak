@@ -5,7 +5,7 @@
   try {
     var pref = localStorage.getItem("pulsepeak-theme");
     var concrete = { daylight: 1, midnight: 1, blossom: 1, liberty: 1, maple: 1 };
-    if (!concrete[pref] && pref !== "system") pref = "midnight";
+    if (!concrete[pref] && pref !== "system") pref = "maple";
     // Concrete themes apply directly; "system" resolves to daylight/midnight.
     var theme = concrete[pref]
       ? pref

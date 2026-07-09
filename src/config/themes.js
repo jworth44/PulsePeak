@@ -44,11 +44,10 @@ export const THEME_OPTIONS = [
 ];
 
 export const THEME_STORAGE_KEY = "pulsepeak-theme";
-// The default theme for a brand-new user. Daylight and Midnight are EQUAL,
-// first-class themes — either can be the default by changing only this value
-// (or set it to "system"). The final default is an owner decision after
-// real-world evaluation; both themes are held to full parity regardless.
-export const FALLBACK_THEME = "midnight";
+// The default theme for a brand-new user. Maple is the owner-approved product
+// identity (APPROVED_VISUAL_TARGET v2.1: "that is the look of a premium
+// product") — new users land in it; every theme stays selectable.
+export const FALLBACK_THEME = "maple";
 
 const THEME_COLOR = { daylight: "#ede6d8", midnight: "#17130f", blossom: "#f1e6fc", liberty: "#0a1a3a", maple: "#20272b" };
 
