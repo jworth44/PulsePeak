@@ -650,7 +650,13 @@ export function buildLaunchSafeCoachResponse(data = {}) {
           to: insight.action?.to || null
         }))
       ],
-      longerTermNote: insights[1]?.title || (top ? "Keep the current rhythm going." : "Keep logging sessions and your patterns sharpen."),
+      // "Keep the current rhythm going" implies a rhythm exists — for a user
+      // whose only insight is the getting-started nudge, say the honest thing.
+      longerTermNote:
+        insights[1]?.title ||
+        (top && top.category !== "activation"
+          ? "Keep the current rhythm going."
+          : "Keep logging sessions and your patterns sharpen."),
       planConnection: insights[1]?.message || top?.reason || "Your guidance is built from your real logged training — nothing generic."
     },
     recommendations: [],

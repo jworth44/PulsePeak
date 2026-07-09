@@ -111,7 +111,7 @@ export default function WeeklyPlanPreviewModal({ planPayload, onClose, onUpgrade
             <strong>
               {suggestedWorkoutMix.environment === "both"
                 ? "Gym + Home blend"
-                : `${suggestedWorkoutMix.environment || "Balanced"} leaning week`}
+                : `${capitalizeWord(suggestedWorkoutMix.environment) || "Balanced"}-leaning week`}
             </strong>
             <ul className="plan-list">
               {(suggestedWorkoutMix.split || []).map((item) => (
@@ -340,4 +340,9 @@ export default function WeeklyPlanPreviewModal({ planPayload, onClose, onUpgrade
       </div>
     </div>
   );
+}
+
+function capitalizeWord(value) {
+  const text = String(value || "").trim();
+  return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
 }

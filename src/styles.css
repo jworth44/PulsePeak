@@ -1435,6 +1435,9 @@ select:focus {
 
 .weekly-plan-layout {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Cards size to their content — a short Coach note next to a long Why
+     card no longer stretches into a half-empty box (audit F6 tail). */
+  align-items: start;
 }
 
 .weekly-plan-block {
