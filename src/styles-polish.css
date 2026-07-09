@@ -2035,13 +2035,27 @@ input:focus, select:focus, textarea:focus {
   gap: 10px;
 }
 .streak-stat {
-  display: grid;
-  gap: 4px;
-  align-content: start;
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
   padding: 14px 16px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-subtle);
   background: rgba(var(--ink-rgb), 0.02);
+}
+/* Literal stat icon — quiet by default; the flame earns accent only when the
+   streak is active today (visual-first state, accent = achievement). */
+.streak-stat-icon {
+  flex: 0 0 auto;
+  margin-top: 3px;
+  color: var(--text-muted);
+}
+.streak-stat-icon.is-lit { color: var(--accent); }
+.streak-stat-body {
+  display: grid;
+  gap: 4px;
+  align-content: start;
+  min-width: 0;
 }
 .streak-stat-value {
   font-family: "Space Grotesk", sans-serif;

@@ -31,6 +31,48 @@ function freezeLine(status) {
   return null;
 }
 
+// Literal stat icons (RECOGNITION-BEFORE-READING): the flame IS the streak,
+// the dumbbell IS training, the target IS the goal. Same thin athletic stroke
+// as the quick-action icons. The flame lights crimson only when the streak is
+// active today — an earned, visual-first state, never decoration.
+function StatIcon({ name }) {
+  const p = {
+    viewBox: "0 0 24 24",
+    width: 22,
+    height: 22,
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.8,
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    "aria-hidden": true
+  };
+  switch (name) {
+    case "flame":
+      return (
+        <svg {...p}>
+          <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+        </svg>
+      );
+    case "dumbbell":
+      return (
+        <svg {...p}>
+          <path d="M6.5 8v8M17.5 8v8M4 9.5v5M20 9.5v5M6.5 12h11" />
+        </svg>
+      );
+    case "target":
+      return (
+        <svg {...p}>
+          <circle cx="12" cy="12" r="8" />
+          <circle cx="12" cy="12" r="4.5" />
+          <circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
 export default function StreakCard({ status, weeklyTarget = 3, variant }) {
   if (!status) return null;
   const { emoji, title, sub } = headline(status);
@@ -48,24 +90,39 @@ export default function StreakCard({ status, weeklyTarget = 3, variant }) {
       <div className={`streak-card streak-row-card streak-${status.state}`}>
         <div className="streak-stat-row">
           <div className="streak-stat">
-            <span className="streak-stat-value">
-              {status.streak > 0 ? <CountUp value={status.streak} /> : 0}
+            <span className={`streak-stat-icon${status.state === "active" ? " is-lit" : ""}`}>
+              <StatIcon name="flame" />
             </span>
-            <span className="streak-stat-label">Day streak {status.state === "active" ? "🔥" : ""}</span>
+            <div className="streak-stat-body">
+              <span className="streak-stat-value">
+                {status.streak > 0 ? <CountUp value={status.streak} /> : 0}
+              </span>
+              <span className="streak-stat-label">Day streak</span>
+            </div>
           </div>
           <div className="streak-stat">
-            <span className="streak-stat-value">{status.weeklyCompleted || 0}</span>
-            <span className="streak-stat-label">
-              Workout{(status.weeklyCompleted || 0) === 1 ? "" : "s"} this week
+            <span className="streak-stat-icon">
+              <StatIcon name="dumbbell" />
             </span>
+            <div className="streak-stat-body">
+              <span className="streak-stat-value">{status.weeklyCompleted || 0}</span>
+              <span className="streak-stat-label">
+                Workout{(status.weeklyCompleted || 0) === 1 ? "" : "s"} this week
+              </span>
+            </div>
           </div>
           <div className="streak-stat">
-            <span className="streak-stat-value">
-              {Math.min(status.weeklyCompleted || 0, goalTarget)}/{goalTarget}
+            <span className="streak-stat-icon">
+              <StatIcon name="target" />
             </span>
-            <span className="streak-stat-label">Weekly goal</span>
-            <div className="streak-goal-bar">
-              <div className="streak-goal-fill" style={{ width: `${goalPct}%` }} />
+            <div className="streak-stat-body">
+              <span className="streak-stat-value">
+                {Math.min(status.weeklyCompleted || 0, goalTarget)}/{goalTarget}
+              </span>
+              <span className="streak-stat-label">Weekly goal</span>
+              <div className="streak-goal-bar">
+                <div className="streak-goal-fill" style={{ width: `${goalPct}%` }} />
+              </div>
             </div>
           </div>
         </div>
