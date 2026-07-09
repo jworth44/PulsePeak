@@ -35,7 +35,7 @@ const STEP_TITLES = [
 ];
 
 const ONBOARDING_STEP_MEDIA = {
-  0: { src: "/media/onboarding/onboarding-1.jpg", alt: "Training with dumbbells in a bright gym" },
+  0: { src: "/media/onboarding-welcome.png", alt: "Athlete pressing dumbbells in a dark premium gym" },
   1: { src: "/media/onboarding/onboarding-4.jpg", alt: "PulsePeak app mode setup preview" },
   2: { src: "/media/onboarding/onboarding-6.jpg", alt: "PulsePeak goal selection setup preview" },
   3: { src: "/media/onboarding/onboarding-11.jpg", alt: "PulsePeak training setup preview" },
