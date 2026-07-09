@@ -309,6 +309,20 @@ media review · commit · production-log line · roadmap update. Then the next b
   the three global stylesheets are the token cascade; fracturing them risks
   theme regressions for ~26 kB gzip. **Perf unit: engineering-tractable items
   complete.**
+- **Benchmark fidelity pass (v2.1, 2026-07-09)** — owner sharpened the target:
+  Maple must LOOK like the concept screenshot (honesty rules still bind).
+  Shipped in four green commits: `cd07a57` cinematic Today hero (TODAY'S
+  TRAINING display type + greeting + honest engine copy + one crimson START
+  SESSION; Maple designed dusk-mountain backdrop `ca-hero-dusk.svg` via
+  `--hero-cinematic`, photography drop-in ready) + Today's Focus card (real
+  focus/why/plan + awaiting-media slot) + ROOT FIX: secondary/ghost buttons
+  pinned `#ededf0` → `--secondary-button-text` (were invisible on Daylight) ·
+  `3f99647` stat-row literal icons (flame/dumbbell/target; flame = accent only
+  when streak active) · `6e9091f` Workout Library benchmark bar (persistent
+  search, no dead controls) + muscle-first section order + eyebrow-as-heading
+  + icon-over-label equipment cards · `e85a93d` mobile search focus fix.
+  Verified Maple/Midnight/Daylight screenshots + 375px structural + live
+  search filtering; qa:launch 19/19 + qa:workout-library PASS throughout.
 - C5–C9, C11–C12 — queued.
 
 ### ⏳ Owner-gated / owner-judgment queue (surfaced by the autonomous sweep)

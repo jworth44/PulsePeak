@@ -115,12 +115,21 @@ Already built, verified, and **machine-locked into qa:launch (19/19 baseline)**:
   `theme-bootstrap.js`): exact Canadian palette; maple mark by the wordmark;
   mountain-silhouette backdrop (`public/ca-mountains.svg`); closing banner
   (`public/ca-banner.svg`); crimson eyebrows (#ec7080, AA).
-- **Today**: stat row (StreakCard `variant="row"` — 3 honest cardlets + coaching
-  folded beneath) · Quick Actions (5 tiles, real actions only) · Recent
-  Activity (real logged sessions, calendar-day recency, evergreen ring-check).
-- **Workout Library** (`/workout-library`): equipment (16 icon cards) · muscle
-  grid (8, live counts from `/api/exercise-library`) · workout types (6) ·
-  search/filter/empty/loading states · click-through to a filtered Exercise
+- **Today (benchmark composition COMPLETE as designed states, 2026-07-09)**:
+  cinematic hero (`.today-cinematic` — TODAY'S TRAINING display headline,
+  greeting line, honest engine-ranked copy, one crimson START SESSION; Maple
+  backdrop = designed dusk-mountain `public/ca-hero-dusk.svg`, swaps to owner
+  photography via the `--hero-cinematic` token) · stat row (3 honest cardlets
+  WITH literal icons — flame/dumbbell/target; flame lights accent only when
+  the streak is active) · Today's Focus card (real focus + why + View Full
+  Plan + awaiting-media photo slot) · Quick Actions (5 tiles, real actions
+  only) · Recent Activity (real logged sessions, calendar-day recency,
+  evergreen ring-check) · remaining For-You insights as the quiet list below.
+- **Workout Library (benchmark composition COMPLETE, 2026-07-09)**: top bar =
+  back · title · persistent search · filter icon (icon focuses the field;
+  mobile swaps title↔field — no dead controls) · muscle grid LEADS (8, live
+  counts) · equipment (16 literal icon-over-label cards) · workout types (6) ·
+  one crimson caps heading per section · click-through to a filtered Exercise
   Library (`?category=` / `?q=`) · honest awaiting-media states ·
   `qa:workout-library` media-validation gate.
 - App-wide a11y pass complete (23 toggles aria-pressed, all dialogs named, all
@@ -139,10 +148,11 @@ pass the AI Image QA Gate; queue = `MEDIA_AUDIT_REGISTER.md`):
 5. 6 workout-type photos (style performed, Canadian grading) — keys `type-*`.
 6. Exercise/session photography re-shoot (one coherent production).
 
-**Engineering, once media lands:** the cinematic Today hero composition
-(display headline + photography + START SESSION as the one action), the Focus
-photo card, thumbnails in Recent Activity. Compare every screen against the
-benchmark; refine until it feels as premium.
+**Engineering, once media lands:** the hero/focus compositions are BUILT —
+media drops in via `--hero-cinematic` (hero) and the focus-card photo slot;
+Recent Activity thumbnails still need their render slot once the exercise
+re-shoot lands. Compare every screen against the benchmark; refine until it
+feels as premium.
 
 **Owner decisions pending:** Maple as the default theme? (one-constant flip in
 `config/themes.js` FALLBACK_THEME) · Blossom text tweaks (unspecified).
