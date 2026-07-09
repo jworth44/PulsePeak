@@ -13,6 +13,18 @@ premium identities Daylight/Midnight with NO shared accents; remove noise relent
 no new concepts, no competitor research. **Every capability closes only when it meets that feel in
 BOTH flagship identities (Daylight + Midnight).**
 
+**⚑ APPROVED VISUAL TARGET (owner, 2026-07-08): the Canadian concept** — see
+`CANADIAN_DESIGN_LANGUAGE.md`. The concept image (Today's Training + Workout Library,
+charcoal/crimson/evergreen) is the **benchmark every completed screen is compared against**:
+reproduce the experience (composition · hierarchy · spacing · restraint · typography · emotion),
+never the pixels; if a production screen feels less premium than the concept, keep refining.
+Implemented so far: the **`maple` theme** (palette + subtle-patriotism chrome). **Structural
+benchmark backlog** (cross-theme, sequenced within the existing capabilities): cinematic Today
+hero w/ headline + START SESSION (C3 iteration; hero photography owner-gated), 4-stat metric row
+(C3; needs honest data — avg-HR only if tracked), Quick Actions row (C3), Recent Activity w/
+photo thumbnails (C3/C6; thumbnails from the exercise-photo sets), Workout Library muscle-tile
+**live exercise counts** (engineering-tractable now), top-bar search+filter styling (C5).
+
 ---
 
 ## Execution Protocol (grounded in real capabilities)

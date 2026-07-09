@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 400" preserveAspectRatio="xMidYMax slice">
+  <!-- Soft layered mountain silhouettes for the Maple theme backdrop.
+       Slightly darker than the charcoal canvas; meant to be felt, not seen. -->
+  <path fill="#161B1E" opacity="0.85" d="M0 400 L0 262 L170 148 L296 232 L432 96 L560 224 L704 128 L842 244 L978 106 L1118 234 L1262 156 L1404 252 L1502 196 L1600 258 L1600 400 Z"/>
+  <path fill="#12171A" opacity="0.95" d="M0 400 L0 324 L204 224 L362 302 L524 186 L702 304 L882 206 L1062 312 L1242 234 L1424 322 L1600 254 L1600 400 Z"/>
+</svg>

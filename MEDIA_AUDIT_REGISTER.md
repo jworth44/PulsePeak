@@ -143,3 +143,24 @@ consistent grade, no AI artifacts, no baked text):
 Every asset must pass the **AI Image QA Gate** before its path is added to
 `WORKOUT_LIBRARY_MEDIA`. `validateLibraryMedia()` fails any published path not
 rooted at `/media/workout-library/`.
+
+---
+
+## Canadian benchmark media (added 2026-07-09, per CANADIAN_DESIGN_LANGUAGE.md)
+
+The owner-approved Canadian concept is the visual benchmark for all screens.
+Additional owner-generated media it requires (all render honest awaiting/designed
+states until approved; one consistent production — natural light, premium
+training environments, muted backgrounds, Canadian grading):
+
+- **Today hero landscape** — cinematic Canadian mountain/lake photography for the
+  "TODAY'S TRAINING" hero (per-theme variant acceptable; Maple first).
+- **"Today's Focus" photo** — athlete training shot matching the session focus.
+- **Recent-activity thumbnails** — reuse of session/exercise photography once the
+  main re-shoot lands (no new keys; sourced from the exercise library sets).
+- **Muscle-group diagrams (8, already queued above)** — style note per the
+  benchmark: anatomical figure, red-highlighted target muscle, charcoal ground.
+- **Workout-type photos (6, already queued above)** — grading note per the
+  benchmark: natural light, muted backgrounds, Canadian production feel.
+- **Brand maple mark** — a stylized functional SVG (`public/maple-leaf.svg`)
+  ships now; swap in owner-supplied brand vector if desired.

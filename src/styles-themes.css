@@ -632,3 +632,195 @@
   background: url("/us-banner.svg") center / cover no-repeat;
   box-shadow: var(--elev-2), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
+
+/* ===================================================================== */
+/* MAPLE — Canadian Editorial Design Language (owner-approved benchmark)  */
+/* Deep Canadian charcoal + slate/stone surfaces, soft warm white ink,    */
+/* Canadian crimson reserved for actions/achievements/navigation,         */
+/* evergreen for recovery/wellness, silver/mist neutrals. Patriotism is   */
+/* FELT not decorated: maple brand mark, soft mountain silhouettes,       */
+/* snow-light gradient, closing "Built in Canada" banner. No bright blue, */
+/* no neon, no pure black/white. Spec: CANADIAN_DESIGN_LANGUAGE.md        */
+/* ===================================================================== */
+:root[data-theme="maple"] {
+  color-scheme: dark;
+  --theme-name: "PulsePeak Maple";
+
+  --ink-rgb: 245, 245, 242;
+  --card-rgb: 44, 53, 59;
+  --card-alt-rgb: 51, 61, 68;
+  --accent-rgb: 198, 40, 59;
+  --chart-rgb: 198, 40, 59;
+  --premium-rgb: 197, 204, 209;
+  --sidebar-rgb: 26, 31, 34;
+  --overlay-rgb: 32, 39, 43;
+
+  /* Deep Canadian charcoal canvas; slate/stone/granite surfaces. */
+  --app-background: #20272b;
+  --app-background-strong: #242c31;
+  --bg-sunken: #1a1f22;
+  --bg-elevated: #2c353b;
+  --bg-overlay: #333d44;
+  --bg-inset: #20272b;
+  --sidebar-background: rgba(26, 31, 34, 0.88);
+  --main-surface-background: rgba(32, 39, 43, 0.24);
+  --surface: rgba(44, 53, 59, 0.86);
+  --surface-strong: rgba(51, 61, 68, 0.92);
+  --card-background: rgba(44, 53, 59, 0.9);
+  --secondary-card-background: rgba(51, 61, 68, 0.88);
+
+  /* Soft warm white ink; silver/mist supporting text. */
+  --text-primary: #f5f5f2;
+  --text-secondary: #c5ccd1;
+  --text-muted: #97a3aa;
+  --text-inverse: #1a1f22;
+  --text-on-card: #f5f5f2;
+  --sidebar-text: #f5f5f2;
+  --sidebar-muted: #c5ccd1;
+
+  /* Canadian crimson — primary actions / achievements / navigation ONLY. */
+  --accent-400: #d64a5b;
+  --accent-500: #c6283b;
+  --accent-600: #b32035;
+  --accent-700: #9a1b2d;
+  --accent-color: #c6283b;
+  --accent: #c6283b;
+  --accent-hover: #d33146;
+  --accent-active: #b32035;
+  --accent-soft: rgba(198, 40, 59, 0.18);
+  --accent-ring: rgba(198, 40, 59, 0.55);
+  --accent-contrast: #ffffff;
+  --ring-accent: #c6283b;
+  --chart-accent: #d64a5b;
+
+  /* Achievements glow in the same crimson family. */
+  --volt: #d33146;
+  --volt-bright: #dc5563;
+  --volt-soft: rgba(211, 49, 70, 0.2);
+  --volt-glow: rgba(211, 49, 70, 0.45);
+  --premium-highlight: #c5ccd1;
+
+  /* Semantic — evergreen carries recovery/wellness/success (nature);
+     no bright blue anywhere: informational tones go mist/steel. */
+  --success: #4fa483;
+  --success-soft: rgba(46, 111, 86, 0.24);
+  --warning: #d9a441;
+  --warning-soft: rgba(217, 164, 65, 0.2);
+  --danger: #d64a5b;
+  --danger-soft: rgba(214, 74, 91, 0.2);
+  --info: #9fb0ba;
+  --info-soft: rgba(159, 176, 186, 0.18);
+
+  --data-high: #4fa483;
+  --data-mid: #d9a441;
+  --data-low: #d64a5b;
+  --data-strain: #c6283b;
+  --data-cardio: #3a7c62;
+  --data-volt: #d33146;
+  --data-track: rgba(245, 245, 242, 0.12);
+
+  /* Hairlines — silver/mist on charcoal. */
+  --border-color: rgba(197, 204, 209, 0.15);
+  --border-subtle: rgba(197, 204, 209, 0.09);
+  --border-default: rgba(197, 204, 209, 0.15);
+  --border-strong: rgba(197, 204, 209, 0.26);
+  --border-accent: rgba(198, 40, 59, 0.55);
+  --hairline-top: rgba(245, 245, 242, 0.09);
+
+  /* Buttons — primary crimson; secondaries stone/slate, quiet. */
+  --button-text: #ffffff;
+  --secondary-button-background: rgba(197, 204, 209, 0.1);
+  --secondary-button-background-hover: rgba(197, 204, 209, 0.17);
+  --secondary-button-text: #f5f5f2;
+  --ghost-button-background: rgba(197, 204, 209, 0.06);
+  --ghost-button-background-hover: rgba(197, 204, 209, 0.12);
+  --ghost-button-text: #f5f5f2;
+  --surface-dark: #242c31;
+
+  /* Gradients — crimson actions; quiet surface sheen. */
+  --grad-pulse: linear-gradient(120deg, #d33146 0%, #c6283b 46%, #9a1b2d 100%);
+  --grad-volt: linear-gradient(135deg, #dc5563 0%, #c6283b 100%);
+  --grad-surface: linear-gradient(180deg, rgba(245, 245, 242, 0.045) 0%, rgba(245, 245, 242, 0) 42%);
+  --grad-glow-red: radial-gradient(60% 60% at 50% 40%, rgba(198, 40, 59, 0.34) 0%, transparent 70%);
+  --grad-area-red: linear-gradient(180deg, rgba(198, 40, 59, 0.34) 0%, rgba(198, 40, 59, 0) 100%);
+  --button-background: var(--grad-pulse);
+  --button-hover: linear-gradient(120deg, #d33146, #b32035);
+
+  /* Elevation — deep charcoal shadows + soft warm-white hairline. */
+  --elev-1: inset 0 1px 0 0 rgba(245, 245, 242, 0.06), 0 1px 2px rgba(8, 11, 12, 0.5), 0 2px 8px rgba(8, 11, 12, 0.4);
+  --elev-2: inset 0 1px 0 0 rgba(245, 245, 242, 0.08), 0 4px 12px rgba(8, 11, 12, 0.55), 0 8px 24px rgba(8, 11, 12, 0.42);
+  --elev-3: inset 0 1px 0 0 rgba(245, 245, 242, 0.09), 0 8px 24px rgba(8, 11, 12, 0.6), 0 16px 48px rgba(8, 11, 12, 0.5);
+  --elev-4: inset 0 1px 0 0 rgba(245, 245, 242, 0.11), 0 24px 64px rgba(5, 7, 8, 0.7);
+  --glow-red: 0 0 0 1px var(--accent-ring), 0 0 26px rgba(198, 40, 59, 0.35);
+  --glow-volt: 0 0 0 1px var(--volt-glow), 0 0 30px rgba(211, 49, 70, 0.4);
+  --panel-shadow: 0 24px 60px -28px rgba(5, 7, 8, 0.95);
+  --soft-shadow: 0 16px 40px -24px rgba(5, 7, 8, 0.8);
+
+  /* Composed backgrounds — northern atmosphere: charcoal gradient, faint
+     snow-light from above, a whisper of evergreen. Quiet, never obvious. */
+  --hero-gradient:
+    radial-gradient(120% 80% at 50% -8%, rgba(245, 245, 242, 0.05), transparent 46%),
+    radial-gradient(90% 70% at 88% 108%, rgba(46, 111, 86, 0.1), transparent 55%),
+    linear-gradient(165deg, #242c31 0%, #20272b 55%, #1a1f22 100%);
+  --card-glow:
+    linear-gradient(180deg, rgba(51, 61, 68, 0.95), rgba(44, 53, 59, 0.92));
+  --callout-glow:
+    radial-gradient(circle at top right, rgba(198, 40, 59, 0.13), transparent 42%),
+    linear-gradient(135deg, rgba(51, 61, 68, 0.96), rgba(44, 53, 59, 0.94));
+  --focus-glow:
+    radial-gradient(circle at top right, rgba(46, 111, 86, 0.16), transparent 42%),
+    linear-gradient(135deg, rgba(51, 61, 68, 0.96), rgba(44, 53, 59, 0.94));
+  --success-glow:
+    radial-gradient(circle at top right, rgba(46, 111, 86, 0.2), transparent 42%),
+    linear-gradient(135deg, rgba(38, 58, 51, 0.96), rgba(40, 50, 48, 0.94));
+}
+
+/* ---- Maple: northern-atmosphere chrome (felt, not decorated) ---------- */
+
+/* Let the mountain-silhouette backdrop breathe through the scroll area. */
+:root[data-theme="maple"] .app-main {
+  background: rgba(26, 31, 34, 0.3) !important;
+}
+
+/* Fixed full-viewport backdrop: charcoal gradient, soft snow-light from the
+   top, layered mountain silhouettes settling into the bottom edge. */
+:root[data-theme="maple"] body::before {
+  background:
+    linear-gradient(180deg, rgba(26, 31, 34, 0) 42%, rgba(26, 31, 34, 0.55) 72%, rgba(26, 31, 34, 0.85) 100%),
+    url("/ca-mountains.svg") bottom center / 100% auto no-repeat,
+    radial-gradient(120% 60% at 50% -12%, rgba(245, 245, 242, 0.055), transparent 45%),
+    linear-gradient(165deg, #242c31 0%, #20272b 55%, #1a1f22 100%) !important;
+}
+
+/* Eyebrows: crimson per the approved concept, brightened for AA on charcoal. */
+:root[data-theme="maple"] .section-label,
+:root[data-theme="maple"] .foryou-eyebrow,
+:root[data-theme="maple"] .today-hero-copy .badge {
+  color: #ec7080 !important;
+}
+
+/* Maple brand mark beside the wordmark — quiet, small, unmistakable. */
+:root[data-theme="maple"] .app-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+:root[data-theme="maple"] .app-brand::before {
+  content: "";
+  width: 21px;
+  height: 21px;
+  background: url("/maple-leaf.svg") center / contain no-repeat;
+  flex: 0 0 auto;
+}
+
+/* "BUILT IN CANADA. MADE FOR YOUR PEAK." — closing banner on every page. */
+:root[data-theme="maple"] .app-column::after {
+  content: "";
+  display: block;
+  width: 100%;
+  aspect-ratio: 1200 / 160;
+  margin: 34px 0 6px;
+  border-radius: 14px;
+  background: url("/ca-banner.svg") center / cover no-repeat;
+  box-shadow: var(--elev-2), inset 0 0 0 1px rgba(197, 204, 209, 0.12);
+}
