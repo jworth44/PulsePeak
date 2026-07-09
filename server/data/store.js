@@ -641,8 +641,14 @@ export function buildLaunchSafeCoachResponse(data = {}) {
       },
       whyItMatters: top?.reason || "Guidance sharpens as soon as there's real training history to read.",
       nextActions: [
-        { title: nextAction.title, detail: nextAction.message },
-        ...insights.slice(1, 3).map((insight) => ({ title: insight.title, detail: insight.message }))
+        // Carry the route: an "Action" card that goes nowhere is a dead
+        // affordance (owner audit F7).
+        { title: nextAction.title, detail: nextAction.message, to: nextAction.to || null },
+        ...insights.slice(1, 3).map((insight) => ({
+          title: insight.title,
+          detail: insight.message,
+          to: insight.action?.to || null
+        }))
       ],
       longerTermNote: insights[1]?.title || (top ? "Keep the current rhythm going." : "Keep logging sessions and your patterns sharpen."),
       planConnection: insights[1]?.message || top?.reason || "Your guidance is built from your real logged training — nothing generic."

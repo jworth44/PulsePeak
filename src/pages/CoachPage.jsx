@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Panel from "../components/Panel";
 import UpgradePrompt from "../components/UpgradePrompt";
 import { apiRequest } from "../api/client";
@@ -94,13 +95,23 @@ export default function CoachPage() {
       <div className="content-grid">
         <Panel eyebrow="Next actions" title="Do these next">
           <div className="coach-action-list">
-            {coachNextActions.map((action) => (
-              <article className="coach-action-card" key={action.title}>
-                <span className="focus-step">Action</span>
-                <strong>{action.title}</strong>
-                <p className="muted">{action.detail}</p>
-              </article>
-            ))}
+            {/* An "Action" card must act: cards with a route are links. */}
+            {coachNextActions.map((action) =>
+              action.to ? (
+                <Link className="coach-action-card coach-action-card-link" key={action.title} to={action.to}>
+                  <span className="focus-step">Action</span>
+                  <strong>{action.title}</strong>
+                  <p className="muted">{action.detail}</p>
+                  <span aria-hidden="true" className="coach-action-go">Go →</span>
+                </Link>
+              ) : (
+                <article className="coach-action-card" key={action.title}>
+                  <span className="focus-step">Action</span>
+                  <strong>{action.title}</strong>
+                  <p className="muted">{action.detail}</p>
+                </article>
+              )
+            )}
           </div>
         </Panel>
 
