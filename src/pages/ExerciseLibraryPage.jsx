@@ -11,6 +11,37 @@ import { getExerciseImageSrc } from "../utils/getExerciseImageSrc";
 
 const LIBRARY_CATEGORY_ORDER = ["All", "Chest", "Back", "Shoulders", "Biceps", "Triceps", "Legs", "Glutes", "Core", "Conditioning", "Mobility"];
 
+// Canonical equipment families for filtering. The raw catalog equipment
+// strings are free text ("Barbell or dumbbell", "Barbell, dumbbells, or
+// kettlebells depending on variation", ...) — exact-string matching against
+// them made most equipment selections return ZERO results (owner audit F5).
+// Filtering is token-based instead: an entry matches "Dumbbells" when any of
+// its equipment strings mentions a dumbbell.
+const EQUIPMENT_FILTER_OPTIONS = [
+  { value: "barbell", label: "Barbell" },
+  { value: "dumbbell", label: "Dumbbells" },
+  { value: "kettlebell", label: "Kettlebells" },
+  { value: "band", label: "Bands" },
+  { value: "machine", label: "Machines / Cables" },
+  { value: "bench", label: "Bench" },
+  { value: "pull-up", label: "Pull-up bar" },
+  { value: "bodyweight", label: "Bodyweight" }
+];
+
+function entryMatchesEquipment(entry, token) {
+  if (!token || token === "all") {
+    return true;
+  }
+  const haystack = (entry.equipment || []).join(" ").toLowerCase();
+  if (token === "machine") {
+    return /machine|cable/.test(haystack);
+  }
+  if (token === "pull-up") {
+    return /pull-?up|chin-?up/.test(haystack);
+  }
+  return haystack.includes(token);
+}
+
 export default function ExerciseLibraryPage() {
   const { token } = useAuth();
   const { data } = useDashboardData();
@@ -42,7 +73,13 @@ export default function ExerciseLibraryPage() {
       setSearch(q);
     }
     if (equipment) {
-      setSelectedEquipment(equipment);
+      const normalized = equipment.trim().toLowerCase();
+      const match = EQUIPMENT_FILTER_OPTIONS.find(
+        (option) => option.value === normalized || option.label.toLowerCase() === normalized
+      );
+      if (match) {
+        setSelectedEquipment(match.value);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
@@ -101,11 +138,16 @@ export default function ExerciseLibraryPage() {
       }
 
       const matchesCategory = selectedCategory === "All" || entry.category === selectedCategory;
-      const matchesEquipment = selectedEquipment === "all" || (entry.equipment || []).includes(selectedEquipment);
+      const matchesEquipment = entryMatchesEquipment(entry, selectedEquipment);
       const matchesDifficulty = selectedDifficulty === "all" || entry.difficulty === selectedDifficulty;
       return matchesCategory && matchesEquipment && matchesDifficulty;
     });
   }, [entries, search, selectedCategory, selectedDifficulty, selectedEquipment]);
+  // Only offer equipment families that actually match at least one entry.
+  const equipmentFilterOptions = useMemo(
+    () => EQUIPMENT_FILTER_OPTIONS.filter((option) => entries.some((entry) => entryMatchesEquipment(entry, option.value))),
+    [entries]
+  );
   const topSearchMatch = filteredEntries[0] || null;
   const hasActiveFilters =
     Boolean(search.trim()) || selectedCategory !== "All" || selectedEquipment !== "all" || selectedDifficulty !== "all";
@@ -200,9 +242,9 @@ export default function ExerciseLibraryPage() {
                 <span>Equipment</span>
                 <select value={selectedEquipment} onChange={(event) => setSelectedEquipment(event.target.value)}>
                   <option value="all">All equipment</option>
-                  {(library?.equipmentOptions || []).map((equipment) => (
-                    <option key={equipment} value={equipment}>
-                      {equipment}
+                  {equipmentFilterOptions.map((equipment) => (
+                    <option key={equipment.value} value={equipment.value}>
+                      {equipment.label}
                     </option>
                   ))}
                 </select>
