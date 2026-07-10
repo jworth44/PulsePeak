@@ -480,7 +480,7 @@ export default function DashboardPage() {
       </button>
 
       {/* Today's Focus (benchmark): the engine's real session focus + why. */}
-      <section className="today-focus-card">
+      <section className="today-focus-card" data-reveal>
         <div className="today-focus-body">
           <p className="today-focus-eyebrow section-label">Today&rsquo;s focus</p>
           <h2 className="today-focus-title">{workoutEngine?.recommendedFocusLabel || todayFocus?.title || "Your next session"}</h2>
@@ -497,12 +497,12 @@ export default function DashboardPage() {
       </section>
 
       {summary.habits.length > 0 && (
-        <Panel className="today-habits" title="Small wins that keep the week on track">
+        <Panel className="today-habits" title="Small wins that keep the week on track" data-reveal>
           <HabitList habits={summary.habits} onToggle={toggleHabit} />
         </Panel>
       )}
 
-      <Panel className="today-quick" title="Quick actions">
+      <Panel className="today-quick" title="Quick actions" data-reveal>
         {/* Canadian-benchmark row: one tap to the real actions the app has —
             honest labels, no invented features. Mobility hides with its module. */}
         <div className="quick-actions-row">
@@ -532,7 +532,7 @@ export default function DashboardPage() {
       </Panel>
 
       {Array.isArray(summary.recentWorkouts) && summary.recentWorkouts.length > 0 ? (
-        <Panel className="today-recent" title="Recent activity">
+        <Panel className="today-recent" title="Recent activity" data-reveal>
           {/* Real logged sessions only (Canadian benchmark item). Photo
               thumbnails arrive with the media re-shoot — text rows until then,
               never placeholder imagery. */}

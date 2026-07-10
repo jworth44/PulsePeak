@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../state/AuthContext";
 import { applyThemePreference, getStoredThemePreference, initThemeSync } from "../config/themes";
+import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import InstallPrompt from "./InstallPrompt";
 
 // Creative Direction V2 — Product Shell.
@@ -21,6 +22,8 @@ export default function AppShell({ children }) {
     applyThemePreference(getStoredThemePreference());
     return initThemeSync();
   }, []);
+
+  useRevealOnScroll();
 
   const doors = useMemo(() => {
     const shows = (module) => !hiddenModules.includes(module);
