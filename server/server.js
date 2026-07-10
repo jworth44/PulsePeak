@@ -193,6 +193,40 @@ app.get("/api/health", (_request, response) => {
   response.json({ ok: true });
 });
 
+// Escape hatch for a stale service worker. An outdated SW hijacks every
+// navigation on this origin (its navigateFallback serves the cached app shell
+// for any path) EXCEPT /api/* — so this cleanup page is the one URL that is
+// guaranteed to come from the real server. It unregisters all service
+// workers, wipes CacheStorage, then bounces to the live app.
+app.get("/api/fresh", (_request, response) => {
+  response
+    .type("html")
+    .set("Cache-Control", "no-store")
+    .send(`<!doctype html>
+<html><head><meta charset="utf-8"><title>PulsePeak — refreshing</title>
+<style>body{font-family:system-ui,sans-serif;background:#20272b;color:#f5f5f2;display:grid;place-items:center;min-height:100vh;margin:0}p{opacity:.8}</style>
+</head><body><div><h1>Refreshing PulsePeak&hellip;</h1><p id="s">Clearing cached versions.</p></div>
+<script>
+(async () => {
+  const s = document.getElementById("s");
+  try {
+    if ("serviceWorker" in navigator) {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map((r) => r.unregister()));
+    }
+    if (window.caches) {
+      const keys = await caches.keys();
+      await Promise.all(keys.map((k) => caches.delete(k)));
+    }
+    s.textContent = "Done - loading the latest build.";
+  } catch (e) {
+    s.textContent = "Cleanup hit an error (" + e.message + ") - loading anyway.";
+  }
+  setTimeout(() => { window.location.replace("/?fresh=" + Date.now()); }, 400);
+})();
+</script></body></html>`);
+});
+
 app.post("/api/auth/register", authRateLimiter, (request, response) => {
   try {
     const { name, email, password } = request.body;

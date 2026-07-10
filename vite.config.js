@@ -2,6 +2,11 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
+  // Visible build stamp: lets anyone confirm WHICH build a browser is showing
+  // (stale-service-worker diagnosis). Surfaced on <html data-build> + console.
+  define: {
+    __BUILD_STAMP__: JSON.stringify(new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC")
+  },
   plugins: [
     VitePWA({
       registerType: "autoUpdate",
