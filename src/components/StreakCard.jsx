@@ -147,7 +147,7 @@ export default function StreakCard({ status, weeklyTarget = 3, variant }) {
         <p className="streak-row-context">
           {sub}
           {goalRemaining > 0
-            ? ` ${goalRemaining} more session${goalRemaining === 1 ? "" : "s"} hits your weekly goal.`
+            ? ` ${goalRemaining} more session${goalRemaining === 1 ? "" : "s"} hit${goalRemaining === 1 ? "s" : ""} your weekly goal.`
             : " Weekly goal complete — everything from here is a bonus."}
         </p>
         {freeze ? <p className="streak-freeze">{freeze}</p> : null}

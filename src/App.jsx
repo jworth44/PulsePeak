@@ -130,6 +130,13 @@ export default function App() {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/preferences" element={<PreferencesPage />} />
             <Route path="/onboarding" element={<Navigate to="/" replace />} />
+            {/* Aliases for URLs users are likely to type from nav labels or habit. */}
+            <Route path="/today" element={<Navigate to="/" replace />} />
+            <Route path="/home" element={<Navigate to="/" replace />} />
+            <Route path="/train" element={<Navigate to="/workouts" replace />} />
+            <Route path="/exercises" element={<Navigate to="/exercise-library" replace />} />
+            <Route path="/settings" element={<Navigate to="/preferences?section=account" replace />} />
+            <Route path="/account" element={<Navigate to="/preferences?section=account" replace />} />
             <Route path="/billing/success" element={<BillingSuccessPage />} />
             <Route path="/billing/cancel" element={<BillingCancelPage />} />
             <Route path="*" element={<NotFoundPage />} />
