@@ -623,6 +623,20 @@ async function runBrowserCoverage(browser) {
     await page.getByText(/choose your setup, pick your focus/i).waitFor({ timeout: 15000 });
     await page.locator(".section-subnav").getByRole("link", { name: "Exercise Library" }).waitFor({ timeout: 10000 });
     await assertRouteRenders(page, "/workouts", /choose your setup, pick your focus/i);
+    // Starting a workout opens a populated session. Assert this on the fresh
+    // recommended hero, which is enabled and populated before any filter
+    // narrowing runs — scoped to the real primary button (not the surrounding
+    // `role="button"` card) and to enabled workouts (locked ones render a
+    // disabled "Locked on Free" button that opens an empty preview instead).
+    const populatedStart = page
+      .locator("button.primary-button:enabled")
+      .filter({ hasText: "Start workout" })
+      .first();
+    await populatedStart.scrollIntoViewIfNeeded();
+    await populatedStart.click();
+    await page.getByRole("dialog").waitFor({ timeout: 10000 });
+    await page.getByText(/Current exercise/i).waitFor({ timeout: 10000 });
+    await page.getByRole("button", { name: /Close workout session/i }).click();
     await page.getByRole("button", { name: "Quick session" }).click();
     await page.getByText(/visible results/i).waitFor({ timeout: 10000 });
     await page.getByRole("button", { name: "Recovery day", exact: true }).click();
@@ -648,10 +662,17 @@ async function runBrowserCoverage(browser) {
     await saveButton.click();
     const saveResponse = await saveMutation;
     expect(saveResponse.ok(), `Workout save mutation failed with status ${saveResponse.status()}.`);
-    await page.getByRole("button", { name: "Start workout" }).first().click();
-    await page.getByRole("dialog").waitFor({ timeout: 10000 });
-    await page.getByText(/Current exercise/i).waitFor({ timeout: 10000 });
-    await page.getByRole("button", { name: /Close workout session/i }).click();
+    // The saved workout surfaces in the Saved panel, ready to re-run. (The
+    // populated-session start path is asserted above on the fresh hero; after
+    // filter narrowing a free user's remaining startable workouts can be
+    // recovery/preview sessions, which is expected free-tier behaviour.)
+    await page
+      .locator("article.module-card-clickable", { hasText: /ready to re-run/i })
+      .first()
+      .locator("button.primary-button")
+      .filter({ hasText: "Start workout" })
+      .first()
+      .waitFor({ timeout: 10000 });
     await assertRouteRenders(page, "/plan", /weekly strategy|adaptive weekly plan|weekly focus/i);
     await assertRouteRenders(page, "/mobility", /mobility/i);
     await assertRouteRenders(page, "/nutrition", /nutrition/i);
