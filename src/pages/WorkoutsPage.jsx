@@ -18,6 +18,18 @@ import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "..
 import { getExerciseImageSrc } from "../utils/getExerciseImageSrc";
 import { getVisibleLockedWorkoutMessage, hasFullWorkoutAccess } from "../../shared/entitlements";
 import { WORKOUT_DISCOVERY_CATEGORIES, WORKOUT_FILTER_PRESETS, WORKOUT_SORT_OPTIONS } from "../../shared/libraryTaxonomy.js";
+import { MUSCLE_GROUPS, resolveLibraryMedia } from "../config/workoutLibrary";
+
+// Muscles with an exact Exercise Library category land on the precise chip;
+// the rest resolve through keyword search (same logic as WorkoutLibraryPage).
+const MUSCLE_TO_LIBRARY_CATEGORY = {
+  chest: "Chest",
+  back: "Back",
+  shoulders: "Shoulders",
+  legs: "Legs",
+  glutes: "Glutes",
+  core: "Core"
+};
 
 export default function WorkoutsPage() {
   const navigate = useNavigate();
@@ -907,129 +919,47 @@ export default function WorkoutsPage() {
         )}
       </Panel>
 
-      <Panel eyebrow="Exercise library" title="Browse the movement pool behind the workout engine">
+      <Panel eyebrow="Exercise library" title="Browse by muscle group" data-reveal>
+        {/* Research §8 (PREMIUM_RESEARCH_FINDINGS): anatomy is the browse
+            surface. The deep per-exercise pool lives in /exercise-library —
+            inlining it here made this page ~25,000px tall. */}
         <div className="section-context">
-          <span className="section-context-label">Movement categories</span>
-          <p>Browse by category to see the deeper exercise pool that powers workout variety, swaps, and equipment-aware recommendations.</p>
+          <span className="section-context-label">The movement pool behind the engine</span>
+          <p>Tap a muscle group to open its exercises — every guide, swap, and variation lives in the Exercise Library.</p>
         </div>
-        <div className="selector-row">
-          <button
-            className={`selector-pill ${selectedExerciseCategory === "all" ? "selector-pill-active" : ""}`}
-            aria-pressed={selectedExerciseCategory === "all"}
-            type="button"
-            onClick={() => setSelectedExerciseCategory("all")}
-          >
-            <strong>All categories</strong>
-            <span>Browse grouped movement families</span>
-          </button>
-          {(libraryMeta?.exerciseLibraryPreview?.categories || []).map((category) => (
-            <button
-              key={category.id}
-              className={`selector-pill ${selectedExerciseCategory === category.id ? "selector-pill-active" : ""}`}
-              aria-pressed={selectedExerciseCategory === category.id}
-              type="button"
-              onClick={() => setSelectedExerciseCategory(category.id)}
-            >
-              <strong>{category.label}</strong>
-              <span>{category.count} options</span>
-            </button>
-          ))}
-        </div>
-        {selectedExerciseCategory === "all" ? (
-          <div className="library-category-groups">
-            {exercisePreviewGroups.map((group) => (
-              <section className="library-category-group" key={group.id}>
-                <div className="section-context compact-section-context">
-                  <span className="section-context-label">{group.label}</span>
-                  <p>{group.count} movements available in this category right now.</p>
-                </div>
-                <div className="module-card-grid">
-                  {group.entries.map((entry) => (
-                    <article
-                      className="module-card module-card-clickable"
-                      key={entry.detailId || entry.id}
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => openMovementGuide(buildPreviewMovement(entry))}
-                      onKeyDown={(event) => {
-                        if (event.key === "Enter" || event.key === " ") {
-                          event.preventDefault();
-                          openMovementGuide(buildPreviewMovement(entry));
-                        }
-                      }}
-                    >
-                      <p className="section-label">
-                        {entry.category} · {entry.movementPattern}
-                      </p>
-                      <div className="library-card-hero">
-                        {renderCatalogPreview(entry, visualModelPreference)}
-                        <div className="library-card-hero-copy">
-                          <span className="library-depth-note">Browse deeper movement pool</span>
-                          <span className="library-depth-note">{entry.rehabSafe ? "Joint-friendly option" : "Built for swaps and variety"}</span>
-                        </div>
-                      </div>
-                      <h4>{entry.title || entry.name}</h4>
-                      <p className="support-copy">{formatPreviewEquipment(entry.equipment)}</p>
-                      <p className="support-copy">
-                        {entry.difficulty} · {entry.jointStress} joint stress
-                        {entry.rehabSafe ? " · rehab-safe option" : ""}
-                      </p>
-                      <p className="support-copy">{entry.primaryMuscleGroup}{entry.movementQuality ? ` · ${entry.movementQuality.toLowerCase()}` : ""}</p>
-                      <div className="module-card-actions">
-                        <button className="ghost-button" type="button" onClick={(event) => { event.stopPropagation(); openMovementGuide(buildPreviewMovement(entry)); }}>
-                          Open guide
-                        </button>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
-        ) : (
-          <div className="module-card-grid">
-            {exercisePreview.slice(0, 12).map((entry) => (
-              <article
-                className="module-card module-card-clickable"
-                key={entry.detailId || entry.id}
-                role="button"
-                tabIndex={0}
-                onClick={() => openMovementGuide(buildPreviewMovement(entry))}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    openMovementGuide(buildPreviewMovement(entry));
-                  }
-                }}
+        <div className="library-muscle-grid">
+          {MUSCLE_GROUPS.map((group) => {
+            const category = MUSCLE_TO_LIBRARY_CATEGORY[group.filter.muscle];
+            const query = category ? { category } : { q: group.label };
+            const media = resolveLibraryMedia(group.media);
+            return (
+              <button
+                key={group.id}
+                type="button"
+                className="library-muscle-card"
+                onClick={() => navigate(`/exercise-library?${new URLSearchParams(query).toString()}`)}
               >
-                <p className="section-label">
-                  {entry.category} · {entry.movementPattern}
-                </p>
-                <div className="library-card-hero">
-                  {renderCatalogPreview(entry, visualModelPreference)}
-                  <div className="library-card-hero-copy">
-                    <span className="library-depth-note">Browse deeper movement pool</span>
-                    <span className="library-depth-note">{entry.rehabSafe ? "Joint-friendly option" : "Built for swaps and variety"}</span>
-                  </div>
-                </div>
-                <h4>{entry.title || entry.name}</h4>
-                <p className="support-copy">{formatPreviewEquipment(entry.equipment)}</p>
-                <p className="support-copy">
-                  {entry.difficulty} · {entry.jointStress} joint stress
-                  {entry.rehabSafe ? " · rehab-safe option" : ""}
-                </p>
-                <p className="support-copy">
-                  {getGuideStatusLabel(entry, { visualModelPreference })}
-                </p>
-                <div className="module-card-actions">
-                  <button className="ghost-button" type="button" onClick={(event) => { event.stopPropagation(); openMovementGuide(buildPreviewMovement(entry)); }}>
-                    Open guide
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-        )}
+                <span className="library-media library-media-muscle">
+                  {media ? (
+                    <img src={media} alt={`${group.label} muscle group`} loading="lazy" className="is-loaded" />
+                  ) : (
+                    <span className="library-media-awaiting" role="img" aria-label={`${group.label} — image in production`}>
+                      <span className="library-media-awaiting-text">Image in production</span>
+                    </span>
+                  )}
+                </span>
+                <span className="library-media-body">
+                  <span className="library-media-label">{group.label}</span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        <div className="module-card-actions">
+          <button className="secondary-button" type="button" onClick={() => navigate("/exercise-library")}>
+            Browse the full library <span aria-hidden="true">→</span>
+          </button>
+        </div>
       </Panel>
 
       <Panel eyebrow="Saved workouts" title="Come back to the sessions you want to run again">

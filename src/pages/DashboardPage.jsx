@@ -519,7 +519,7 @@ export default function DashboardPage() {
             <span>Exercises</span>
           </button>
           {showMobilityDashboard ? (
-            <button className="quick-action" type="button" onClick={() => navigate("/mobility")}>
+            <button className="quick-action quick-action-recovery" type="button" onClick={() => navigate("/mobility")}>
               <QuickActionIcon name="mobility" />
               <span>Mobility</span>
             </button>
@@ -645,13 +645,14 @@ export default function DashboardPage() {
 // Thin athletic line icons for the Quick Actions row (decorative — the button
 // labels carry the meaning).
 function QuickActionIcon({ name }) {
+  // Prominent, confident marks (research §7): bigger canvas, heavier stroke.
   const p = {
     viewBox: "0 0 24 24",
-    width: 20,
-    height: 20,
+    width: 28,
+    height: 28,
     fill: "none",
     stroke: "currentColor",
-    strokeWidth: 1.8,
+    strokeWidth: 2.4,
     strokeLinecap: "round",
     strokeLinejoin: "round",
     "aria-hidden": true
