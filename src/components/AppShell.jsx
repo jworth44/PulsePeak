@@ -69,7 +69,9 @@ export default function AppShell({ children }) {
       <header className="app-topbar">
         <div className="app-topbar-inner">
           <Link to="/" className="app-brand" aria-label="PulsePeak — Today">
+            <img className="app-brand-leaf" src="/maple-leaf.svg" alt="" aria-hidden="true" />
             <span className="app-brand-word">PulsePeak</span>
+            <img className="app-brand-flag" src="/ca-flag.svg" alt="Canadian flag" />
           </Link>
 
           <nav className="primary-pill" aria-label="Primary">

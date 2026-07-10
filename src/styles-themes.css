@@ -794,13 +794,15 @@
   background: rgba(26, 31, 34, 0.3) !important;
 }
 
-/* Fixed full-viewport backdrop: charcoal gradient, soft snow-light from the
-   top, layered mountain silhouettes settling into the bottom edge. */
+/* Fixed full-viewport backdrop: the dusk-mountain photograph sits behind the
+   whole page as heavily dimmed atmosphere (Cinematic Directive — the page is
+   a scene, not a flat charcoal wall), with the mountain silhouettes settling
+   into the bottom edge. Cards keep solid grounds, so AA text contrast holds. */
 :root[data-theme="maple"] body::before {
   background:
-    linear-gradient(180deg, rgba(26, 31, 34, 0) 42%, rgba(26, 31, 34, 0.55) 72%, rgba(26, 31, 34, 0.85) 100%),
+    linear-gradient(180deg, rgba(26, 31, 34, 0.62) 0%, rgba(26, 31, 34, 0.78) 48%, rgba(20, 24, 27, 0.94) 100%),
     url("/ca-mountains.svg") bottom center / 100% auto no-repeat,
-    radial-gradient(120% 60% at 50% -12%, rgba(245, 245, 242, 0.055), transparent 45%),
+    url("/media/pp-hero-dusk.png") center top / cover no-repeat,
     linear-gradient(165deg, #242c31 0%, #20272b 55%, #1a1f22 100%) !important;
 }
 
@@ -811,19 +813,8 @@
   color: #ec7080 !important;
 }
 
-/* Maple brand mark beside the wordmark — quiet, small, unmistakable. */
-:root[data-theme="maple"] .app-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-}
-:root[data-theme="maple"] .app-brand::before {
-  content: "";
-  width: 21px;
-  height: 21px;
-  background: url("/maple-leaf.svg") center / contain no-repeat;
-  flex: 0 0 auto;
-}
+/* Brand mark now lives in the AppShell lockup (leaf + wordmark + flag) on
+   every theme — the maple-only ::before leaf was removed to avoid doubling. */
 
 /* "BUILT IN CANADA. MADE FOR YOUR PEAK." — closing banner on every page. */
 :root[data-theme="maple"] .app-column::after {
