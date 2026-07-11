@@ -57,7 +57,7 @@ const BASE_EXERCISE_VARIANTS = [
   variant("assisted-pull-up", "Assisted pull-up", "vertical_pull", "machine", "Back", "Vertical pull", ["full_gym"], ["gym", "hybrid"]),
   variant("band-pulldown", "Band pulldown", "vertical_pull", "bands", "Back", "Vertical pull", ["bands", "hybrid"], ["home", "gym", "hybrid"]),
   variant("back-widow", "Back widow", "vertical_pull", "bodyweight", "Back", "Vertical pull", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]),
-  variant("pull-up-negative", "Pull-up negative", "vertical_pull", "bodyweight", "Back", "Vertical pull", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]),
+  variant("pull-up-negative", "Pull-up negative", "vertical_pull", "pullup-bar", "Back", "Vertical pull", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]),
 
   variant("chest-supported-row", "Chest-supported row", "horizontal_pull", "machine", "Back", "Horizontal pull", ["full_gym"], ["gym", "hybrid"]),
   variant("seated-cable-row", "Seated cable row", "horizontal_pull", "machine", "Back", "Horizontal pull", ["full_gym"], ["gym", "hybrid"]),
@@ -203,7 +203,7 @@ const EXPANDED_EXERCISE_VARIANTS = [
   ]),
   ...variantFamily("pull_family", [
     ["neutral-grip-lat-pulldown", "Neutral-grip lat pulldown", "vertical_pull", "machine", "Back", "Vertical pull", ["full_gym"], ["gym", "hybrid"]],
-    ["chin-up", "Chin-up", "vertical_pull", "bodyweight", "Back", "Vertical pull", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
+    ["chin-up", "Chin-up", "vertical_pull", "pullup-bar", "Back", "Vertical pull", ["bodyweight", "hybrid"], ["home", "gym", "hybrid"]],
     ["straight-arm-band-pulldown", "Straight-arm band pulldown", "vertical_pull", "bands", "Back", "Vertical pull", ["bands", "hybrid"], ["home", "gym", "hybrid"]],
     ["straight-arm-pulldown", "Straight-arm pulldown", "vertical_pull", "machine", "Back", "Vertical pull", ["full_gym"], ["gym", "hybrid"]],
     ["dumbbell-pullover", "Dumbbell pullover", "vertical_pull", "dumbbell", "Back", "Vertical pull", ["bench_dumbbells", "dumbbells_only", "hybrid"], ["home", "gym", "hybrid"]],
@@ -399,7 +399,11 @@ const WORKOUT_TEMPLATES = [
   template("recovery-reset", "Recovery Reset", "mobility_recovery", "mobility", 28, "Low", ["Mobility", "Recovery"], "A support day built for stiffness, stress, or lower readiness without losing the training rhythm.", [
     slot("mobility-a", "Reset flow", "mobility_flow", 2, "5 each side"),
     slot("mobility-b", "Main mobility work", "mobility_flow", 3, "5-6 each side"),
-    slot("conditioning", "Easy conditioning", "conditioning", 2, null, "20-30 sec")
+    // Recovery Directive session-quality standard: a recovery day finishes
+    // with LOW-stress activation, not conditioning (the conditioning pool is
+    // high-joint-stress by definition and is excluded from recovery
+    // sessions, which left this slot permanently empty).
+    slot("finish", "Low-stress finish", "glute", 2, "10-12")
   ])
 ];
 
@@ -620,7 +624,8 @@ function buildWorkoutFromTemplate(templateEntry, filters, profile, historyContex
         equipmentSelections: filters.equipmentSelections,
         profile,
         historyContext,
-        usedExerciseNames
+        usedExerciseNames,
+        templateFocus: templateEntry.focus
       })
     )
     .filter(Boolean)
@@ -708,7 +713,30 @@ function applyWorkoutAccess(workout, accessTier, suggestedFocuses) {
   };
 }
 
-function buildExerciseForSlot(slotEntry, { environment, equipmentProfile, equipmentSelections, profile, historyContext, usedExerciseNames = new Set() }) {
+// Selection-time safety rules (Recovery Directive Part 5/7): a restricted
+// user's sessions must not CONTAIN the restricted patterns — adapting the
+// guide text after selection is not enough. Conservative, pattern-first.
+const RESTRICTED_AREA_VARIANT_RULES = [
+  { area: "shoulder", conflicts: (v) => v.movementPattern === "Vertical push" || /lateral raise|upright row|pullover|overhead|arnold|pike push|handstand|snatch|jerk/i.test(v.name) },
+  { area: "knee", conflicts: (v) => /jump|plyo|bound|burpee|high knees|jack|skater|pistol/i.test(v.name) },
+  { area: "ankle", conflicts: (v) => /jump|plyo|bound|high knees|jack|skater/i.test(v.name) },
+  { area: "hip", conflicts: (v) => /jump|plyo|bound|burpee|skater/i.test(v.name) },
+  { area: "back", conflicts: (v) => /deadlift|good morning|bent-over|barbell row/i.test(v.name) },
+  { area: "wrist", conflicts: (v) => /push-up|plank|handstand|crawl|renegade/i.test(v.name) }
+];
+
+function violatesRestrictions(variantEntry, profile) {
+  if (!profile || profile.injuryStatus === "none") {
+    return false;
+  }
+  const areas = Array.isArray(profile.restrictedAreas) ? profile.restrictedAreas : [];
+  if (!areas.length) {
+    return false;
+  }
+  return RESTRICTED_AREA_VARIANT_RULES.some((rule) => areas.includes(rule.area) && rule.conflicts(variantEntry));
+}
+
+function buildExerciseForSlot(slotEntry, { environment, equipmentProfile, equipmentSelections, profile, historyContext, usedExerciseNames = new Set(), templateFocus = null }) {
   const isUsed = (variantEntry) => usedExerciseNames.has(String(variantEntry.name || "").toLowerCase());
   const options = EXERCISE_VARIANTS.filter((variantEntry) => {
     if (variantEntry.pool !== slotEntry.pool) {
@@ -723,6 +751,15 @@ function buildExerciseForSlot(slotEntry, { environment, equipmentProfile, equipm
     if (!variantEntry.environments.includes(environment) && !variantEntry.environments.includes("hybrid")) {
       return false;
     }
+    if (violatesRestrictions(variantEntry, profile)) {
+      return false;
+    }
+    // A recovery session must stay a recovery session: no high-joint-stress
+    // variants inside mobility_recovery templates (the "high-stress Recovery
+    // Reset" persona-F defect).
+    if (templateFocus === "mobility_recovery" && variantEntry.jointStressLevel === "high") {
+      return false;
+    }
     return true;
   });
 
@@ -730,19 +767,12 @@ function buildExerciseForSlot(slotEntry, { environment, equipmentProfile, equipm
     rankVariantOption(right, { environment, equipmentProfile, equipmentSelections, profile, historyContext, slotEntry }) -
     rankVariantOption(left, { environment, equipmentProfile, equipmentSelections, profile, historyContext, slotEntry })
   );
-  // Pool-wide fallback still NEVER reuses an exercise already in this
-  // session (Recovery Directive P0): a slot with a truly exhausted pool is
-  // dropped by the caller, never silently filled with a repeat.
-  const fallbackOptions = rankedOptions.length
-    ? rankedOptions
-    : EXERCISE_VARIANTS
-        .filter((variantEntry) => variantEntry.pool === slotEntry.pool && !isUsed(variantEntry))
-        .sort((left, right) =>
-          rankVariantOption(right, { environment, equipmentProfile, equipmentSelections, profile, historyContext, slotEntry }) -
-          rankVariantOption(left, { environment, equipmentProfile, equipmentSelections, profile, historyContext, slotEntry })
-        );
-
-  const primaryOption = fallbackOptions[0];
+  // NO pool-wide fallback (Recovery Directive persona A/G defect): the old
+  // fallback dropped the equipment/safety filters and served dumbbell work
+  // to bodyweight-only users. A slot whose eligible pool is empty is
+  // dropped by the caller — an honestly shorter session, never equipment
+  // the user doesn't have or movements they can't do.
+  const primaryOption = rankedOptions[0];
   if (!primaryOption) {
     return null;
   }
@@ -755,7 +785,7 @@ function buildExerciseForSlot(slotEntry, { environment, equipmentProfile, equipm
     usedExerciseNames.add(String(primary.name).toLowerCase());
   }
 
-  const swapOptions = fallbackOptions
+  const swapOptions = rankedOptions
     .slice(1)
     .map((option) => attachExerciseMetadata(option, slotEntry, profile, historyContext))
     .filter(Boolean)
@@ -763,7 +793,7 @@ function buildExerciseForSlot(slotEntry, { environment, equipmentProfile, equipm
 
   return {
     ...primary,
-    availableSwapCount: Math.max(fallbackOptions.length - 1, 0),
+    availableSwapCount: Math.max(rankedOptions.length - 1, 0),
     swapOptions
   };
 }
@@ -1208,6 +1238,15 @@ function matchesEquipmentSetup(option, equipmentProfile, equipmentSelections = [
 }
 
 function matchesEquipmentSelection(optionEquipment, equipmentSelections = []) {
+  // Bodyweight is a capability every user has: owning a bench or dumbbells
+  // must never disqualify equipment-free movements. (This gap silently
+  // emptied bodyweight/mobility pools for equipped users and was papered
+  // over by the old unsafe pool-wide fallback. Bar-dependent movements are
+  // tagged "pullup-bar", not "bodyweight", so they still require the bar.)
+  if (optionEquipment === "bodyweight") {
+    return true;
+  }
+
   const selectionSet = new Set(equipmentSelections || []);
   if (!selectionSet.size) {
     return true;
@@ -1215,7 +1254,7 @@ function matchesEquipmentSelection(optionEquipment, equipmentSelections = []) {
 
   const map = {
     dumbbell: ["dumbbells", "kettlebells"],
-    bodyweight: ["bodyweight", "pull_up_bar"],
+    "pullup-bar": ["pull_up_bar"],
     bands: ["bands"],
     barbell: ["barbell"],
     machine: ["machines"],

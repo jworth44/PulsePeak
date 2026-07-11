@@ -158,10 +158,16 @@ export function buildEquipmentProfileFromSelections(selections = [], trainingEnv
 }
 
 export function getEquipmentSelectionsForProfile(profile = {}) {
-  return normalizeEquipmentSelections(
-    profile.equipmentSelections || EQUIPMENT_PROFILE_SELECTION_MAP[profile.equipmentProfile] || [],
-    profile.trainingEnvironment || "hybrid"
-  );
+  // An EMPTY selections array must fall back to the profile's equipment
+  // profile — `[] || fallback` short-circuits on the truthy empty array,
+  // which routed bodyweight-profile users (onboarding writes
+  // equipmentSelections: []) to the environment default and served them
+  // dumbbell workouts (Recovery Directive persona A/G defect).
+  const explicitSelections =
+    Array.isArray(profile.equipmentSelections) && profile.equipmentSelections.length
+      ? profile.equipmentSelections
+      : EQUIPMENT_PROFILE_SELECTION_MAP[profile.equipmentProfile] || [];
+  return normalizeEquipmentSelections(explicitSelections, profile.trainingEnvironment || "hybrid");
 }
 
 export function formatEquipmentSelections(selections = []) {
