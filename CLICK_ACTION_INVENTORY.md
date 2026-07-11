@@ -51,3 +51,13 @@ The 19 verifications cover every high-stakes promise the owner named plus
 the primary action per route. The long tail (441 library cards, per-filter
 permutations, settings toggles) is exercised by qa:launch scenarios and the
 persona runs (Task #5); any mismatch found there gets logged here.
+
+## Extended interaction verification (2026-07-11, ongoing loop)
+- **Nutrition meal logging (full mode):** valid meal (520cal/42g) → POST 201,
+  "Meal logged.", appears in list; out-of-range (9000cal) → POST 400,
+  "Calories must be between 0 and 3000.", not listed. Persists + rejects
+  honestly. VERIFIED clean.
+- **Weekly check-in:** 6 selects → POST 201 "Weekly check-in saved." (earlier).
+- **Category/equipment/duration/intensity/joint filters:** correct outcomes or
+  honest widen/empty (WR-6).
+- **Swaps, Save workout, exercise guides, session start:** all fulfill labels.
