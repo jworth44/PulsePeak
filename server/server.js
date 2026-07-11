@@ -206,11 +206,19 @@ app.get("/api/fresh", (_request, response) => {
 <html><head><meta charset="utf-8"><title>PulsePeak — refreshing</title>
 <style>body{font-family:system-ui,sans-serif;background:#20272b;color:#f5f5f2;display:grid;place-items:center;min-height:100vh;margin:0}p{opacity:.8}</style>
 </head><body><div><h1>Refreshing PulsePeak&hellip;</h1><p id="s">Clearing cached versions.</p></div>
-<script>
-/* v2: every cleanup step is timeout-raced and the redirect is UNCONDITIONAL —
-   cache/SW calls can stall indefinitely while another tab holds the old
-   worker's locks, and the page must never sit here forever. */
-(() => {
+<script src="/api/fresh.js"></script></body></html>`);
+});
+
+// The cleanup logic for /api/fresh, served as an EXTERNAL same-origin script:
+// the helmet CSP (script-src 'self') blocks inline scripts, which silently
+// disabled the v1/v2 inline versions — the page rendered but nothing ran.
+// External same-origin passes 'self'; /api/* keeps it out of the old SW's
+// reach. Every step is timeout-raced and the redirect is UNCONDITIONAL.
+app.get("/api/fresh.js", (_request, response) => {
+  response
+    .type("application/javascript")
+    .set("Cache-Control", "no-store")
+    .send(`(() => {
   const s = document.getElementById("s");
   const go = () => window.location.replace("/?fresh=" + Date.now());
   const bail = setTimeout(go, 4000);
@@ -223,7 +231,7 @@ app.get("/api/fresh", (_request, response) => {
           2000
         );
       }
-    } catch (e) { /* proceed regardless */ }
+    } catch (e) {}
     try {
       if (window.caches) {
         await withTimeout(
@@ -231,13 +239,12 @@ app.get("/api/fresh", (_request, response) => {
           2000
         );
       }
-    } catch (e) { /* proceed regardless */ }
-    s.textContent = "Done - loading the latest build.";
+    } catch (e) {}
+    if (s) s.textContent = "Done - loading the latest build.";
     clearTimeout(bail);
     setTimeout(go, 250);
   })();
-})();
-</script></body></html>`);
+})();`);
 });
 
 app.post("/api/auth/register", authRateLimiter, (request, response) => {
