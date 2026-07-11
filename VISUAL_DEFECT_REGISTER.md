@@ -85,3 +85,12 @@ over the title "STRENGTH" (the engine's recommended path for a healthy user) —
 an incoherent MOBILITY/STRENGTH pairing on the first thing you see. The page
 is genuinely a paths hub, so the eyebrow now reads "Recommended for you right
 now", coherent with whatever path the engine recommends. Build 0.
+
+## VD-8 (P2) — Onboarding height input had an impossible imperial range — FIXED
+Found by driving onboarding as a first-time user. The height field's `min` was
+hardcoded "120" while `max` was unit-aware (`metric ? 230 : 90`). For imperial
+(inches) that meant **min 120in (10ft) > max 90in** — an impossible range, and
+every realistic height (e.g. 70in) was flagged invalid by the number input.
+Fixed: `min` is now unit-aware — 120cm (metric) / 48in (imperial). Verified
+live: imperial height renders min=48, max=90. Weight/target inputs already had
+unit-aware bounds. Build 0.

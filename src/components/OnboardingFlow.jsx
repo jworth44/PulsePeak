@@ -466,10 +466,14 @@ export default function OnboardingFlow({ mode = "onboarding", onComplete }) {
               </label>
               <label>
                 Height ({heightUnitLabel})
+                {/* min must be unit-aware like max: it was hardcoded "120",
+                    which for imperial (inches) meant min 120in (10ft) > max
+                    90in — an impossible range that flagged every real height
+                    (e.g. 70in) as invalid. */}
                 <input
-                  min="120"
+                  min={form.unitPreference === "metric" ? "120" : "48"}
                   max={form.unitPreference === "metric" ? "230" : "90"}
-                  step={form.unitPreference === "metric" ? "1" : "1"}
+                  step="1"
                   type="number"
                   value={form.heightInput}
                   onChange={(event) => updateField("heightInput", event.target.value)}
