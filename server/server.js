@@ -207,22 +207,35 @@ app.get("/api/fresh", (_request, response) => {
 <style>body{font-family:system-ui,sans-serif;background:#20272b;color:#f5f5f2;display:grid;place-items:center;min-height:100vh;margin:0}p{opacity:.8}</style>
 </head><body><div><h1>Refreshing PulsePeak&hellip;</h1><p id="s">Clearing cached versions.</p></div>
 <script>
-(async () => {
+/* v2: every cleanup step is timeout-raced and the redirect is UNCONDITIONAL —
+   cache/SW calls can stall indefinitely while another tab holds the old
+   worker's locks, and the page must never sit here forever. */
+(() => {
   const s = document.getElementById("s");
-  try {
-    if ("serviceWorker" in navigator) {
-      const regs = await navigator.serviceWorker.getRegistrations();
-      await Promise.all(regs.map((r) => r.unregister()));
-    }
-    if (window.caches) {
-      const keys = await caches.keys();
-      await Promise.all(keys.map((k) => caches.delete(k)));
-    }
+  const go = () => window.location.replace("/?fresh=" + Date.now());
+  const bail = setTimeout(go, 4000);
+  const withTimeout = (promise, ms) => Promise.race([promise, new Promise((resolve) => setTimeout(resolve, ms))]);
+  (async () => {
+    try {
+      if ("serviceWorker" in navigator) {
+        await withTimeout(
+          navigator.serviceWorker.getRegistrations().then((regs) => Promise.all(regs.map((r) => r.unregister()))),
+          2000
+        );
+      }
+    } catch (e) { /* proceed regardless */ }
+    try {
+      if (window.caches) {
+        await withTimeout(
+          caches.keys().then((keys) => Promise.all(keys.map((k) => caches.delete(k)))),
+          2000
+        );
+      }
+    } catch (e) { /* proceed regardless */ }
     s.textContent = "Done - loading the latest build.";
-  } catch (e) {
-    s.textContent = "Cleanup hit an error (" + e.message + ") - loading anyway.";
-  }
-  setTimeout(() => { window.location.replace("/?fresh=" + Date.now()); }, 400);
+    clearTimeout(bail);
+    setTimeout(go, 250);
+  })();
 })();
 </script></body></html>`);
 });
