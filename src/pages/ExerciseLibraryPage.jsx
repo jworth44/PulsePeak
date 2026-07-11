@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import CountUp from "../components/CountUp";
 import EmptyStateCard from "../components/EmptyStateCard";
 import Panel from "../components/Panel";
 import MovementDetailModal from "../components/MovementDetailModal";
@@ -188,18 +189,23 @@ export default function ExerciseLibraryPage() {
   return (
     <>
       <div className="page-grid page-grid-tight exercise-library-page">
-        <section className="module-page-hero exercise-library-hero">
-          <div className="today-hero-copy">
-            <p className="section-label">Exercise Library</p>
-            <h2>Learn every movement, the right way.</h2>
-            <p className="lead-copy">
-              Search every exercise in your training with step-by-step guides and coaching cues, so you always know exactly how to move.
-            </p>
-          </div>
-          <div className="today-hero-score">
-            <span className="section-label">Your library</span>
-            <strong>{library?.total || entries.length} exercises</strong>
-            <p className="support-copy">{visualCount} with step-by-step visual guides</p>
+        {/* Editorial opener (Craftsmanship): the library's scale IS the story —
+            real counts staged as hero numbers, same language as Progress. */}
+        <section className="progress-pride exercise-library-opener" data-reveal>
+          <p className="progress-pride-eyebrow">Exercise Library</p>
+          <h2 className="progress-pride-title">Learn every movement, the right way.</h2>
+          <p className="progress-pride-copy">
+            Search every exercise in your training with step-by-step guides and coaching cues, so you always know exactly how to move.
+          </p>
+          <div className="progress-pride-stats">
+            <div className="pride-stat pride-stat-lead">
+              <span className="pride-stat-value"><CountUp value={library?.total || entries.length} /></span>
+              <span className="pride-stat-label">Exercises</span>
+            </div>
+            <div className="pride-stat">
+              <span className="pride-stat-value"><CountUp value={visualCount} /></span>
+              <span className="pride-stat-label">Step-by-step visual guides</span>
+            </div>
           </div>
         </section>
 
