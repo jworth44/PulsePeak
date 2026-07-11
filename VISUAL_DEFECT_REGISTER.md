@@ -78,3 +78,10 @@ Found by Part 10 review of /exercise-library.
   rank above title, category, muscle, then tangential-field hits; stable ties.
 - **Verified:** squat→"Back squat", curl→"Band curl"/"Biceps curl",
   press→"Arnold press" now lead. qa:launch 19/19; build 0.
+
+## VD-7 (P2) — Mobility hero eyebrow contradicted its title — FIXED
+The movement-support hub hero read eyebrow "MOBILITY · RECOMMENDED RIGHT NOW"
+over the title "STRENGTH" (the engine's recommended path for a healthy user) —
+an incoherent MOBILITY/STRENGTH pairing on the first thing you see. The page
+is genuinely a paths hub, so the eyebrow now reads "Recommended for you right
+now", coherent with whatever path the engine recommends. Build 0.

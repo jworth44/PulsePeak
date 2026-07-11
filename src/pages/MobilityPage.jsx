@@ -404,7 +404,12 @@ export default function MobilityPage() {
         <img alt="" aria-hidden="true" className="train-cinematic-photo" src="/media/pp-hero-dusk.png" />
         <div aria-hidden="true" className="train-cinematic-scrim" />
         <div className="train-cinematic-content">
-          <p className="train-cinematic-eyebrow">Mobility · recommended right now</p>
+          {/* This surface is the movement-support hub (Strength / Mobility /
+              Yoga / Cardio / Injury are all paths). The title is the engine's
+              recommended path, which may be Strength for a healthy user — so
+              the eyebrow can't assert "Mobility" or it contradicts the title
+              ("MOBILITY · RECOMMENDED / STRENGTH"). */}
+          <p className="train-cinematic-eyebrow">Recommended for you right now</p>
           <h2 className="train-cinematic-title">{getSmartCategoryLabel(recommendedCategory)}</h2>
           <p className="train-cinematic-copy">{getModeLeadCopy(isSearchMode ? effectiveCategory : effectiveCategory)}</p>
         </div>

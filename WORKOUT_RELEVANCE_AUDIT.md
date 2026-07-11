@@ -33,3 +33,11 @@ slots — 0 duplicate selections, 0 already-selected names offered in any
 dropdown, and after performing 2 real swaps still 0/0. The dropdown is the
 only swap surface, so the UI cannot assemble a duplicate session. No code
 change required; register corrected per the reporting-precision rules.
+
+## WR-3 — Injury Support intake VERIFIED functional (Part 7)
+Live probe (2026-07-11): the Injury Support path is a real multi-step wizard,
+not a label. Step 1 "What are you managing?" (Injury / Ache) → Step 2 renders
+8 body areas (Lower back, Calves, Shoulders, Hips, Knees, Ankles, Neck,
+Wrists) → symptom step → targeted results. Combined with the persona audit
+(results change per answer: ACL→knee rehab, tennis elbow→forearm), Part 7
+intake depth is satisfied. No change required.
