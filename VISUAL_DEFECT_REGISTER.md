@@ -53,8 +53,13 @@ and the session modal is the highest-frequency surface in the app.
 round caps). Swept the codebase — no other bare-glyph closes remain.
 **Verified:** session close button now contains an SVG, zero text; build 0.
 
-## VD-5 (P3, queued) — Coach empty-state column imbalance
+## VD-5 (P3) — Coach zero-data column imbalance — FIXED
 On /coach with no history, the two-column layout leaves the left "Do these
 next" column with one small action card above a large dead void while the
 right column runs ~200px taller. Queued: collapse to a single column (or
 balance) when the actions column has a single item in the zero-data state.
+
+**VD-5 fix:** Coach `.content-grid` gets `content-grid-single` when
+`coachNextActions.length < 2` → stacks to one column, so the single action
+card no longer sits beside a much taller right column. Verified: flex-direction
+column, panels stacked, no side void; build 0.

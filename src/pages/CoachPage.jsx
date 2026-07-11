@@ -82,7 +82,10 @@ export default function CoachPage() {
         </p>
       </section>
 
-      <div className="content-grid">
+      {/* With sparse actions (zero-data state) the 2-col split leaves the
+          left column short beside a much taller right column — a dead void.
+          Collapse to one column until there are enough actions to balance. */}
+      <div className={`content-grid${coachNextActions.length < 2 ? " content-grid-single" : ""}`}>
         <Panel eyebrow="Next actions" title="Do these next">
           <div className="coach-action-list">
             {/* An "Action" card must act: cards with a route are links. */}

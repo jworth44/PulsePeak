@@ -572,6 +572,15 @@ select {
   flex: 1 1 380px;
 }
 
+/* Sparse-content variant: stack into one column so a short panel never sits
+   beside a much taller one leaving a dead void (Coach zero-data state). */
+.content-grid-single {
+  flex-direction: column;
+}
+.content-grid-single > * {
+  flex: 1 1 auto;
+}
+
 .panel-heading {
   justify-content: space-between;
   align-items: center;
