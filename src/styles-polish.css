@@ -231,6 +231,21 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
   border-color: var(--border-strong) !important;
   transform: translateY(-1px);
 }
+/* Coach action cards: the eyebrow is its own line, never fused to the title. */
+.coach-action-card .focus-step {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Coach opener: the "why" reads as a quiet attributed line under the insight. */
+.coach-why-line {
+  margin: 6px 0 0;
+  max-width: 62ch;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+.coach-why-line strong { color: var(--text-primary); font-weight: 600; }
+
 /* ---- Plan editorial: dissolve the note-box wall ---------------------------
    Plan's panels stacked 4-5 bordered module-notes each (boxes in boxes).
    They become quiet hairline rows — content unchanged, chrome gone. */

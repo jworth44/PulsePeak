@@ -69,28 +69,18 @@ export default function CoachPage() {
 
   return (
     <div className="page-grid editorial-sections">
-      <Panel eyebrow="Coach summary" title="Use the coach to decide what matters most next">
-        <div className="module-note">
-          <strong>Your clearest next move, read from your real training.</strong>
-          <p className="muted">
-            PulsePeak looks at your recent sessions, records, and gaps, then surfaces what matters most right now — no generic advice, only what your own data supports.
-          </p>
-        </div>
-      </Panel>
-
-      <Panel eyebrow="Coach engine" title="What matters most right now">
-        <section className={`coach-hero coach-${data.coach.primaryInsight.category}`}>
-          <div className="coach-hero-copy">
-            <p className="badge">{isPremium ? "Premium reasoning" : "Daily coaching"}</p>
-            <h3>{data.coach.primaryInsight.title}</h3>
-            <p className="coach-detail">{data.coach.primaryInsight.detail}</p>
-          </div>
-          <div className="coach-why-block">
-            <span className="focus-step">Why it matters</span>
-            <p>{data.coach.whyItMatters}</p>
-          </div>
-        </section>
-      </Panel>
+      {/* Editorial opener (Craftsmanship): the coach's single clearest read
+          IS the page — no explainer panel, no box around the thought. */}
+      <section className="progress-pride coach-opener" data-reveal>
+        <p className="progress-pride-eyebrow">
+          {isPremium ? "Your coach · premium reasoning" : "Your coach · read from your real training"}
+        </p>
+        <h2 className="progress-pride-title">{data.coach.primaryInsight.title}</h2>
+        <p className="progress-pride-copy">{data.coach.primaryInsight.detail}</p>
+        <p className="coach-why-line">
+          <strong>Why it matters</strong> — {data.coach.whyItMatters}
+        </p>
+      </section>
 
       <div className="content-grid">
         <Panel eyebrow="Next actions" title="Do these next">
