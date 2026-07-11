@@ -1064,7 +1064,17 @@ html.reveal-ready [data-reveal].is-revealed {
     padding-top: 0;
     padding-bottom: 0;
   }
-  .section-subnav { gap: 8px; }
+  /* The subnav scrolls horizontally when its tabs exceed the viewport. A
+     hard-clipped tab at the right edge reads as broken; a fade-out edge
+     signals "there's more, keep scrolling" (premium scroll affordance).
+     Extra right scroll-padding keeps the last tab off the very edge. */
+  .section-subnav {
+    gap: 8px;
+    padding-right: 24px;
+    scroll-padding-right: 24px;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent 100%);
+    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent 100%);
+  }
   .today-week-review-link,
   .text-link {
     min-height: 44px;

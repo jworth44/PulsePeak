@@ -32,3 +32,14 @@ Icon buttons are flagged by SHORTEST side; a 42×44 button is a 1848px² tap
 area (usable) but was floored to 44×44 for full compliance and consistency.
 Desktop min-target guidance (32px) is informational only — pointer targets
 don't need the 44px touch floor; no desktop control was resized.
+
+## VD-3 (P2) — Mobile subnav clipped hard at the right edge — FIXED
+**Found by:** directive Part 10 visual review — actually looking at mobile
+Train (390px). The section subnav (Workouts/Plan/Workout Library/Exercise
+Library/...) scrolls horizontally but the overflowing tab was hard-cut
+("Exerci…"), reading as broken rather than scrollable.
+**Fix:** right-edge fade mask + right scroll-padding on `.section-subnav` at
+≤780px, so the last tab fades out (premium "there's more" affordance) instead
+of clipping.
+**Verified:** headless 390px screenshot — "Exerc" now fades softly at the
+edge; nav still scrollable; build 0.
