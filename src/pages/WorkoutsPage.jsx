@@ -470,6 +470,49 @@ export default function WorkoutsPage() {
         </div>
       </section>
 
+      <Panel eyebrow="Exercise library" title="Browse by muscle group" data-reveal>
+        {/* Research §8 (PREMIUM_RESEARCH_FINDINGS): anatomy is the browse
+            surface. The deep per-exercise pool lives in /exercise-library —
+            inlining it here made this page ~25,000px tall. */}
+        <div className="section-context">
+          <span className="section-context-label">The movement pool behind the engine</span>
+          <p>Tap a muscle group to open its exercises — every guide, swap, and variation lives in the Exercise Library.</p>
+        </div>
+        <div className="library-muscle-grid">
+          {MUSCLE_GROUPS.map((group) => {
+            const category = MUSCLE_TO_LIBRARY_CATEGORY[group.filter.muscle];
+            const query = category ? { category } : { q: group.label };
+            const media = resolveLibraryMedia(group.media);
+            return (
+              <button
+                key={group.id}
+                type="button"
+                className="library-muscle-card"
+                onClick={() => navigate(`/exercise-library?${new URLSearchParams(query).toString()}`)}
+              >
+                <span className="library-media library-media-muscle">
+                  {media ? (
+                    <img src={media} alt={`${group.label} muscle group`} loading="lazy" className="is-loaded" />
+                  ) : (
+                    <span className="library-media-awaiting" role="img" aria-label={`${group.label} — image in production`}>
+                      <span className="library-media-awaiting-text">Image in production</span>
+                    </span>
+                  )}
+                </span>
+                <span className="library-media-body">
+                  <span className="library-media-label">{group.label}</span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        <div className="module-card-actions">
+          <button className="secondary-button" type="button" onClick={() => navigate("/exercise-library")}>
+            Browse the full library <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </Panel>
+
       {feedback ? <div className="status-banner">{feedback}</div> : null}
 
       <div className={`cap-banner ${workoutAccess?.locked ? "cap-banner-locked" : ""}`}>
@@ -578,13 +621,13 @@ export default function WorkoutsPage() {
           {categoryOptions.map((category) => (
             <button
               key={category.id}
-              className={`selector-pill ${selectedCategory === category.id ? "selector-pill-active" : ""}`}
+              className={`selector-pill selector-pill-compact ${selectedCategory === category.id ? "selector-pill-active" : ""}`}
               aria-pressed={selectedCategory === category.id}
               type="button"
               onClick={() => setSelectedCategory(category.id)}
+              title={category.description}
             >
               <strong>{category.label}</strong>
-              <span>{category.description}</span>
             </button>
           ))}
         </div>
@@ -917,49 +960,6 @@ export default function WorkoutsPage() {
             </button>
           </EmptyStateCard>
         )}
-      </Panel>
-
-      <Panel eyebrow="Exercise library" title="Browse by muscle group" data-reveal>
-        {/* Research §8 (PREMIUM_RESEARCH_FINDINGS): anatomy is the browse
-            surface. The deep per-exercise pool lives in /exercise-library —
-            inlining it here made this page ~25,000px tall. */}
-        <div className="section-context">
-          <span className="section-context-label">The movement pool behind the engine</span>
-          <p>Tap a muscle group to open its exercises — every guide, swap, and variation lives in the Exercise Library.</p>
-        </div>
-        <div className="library-muscle-grid">
-          {MUSCLE_GROUPS.map((group) => {
-            const category = MUSCLE_TO_LIBRARY_CATEGORY[group.filter.muscle];
-            const query = category ? { category } : { q: group.label };
-            const media = resolveLibraryMedia(group.media);
-            return (
-              <button
-                key={group.id}
-                type="button"
-                className="library-muscle-card"
-                onClick={() => navigate(`/exercise-library?${new URLSearchParams(query).toString()}`)}
-              >
-                <span className="library-media library-media-muscle">
-                  {media ? (
-                    <img src={media} alt={`${group.label} muscle group`} loading="lazy" className="is-loaded" />
-                  ) : (
-                    <span className="library-media-awaiting" role="img" aria-label={`${group.label} — image in production`}>
-                      <span className="library-media-awaiting-text">Image in production</span>
-                    </span>
-                  )}
-                </span>
-                <span className="library-media-body">
-                  <span className="library-media-label">{group.label}</span>
-                </span>
-              </button>
-            );
-          })}
-        </div>
-        <div className="module-card-actions">
-          <button className="secondary-button" type="button" onClick={() => navigate("/exercise-library")}>
-            Browse the full library <span aria-hidden="true">→</span>
-          </button>
-        </div>
       </Panel>
 
       <Panel eyebrow="Saved workouts" title="Come back to the sessions you want to run again">

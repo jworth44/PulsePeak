@@ -231,6 +231,27 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
   border-color: var(--border-strong) !important;
   transform: translateY(-1px);
 }
+/* Status is not a hero (Craftsmanship Directive: one hero per screen). The
+   entitlement banner reads as a quiet status line, not a boxed billboard —
+   EXCEPT when the user is actually locked out, which deserves attention. */
+.cap-banner:not(.cap-banner-locked) {
+  border: 0;
+  background: transparent;
+  padding: 0 2px;
+  gap: 0.2rem;
+}
+.cap-banner:not(.cap-banner-locked) strong {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.cap-banner:not(.cap-banner-locked) .support-copy {
+  font-size: 0.82rem;
+  opacity: 0.75;
+}
+
 /* THE one dominant CTA (research §1/§7): a chunky 56px pill. Every premium
    reference (Ladder START WORKOUT, Peloton, Centr) has exactly one oversized
    primary action per screen. */
@@ -2837,13 +2858,13 @@ input:focus, select:focus, textarea:focus {
 /* Muscle + type grids */
 .library-muscle-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 22px;
 }
 .library-type-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
+  gap: 22px;
 }
 .library-muscle-card,
 .library-type-card {
