@@ -79,12 +79,14 @@ export default function PreferencesPage() {
 
   return (
     <div className="page-grid editorial-sections">
-      <section className="module-page-hero">
-        <div>
-          <p className="badge">Settings</p>
-          <h2>Tune PulsePeak to how you train.</h2>
-          <p className="lead-copy">Your setup, appearance, guidance level, and what shows up — all in one place.</p>
-        </div>
+      {/* The "You" door greets YOU (Craftsmanship: this app knows me) — the
+          user's real identity leads; what the page does is the support line. */}
+      <section className="progress-pride you-opener" data-reveal>
+        <p className="progress-pride-eyebrow">You · {isPremium ? "Premium" : "Free plan"}</p>
+        <h2 className="progress-pride-title">{user?.name || "Your account"}</h2>
+        <p className="progress-pride-copy">
+          Your setup, appearance, guidance level, and what shows up — tuned to how you train.
+        </p>
       </section>
 
       <div className="settings-layout">
