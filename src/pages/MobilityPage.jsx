@@ -390,17 +390,20 @@ export default function MobilityPage() {
 
   return (
     <div className="page-grid page-grid-tight train-editorial-page">
-      <section className="module-page-hero">
-        <div className="mobility-hero-copy">
-          <p className="badge">Mobility</p>
-          <h2>{mobilityModule?.title || "Guided movement support that fits today"}</h2>
-          <p className="lead-copy">{getModeLeadCopy(isSearchMode ? effectiveCategory : effectiveCategory)}</p>
-          <p className="support-copy recommendation-context-note">{continuityContext.title}</p>
-          <p className="support-copy smart-default-copy">
-            Recommended right now: <strong>{getSmartCategoryLabel(recommendedCategory)}</strong>
-          </p>
+      {/* Cinematic opener (Craftsmanship): what your body needs right now IS
+          the story — over the recovery photograph, evergreen pillar. */}
+      <section className="train-cinematic mobility-cinematic">
+        <img alt="" aria-hidden="true" className="train-cinematic-photo" src="/media/workout-library/type-recovery.png" />
+        <div aria-hidden="true" className="train-cinematic-scrim" />
+        <div className="train-cinematic-content">
+          <p className="train-cinematic-eyebrow">Mobility · recommended right now</p>
+          <h2 className="train-cinematic-title">{getSmartCategoryLabel(recommendedCategory)}</h2>
+          <p className="train-cinematic-copy">{getModeLeadCopy(isSearchMode ? effectiveCategory : effectiveCategory)}</p>
         </div>
-        <div className="smart-quick-actions" aria-label="Quick actions">
+      </section>
+
+      <section className="mobility-quick-row" aria-label="Quick actions">
+        <div className="smart-quick-actions">
           {QUICK_ACTIONS.map((action) => {
             const isRecommendedAction =
               (action.targetCategory && action.targetCategory === recommendedCategory) ||
