@@ -41,3 +41,15 @@ not a label. Step 1 "What are you managing?" (Injury / Ache) → Step 2 renders
 Wrists) → symptom step → targeted results. Combined with the persona audit
 (results change per answer: ACL→knee rehab, tennis elbow→forearm), Part 7
 intake depth is satisfied. No change required.
+
+## WR-4 (P1) — Hybrid users got an EMPTY equipment selector — FIXED
+Found by Part 6 filter probing. `getEquipmentSelectionOptionsForEnvironment`
+returned all options only when `environment === "hybrid"`, but the Workouts
+filter uses `"both"` for hybrid/either. No equipment option lists `"both"` in
+its environments, so the function returned [] and the "tap the equipment you
+have today" grid rendered EMPTY for every hybrid user — they could not select
+equipment at all (the owner's own default profile is hybrid).
+- **Verify:** `getEquipmentSelectionOptionsForEnvironment('both')` was 0
+  (hybrid 8, home 6). Now 8, and the live grid renders all 8 chips and toggles.
+- **Fix:** treat "both" as a synonym of "hybrid" in the function.
+- qa:launch 19/19, qa:personas PASS, build 0.

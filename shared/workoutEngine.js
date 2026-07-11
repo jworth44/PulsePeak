@@ -126,13 +126,15 @@ export function normalizeEquipmentSelections(value, trainingEnvironment = "hybri
 }
 
 export function getEquipmentSelectionOptionsForEnvironment(trainingEnvironment = "hybrid") {
-  return EQUIPMENT_SELECTION_OPTIONS.filter((option) => {
-    if (trainingEnvironment === "hybrid") {
-      return true;
-    }
-
-    return option.environments.includes(trainingEnvironment);
-  });
+  // "both" is the Workouts filter's value for hybrid/either; it's a synonym
+  // for "hybrid". Without this, a hybrid user's environment ("both") matched
+  // no option's environments list and the equipment selector rendered EMPTY —
+  // hybrid users could not tap the equipment they have (Recovery Directive
+  // filter/outcome defect).
+  if (trainingEnvironment === "hybrid" || trainingEnvironment === "both") {
+    return EQUIPMENT_SELECTION_OPTIONS.slice();
+  }
+  return EQUIPMENT_SELECTION_OPTIONS.filter((option) => option.environments.includes(trainingEnvironment));
 }
 
 export function buildEquipmentProfileFromSelections(selections = [], trainingEnvironment = "hybrid") {
