@@ -867,6 +867,19 @@ function scoreTemplate(templateEntry, profile, filters, historyContext) {
     score += 2;
   }
 
+  // Age-aware recovery bias (Recovery Directive persona C / PA-4): older
+  // athletes' DEFAULT recommendations lean joint-friendlier and recovery-
+  // aware — a soft scoring nudge, never a hard exclusion (a fit 55-year-old
+  // can still reach every session). Strength of the nudge scales with age
+  // band. Explicit focus/category filters still override.
+  const ageRecoveryWeight = { "40-49": 1, "50-59": 2, "60-plus": 3, "60+": 3 }[profile.ageGroup] || 0;
+  if (ageRecoveryWeight) {
+    const sessionHighStress = (templateEntry.slots || []).length >= 6 || templateEntry.intensity === "High";
+    if (templateEntry.intensity === "High") score -= 3 * ageRecoveryWeight;
+    if (!sessionHighStress) score += 1.5 * ageRecoveryWeight;
+    if (templateEntry.focus === "mobility_recovery") score += 1.5 * ageRecoveryWeight;
+  }
+
   if (historyContext.templateUsage.get(templateEntry.id)) {
     const recentTemplateUsage = historyContext.templateUsage.get(templateEntry.id);
     score -= recentTemplateUsage >= 2 ? 8 : 4;

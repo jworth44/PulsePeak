@@ -74,3 +74,22 @@ clean · `qa:launch` 19/19 · build 0.
 - C (40+) currently generates without violations, but the probe does not
   yet assert that 40+ selection DIFFERS appropriately (volume/intensity/
   recovery coaching) from the 30-39 baseline — queued as PA-4.
+
+## PA-4 (P2) — 40+ selection now differs appropriately — FIXED + GATED
+**Finding (honest):** the generator did NOT use `ageGroup` at all — a 40-49
+user received the identical default recommendations as a 30-39 user. "40+"
+existed only as a workout tag / manual filter.
+**Fix:** soft age-recovery bias in `scoreTemplate` — older bands (40-49 ×1,
+50-59 ×2, 60+ ×3) down-weight High-intensity and ≥6-slot sessions and
+up-weight non-high-stress + mobility_recovery. A NUDGE, never a hard
+exclusion (a fit older athlete still reaches every session); explicit
+focus/category filters still override.
+**Verified:** 40-49 top-5 order differs from 30-39 (the 6-exercise Full Body
+session is deprioritized for older users); older bands never rank MORE
+high-intensity/volume sessions than the baseline. Now asserted permanently
+in `qa:personas` (PA-4 block). qa:personas 49 · qa:launch 19/19 · build 0.
+**Honest scope:** the effect is a recommendation-ORDER + volume nudge, not a
+dramatic overhaul; for equipment sets where every surfaced template is
+already Moderate, the visible lever is session length. This is intentional
+conservatism, not a stronger age-gate (a fit 55-year-old shouldn't be
+force-downgraded).

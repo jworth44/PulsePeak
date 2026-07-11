@@ -72,6 +72,31 @@ for (const [name, spec] of Object.entries(PERSONAS)) {
   }
 }
 
+// PA-4: 40+ recommendations must DIFFER from the 30-39 baseline and never
+// be higher-intensity/volume (age-aware recovery bias, persona C).
+{
+  const ageProfile = (ageGroup) => ({ ...base, ageGroup });
+  const genFor = (profile) => {
+    const selections = getEquipmentSelectionsForProfile(profile);
+    const equipmentProfile = buildEquipmentProfileFromSelections(selections, profile.trainingEnvironment);
+    return getWorkoutLibraryForProfile(
+      { environment: "both", focus: "recommended", equipmentProfile, equipmentSelections: selections },
+      profile, [], "premium"
+    );
+  };
+  const topNames = (ws, n = 5) => ws.slice(0, n).map((w) => w.name).join("|");
+  const highVol = (ws, n = 6) => ws.slice(0, n).filter((w) => w.intensity === "High" || (w.exercises || []).length >= 6).length;
+  const young = genFor(ageProfile("30-39"));
+  const older = genFor(ageProfile("40-49"));
+  const oldest = genFor(ageProfile("60-plus"));
+  if (topNames(young) === topNames(older) && topNames(older) === topNames(oldest)) {
+    failures.push("PA-4: 40+/60+ recommendation order is identical to the 30-39 baseline (age has no effect)");
+  }
+  if (highVol(older) > highVol(young) || highVol(oldest) > highVol(older)) {
+    failures.push(`PA-4: older age bands rank MORE high-intensity/volume sessions (30-39=${highVol(young)}, 40-49=${highVol(older)}, 60+=${highVol(oldest)})`);
+  }
+}
+
 console.log(`persona-relevance-audit: ${sessionsChecked} sessions checked across ${Object.keys(PERSONAS).length} personas`);
 if (failures.length) {
   console.error(`FAIL — ${failures.length} persona-relevance violations:`);
