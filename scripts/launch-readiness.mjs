@@ -122,6 +122,18 @@ function expect(condition, message) {
   }
 }
 
+// Poll an async predicate until it holds (animated values, eventual UI).
+async function expectEventually(predicate, message, { timeout = 8000, interval = 200 } = {}) {
+  const deadline = Date.now() + timeout;
+  while (Date.now() < deadline) {
+    if (await predicate()) {
+      return;
+    }
+    await new Promise((resolve) => setTimeout(resolve, interval));
+  }
+  throw new Error(message);
+}
+
 async function waitForHealth() {
   for (let attempt = 0; attempt < 60; attempt += 1) {
     try {
@@ -885,15 +897,19 @@ async function runBrowserCoverage(browser) {
     await page.getByText(/Weekly check-in saved\./i).first().waitFor({ timeout: 10000 });
 
     // Persistence: after reload the form must acknowledge this week's entry.
+    // (Progress opens with the pride hero — completion score + streak stats.)
     await page.reload({ waitUntil: "networkidle" });
-    await page.getByText(/progress overview/i).first().waitFor({ timeout: 15000 });
+    await page.locator(".progress-pride").waitFor({ timeout: 15000 });
     await page.getByRole("button", { name: /Update weekly check-in/i }).waitFor({ timeout: 10000 });
 
     // --- Progress engine: the page must reflect the data the other engines
     // just produced — completed habit streak and a non-zero completion score.
     await page.getByText(/1 day streak/i).first().waitFor({ timeout: 10000 });
-    const completionText = await page.getByText(/% current completion/i).first().textContent();
-    expect(!/^0% current completion/.test(completionText.trim()), `Progress completion score stayed at zero after meal, habit, check-in and seeded workouts: "${completionText.trim()}"`);
+    const completionStat = page.locator(".pride-stat-lead .pride-stat-value");
+    await expectEventually(async () => {
+      const text = (await completionStat.textContent()).trim();
+      return /%$/.test(text) && text !== "0%";
+    }, `Progress completion score stayed at zero after meal, habit, check-in and seeded workouts: "${(await completionStat.textContent()).trim()}"`);
 
     recordScenario("engine-depth-e2e", {
       pass: bucket.consoleErrors.length === 0 && bucket.pageErrors.length === 0,

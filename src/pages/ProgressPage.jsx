@@ -1,6 +1,7 @@
 import React from "react";
 import EmptyStateCard from "../components/EmptyStateCard";
 import Panel from "../components/Panel";
+import CountUp from "../components/CountUp";
 import UpgradePrompt from "../components/UpgradePrompt";
 import { BarChart, LineChart } from "../components/SimpleChart";
 import { getUpgradePrompt } from "../config/upgradePrompts";
@@ -138,63 +139,62 @@ export default function ProgressPage() {
       {error ? <div className="status-banner">{error}</div> : null}
       {status ? <div className="status-banner">{status}</div> : null}
 
-      <Panel eyebrow="Progress overview" title="Are you getting stronger?">
-        <div className="module-note">
-          <strong>{summary.completion}% current completion</strong>
-          <p className="muted">One score across training, recovery, hydration, and nutrition — so your progress reads as a single, connected signal.</p>
+      {/* Pride opener (Craftsmanship: Progress should make them proud) — the
+          score and streaks stage as hero numbers, not note-boxes. All real
+          data; the headline leads with the actual improvement when one
+          exists. */}
+      <section className="progress-pride" data-reveal>
+        <p className="progress-pride-eyebrow">Progress</p>
+        <h2 className="progress-pride-title">{improvementHeadline?.title || "Are you getting stronger?"}</h2>
+        <p className="progress-pride-copy">
+          {improvementHeadline?.body ||
+            "One score across training, recovery, hydration, and nutrition — your progress as a single, connected signal."}
+        </p>
+        <div className="progress-pride-stats">
+          <div className="pride-stat pride-stat-lead">
+            <span className="pride-stat-value"><CountUp value={summary.completion} />%</span>
+            <span className="pride-stat-label">Completion score</span>
+          </div>
+          <div className="pride-stat">
+            <span className="pride-stat-value"><CountUp value={streakStatus.streak || 0} /></span>
+            <span className="pride-stat-label">Day streak</span>
+          </div>
+          <div className="pride-stat">
+            <span className="pride-stat-value"><CountUp value={streakStatus.longestStreak || 0} /></span>
+            <span className="pride-stat-label">Longest streak</span>
+          </div>
+          <div className="pride-stat">
+            <span className="pride-stat-value"><CountUp value={streakStatus.weeklyCompleted ?? 0} /></span>
+            <span className="pride-stat-label">Sessions this week</span>
+          </div>
         </div>
-        {improvementHeadline ? (
+      </section>
+
+      <Panel eyebrow="Training insight" title="What the recent pattern suggests">
+        {progressInsights.length ? (
+          <div className="insight-list">
+            {progressInsights.map((insight) => (
+              <div className="insight-chip" key={insight.title}>
+                <strong>{insight.title}</strong>
+                <p className="muted">{insight.body}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <EmptyStateCard
+            ctaLabel="Start Strength"
+            ctaTo="/workout/strength"
+            description="Complete a few sessions so PulsePeak has enough recent training to summarize here."
+            title="No session insights yet"
+          />
+        )}
+        {primarySignal ? (
           <div className="module-note">
-            <strong>{improvementHeadline.title}</strong>
-            <p className="support-copy">{improvementHeadline.body}</p>
+            <strong>{primarySignal.title}</strong>
+            <p className="support-copy">{primarySignal.detail}</p>
           </div>
         ) : null}
       </Panel>
-
-      <div className="content-grid">
-        <Panel eyebrow="Consistency" title="Recent momentum">
-          <div className="insight-list">
-            <div className="insight-chip">
-              <strong>Current streak</strong>
-              <p className="muted">{streakStatus.streak || 0} day{(streakStatus.streak || 0) === 1 ? "" : "s"}</p>
-            </div>
-            <div className="insight-chip">
-              <strong>Longest streak</strong>
-              <p className="muted">{streakStatus.longestStreak || 0} day{(streakStatus.longestStreak || 0) === 1 ? "" : "s"}</p>
-            </div>
-            <div className="insight-chip">
-              <strong>Sessions this week</strong>
-              <p className="muted">{streakStatus.weeklyCompleted ?? 0}</p>
-            </div>
-          </div>
-        </Panel>
-
-        <Panel eyebrow="Training insight" title="What the recent pattern suggests">
-          {progressInsights.length ? (
-            <div className="insight-list">
-              {progressInsights.map((insight) => (
-                <div className="insight-chip" key={insight.title}>
-                  <strong>{insight.title}</strong>
-                  <p className="muted">{insight.body}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <EmptyStateCard
-              ctaLabel="Start Strength"
-              ctaTo="/workout/strength"
-              description="Complete a few sessions so PulsePeak has enough recent training to summarize here."
-              title="No session insights yet"
-            />
-          )}
-          {primarySignal ? (
-            <div className="module-note">
-              <strong>{primarySignal.title}</strong>
-              <p className="support-copy">{primarySignal.detail}</p>
-            </div>
-          ) : null}
-        </Panel>
-      </div>
 
       <Panel eyebrow="Improvement signals" title="What is actually improving">
         <div className="content-grid">
