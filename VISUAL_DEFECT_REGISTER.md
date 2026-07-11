@@ -63,3 +63,18 @@ balance) when the actions column has a single item in the zero-data state.
 `coachNextActions.length < 2` → stacks to one column, so the single action
 card no longer sits beside a much taller right column. Verified: flex-direction
 column, panels stacked, no side void; build 0.
+
+## VD-6 (P1) — Exercise Library search: noise + no relevance ranking — FIXED
+Found by Part 10 review of /exercise-library.
+- **Empty-field noise:** the "Open top match: <X>" button showed on an empty
+  search (top match = first library entry, e.g. "90/90 hip flow"), offering
+  to open a random exercise the user never searched for. Fixed: the search-
+  actions row only renders once `search.trim()` or a filter is active, and
+  the top-match button only when there is a query.
+- **No relevance ranking (real UX defect):** results kept the library's
+  alphabetical order, so searching "squat" returned top match "90/90 hip
+  flow" (a squat-adjacent mobility drill matched via a secondary field) above
+  "Back squat". Added a relevance score — exact/prefix/word-boundary name hits
+  rank above title, category, muscle, then tangential-field hits; stable ties.
+- **Verified:** squat→"Back squat", curl→"Band curl"/"Biceps curl",
+  press→"Arnold press" now lead. qa:launch 19/19; build 0.

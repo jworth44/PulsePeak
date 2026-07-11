@@ -116,7 +116,25 @@ export default function ExerciseLibraryPage() {
 
   const filteredEntries = useMemo(() => {
     const normalizedSearch = search.trim().toLowerCase();
-    return entries.filter((entry) => {
+
+    // Relevance score for a search query: a name/title hit must always rank
+    // above a tangential field hit, so searching "squat" surfaces "Back squat"
+    // before squat-adjacent mobility ("Ankle rocks", "90/90 hip flow") that
+    // only matched via training-use/muscle fields. Without this the results
+    // fell back to the library's alphabetical order and the "top match" was
+    // whatever sorted first, not the best match.
+    const scoreEntry = (entry) => {
+      const name = String(entry.name || entry.title || "").toLowerCase();
+      if (name === normalizedSearch) return 100;
+      if (name.startsWith(normalizedSearch)) return 90;
+      if (new RegExp(`\\b${normalizedSearch.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`).test(name)) return 80;
+      if (name.includes(normalizedSearch)) return 65;
+      if (String(entry.category || "").toLowerCase().includes(normalizedSearch)) return 45;
+      if ((entry.primaryMuscles || []).some((m) => String(m).toLowerCase().includes(normalizedSearch))) return 35;
+      return 10; // matched only via a secondary/training-use field
+    };
+
+    const matched = entries.filter((entry) => {
       const searchPool = [
         entry.name,
         entry.title,
@@ -143,13 +161,24 @@ export default function ExerciseLibraryPage() {
       const matchesDifficulty = selectedDifficulty === "all" || entry.difficulty === selectedDifficulty;
       return matchesCategory && matchesEquipment && matchesDifficulty;
     });
+
+    if (!normalizedSearch) return matched;
+    // Stable sort by relevance (descending); ties keep library order.
+    return matched
+      .map((entry, index) => ({ entry, index, score: scoreEntry(entry) }))
+      .sort((a, b) => b.score - a.score || a.index - b.index)
+      .map((item) => item.entry);
   }, [entries, search, selectedCategory, selectedDifficulty, selectedEquipment]);
   // Only offer equipment families that actually match at least one entry.
   const equipmentFilterOptions = useMemo(
     () => EQUIPMENT_FILTER_OPTIONS.filter((option) => entries.some((entry) => entryMatchesEquipment(entry, option.value))),
     [entries]
   );
-  const topSearchMatch = filteredEntries[0] || null;
+  // "Top match" is only a meaningful concept when the user has actually
+  // typed a query — otherwise the first library entry is not a "match" and
+  // offering to open it (e.g. "Open top match: 90/90 hip flow" on an empty
+  // field) reads as random noise.
+  const topSearchMatch = search.trim() ? filteredEntries[0] || null : null;
   const hasActiveFilters =
     Boolean(search.trim()) || selectedCategory !== "All" || selectedEquipment !== "all" || selectedDifficulty !== "all";
 
@@ -228,14 +257,21 @@ export default function ExerciseLibraryPage() {
               />
             </label>
 
-            <div className="exercise-library-search-actions">
-              <button className="secondary-button" disabled={!topSearchMatch} type="button" onClick={openTopSearchMatch}>
-                {topSearchMatch ? `Open top match: ${topSearchMatch.name}` : "No matching exercise"}
-              </button>
-              <button className="ghost-button" disabled={!hasActiveFilters} type="button" onClick={resetExerciseSearch}>
-                Clear search and filters
-              </button>
-            </div>
+            {/* Only surface search actions once the user is actually
+                searching/filtering — an empty field has no "top match" to
+                open and nothing to clear. */}
+            {search.trim() || hasActiveFilters ? (
+              <div className="exercise-library-search-actions">
+                {search.trim() ? (
+                  <button className="secondary-button" disabled={!topSearchMatch} type="button" onClick={openTopSearchMatch}>
+                    {topSearchMatch ? `Open top match: ${topSearchMatch.name}` : "No matching exercise"}
+                  </button>
+                ) : null}
+                <button className="ghost-button" disabled={!hasActiveFilters} type="button" onClick={resetExerciseSearch}>
+                  Clear search and filters
+                </button>
+              </div>
+            ) : null}
 
             {search.trim() ? (
               <p className="support-copy exercise-library-search-hint">
