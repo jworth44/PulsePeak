@@ -65,3 +65,16 @@ After WR-4, swept every `=== "hybrid"` check for the same synonym footgun:
   receive the profile's "hybrid" / are benign pass-throughs over bodyweight
   mobility; no user-facing impact. Left as-is.
 Honest: one live fix (WR-4) + one prevention (this). Build 0.
+
+## WR-6 — /workouts filter system VERIFIED trustworthy (Part 6) — no defect
+Live interaction probe of every discovery filter (2026-07-11):
+- **Category** (Push/Pull/Legs/Full Body): distinct, relevant result sets.
+- **Equipment**: 8 chips render + toggle (after WR-4 fix).
+- **Duration / Intensity** (non-safety): when no workout matches (e.g. this
+  hybrid user has only 48-54 min sessions and "35 or less" is selected), the
+  app shows "PulsePeak widened the filters to keep a usable workout ready" and
+  surfaces alternatives — honest widening, NOT silent substitution.
+- **Joint stress = Low** (safety filter): honest empty state ("No workouts
+  match these filters"), never silently substituting higher-stress work under
+  a safety label.
+All filters produce a correct outcome or an honest explanation. No change.
