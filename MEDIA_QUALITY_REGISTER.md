@@ -35,3 +35,32 @@ reviewed separately under theme atmosphere (Task #6).
 `_media_audit` probe rerun after the hero re-sourcing — see commit. The
 audit methodology lives in this register's history; re-run by measuring
 naturalWidth vs rendered width × DPR on every route.
+
+## §HD-MUSCLE-TYPE — HD regeneration of muscle figures + workout-type photos (owner-gated)
+**Owner (2026-07-11):** the Browse-by-Muscle-Group figures are "dull, with a
+shadow image/watermark in the background"; want HD + prominent. The Popular
+Workout Types photos also need sharper HD.
+
+**Root cause:** current assets are low-res (~63 KB PNGs, muscle-*.png) with a
+baked dark geometric backdrop behind each figure (the "watermark") — both are
+in the pixels, not fixable in CSS. A display-pop filter (contrast 1.08 /
+saturate 1.14 / brightness 1.03) was applied as a stopgap; it cannot remove
+the backdrop or add resolution.
+
+**Regeneration spec (ready to run once image-generation is greenlit):**
+- **8 muscle figures** `public/media/workout-library/muscle-{chest,back,
+  shoulders,arms,legs,glutes,core,full-body}.png`, aspect 4:5, ≥1024×1280,
+  transparent OR clean seamless charcoal (#1A1F22) background with NO geometric
+  shadow/backdrop shape. Same anatomical model + pose + lighting across all 8
+  (consistency); target muscle group illuminated in Canadian crimson
+  (#C6283B), rest of body neutral muscle tone. Front view except back/glutes
+  (posterior). No text/watermark.
+- **6 type photos** `type-{strength,hypertrophy,strength-endurance,power,
+  conditioning,recovery}.png`, aspect 16:10, ≥1536×960, commercial-grade
+  dark-gym photography matching the concept grade, one consistent production
+  look. No text/watermark.
+- Pipeline: same composite-then-verify flow proven for the exercise media;
+  run `qa:workout-library` after drop-in (config-driven, no code change —
+  keys already wired in WORKOUT_LIBRARY_MEDIA).
+- Gate: shared Gemini/API cost + scale is the owner's call (concurrent with
+  Orientra). ~14 images.
