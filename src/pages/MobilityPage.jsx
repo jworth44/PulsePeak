@@ -393,7 +393,10 @@ export default function MobilityPage() {
       {/* Cinematic opener (Craftsmanship): what your body needs right now IS
           the story — over the recovery photograph, evergreen pillar. */}
       <section className="train-cinematic mobility-cinematic">
-        <img alt="" aria-hidden="true" className="train-cinematic-photo" src="/media/workout-library/type-recovery.png" />
+        {/* Media-quality rule: the 372px type-recovery tile upscaled 6x here.
+            Dusk mountains (1131px, calm recovery mood) until owner-media
+            delivers the dedicated recovery hero (MEDIA_QUALITY_REGISTER.md). */}
+        <img alt="" aria-hidden="true" className="train-cinematic-photo" src="/media/pp-hero-dusk.png" />
         <div aria-hidden="true" className="train-cinematic-scrim" />
         <div className="train-cinematic-content">
           <p className="train-cinematic-eyebrow">Mobility · recommended right now</p>

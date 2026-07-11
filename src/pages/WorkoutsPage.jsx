@@ -304,20 +304,17 @@ export default function WorkoutsPage() {
   // Cinematic Train hero (Craftsmanship Directive: one hero, one action).
   // The engine's recommendation IS the story; its photograph comes from the
   // approved workout-type media, matched on the focus label.
+  // Media-quality rule (Recovery Directive Part 1): heroes only use sources
+  // large enough for full-width rendering. The 366px type-* tiles measured a
+  // 6x upscale here — visibly blurry. Until the owner-media program delivers
+  // true 2240px hero photography (MEDIA_QUALITY_REGISTER.md), the two
+  // largest approved assets carry the hero: dusk mountains for recovery
+  // moods, the dark-gym render for training moods.
   const trainHeroPhoto = (() => {
     const focus = (selectedFocusLabel || "").toLowerCase();
-    const key = focus.includes("recover") || focus.includes("mobility")
-      ? "type-recovery"
-      : focus.includes("hypertrophy") || focus.includes("muscle")
-        ? "type-hypertrophy"
-        : focus.includes("condition") || focus.includes("cardio") || focus.includes("fat")
-          ? "type-conditioning"
-          : focus.includes("power")
-            ? "type-power"
-            : focus.includes("endurance")
-              ? "type-strength-endurance"
-              : "type-strength";
-    return resolveLibraryMedia(key);
+    return focus.includes("recover") || focus.includes("mobility")
+      ? "/media/pp-hero-dusk.png"
+      : "/media/onboarding-welcome.png";
   })();
   const trainHeroStartable = Boolean(topWorkout && !topWorkout.lockedForAccess);
   const sortOptions = libraryMeta?.sortOptions?.length ? libraryMeta.sortOptions : WORKOUT_SORT_OPTIONS;

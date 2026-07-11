@@ -899,6 +899,10 @@ function rankVariantOption(option, { environment, equipmentProfile, equipmentSel
 }
 
 function buildRecommendationReason(profile, filters, historyContext, selectedFocusMeta = null) {
+  // "both" is a filter value, not English — the owner's hero read
+  // "your both training setup" (Recovery Directive: copy must read coached,
+  // never machine-assembled).
+  const environmentLabel = filters.environment === "both" ? "hybrid" : filters.environment;
   const recommendedFocus = getSuggestedWorkoutFocuses({
     goalType: profile.goalType,
     injuryStatus: profile.injuryStatus,
@@ -922,15 +926,15 @@ function buildRecommendationReason(profile, filters, historyContext, selectedFoc
     const equipmentPhrase = `${formatEquipmentSelections(filters.equipmentSelections).toLowerCase()} setup`;
     // Only cite "recent training history" if there actually is any.
     return historyContext.workouts.length
-      ? `You picked ${focusLabel}, so today’s options stay matched to your ${filters.environment} setup, ${equipmentPhrase}, and recent training history.`
-      : `You picked ${focusLabel}, so today’s options stay matched to your ${filters.environment} setup and ${equipmentPhrase}.`;
+      ? `You picked ${focusLabel}, so today’s options stay matched to your ${environmentLabel} setup, ${equipmentPhrase}, and recent training history.`
+      : `You picked ${focusLabel}, so today’s options stay matched to your ${environmentLabel} setup and ${equipmentPhrase}.`;
   }
 
   if (historyContext.recentFocuses[0] === recommendedFocus) {
     return `${focusLabel} still fits best today, with enough movement changes to keep the session from feeling recycled.`;
   }
 
-  return `${focusLabel} is the best fit today because it lines up with your ${profile.goalType.replace("_", " ")} goal, your ${filters.environment} training setup, and the equipment you actually have available.`;
+  return `${focusLabel} is the best fit today because it lines up with your ${profile.goalType.replace("_", " ")} goal, your ${environmentLabel} training setup, and the equipment you actually have available.`;
 }
 
 function buildSuggestedPairings(profile, filters, selectedFocusMeta = null) {
