@@ -637,7 +637,9 @@ async function runBrowserCoverage(browser) {
     await page.getByRole("dialog").waitFor({ timeout: 10000 });
     await page.getByText(/Current exercise/i).waitFor({ timeout: 10000 });
     await page.getByRole("button", { name: /Close workout session/i }).click();
-    await page.getByRole("button", { name: "Quick session" }).click();
+    // exact: the Train hero's "Start a quick session" CTA also matches the
+    // substring — this targets the preset pill only.
+    await page.getByRole("button", { name: "Quick session", exact: true }).click();
     await page.getByText(/visible results/i).waitFor({ timeout: 10000 });
     await page.getByRole("button", { name: "Recovery day", exact: true }).click();
     await page.getByText(/loaded session/i).waitFor({ timeout: 10000 }).catch(() => {});
