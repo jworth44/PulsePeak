@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EmptyStateCard from "../components/EmptyStateCard";
 import Panel from "../components/Panel";
@@ -103,6 +103,23 @@ export default function MobilityPage() {
   const [selectedIssueType, setSelectedIssueType] = useState("none");
   const [selectedInjury, setSelectedInjury] = useState("none");
   const [selectedSymptomType, setSelectedSymptomType] = useState("none");
+  // Injury Support re-renders moved the scroll to the top on every selection
+  // (owner-reported). Capture the scroll position at click time and restore it
+  // after the commit so the user stays exactly where they were.
+  const preservedScrollRef = useRef(null);
+  const preserveScroll = (fn) => (...args) => {
+    preservedScrollRef.current = window.scrollY;
+    fn(...args);
+  };
+  useLayoutEffect(() => {
+    if (preservedScrollRef.current != null) {
+      const target = preservedScrollRef.current;
+      preservedScrollRef.current = null;
+      window.scrollTo(0, target);
+      // one more restore after paint, in case async content shifts height
+      requestAnimationFrame(() => window.scrollTo(0, target));
+    }
+  }, [selectedIssueType, selectedInjury, selectedArea, selectedSymptomType]);
   // Recovery Directive Part 7 — safety-relevant injury intake. Conservative,
   // transparent; never diagnostic. Drives the guidance note, not a fake filter.
   const [injurySide, setInjurySide] = useState("unspecified");
@@ -623,7 +640,12 @@ export default function MobilityPage() {
         ) : null}
       </Panel>
 
-      <div className={`content-grid category-transition-shell ${isSearchMode ? "category-transition-shell-search" : ""}`} key={isSearchMode ? `search-${normalizedSearchQuery}` : effectiveCategory}>
+      {/* Stable key: the previous key changed on every category/search/injury
+          selection, remounting this whole subtree — which collapsed the page
+          height mid-commit and clamped the scroll position to the top on every
+          Injury Support click (owner-reported). Reconciling in place keeps the
+          user where they are. (The old key only re-triggered a cosmetic fade.) */}
+      <div className={`content-grid category-transition-shell ${isSearchMode ? "category-transition-shell-search" : ""}`}>
         <Panel eyebrow="Suggested today" title="Start here first">
           {isSearchMode ? (
             <div className="search-mode-state">
@@ -640,7 +662,7 @@ export default function MobilityPage() {
               areaOptions={acheBodyAreaOptions}
               symptomOptions={symptomTypeOptions}
               profileAreas={data?.profile?.restrictedAreas || []}
-              onIssueType={(type) => {
+              onIssueType={preserveScroll((type) => {
                 setSelectedIssueType(type);
                 setSelectedArea("all");
                 setSelectedInjury("none");
@@ -648,10 +670,10 @@ export default function MobilityPage() {
                 setInjurySide("unspecified");
                 setInjuryTolerance("none");
                 setInjuryCleared("none");
-              }}
-              onInjury={setSelectedInjury}
-              onArea={setSelectedArea}
-              onSymptom={setSelectedSymptomType}
+              })}
+              onInjury={preserveScroll(setSelectedInjury)}
+              onArea={preserveScroll(setSelectedArea)}
+              onSymptom={preserveScroll(setSelectedSymptomType)}
             />
           ) : (
             <>
