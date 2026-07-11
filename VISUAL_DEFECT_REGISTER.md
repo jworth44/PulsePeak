@@ -94,3 +94,10 @@ every realistic height (e.g. 70in) was flagged invalid by the number input.
 Fixed: `min` is now unit-aware — 120cm (metric) / 48in (imperial). Verified
 live: imperial height renders min=48, max=90. Weight/target inputs already had
 unit-aware bounds. Build 0.
+
+## VD-9 — Onboarding unit conversion VERIFIED clean (no defect)
+Drove the onboarding wizard imperial→metric→imperial round-trip live:
+70in/185lb → 178cm/83.9kg → back to 70in/185lb (no drift/corruption). Labels
+update (in/lb ↔ cm/kg), `convertUnitInputs` round-trips through canonical
+storage correctly, and `validateStep` shows unit-correct bounds (the F11 fix).
+With VD-8 (height range), the onboarding body-metrics step is solid. No change.
