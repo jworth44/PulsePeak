@@ -1864,6 +1864,28 @@ input:focus, select:focus, textarea:focus {
 .injury-chooser-summary strong { color: var(--text-primary); }
 .injury-library-note { margin: 0; }
 
+/* Conservative injury guidance (Recovery Directive Part 7) — tone escalates
+   with the user's answers; all tones AA on both light + dark themes. */
+.injury-guidance {
+  display: grid;
+  gap: 4px;
+  margin: 4px 0 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  border-left-width: 4px;
+  background: rgba(var(--ink-rgb), 0.03);
+}
+.injury-guidance strong { color: var(--text-primary); }
+.injury-guidance .support-copy { margin: 0; }
+.injury-guidance-ask { border-left-color: var(--text-muted); }
+.injury-guidance-ok { border-left-color: var(--data-recovery, #3a7c62); }
+.injury-guidance-caution { border-left-color: #c98a2b; }
+.injury-guidance-stop {
+  border-left-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.06);
+}
+
 /* Recovery -> reflection nudge: the next chapter in the training day. */
 .recovery-next {
   display: flex;

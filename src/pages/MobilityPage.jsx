@@ -103,6 +103,11 @@ export default function MobilityPage() {
   const [selectedIssueType, setSelectedIssueType] = useState("none");
   const [selectedInjury, setSelectedInjury] = useState("none");
   const [selectedSymptomType, setSelectedSymptomType] = useState("none");
+  // Recovery Directive Part 7 — safety-relevant injury intake. Conservative,
+  // transparent; never diagnostic. Drives the guidance note, not a fake filter.
+  const [injurySide, setInjurySide] = useState("unspecified");
+  const [injuryTolerance, setInjuryTolerance] = useState("none");
+  const [injuryCleared, setInjuryCleared] = useState("none");
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
   const [selectedEquipment, setSelectedEquipment] = useState("all");
   const [selectedSwaps, setSelectedSwaps] = useState({});
@@ -635,6 +640,9 @@ export default function MobilityPage() {
                 setSelectedArea("all");
                 setSelectedInjury("none");
                 setSelectedSymptomType("none");
+                setInjurySide("unspecified");
+                setInjuryTolerance("none");
+                setInjuryCleared("none");
               }}
               onInjury={setSelectedInjury}
               onArea={setSelectedArea}
@@ -643,27 +651,42 @@ export default function MobilityPage() {
           ) : (
             <>
               {effectiveCategory === "injury_support" ? (
-                <div className="injury-chooser-summary">
-                  <span>
-                    Supporting: <strong>{
-                      selectedIssueType === "injury"
-                        ? selectedInjuryMapping?.label || "Injury"
-                        : `${acheBodyAreaOptions.find((option) => option.value === selectedArea)?.label || formatBodyAreaLabel(selectedArea)} · ${symptomTypeOptions.find((option) => option.value === selectedSymptomType)?.label || "Support"}`
-                    }</strong>
-                  </span>
-                  <button
-                    className="text-link"
-                    type="button"
-                    onClick={() => {
-                      setSelectedIssueType("none");
-                      setSelectedArea("all");
-                      setSelectedInjury("none");
-                      setSelectedSymptomType("none");
-                    }}
-                  >
-                    Change
-                  </button>
-                </div>
+                <>
+                  <div className="injury-chooser-summary">
+                    <span>
+                      Supporting: <strong>{
+                        selectedIssueType === "injury"
+                          ? selectedInjuryMapping?.label || "Injury"
+                          : `${acheBodyAreaOptions.find((option) => option.value === selectedArea)?.label || formatBodyAreaLabel(selectedArea)} · ${symptomTypeOptions.find((option) => option.value === selectedSymptomType)?.label || "Support"}`
+                      }</strong>
+                      {injurySide !== "unspecified" ? ` · ${INJURY_SIDE_LABELS[injurySide] || injurySide} side` : ""}
+                      {injuryTolerance !== "none" ? ` · ${INJURY_TOLERANCE_LABELS[injuryTolerance]}` : ""}
+                    </span>
+                    <button
+                      className="text-link"
+                      type="button"
+                      onClick={() => {
+                        setSelectedIssueType("none");
+                        setSelectedArea("all");
+                        setSelectedInjury("none");
+                        setSelectedSymptomType("none");
+                        setInjurySide("unspecified");
+                        setInjuryTolerance("none");
+                        setInjuryCleared("none");
+                      }}
+                    >
+                      Change
+                    </button>
+                  </div>
+                  <InjurySafetyIntake
+                    injurySide={injurySide}
+                    injuryTolerance={injuryTolerance}
+                    injuryCleared={injuryCleared}
+                    onSide={setInjurySide}
+                    onTolerance={setInjuryTolerance}
+                    onCleared={setInjuryCleared}
+                  />
+                </>
               ) : null}
               <div className="module-note">
                 <strong>{categories.find((category) => category.id === effectiveCategory)?.label || "Guided movement support"}</strong>
@@ -1176,6 +1199,72 @@ function renderMobilityPreview(routine) {
 // issue type, then the specific injury or body area + symptom. The movement
 // recommendations change based on these answers; nothing navigates away.
 // (Replaces the old CTA that routed to an interstitial and looped back.)
+const INJURY_SIDE_LABELS = { left: "Left", right: "Right", both: "Both", unspecified: "Unspecified" };
+const INJURY_TOLERANCE_LABELS = {
+  none: "Tolerance not set",
+  pain_free: "Pain-free through range",
+  mild: "Mild discomfort",
+  significant: "Significant pain"
+};
+const INJURY_SIDE_OPTIONS = [
+  { value: "left", label: "Left" },
+  { value: "right", label: "Right" },
+  { value: "both", label: "Both / central" }
+];
+const INJURY_TOLERANCE_OPTIONS = [
+  { value: "pain_free", label: "Pain-free", detail: "Moves without pain" },
+  { value: "mild", label: "Mild discomfort", detail: "Some ache, tolerable" },
+  { value: "significant", label: "Significant pain", detail: "Sharp or limiting" }
+];
+const INJURY_CLEARED_OPTIONS = [
+  { value: "yes", label: "Yes, cleared", detail: "OK'd to train" },
+  { value: "unsure", label: "Not sure", detail: "No guidance yet" },
+  { value: "no", label: "No / advised rest", detail: "Told to hold off" }
+];
+
+// Conservative, transparent fitness guidance (Recovery Directive Part 7).
+// Never diagnoses, never promises treatment; escalates caution with the
+// user's own tolerance + clearance answers, and asks when data is missing.
+function renderInjuryGuidance(tolerance, cleared) {
+  if (tolerance === "none" && cleared === "none") {
+    return (
+      <div className="injury-guidance injury-guidance-ask">
+        <strong>Answer the last two questions for safer guidance.</strong>
+        <p className="support-copy">Your pain level and whether you&rsquo;ve been cleared change what PulsePeak recommends here.</p>
+      </div>
+    );
+  }
+  const stop = cleared === "no" || tolerance === "significant";
+  const caution = cleared === "unsure" || tolerance === "mild";
+  if (stop) {
+    return (
+      <div className="injury-guidance injury-guidance-stop" role="note">
+        <strong>Stay conservative — this may be more than a training tweak.</strong>
+        <p className="support-copy">
+          {cleared === "no"
+            ? "You said you haven't been cleared to train this. "
+            : "You flagged significant pain. "}
+          PulsePeak isn&rsquo;t a medical tool and won&rsquo;t work through pain. Use only the gentlest pain-free movements below, stop anything that hurts, and check with a qualified professional before loading this pattern.
+        </p>
+      </div>
+    );
+  }
+  if (caution) {
+    return (
+      <div className="injury-guidance injury-guidance-caution" role="note">
+        <strong>Ease in and let comfort lead.</strong>
+        <p className="support-copy">Keep every movement in a pain-free range, move slowly, and back off anything that sharpens. If discomfort builds instead of easing, stop and get it looked at.</p>
+      </div>
+    );
+  }
+  return (
+    <div className="injury-guidance injury-guidance-ok" role="note">
+      <strong>Good to move — keep it controlled.</strong>
+      <p className="support-copy">You&rsquo;re pain-free and cleared, so treat this as gentle support work: smooth, controlled reps within a comfortable range, and stop if anything changes.</p>
+    </div>
+  );
+}
+
 function InjurySupportChooser({
   selectedIssueType,
   selectedInjury,
@@ -1319,6 +1408,73 @@ function InjurySupportChooser({
           </div>
         </div>
       ) : null}
+
+    </div>
+  );
+}
+
+// Safety-relevant follow-ups (Recovery Directive Part 7). Rendered in the
+// results view because injury support becomes "ready" as soon as the primary
+// selection is made — so this is where the user actually lands. Collects
+// side, movement tolerance, and exercise clearance, and surfaces conservative
+// guidance keyed to the answers.
+function InjurySafetyIntake({ injurySide, injuryTolerance, injuryCleared, onSide, onTolerance, onCleared }) {
+  return (
+    <div className="injury-safety-intake">
+      <div className="injury-chooser-step">
+        <span className="injury-chooser-label">Which side?</span>
+        <div className="injury-chooser-options">
+          {INJURY_SIDE_OPTIONS.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              aria-pressed={injurySide === option.value}
+              className={`injury-chooser-pill${injurySide === option.value ? " is-selected" : ""}`}
+              onClick={() => onSide(option.value)}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="injury-chooser-step">
+        <span className="injury-chooser-label">How does it tolerate movement right now?</span>
+        <div className="injury-chooser-options">
+          {INJURY_TOLERANCE_OPTIONS.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              aria-pressed={injuryTolerance === option.value}
+              className={`injury-chooser-option${injuryTolerance === option.value ? " is-selected" : ""}`}
+              onClick={() => onTolerance(option.value)}
+            >
+              <strong>{option.label}</strong>
+              <span>{option.detail}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="injury-chooser-step">
+        <span className="injury-chooser-label">Have you been cleared to exercise this?</span>
+        <div className="injury-chooser-options">
+          {INJURY_CLEARED_OPTIONS.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              aria-pressed={injuryCleared === option.value}
+              className={`injury-chooser-option${injuryCleared === option.value ? " is-selected" : ""}`}
+              onClick={() => onCleared(option.value)}
+            >
+              <strong>{option.label}</strong>
+              <span>{option.detail}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {renderInjuryGuidance(injuryTolerance, injuryCleared)}
     </div>
   );
 }
