@@ -11,6 +11,14 @@ import { buildGuideTarget, getGuideStatusLabel, resolveMovementVisual } from "..
 import { getExerciseImageSrc } from "../utils/getExerciseImageSrc";
 
 const LIBRARY_CATEGORY_ORDER = ["All", "Chest", "Back", "Shoulders", "Biceps", "Triceps", "Legs", "Glutes", "Core", "Conditioning", "Mobility"];
+// Virtual categories: a Workout Library tile with no single library category
+// expands to a set. "Arms" = Biceps + Triceps.
+const VIRTUAL_CATEGORIES = { Arms: ["Biceps", "Triceps"] };
+function entryMatchesCategory(entry, selected) {
+  if (selected === "All") return true;
+  const set = VIRTUAL_CATEGORIES[selected];
+  return set ? set.includes(entry.category) : entry.category === selected;
+}
 
 // Canonical equipment families for filtering. The raw catalog equipment
 // strings are free text ("Barbell or dumbbell", "Barbell, dumbbells, or
@@ -66,7 +74,7 @@ export default function ExerciseLibraryPage() {
     const category = searchParams.get("category");
     const q = searchParams.get("q");
     const equipment = searchParams.get("equipment");
-    if (category && LIBRARY_CATEGORY_ORDER.includes(category)) {
+    if (category && (LIBRARY_CATEGORY_ORDER.includes(category) || VIRTUAL_CATEGORIES[category])) {
       setSelectedCategory(category);
       setSearch("");
     }
@@ -156,7 +164,7 @@ export default function ExerciseLibraryPage() {
         return matchesSearch;
       }
 
-      const matchesCategory = selectedCategory === "All" || entry.category === selectedCategory;
+      const matchesCategory = entryMatchesCategory(entry, selectedCategory);
       const matchesEquipment = entryMatchesEquipment(entry, selectedEquipment);
       const matchesDifficulty = selectedDifficulty === "all" || entry.difficulty === selectedDifficulty;
       return matchesCategory && matchesEquipment && matchesDifficulty;

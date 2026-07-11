@@ -19,7 +19,12 @@ const MUSCLE_TO_CATEGORY = {
   shoulders: "Shoulders",
   legs: "Legs",
   glutes: "Glutes",
-  core: "Core"
+  core: "Core",
+  // "Arms" has no single library category (Biceps + Triceps); the Exercise
+  // Library expands this virtual category. Previously it fell through to a
+  // ?q=Arms keyword search that surfaced conditioning exercises (which merely
+  // list "arms" as a secondary muscle) above actual biceps/triceps work.
+  arms: "Arms"
 };
 
 // Equipment tiles → the Exercise Library's equipment filter (its vocabulary
