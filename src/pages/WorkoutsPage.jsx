@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import EmptyStateCard from "../components/EmptyStateCard";
 import Panel from "../components/Panel";
 import WorkoutDetailModal from "../components/WorkoutDetailModal";
@@ -38,7 +38,8 @@ export default function WorkoutsPage() {
   const [workoutEnvironment, setWorkoutEnvironment] = useState("both");
   const [equipmentSelections, setEquipmentSelections] = useState([]);
   const [workoutFocus, setWorkoutFocus] = useState("recommended");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchParams] = useSearchParams();
+  const [selectedCategory, setSelectedCategory] = useState(() => searchParams.get("category") || "all");
   const [selectedDuration, setSelectedDuration] = useState("all");
   const [selectedIntensity, setSelectedIntensity] = useState("all");
   const [selectedJointStress, setSelectedJointStress] = useState("all");
@@ -68,6 +69,17 @@ export default function WorkoutsPage() {
   const currentPlanFocus = null;
   const weeklyStructure = null;
   const recoveryBias = null;
+
+  // Deep-link from the Workout Library's type/focus/region tiles:
+  // /workouts?category=<id> selects that workout category on arrival and when
+  // the query changes (tapping another tile), without fighting in-page edits.
+  useEffect(() => {
+    const incoming = searchParams.get("category");
+    if (incoming && WORKOUT_DISCOVERY_CATEGORIES.some((c) => c.id === incoming)) {
+      setSelectedCategory(incoming);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   const filterState = useMemo(
     () => ({

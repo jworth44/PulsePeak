@@ -22,6 +22,42 @@ const MUSCLE_TO_CATEGORY = {
   core: "Core"
 };
 
+// Equipment tiles → the Exercise Library's equipment filter (its vocabulary
+// differs from the workout config's, so map explicitly). Previously every
+// non-muscle tile fell back to ?q=<label>, which searched the library for
+// literal text like "Home Equipment" and returned "No exercises match".
+const EQUIPMENT_TILE_TO_LIBRARY = {
+  bodyweight: "bodyweight",
+  dumbbells: "dumbbell",
+  barbell: "barbell",
+  kettlebells: "kettlebell",
+  machines: "machine",
+  bands: "band",
+  pullup_bar: "pull-up",
+  bench: "bench"
+};
+
+// Workout-concept tiles (type / focus / region) are NOT exercise filters —
+// they belong on the Workouts page as a workout category. Map each to a real
+// WORKOUT_DISCOVERY_CATEGORIES id so the tile lands on filtered WORKOUTS
+// instead of an empty exercise search. Unmapped fuzzy cases fall back to a
+// close relative rather than a dead end.
+const CONCEPT_TILE_TO_WORKOUT_CATEGORY = {
+  // WORKOUT_TYPES
+  strength: "strength",
+  hypertrophy: "muscle_building",
+  strength_endurance: "conditioning",
+  power: "strength",
+  conditioning: "conditioning",
+  recovery: "recovery_day",
+  // EQUIPMENT_FILTERS focus/region entries
+  quick: "all",
+  home: "at_home",
+  low_impact: "joint_friendly",
+  upper: "upper_body",
+  lower: "lower_body"
+};
+
 // ======================================================================
 // WORKOUT LIBRARY — a production-ready browse framework.
 // Browse by equipment (icon UI), muscle group (approved anatomical media),
@@ -95,9 +131,27 @@ export default function WorkoutLibraryPage() {
   // keyword search — the library's search pool already covers name, category,
   // muscles and equipment, so this reliably lands on a filtered result set.
   const openItem = (item) => {
-    const category = item.filter.muscle ? MUSCLE_TO_CATEGORY[item.filter.muscle] : null;
-    const query = category ? { category } : { q: item.label };
-    navigate(`/exercise-library?${new URLSearchParams(query).toString()}`);
+    const f = item.filter || {};
+    // Equipment → Exercise Library filtered by equipment.
+    if (f.equipment) {
+      const value = EQUIPMENT_TILE_TO_LIBRARY[f.equipment] || f.equipment;
+      navigate(`/exercise-library?equipment=${encodeURIComponent(value)}`);
+      return;
+    }
+    // Muscle group → Exercise Library category (arms/full-body have no exact
+    // category, so keyword-search their label — those pools resolve it).
+    if (f.muscle) {
+      const category = MUSCLE_TO_CATEGORY[f.muscle];
+      const query = category ? { category } : { q: item.label };
+      navigate(`/exercise-library?${new URLSearchParams(query).toString()}`);
+      return;
+    }
+    // Workout concept (type / focus / region) → filtered WORKOUTS, not the
+    // exercise library. This is what made Home Equipment / Lower Joint Stress /
+    // Recovery Day dead-end on "No exercises match".
+    const conceptKey = f.type || f.focus || f.region;
+    const workoutCategory = CONCEPT_TILE_TO_WORKOUT_CATEGORY[conceptKey] || "all";
+    navigate(`/workouts?category=${encodeURIComponent(workoutCategory)}`);
   };
 
   return (
