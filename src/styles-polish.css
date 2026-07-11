@@ -2634,13 +2634,45 @@ input:focus, select:focus, textarea:focus {
   background: rgba(var(--accent-rgb), 0.12);
   box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.18);
 }
+/* Owner: give each quick action its own meaningful colour so the row reads as
+   five distinct destinations, not one repeated chip. Muted, theme-token hues
+   (kept desaturated to stay premium on the Canadian palette). Start=crimson
+   action, Log=amber, Exercises=steel, Mobility=evergreen, Check-in=violet. */
+.quick-action-start svg {
+  /* Fixed Canadian crimson (not var(--accent)): the accent is pine on
+     Daylight, which would collide with Mobility's evergreen. Fixed hues keep
+     all five chips distinct on every theme. */
+  color: #c6283b;
+  background: rgba(198, 40, 59, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(198, 40, 59, 0.24);
+}
+.quick-action-start:hover svg { background: rgba(198, 40, 59, 0.24); }
+.quick-action-log svg {
+  color: #d08a2e;
+  background: rgba(208, 138, 46, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(208, 138, 46, 0.24);
+}
+.quick-action-exercises svg {
+  color: #4f7fb0;
+  background: rgba(79, 127, 176, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(79, 127, 176, 0.24);
+}
 .quick-action-recovery svg {
   /* Mobility (recovery pillar) — evergreen, not crimson. */
   color: var(--data-recovery, #3a7c62);
-  background: rgba(58, 124, 98, 0.14);
-  box-shadow: inset 0 0 0 1px rgba(58, 124, 98, 0.22);
+  background: rgba(58, 124, 98, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(58, 124, 98, 0.24);
 }
-.quick-action:hover svg { background: rgba(var(--accent-rgb), 0.18); }
+.quick-action-checkin svg {
+  color: #8a6bc2;
+  background: rgba(138, 107, 194, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(138, 107, 194, 0.24);
+}
+/* Each chip deepens its own hue on hover (no shared accent wash). */
+.quick-action-log:hover svg { background: rgba(208, 138, 46, 0.24); }
+.quick-action-exercises:hover svg { background: rgba(79, 127, 176, 0.24); }
+.quick-action-recovery:hover svg { background: rgba(58, 124, 98, 0.24); }
+.quick-action-checkin:hover svg { background: rgba(138, 107, 194, 0.24); }
 .quick-action:hover {
   color: var(--text-primary);
   background: rgba(var(--ink-rgb), 0.05);

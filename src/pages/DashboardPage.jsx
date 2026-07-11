@@ -515,15 +515,15 @@ export default function DashboardPage() {
         {/* Canadian-benchmark row: one tap to the real actions the app has —
             honest labels, no invented features. Mobility hides with its module. */}
         <div className="quick-actions-row">
-          <button className="quick-action" type="button" onClick={openPrimaryWorkoutAction}>
+          <button className="quick-action quick-action-start" type="button" onClick={openPrimaryWorkoutAction}>
             <QuickActionIcon name="play" />
             <span>Start workout</span>
           </button>
-          <button className="quick-action" type="button" onClick={() => navigate("/workouts")}>
+          <button className="quick-action quick-action-log" type="button" onClick={() => navigate("/workouts")}>
             <QuickActionIcon name="log" />
             <span>Log a session</span>
           </button>
-          <button className="quick-action" type="button" onClick={() => navigate("/exercise-library")}>
+          <button className="quick-action quick-action-exercises" type="button" onClick={() => navigate("/exercise-library")}>
             <QuickActionIcon name="library" />
             <span>Exercises</span>
           </button>
@@ -533,7 +533,7 @@ export default function DashboardPage() {
               <span>Mobility</span>
             </button>
           ) : null}
-          <button className="quick-action" type="button" onClick={() => navigate("/progress")}>
+          <button className="quick-action quick-action-checkin" type="button" onClick={() => navigate("/progress")}>
             <QuickActionIcon name="checkin" />
             <span>Weekly check-in</span>
           </button>
@@ -654,14 +654,15 @@ export default function DashboardPage() {
 // Thin athletic line icons for the Quick Actions row (decorative — the button
 // labels carry the meaning).
 function QuickActionIcon({ name }) {
-  // Prominent, confident marks (research §7): bigger canvas, heavier stroke.
+  // Prominent, confident marks (owner: stronger icons). Bigger canvas + heavy
+  // 2.75 stroke so each mark reads boldly inside its colored chip.
   const p = {
     viewBox: "0 0 24 24",
-    width: 28,
-    height: 28,
+    width: 30,
+    height: 30,
     fill: "none",
     stroke: "currentColor",
-    strokeWidth: 2.4,
+    strokeWidth: 2.75,
     strokeLinecap: "round",
     strokeLinejoin: "round",
     "aria-hidden": true
