@@ -301,6 +301,25 @@ export default function WorkoutsPage() {
       : formatWorkoutFocus(workoutFocus);
   const selectedFocusOption = focusOptions.find((option) => option.value === workoutFocus);
   const equipmentSummary = formatEquipmentSelections(equipmentSelections);
+  // Cinematic Train hero (Craftsmanship Directive: one hero, one action).
+  // The engine's recommendation IS the story; its photograph comes from the
+  // approved workout-type media, matched on the focus label.
+  const trainHeroPhoto = (() => {
+    const focus = (selectedFocusLabel || "").toLowerCase();
+    const key = focus.includes("recover") || focus.includes("mobility")
+      ? "type-recovery"
+      : focus.includes("hypertrophy") || focus.includes("muscle")
+        ? "type-hypertrophy"
+        : focus.includes("condition") || focus.includes("cardio") || focus.includes("fat")
+          ? "type-conditioning"
+          : focus.includes("power")
+            ? "type-power"
+            : focus.includes("endurance")
+              ? "type-strength-endurance"
+              : "type-strength";
+    return resolveLibraryMedia(key);
+  })();
+  const trainHeroStartable = Boolean(topWorkout && !topWorkout.lockedForAccess);
   const sortOptions = libraryMeta?.sortOptions?.length ? libraryMeta.sortOptions : WORKOUT_SORT_OPTIONS;
   const loadedWorkoutMessage = buildLoadedWorkoutMessage(topWorkout, selectedCategoryMeta, selectedFocusLabel, isUsingFilterRecovery);
   const coachReasoning = buildCoachReasoning({
@@ -462,11 +481,26 @@ export default function WorkoutsPage() {
 
   return (
     <div className="page-grid page-grid-tight train-editorial-page">
-      <section className="module-page-hero">
-        <div>
-          <p className="badge">Workouts</p>
-          <h2>Choose your setup, pick your focus, and run a session that fits today.</h2>
-          <p className="lead-copy">Build the session around the equipment you actually have so the workout feels usable the moment you open it.</p>
+      {/* ONE hero, one story, one action (Craftsmanship Directive): the
+          engine's recommendation as a cinematic photographic moment. */}
+      <section className="train-cinematic">
+        {trainHeroPhoto ? (
+          <img alt="" aria-hidden="true" className="train-cinematic-photo" src={trainHeroPhoto} />
+        ) : null}
+        <div aria-hidden="true" className="train-cinematic-scrim" />
+        <div className="train-cinematic-content">
+          <p className="train-cinematic-eyebrow">Today&rsquo;s session</p>
+          <h2 className="train-cinematic-title">{selectedFocusLabel}</h2>
+          <p className="train-cinematic-copy">
+            {libraryMeta?.recommendationReason || "Built from your setup, your recovery, and what you trained last."}
+          </p>
+          <button
+            className="today-cinematic-cta"
+            type="button"
+            onClick={() => (trainHeroStartable ? startWorkoutSession(topWorkout) : navigate("/workout/quick-start"))}
+          >
+            {trainHeroStartable ? "Start this session" : "Start a quick session"} <span aria-hidden="true">→</span>
+          </button>
         </div>
       </section>
 
@@ -544,7 +578,7 @@ export default function WorkoutsPage() {
       <Panel eyebrow="Today" title="Match the session to your real setup">
         <div className="section-context">
           <span className="section-context-label">Workout setup</span>
-          <p>Choose where you are training, tap the equipment you have today, and then pick the split you want to run.</p>
+          <p>Choose your setup, pick your focus, and run a session that fits today — tap the equipment you have and the engine reshapes everything above.</p>
         </div>
         {trustCue ? <p className="support-copy recommendation-context-note">{trustCue}</p> : null}
         {!libraryMeta?.fullLibraryAccess && libraryMeta?.lockedLibraryMessage ? (
