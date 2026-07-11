@@ -61,3 +61,6 @@ persona runs (Task #5); any mismatch found there gets logged here.
 - **Category/equipment/duration/intensity/joint filters:** correct outcomes or
   honest widen/empty (WR-6).
 - **Swaps, Save workout, exercise guides, session start:** all fulfill labels.
+- **Module visibility (You → Module Visibility):** Hide Nutrition → Save (PATCH
+  200) → removed from Train subnav → Show → Save → restored. Round-trip +
+  persistence + nav reflection all correct. VERIFIED clean.
