@@ -598,20 +598,14 @@
   color: #ff6b6f !important;
 }
 
-/* A real US flag flying next to the wordmark — visible on every page. */
-:root[data-theme="liberty"] .app-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-:root[data-theme="liberty"] .app-brand::before {
-  content: "";
-  width: 40px;
-  height: 26px;
-  border-radius: 3px;
-  background: url("/us-flag.svg") center / cover no-repeat;
-  box-shadow: 0 2px 6px rgba(1, 5, 16, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.25);
-  flex: 0 0 auto;
+/* Liberty flies the US flag by swapping the MATERIAL of the existing brand
+   flag chip in place (Recovery Directive Part 8: themes change material, not
+   layout). The old approach injected an extra ::before flag that widened the
+   brand lockup and shifted the centered nav pill ~25px off every other
+   theme — a layout-parity violation. `content:` swaps the rendered image on
+   the same element, so geometry stays byte-identical to the other themes. */
+:root[data-theme="liberty"] .app-brand-flag {
+  content: url("/us-flag.svg");
 }
 
 /* Owner: no applied stripe bars anywhere — the patriotic colour comes from the
