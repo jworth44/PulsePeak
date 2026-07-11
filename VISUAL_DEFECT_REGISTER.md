@@ -43,3 +43,18 @@ Library/...) scrolls horizontally but the overflowing tab was hard-cut
 of clipping.
 **Verified:** headless 390px screenshot — "Exerc" now fades softly at the
 edge; nav still scrollable; build 0.
+
+## VD-4 (P2) — Modal close was a bare text glyph — FIXED
+**Found by:** Part 10 review of the session modal — the close control rendered
+a literal letter "X" (WorkoutDetailModal) / "×" glyph (WeekInReview). A
+font-character close is a classic "cheap" tell on an otherwise premium modal,
+and the session modal is the highest-frequency surface in the app.
+**Fix:** replaced both with a proper 2-stroke SVG close icon (currentColor,
+round caps). Swept the codebase — no other bare-glyph closes remain.
+**Verified:** session close button now contains an SVG, zero text; build 0.
+
+## VD-5 (P3, queued) — Coach empty-state column imbalance
+On /coach with no history, the two-column layout leaves the left "Do these
+next" column with one small action card above a large dead void while the
+right column runs ~200px taller. Queued: collapse to a single column (or
+balance) when the actions column has a single item in the zero-data state.
