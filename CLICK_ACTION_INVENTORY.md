@@ -64,3 +64,12 @@ persona runs (Task #5); any mismatch found there gets logged here.
 - **Module visibility (You → Module Visibility):** Hide Nutrition → Save (PATCH
   200) → removed from Train subnav → Show → Save → restored. Round-trip +
   persistence + nav reflection all correct. VERIFIED clean.
+- **Full session flow (premium):** start → 5-exercise populated session → check
+  each (Done states) → "Push completed" enables → complete → workout logged
+  (POST 201) → celebration overlay renders honest stats ("Strong work · 46
+  minutes trained · 5 exercises · Continue"). Zero console errors. VERIFIED
+  clean + premium. (Note: Playwright `.check()` on the custom hidden checkbox
+  does NOT fire React onChange — must click the visible `.exercise-check-toggle`
+  label; a probe artifact, not a defect.)
+- **Plan preview modal (premium):** real weekly-plan content in a labeled card
+  grid with exercise thumbnails; no undefined/NaN, no console errors. Clean.
