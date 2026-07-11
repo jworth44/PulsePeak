@@ -293,6 +293,63 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
   color: var(--text-secondary);
   line-height: 1.55;
 }
+
+/* ---- Owner defect #11: bullet-list "Tools" pills read off-centre + messy ---
+   The Plan "Tools" section rendered each tool as a <li> with a disc bullet
+   BESIDE the pill button and the description wrapping under it. Drop the
+   bullets and lay each item out as a clean vertical stack: pill on its own
+   line, caption beneath. */
+.compact-plan-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: grid;
+  gap: 16px;
+}
+.compact-plan-list li {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.compact-plan-list .module-link {
+  align-self: flex-start;
+}
+.compact-plan-list .support-copy {
+  margin: 0;
+}
+
+/* Cards get real air (owner: "cards still touching"). 0.9rem read as a
+   collision on the 4-up Tools/type grids. */
+.module-card-grid {
+  gap: 20px !important;
+}
+
+/* ---- Owner defect #11: justify body copy for clean edges ------------------
+   Applied to prose paragraphs only (never labels, pills, stat numbers, or
+   headings). hyphens:auto suppresses the rivers justify can create in narrow
+   cards. */
+.support-copy,
+.lead-copy,
+.progress-pride-copy,
+.train-cinematic-copy,
+.section-context > p,
+.module-note p,
+.plan-launch-note {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+/* But a single short line looks worse justified — only justify when it wraps.
+   Keep captions that sit inside tight pills/stacks left-aligned. */
+.compact-plan-list .support-copy,
+.quick-action span,
+.pride-stat-label,
+.streak-stat-label {
+  text-align: left;
+  hyphens: manual;
+}
 .progress-pride-stats {
   display: flex;
   flex-wrap: wrap;
