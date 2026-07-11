@@ -231,6 +231,23 @@ h4 { letter-spacing: -0.012em; font-weight: 700; }
   border-color: var(--border-strong) !important;
   transform: translateY(-1px);
 }
+/* ---- Plan editorial: dissolve the note-box wall ---------------------------
+   Plan's panels stacked 4-5 bordered module-notes each (boxes in boxes).
+   They become quiet hairline rows — content unchanged, chrome gone. */
+.plan-editorial .panel .module-note {
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  padding: 12px 2px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.plan-editorial .panel .module-note:last-child { border-bottom: 0; }
+.plan-launch-note {
+  margin: -8px 2px 0;
+  color: var(--text-secondary);
+}
+.plan-launch-note strong { color: var(--text-primary); font-weight: 600; }
+
 /* ---- Progress pride opener: the numbers ARE the story --------------------
    Quiet editorial hero (no box): headline leads, real metrics stage huge,
    the completion score carries the accent. */

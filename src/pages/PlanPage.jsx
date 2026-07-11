@@ -192,28 +192,29 @@ export default function PlanPage() {
   };
 
   return (
-    <div className="page-grid page-grid-tight editorial-sections">
-      <section className="module-page-hero">
-        <div>
-          <p className="badge">Plan</p>
-          <h2>{summary.planSummary?.weeklyFocus || "Your adaptive weekly plan"}</h2>
-          <p className="lead-copy">
+    <div className="page-grid page-grid-tight editorial-sections plan-editorial">
+      {/* Cinematic opener (Craftsmanship): the WEEK is the story — its focus
+          as display type over the dusk-mountain photograph, one real action. */}
+      <section className="train-cinematic plan-cinematic">
+        <img alt="" aria-hidden="true" className="train-cinematic-photo" src="/media/pp-hero-dusk.png" />
+        <div aria-hidden="true" className="train-cinematic-scrim" />
+        <div className="train-cinematic-content">
+          <p className="train-cinematic-eyebrow">Weekly focus</p>
+          <h2 className="train-cinematic-title">{summary.planSummary?.weeklyFocus || "Your adaptive weekly plan"}</h2>
+          <p className="train-cinematic-copy">
             {programSummary || "This page keeps your weekly plan organized around your current setup, available tools, and next recommended actions."}
           </p>
-        </div>
-        <div className="module-page-actions">
-          <button className="primary-button" disabled={opening} type="button" onClick={openWeeklyPlan}>
-            {opening ? "Opening plan..." : hasPlanAccess ? "Open full weekly plan" : "Preview weekly plan"}
+          <button className="today-cinematic-cta" disabled={opening} type="button" onClick={openWeeklyPlan}>
+            {opening ? "Opening plan..." : hasPlanAccess ? "Open full weekly plan" : "Preview weekly plan"} <span aria-hidden="true">→</span>
           </button>
         </div>
       </section>
 
       {feedback ? <div className="status-banner">{feedback}</div> : null}
 
-      <div className="module-note">
-        <strong>{launchContext?.launchLabel || "Plan overview"}</strong>
-        <p className="support-copy">{launchContext?.launchSummary || "Use this space to review the week at a high level before opening a full plan preview or jumping into workouts."}</p>
-      </div>
+      <p className="support-copy plan-launch-note">
+        <strong>{launchContext?.launchLabel || "Plan overview"}</strong> — {launchContext?.launchSummary || "review the week at a high level before opening a full plan preview or jumping into workouts."}
+      </p>
 
       <div className="content-grid">
         <Panel eyebrow="Program" title="What this block is trying to do">
