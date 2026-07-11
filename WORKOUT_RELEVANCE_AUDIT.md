@@ -53,3 +53,15 @@ equipment at all (the owner's own default profile is hybrid).
   (hybrid 8, home 6). Now 8, and the live grid renders all 8 chips and toggles.
 - **Fix:** treat "both" as a synonym of "hybrid" in the function.
 - qa:launch 19/19, qa:personas PASS, build 0.
+
+## WR-5 — Audited all "both"/"hybrid" environment checks (WR-4 class)
+After WR-4, swept every `=== "hybrid"` check for the same synonym footgun:
+- `getEquipmentSelectionOptionsForEnvironment` — the live P1 (WR-4), fixed.
+- `getEquipmentOptionsForEnvironment` — only ever called with onboarding's
+  home/gym/hybrid (never "both"), so NOT a live defect; hardened defensively
+  to treat both==hybrid so the class can't recur. hybrid 6 (unchanged),
+  both 0→6.
+- `store.js` preferredEnvironment + `stretchLibrary` requestedEnvironment —
+  receive the profile's "hybrid" / are benign pass-throughs over bodyweight
+  mobility; no user-facing impact. Left as-is.
+Honest: one live fix (WR-4) + one prevention (this). Build 0.

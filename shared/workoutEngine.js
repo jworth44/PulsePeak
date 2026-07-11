@@ -190,13 +190,14 @@ export function formatEquipmentSelections(selections = []) {
 }
 
 export function getEquipmentOptionsForEnvironment(trainingEnvironment = "hybrid") {
-  return EQUIPMENT_PROFILE_OPTIONS.filter((option) => {
-    if (trainingEnvironment === "hybrid") {
-      return true;
-    }
-
-    return option.environments.includes(trainingEnvironment);
-  });
+  // Defensive hardening (not a live bug today — onboarding only passes
+  // home/gym/hybrid): treat "both" as a synonym of "hybrid" so this never
+  // repeats the WR-4 empty-options defect if a "both"-valued environment
+  // ever reaches it, matching getEquipmentSelectionOptionsForEnvironment.
+  if (trainingEnvironment === "hybrid" || trainingEnvironment === "both") {
+    return EQUIPMENT_PROFILE_OPTIONS.slice();
+  }
+  return EQUIPMENT_PROFILE_OPTIONS.filter((option) => option.environments.includes(trainingEnvironment));
 }
 
 export function getSuggestedWorkoutFocuses({ goalType = "general_fitness", injuryStatus = "none", lowRecovery = false } = {}) {
