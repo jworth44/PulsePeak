@@ -108,14 +108,29 @@ export default function NutritionPage() {
 
   return (
     <div className="page-grid page-grid-tight editorial-sections">
-      <section className="module-page-hero">
-        <div>
-          <p className="badge">Nutrition</p>
-          <h2>Turn your targets into food choices you can actually follow today.</h2>
-          <p className="lead-copy">
-            PulsePeak keeps the numbers practical, then turns them into a few repeatable meals, hydration moves, and simple timing choices that support training and recovery.
+      {/* Cinematic opener (Craftsmanship: one hero, one story, one action) —
+          the engine's real food direction over the approved dark-grade
+          nutrition photography. Same composition language as Train. */}
+      <section className="train-cinematic nutrition-cinematic">
+        <img alt="" aria-hidden="true" className="train-cinematic-photo" src="/nutrition/high-protein-breakfast.png" />
+        <div aria-hidden="true" className="train-cinematic-scrim" />
+        <div className="train-cinematic-content">
+          <p className="train-cinematic-eyebrow">Nutrition</p>
+          <h2 className="train-cinematic-title">
+            {guidance?.todayDirection?.title || "Food that follows your training"}
+          </h2>
+          <p className="train-cinematic-copy">
+            {continuityContext.title || "PulsePeak keeps the numbers practical, then turns them into a few repeatable meals, hydration moves, and simple timing choices."}
           </p>
-          <p className="support-copy recommendation-context-note">{continuityContext.title}</p>
+          {nutritionMode !== "off" ? (
+            <button
+              className="today-cinematic-cta"
+              type="button"
+              onClick={() => document.getElementById("nutrition-log")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+            >
+              Log today&rsquo;s food <span aria-hidden="true">↓</span>
+            </button>
+          ) : null}
         </div>
       </section>
 
@@ -158,7 +173,8 @@ export default function NutritionPage() {
       ) : (
         <>
           <div className="content-grid">
-            <Panel eyebrow="Today's food direction" title={guidance?.todayDirection?.title || "Actionable nutrition guidance"}>
+            {/* The hero carries the headline — this panel carries the steps. */}
+            <Panel eyebrow="Today's food direction" title="How to hit it today">
               <div className="section-context">
                 <span className="section-context-label">Today</span>
                 <p>{continuityContext.detail || guidance?.todayDirection?.summary || "These are the easiest nutrition wins left for the day, based on the gaps PulsePeak still sees."}</p>
@@ -267,7 +283,7 @@ export default function NutritionPage() {
           </div>
 
           {nutritionMode === "full" ? (
-            <Panel eyebrow="Meals" title="Full nutrition logging">
+            <Panel eyebrow="Meals" title="Full nutrition logging" id="nutrition-log">
               <form className="stack-form" onSubmit={addMeal}>
                 <label>
                   Meal or snack
@@ -296,7 +312,7 @@ export default function NutritionPage() {
               />
             </Panel>
           ) : (
-            <Panel eyebrow="Protein check-ins" title="Keep the nutrition layer light">
+            <Panel eyebrow="Protein check-ins" title="Keep the nutrition layer light" id="nutrition-log">
               <form className="stack-form" onSubmit={addProteinCheckIn}>
                 <label>
                   Protein source
