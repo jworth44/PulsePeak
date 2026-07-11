@@ -472,12 +472,21 @@ export default function DashboardPage() {
       </section>
 
       {summary.streakStatus ? (
-        <StreakCard status={summary.streakStatus} weeklyTarget={weeklySessionTarget} variant="row" />
-      ) : null}
-
-      <button className="text-link today-week-review-link" type="button" onClick={() => setShowWeekReview(true)}>
-        See your week in review →
-      </button>
+        <StreakCard
+          status={summary.streakStatus}
+          weeklyTarget={weeklySessionTarget}
+          variant="row"
+          action={
+            <button className="text-link today-week-review-link" type="button" onClick={() => setShowWeekReview(true)}>
+              Week in review <span aria-hidden="true">→</span>
+            </button>
+          }
+        />
+      ) : (
+        <button className="text-link today-week-review-link" type="button" onClick={() => setShowWeekReview(true)}>
+          See your week in review →
+        </button>
+      )}
 
       {/* Today's Focus (benchmark): the engine's real session focus + why. */}
       <section className="today-focus-card" data-reveal>

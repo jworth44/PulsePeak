@@ -80,7 +80,7 @@ function StatIcon({ name }) {
   }
 }
 
-export default function StreakCard({ status, weeklyTarget = 3, variant }) {
+export default function StreakCard({ status, weeklyTarget = 3, variant, action = null }) {
   if (!status) return null;
   const { emoji, title, sub } = headline(status);
   const freeze = freezeLine(status);
@@ -144,13 +144,18 @@ export default function StreakCard({ status, weeklyTarget = 3, variant }) {
             </div>
           </div>
         </div>
-        <p className="streak-row-context">
-          {sub}
-          {goalRemaining > 0
-            ? ` ${goalRemaining} more session${goalRemaining === 1 ? "" : "s"} hit${goalRemaining === 1 ? "s" : ""} your weekly goal.`
-            : " Weekly goal complete — everything from here is a bonus."}
-        </p>
-        {freeze ? <p className="streak-freeze">{freeze}</p> : null}
+        {/* One composed footer line (Craftsmanship: no stray fragments) —
+            coaching sentence, freeze chip, and the caller's action together. */}
+        <div className="streak-row-footer">
+          <p className="streak-row-context">
+            {sub}
+            {goalRemaining > 0
+              ? ` ${goalRemaining} more session${goalRemaining === 1 ? "" : "s"} hit${goalRemaining === 1 ? "s" : ""} your weekly goal.`
+              : " Weekly goal complete — everything from here is a bonus."}
+          </p>
+          {freeze ? <span className="streak-freeze streak-freeze-chip">{freeze}</span> : null}
+          {action ? <span className="streak-row-action">{action}</span> : null}
+        </div>
       </div>
     );
   }

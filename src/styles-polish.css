@@ -1855,10 +1855,14 @@ input:focus, select:focus, textarea:focus {
   padding: clamp(30px, 5vw, 56px);
 }
 .today-cinematic-greeting {
+  /* The emotional open — the app greets YOU (smile moment), it doesn't
+     whisper a timestamp. */
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 1.18rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+  color: var(--text-primary);
+  opacity: 0.92;
 }
 .today-cinematic-title {
   margin: 0;
@@ -2346,13 +2350,35 @@ input:focus, select:focus, textarea:focus {
   color: var(--text-secondary);
 }
 .streak-stat .streak-goal-bar { margin-top: 6px; }
+/* One composed footer line: coaching sentence · freeze chip · action link.
+   Replaces the stack of stray paragraphs under the stat row. */
+.streak-row-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+  margin-top: 14px;
+}
 .streak-row-context {
-  margin: 12px 0 0;
+  margin: 0;
   font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.5;
 }
-.streak-row-card .streak-freeze { margin: 4px 0 0; }
+.streak-freeze-chip {
+  margin: 0;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(var(--ink-rgb), 0.04);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.streak-row-action { margin-left: auto; }
+.streak-row-action .text-link { font-size: 0.86rem; }
+.streak-row-card .streak-freeze { margin: 0; }
 
 /* Quick actions (Canadian benchmark): one tap to the app's real actions.
    Quiet equipment-like tiles — thin icon over a small label. */
