@@ -15,10 +15,11 @@
     "qa:exercise-library": "node scripts/exercise-library-audit.mjs",
     "qa:model-consistency": "node scripts/model-consistency-audit.mjs",
     "qa:media": "node scripts/media-audit.mjs",
-    "qa:launch": "node scripts/launch-readiness.mjs",
+    "qa:launch": "node scripts/session-dedup-audit.mjs && node scripts/launch-readiness.mjs",
     "qa:workout-guide-regression": "node scripts/workout-guide-regression.mjs",
     "qa:workout-library": "node scripts/workout-library-audit.mjs",
-    "exercise:reports": "node scripts/exercise-manufacturing-report.mjs && node scripts/exercise-manufacturing-render.mjs"
+    "exercise:reports": "node scripts/exercise-manufacturing-report.mjs && node scripts/exercise-manufacturing-render.mjs",
+    "qa:session-dedup": "node scripts/session-dedup-audit.mjs"
   },
   "dependencies": {
     "@stripe/stripe-js": "^9.2.0",

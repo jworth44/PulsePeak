@@ -604,6 +604,14 @@ function buildWorkoutFromTemplate(templateEntry, filters, profile, historyContex
   }
 
   const environment = resolveWorkoutEnvironment(filters.environment, filters.equipmentProfile);
+  // Session-level dedup (Recovery Directive P0): slots were ranked
+  // independently, so templates with several same-pool slots selected the
+  // SAME top variant repeatedly (the "Cat-cow × 4" defect). Each picked
+  // exercise is excluded from later slots; a slot whose pool is genuinely
+  // exhausted is dropped (an honestly shorter session) rather than silently
+  // filled with a repeat.
+  const usedExerciseNames = new Set();
+  const seenSessionNames = new Set();
   const exercises = templateEntry.slots
     .map((slotEntry) =>
       buildExerciseForSlot(slotEntry, {
@@ -611,10 +619,20 @@ function buildWorkoutFromTemplate(templateEntry, filters, profile, historyContex
         equipmentProfile: filters.equipmentProfile,
         equipmentSelections: filters.equipmentSelections,
         profile,
-        historyContext
+        historyContext,
+        usedExerciseNames
       })
     )
-    .filter(Boolean);
+    .filter(Boolean)
+    // Final invariant: one session never lists the same movement twice.
+    .filter((exercise) => {
+      const key = String(exercise.name || "").toLowerCase();
+      if (seenSessionNames.has(key)) {
+        return false;
+      }
+      seenSessionNames.add(key);
+      return true;
+    });
 
   if (!exercises.length) {
     return null;
@@ -690,9 +708,13 @@ function applyWorkoutAccess(workout, accessTier, suggestedFocuses) {
   };
 }
 
-function buildExerciseForSlot(slotEntry, { environment, equipmentProfile, equipmentSelections, profile, historyContext }) {
+function buildExerciseForSlot(slotEntry, { environment, equipmentProfile, equipmentSelections, profile, historyContext, usedExerciseNames = new Set() }) {
+  const isUsed = (variantEntry) => usedExerciseNames.has(String(variantEntry.name || "").toLowerCase());
   const options = EXERCISE_VARIANTS.filter((variantEntry) => {
     if (variantEntry.pool !== slotEntry.pool) {
+      return false;
+    }
+    if (isUsed(variantEntry)) {
       return false;
     }
     if (!matchesEquipmentSetup(variantEntry, equipmentProfile, equipmentSelections)) {
@@ -708,10 +730,13 @@ function buildExerciseForSlot(slotEntry, { environment, equipmentProfile, equipm
     rankVariantOption(right, { environment, equipmentProfile, equipmentSelections, profile, historyContext, slotEntry }) -
     rankVariantOption(left, { environment, equipmentProfile, equipmentSelections, profile, historyContext, slotEntry })
   );
+  // Pool-wide fallback still NEVER reuses an exercise already in this
+  // session (Recovery Directive P0): a slot with a truly exhausted pool is
+  // dropped by the caller, never silently filled with a repeat.
   const fallbackOptions = rankedOptions.length
     ? rankedOptions
     : EXERCISE_VARIANTS
-        .filter((variantEntry) => variantEntry.pool === slotEntry.pool)
+        .filter((variantEntry) => variantEntry.pool === slotEntry.pool && !isUsed(variantEntry))
         .sort((left, right) =>
           rankVariantOption(right, { environment, equipmentProfile, equipmentSelections, profile, historyContext, slotEntry }) -
           rankVariantOption(left, { environment, equipmentProfile, equipmentSelections, profile, historyContext, slotEntry })
@@ -722,6 +747,14 @@ function buildExerciseForSlot(slotEntry, { environment, equipmentProfile, equipm
     return null;
   }
 
+  const primary = attachExerciseMetadata(primaryOption, slotEntry, profile, historyContext);
+  // Record BOTH the variant name and the displayed guide name — dedup must
+  // hold on what the user actually reads in the session.
+  usedExerciseNames.add(String(primaryOption.name || "").toLowerCase());
+  if (primary?.name) {
+    usedExerciseNames.add(String(primary.name).toLowerCase());
+  }
+
   const swapOptions = fallbackOptions
     .slice(1)
     .map((option) => attachExerciseMetadata(option, slotEntry, profile, historyContext))
@@ -729,7 +762,7 @@ function buildExerciseForSlot(slotEntry, { environment, equipmentProfile, equipm
     .slice(0, 10);
 
   return {
-    ...attachExerciseMetadata(primaryOption, slotEntry, profile, historyContext),
+    ...primary,
     availableSwapCount: Math.max(fallbackOptions.length - 1, 0),
     swapOptions
   };
