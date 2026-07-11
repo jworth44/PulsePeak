@@ -21,10 +21,15 @@
   contexts (3 environments × 4 equipment setups × 5 profiles incl. 40+,
   shoulder- and knee-restricted). Pre-fix: multiple failures (negative test).
   Post-fix: PASS. Gate is now unskippable — `qa:launch` runs it first.
-- **Residual (open):** runtime SWAP can still introduce a duplicate of another
-  slot's movement (swap lists are built per-slot). Tracked as WR-2.
+- **Residual:** none for the dropdown flow — see WR-2.
 
-## WR-2 (P1, open) — Swap options are not session-aware
-Swapping an exercise can select a movement already present in another slot.
-Fix direction: session modal filters swap options against current session
-names at render time.
+## WR-2 — Swap session-awareness ✅ VERIFIED ALREADY GUARDED (claim corrected)
+WR-1's analysis assumed generation-time swap lists could reintroduce
+duplicates at runtime. **Live adversarial verification (2026-07-11, premium
+populated session) disproved that:** `WorkoutDetailModal` recomputes each
+slot's swap dropdown against all other slots' CURRENT selections on every
+render (src/components/WorkoutDetailModal.jsx:410-416). Probe results: 5
+slots — 0 duplicate selections, 0 already-selected names offered in any
+dropdown, and after performing 2 real swaps still 0/0. The dropdown is the
+only swap surface, so the UI cannot assemble a duplicate session. No code
+change required; register corrected per the reporting-precision rules.
