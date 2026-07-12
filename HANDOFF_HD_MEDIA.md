@@ -1,5 +1,42 @@
 # HANDOFF — HD Media Generation (Task #13) — 2026-07-11
 
+## ✅✅ BREAKTHROUGH — SCRIPTABLE GEMINI API IS WORKING. NEXT SESSION: JUST RUN THE BATCH.
+The flaky browser path is ABANDONED. `GEMINI_API_KEY` is now in `.env` (owner's
+AI Studio key, format `AQ.Ab8...`, len 53 — authenticates via `?key=` QUERY
+PARAM, NOT Bearer). Image models confirmed available: **`gemini-3-pro-image`
+(Nano Banana Pro)** + `imagen-4.0-generate-001`. Reference-image editing from
+`temp/gemini-media/FINAL-muscle-chest.png` VALIDATED — `temp/gemini-media/
+TEST-core-api.png` came out as the SAME figure, correct abs highlight, clean
+bg, **NO sparkle** (API images have no UI watermark). This satisfies "use
+Gemini" AND is reliable.
+
+**DO THIS (whole set, ~14 API calls, few min):**
+1. `cd` to repo. `node scripts/_gemini_batch.mjs`  → writes 8 `muscle-*.png`
+   (from chest ref, front + posterior for back/glutes) + 6 `type-*.png`
+   (Imagen 16:9) into `temp/gemini-media/api/`. (Optional arg = substring
+   filter, e.g. `node scripts/_gemini_batch.mjs type-` for just type photos,
+   or `... arms` to redo one.)
+2. `Read` each output; QA per the AI Image Gate (correct muscle highlighted,
+   consistent figure, clean bg, no text). Re-run filtered for any reject
+   (tune that item's prompt in the script — esp. `arms` if it colors deltoids,
+   and `back`/`glutes` posterior view).
+3. Copy `temp/gemini-media/api/*.png` → `public/media/workout-library/`
+   (overwrite muscle-{chest,back,shoulders,arms,legs,glutes,core,full-body}.png
+   + type-{strength,hypertrophy,strength-endurance,power,conditioning,recovery}.png).
+   Keys are already wired in `WORKOUT_LIBRARY_MEDIA`.
+4. `npm run build` → `npm run qa:workout-library` (14/14) → headless screenshot
+   `/workout-library` to eyeball the grid → `git commit`.
+5. Then REMOVE the display-pop filter stopgap in `styles-polish.css`
+   (`.library-media-muscle img,.library-media-type img{filter:contrast...}`) —
+   real HD no longer needs it.
+Scripts: `scripts/_gemini_batch.mjs` (batch), `_gemini_test.mjs` (auth check),
+`_gemini_img_test.mjs` (single-image validate) — all `_`-prefixed temp, delete
+when done. `.env` GEMINI_API_KEY must NOT be committed (already gitignored).
+
+## (below = older browser-UI notes, now superseded by the API path above)
+
+# ORIGINAL HANDOFF — HD Media Generation (Task #13) — 2026-07-11
+
 Owner greenlit generating the HD muscle figures + workout-type photos and said
 **"use Gemini"**. This build is IN PROGRESS. Everything else in the Product
 Recovery Directive is done (see memory `project-pulsepeak`); this file is the
