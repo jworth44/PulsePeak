@@ -9,6 +9,22 @@ export default function BillingSuccessPage() {
   const [status, setStatus] = useState("confirming");
   const [message, setMessage] = useState("Confirming your PulsePeak access...");
   const hasConfirmedRef = useRef(false);
+  const mountedRef = useRef(true);
+  const pendingTimeoutRef = useRef(null);
+
+  // Track mount state and clear any pending retry timer on unmount so the
+  // confirmation loop never calls setState (or leaves a timer) after the user
+  // has navigated away from the billing screen.
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+      if (pendingTimeoutRef.current) {
+        window.clearTimeout(pendingTimeoutRef.current);
+        pendingTimeoutRef.current = null;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (hasConfirmedRef.current) return;
@@ -31,14 +47,19 @@ export default function BillingSuccessPage() {
           },
           token
         );
+        if (!mountedRef.current) return;
 
         setUser(payload.user);
         setDashboard(payload.dashboard);
         if (payload.entitlementPending) {
           let syncedPayload = payload;
           for (let attempt = 0; attempt < 3; attempt += 1) {
-            await new Promise((resolve) => window.setTimeout(resolve, 1500));
+            await new Promise((resolve) => {
+              pendingTimeoutRef.current = window.setTimeout(resolve, 1500);
+            });
+            if (!mountedRef.current) return;
             syncedPayload = await refreshSession(token);
+            if (!mountedRef.current) return;
             if (hasPremiumAccess(syncedPayload?.user)) {
               break;
             }
@@ -65,6 +86,7 @@ export default function BillingSuccessPage() {
         }
         await refreshSession(token);
       } catch (error) {
+        if (!mountedRef.current) return;
         setStatus("error");
         setMessage(error.message);
       }

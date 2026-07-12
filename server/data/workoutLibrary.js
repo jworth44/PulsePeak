@@ -8342,6 +8342,7 @@ function buildGuideSafetyNotes(option, loweredName, existingSafetyNotes = []) {
   if (loweredName.includes("pallof")) return ["Use a lighter band if the trunk rotates as soon as you press.", "Keep the knees soft so the low back does not take over."];
   if (loweredName.includes("sled push")) return ["Use a load you can move with clean posture, not a grindy collapse.", "Keep the run space clear before you start the push."];
   if (loweredName.includes("rower sprint")) return ["Stay tall through the spine instead of rounding to chase stroke rate.", "Treat this as an interval, not a max-out every stroke if form falls apart."];
+  if (loweredName.includes("barbell bench press")) return ["Use a spotter or set the safety pins so you can never get pinned under the bar.", "Keep the wrists stacked over the elbows and the bar path controlled.", "Rack the bar the moment a rep stalls rather than fighting it."];
   if (Array.isArray(existingSafetyNotes) && existingSafetyNotes.length) return existingSafetyNotes;
   return [
     "Use a load and range you can control cleanly.",

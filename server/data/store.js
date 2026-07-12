@@ -388,7 +388,12 @@ export function validateUser(email, password) {
   }
 
   const attemptedHash = crypto.scryptSync(password, user.salt, 64).toString("hex");
-  return attemptedHash === user.passwordHash ? normalizeStoredUser(user) : null;
+  // Constant-time compare so a wrong password cannot be probed byte-by-byte via
+  // response timing. Buffers must be equal length before timingSafeEqual.
+  const attempted = Buffer.from(attemptedHash, "hex");
+  const stored = Buffer.from(String(user.passwordHash || ""), "hex");
+  const matches = attempted.length === stored.length && crypto.timingSafeEqual(attempted, stored);
+  return matches ? normalizeStoredUser(user) : null;
 }
 
 export function createSession(userId) {
@@ -476,7 +481,20 @@ export function getSubscriptionStatus(user) {
 
 export function isPremiumEntitled(user) {
   const status = getSubscriptionStatus(user);
-  return getUserTier(user) === "premium" || status === "active" || status === "trialing";
+  if (getUserTier(user) === "premium" || status === "active") {
+    return true;
+  }
+  // A trial only entitles while it is still within its window. Fail closed if the
+  // local status lags Stripe (expired trial that has not yet been reconciled).
+  if (status === "trialing") {
+    return hasActiveTrialWindow(user);
+  }
+  return false;
+}
+
+function hasActiveTrialWindow(user) {
+  const trialEndsAt = getTrialEndsAt(user);
+  return Boolean(trialEndsAt) && new Date(trialEndsAt).getTime() > Date.now();
 }
 
 export function summarizeDashboard(data) {
@@ -2777,7 +2795,9 @@ function poundsToKilograms(value) {
 
 export function getAccessTier(user) {
   const status = getSubscriptionStatus(user);
-  if (status === "trialing") {
+  // Only treat a trial as TRIAL access while it is still inside its window;
+  // an expired-but-unreconciled trial falls through to premium/active or FREE.
+  if (status === "trialing" && hasActiveTrialWindow(user)) {
     return ACCESS_TIERS.TRIAL;
   }
   if (getUserTier(user) === "premium" || status === "active") {

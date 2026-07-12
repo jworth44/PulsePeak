@@ -69,6 +69,24 @@ export default function NutritionPage() {
     }
   };
 
+  const removeMeal = async (id) => {
+    const key = `meal-${id}`;
+    // Guard against a double-click firing a second DELETE against an already
+    // removed meal (which would reject as an unhandled promise).
+    if (saving === key) {
+      return;
+    }
+    setSaving(key);
+    setFeedback("");
+    try {
+      await mutate(`/meals/${id}`, { method: "DELETE" });
+    } catch (mutationError) {
+      setFeedback(mutationError.message);
+    } finally {
+      setSaving("");
+    }
+  };
+
   const addProteinCheckIn = async (event) => {
     event.preventDefault();
     setSaving("protein");
@@ -307,7 +325,7 @@ export default function NutritionPage() {
                 items={data.meals}
                 emptyMeta="Add your first meal to start tracking nutrition."
                 emptyTitle="No meals logged yet"
-                onRemove={(id) => mutate(`/meals/${id}`, { method: "DELETE" })}
+                onRemove={removeMeal}
                 renderMeta={(item) => `${item.calories} kcal | ${item.protein}g protein`}
               />
             </Panel>
