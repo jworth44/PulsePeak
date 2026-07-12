@@ -828,7 +828,7 @@ async function runBrowserVerification(token) {
     }, token);
 
     await page.goto(`${baseUrl}/exercise-library`, { waitUntil: "networkidle" });
-    await page.getByRole("heading", { name: /browse every movement used by pulsepeak workouts/i }).waitFor({ timeout: 15000 });
+    await page.getByRole("heading", { name: /learn every movement, the right way/i }).waitFor({ timeout: 15000 });
 
     const conditioningPill = page.locator(".exercise-library-category-pill").filter({ hasText: "Conditioning" }).first();
     await conditioningPill.click();

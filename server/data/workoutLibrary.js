@@ -4547,6 +4547,202 @@ const EXERCISE_LIBRARY_CONTENT_OVERRIDES = {
     regressions: ["Seated calf raise", "Partial range calf raise"],
     cues: ["Push through the ball of the foot", "Pause at the top", "Lower under control"]
   },
+  "standing calf raise": {
+    category: "Legs",
+    equipment: ["Bodyweight", "Dumbbells", "Machine", "Step"],
+    primaryMuscles: ["Calves"],
+    secondaryMuscles: ["Foot and ankle stabilizers"],
+    difficulty: "Beginner",
+    jointStress: "low",
+    movementPattern: "Ankle plantar flexion",
+    trainingUse: "Calf strength and push-off power with the knees straight",
+    description:
+      "The standing calf raise trains the larger gastrocnemius calf muscle by rising onto the balls of the feet with the knees straight. It builds ankle strength and push-off power.",
+    setup:
+      "Stand tall with feet about hip-width and the knees straight but not locked. Balance your weight through the balls of both feet, and rest a hand on a wall or rack for balance if needed.",
+    execution:
+      "Press through the balls of the feet to lift both heels as high as you can control. Pause and squeeze the calves at the top, then lower the heels slowly to the floor, or below a step for more range.",
+    breathing: "Exhale as you rise. Inhale as you lower.",
+    tempo: "Rise for 1 second, pause briefly, lower for 2-3 seconds.",
+    stepSequence: [
+      { title: "Start", description: "Stand tall with feet hip-width, knees straight, and balance controlled." },
+      { title: "Mid", description: "Press through the balls of the feet and begin lifting both heels." },
+      { title: "Peak", description: "Reach the highest controlled position with the calves squeezed." },
+      { title: "Finish", description: "Lower the heels slowly until they return under control." }
+    ],
+    commonMistakes: [
+      "Bouncing quickly out of the bottom",
+      "Cutting the range short at the top",
+      "Rolling onto the outer edge of the foot",
+      "Bending the knees to cheat the lift",
+      "Leaning heavily on the support"
+    ],
+    safetyNotes: [
+      "Hold support if your balance is unstable.",
+      "Lower with control to protect the Achilles tendon.",
+      "Ease off if the calf or Achilles feels sharp."
+    ],
+    modifications: ["Hold support for balance", "Use both legs together"],
+    progressions: ["Single-leg calf raise", "Hold dumbbells", "Raise from a step for extra range"],
+    regressions: ["Partial-range calf raise", "Seated calf raise"],
+    cues: ["Push through the balls of the feet", "Keep the knees straight, not locked", "Pause at the very top"]
+  },
+  "seated calf raise": {
+    category: "Legs",
+    equipment: ["Machine", "Dumbbells", "Bodyweight"],
+    primaryMuscles: ["Calves"],
+    secondaryMuscles: ["Foot and ankle stabilizers"],
+    difficulty: "Beginner",
+    jointStress: "low",
+    movementPattern: "Ankle plantar flexion (bent knee)",
+    trainingUse: "Soleus strength and lower-leg endurance with the knees bent",
+    description:
+      "The seated calf raise trains the deeper soleus muscle by pressing the heels up while the knees stay bent about 90 degrees, usually with a pad or weight resting on the thighs.",
+    setup:
+      "Sit tall with the balls of the feet on the platform or floor and the knees bent about 90 degrees. Rest the load — a machine pad or dumbbells — on the lower thighs, just above the knees, not on the kneecaps.",
+    execution:
+      "Press through the balls of the feet to lift the heels as high as you can control while the knees stay bent. Squeeze the calves at the top, then lower the heels slowly below the toes for a full stretch.",
+    breathing: "Exhale as you rise. Inhale as you lower.",
+    tempo: "Rise for 1 second, pause briefly, lower for 2-3 seconds.",
+    stepSequence: [
+      { title: "Start", description: "Sit tall with knees bent 90 degrees and the load resting above the knees." },
+      { title: "Mid", description: "Press through the balls of the feet and lift the heels." },
+      { title: "Peak", description: "Reach the top with the calves squeezed and the knees still bent." },
+      { title: "Finish", description: "Lower the heels slowly below the toes for a full stretch." }
+    ],
+    commonMistakes: [
+      "Bouncing out of the bottom",
+      "Using only a short range",
+      "Letting the knees drift or straighten",
+      "Sliding the load onto the kneecaps"
+    ],
+    safetyNotes: [
+      "Keep the pad above the knee, never on the kneecap.",
+      "Lower with control to protect the Achilles tendon.",
+      "Ease off if the calf or Achilles feels sharp."
+    ],
+    modifications: ["Use a lighter load", "Bodyweight seated raise"],
+    progressions: ["Add load on the thighs", "Slow 3-second lower", "Pause at the bottom stretch"],
+    regressions: ["Reduce the load", "Use a shorter range"],
+    cues: ["Keep the knees bent", "Drive the heels straight up", "Full stretch at the bottom"]
+  },
+  "single-leg calf raise": {
+    category: "Legs",
+    equipment: ["Bodyweight", "Dumbbells", "Step"],
+    primaryMuscles: ["Calves"],
+    secondaryMuscles: ["Foot and ankle stabilizers"],
+    difficulty: "Intermediate",
+    jointStress: "low",
+    movementPattern: "Ankle plantar flexion",
+    trainingUse: "Single-leg calf strength, ankle control, and balance",
+    description:
+      "The single-leg calf raise trains one calf at a time by rising onto the ball of one foot, which increases the load and challenges balance.",
+    setup:
+      "Stand on the ball of one foot near a wall or rack for balance. Let the other foot hang or rest lightly behind you, and keep the standing knee straight but not locked.",
+    execution:
+      "Press through the ball of the standing foot to lift the heel as high as you can control. Pause and squeeze the calf at the top, then lower slowly to the floor or below a step. Finish all reps, then switch legs.",
+    breathing: "Exhale as you rise. Inhale as you lower.",
+    tempo: "Rise for 1 second, pause briefly, lower for 2-3 seconds.",
+    stepSequence: [
+      { title: "Start", description: "Balance on the ball of one foot with a hand on support." },
+      { title: "Mid", description: "Press through the ball of the foot and lift the heel." },
+      { title: "Peak", description: "Reach the top with the calf squeezed and balance held." },
+      { title: "Finish", description: "Lower slowly under control, then switch legs after all reps." }
+    ],
+    commonMistakes: [
+      "Bouncing at the bottom",
+      "Cutting the range short",
+      "Rolling onto the outer edge of the foot",
+      "Pulling up with the support hand instead of the calf"
+    ],
+    safetyNotes: [
+      "Keep a hand on support until your balance is steady.",
+      "Lower with control to protect the Achilles tendon.",
+      "Ease off if the calf or Achilles feels sharp."
+    ],
+    modifications: ["Keep more weight on the support hand", "Use both legs together"],
+    progressions: ["Hold a dumbbell", "Raise from a step for extra range", "Slow 3-second lower"],
+    regressions: ["Two-leg calf raise", "More hand support"],
+    cues: ["Push through the ball of the foot", "Stay tall and balanced", "Pause at the very top"]
+  },
+  "dumbbell thruster": {
+    category: "Full body",
+    equipment: ["Dumbbells"],
+    primaryMuscles: ["Quads", "Glutes", "Shoulders"],
+    secondaryMuscles: ["Triceps", "Core"],
+    difficulty: "Intermediate",
+    jointStress: "moderate",
+    movementPattern: "Squat to overhead press",
+    trainingUse: "Full-body power, conditioning, and leg-to-shoulder coordination",
+    description:
+      "The dumbbell thruster combines a front squat and an overhead press into one movement. You squat down with the dumbbells at the shoulders, then drive up and press them overhead in one smooth motion.",
+    setup:
+      "Stand with feet about shoulder-width and hold a dumbbell in each hand resting on the front of the shoulders, palms facing in and elbows up. Brace the core and keep the chest tall.",
+    execution:
+      "Bend the knees and hips to squat down until the thighs are about parallel to the floor, keeping the dumbbells on the shoulders. Drive up hard through the heels, and as the legs straighten use that momentum to press the dumbbells straight overhead. Lower them back to the shoulders and flow into the next squat.",
+    breathing: "Breathe in as you squat down. Exhale as you drive up and press.",
+    tempo: "Squat under control, then drive up and press in one quick motion.",
+    stepSequence: [
+      { title: "Start", description: "Stand tall with the dumbbells resting on the shoulders and elbows up." },
+      { title: "Mid", description: "Squat down until the thighs are about parallel, dumbbells still on the shoulders." },
+      { title: "Peak", description: "Drive up through the heels and press the dumbbells straight overhead." },
+      { title: "Finish", description: "Lower the dumbbells back to the shoulders, ready for the next rep." }
+    ],
+    commonMistakes: [
+      "Pressing overhead before the legs finish driving up",
+      "Letting the chest fall forward in the squat",
+      "Pressing the weights forward instead of straight up",
+      "Arching the low back at the top"
+    ],
+    safetyNotes: [
+      "Use a weight you can press overhead with good form.",
+      "Keep the core braced so the low back does not arch.",
+      "Stop if the shoulders or low back feel strained."
+    ],
+    modifications: ["Use one lighter dumbbell held like a goblet", "Do the squat and press as two separate moves"],
+    progressions: ["Use heavier dumbbells", "Barbell thruster", "Faster continuous pace"],
+    regressions: ["Squat to a box, then press", "Reduce the squat depth"],
+    cues: ["Squat, then drive and press in one flow", "Press straight overhead", "Keep the elbows up in the squat"]
+  },
+  "band thruster": {
+    category: "Full body",
+    equipment: ["Bands"],
+    primaryMuscles: ["Quads", "Glutes", "Shoulders"],
+    secondaryMuscles: ["Triceps", "Core"],
+    difficulty: "Intermediate",
+    jointStress: "low",
+    movementPattern: "Squat to overhead press",
+    trainingUse: "Full-body conditioning and leg-to-shoulder coordination with band tension",
+    description:
+      "The band thruster combines a squat and an overhead press using a resistance band under the feet. You squat down holding the handles at the shoulders, then stand and press the handles overhead.",
+    setup:
+      "Stand on the middle of a resistance band with feet about shoulder-width. Hold a handle in each hand at shoulder height with palms facing forward and the elbows in front of the body.",
+    execution:
+      "Squat down until the thighs are about parallel to the floor while keeping the hands at the shoulders. Drive up through the heels and, as you stand, press the handles straight overhead against the band's tension. Lower the hands back to the shoulders and flow into the next squat.",
+    breathing: "Breathe in as you squat down. Exhale as you drive up and press.",
+    tempo: "Squat under control, then drive up and press in one quick motion.",
+    stepSequence: [
+      { title: "Start", description: "Stand on the band with the handles at the shoulders and elbows up." },
+      { title: "Mid", description: "Squat down until the thighs are about parallel, hands still at the shoulders." },
+      { title: "Peak", description: "Drive up through the heels and press the handles straight overhead." },
+      { title: "Finish", description: "Lower the hands back to the shoulders, ready for the next rep." }
+    ],
+    commonMistakes: [
+      "Pressing overhead before standing all the way up",
+      "Letting the band pull the chest forward",
+      "Knees caving inward during the squat",
+      "Arching the low back at the top"
+    ],
+    safetyNotes: [
+      "Check the band and your footing for wear or slippage before starting.",
+      "Keep the core braced so the low back does not arch.",
+      "Ease off if a shoulder, knee, or the low back feels strained."
+    ],
+    modifications: ["Use a lighter band", "Do the squat and press as two separate moves"],
+    progressions: ["Use a thicker band", "Dumbbell or barbell thruster", "Faster continuous pace"],
+    regressions: ["Reduce the squat depth", "Press only, without the squat"],
+    cues: ["Squat, then stand and press in one flow", "Press straight up", "Stand tall before the press finishes"]
+  },
   plank: {
     category: "Core",
     equipment: ["Bodyweight"],
