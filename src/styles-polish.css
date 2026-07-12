@@ -3250,15 +3250,6 @@ input:focus, select:focus, textarea:focus {
   transition: opacity var(--dur-base) var(--ease-out);
 }
 .library-media img.is-loaded { opacity: 1; }
-/* Display-pop pass (owner: figures read dull) — a modest contrast/saturation
-   lift makes the highlighted muscles stand out on the current low-res assets.
-   NOTE: this is a stopgap; the baked dark backdrop shape ("watermark") and
-   true HD resolution require regeneration — see MEDIA_QUALITY_REGISTER
-   §HD-MUSCLE-TYPE. */
-.library-media-muscle img,
-.library-media-type img {
-  filter: contrast(1.08) saturate(1.14) brightness(1.03);
-}
 
 /* Loading skeleton (approved image still loading) */
 .library-media-loading {
