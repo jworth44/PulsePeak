@@ -33,14 +33,17 @@ API + SPA fallback. Config in `render.yaml` (Render) + health check `/api/health
 
 ## 2. 🔒 CRITICAL launch blocker — persistence
 
-Production `PULSEPEAK_DB_PATH` currently points at `/tmp` (see `render.yaml`) which
-is **ephemeral on Render — all user data is wiped on every deploy/restart.** This
-**must** be fixed before charging customers. Options (owner picks):
-- **Render persistent disk** — mount a disk, set `PULSEPEAK_DB_PATH=/data/pulsepeak-db.json`. Simplest; keeps the JSON store.
-- **Managed Postgres** — more robust for scale; requires a small data-layer swap
-  (the store is already abstracted in `server/data/store.js`).
+**✅ PREPPED (2026-07-12).** `render.yaml` now mounts a 1 GB **Render persistent
+disk** at `/data` and sets `PULSEPEAK_DB_PATH=/data/pulsepeak-db.json`, so user
+data survives deploys/restarts. No code change was needed — `server/data/store.js`
+already creates the directory and seeds an empty DB on first boot, and writes are
+atomic. **Owner action remaining:** the service must be on a **paid instance
+(Starter+)** for Render to attach a disk (free tier can't); confirm the plan when
+connecting the Blueprint, then verify data survives one redeploy.
 
-Until this is resolved, treat any deploy as **data-destroying**. This is the #1 item.
+- **Render persistent disk** — ✅ configured (above). Simplest; keeps the JSON store.
+- **Managed Postgres** — more robust for scale; requires a small data-layer swap
+  (the store is already abstracted in `server/data/store.js`). Migrate later if scale demands it.
 
 ---
 
@@ -126,7 +129,7 @@ nutrition and hydration, recovery and habit tracking, and progress you can see.
 - [x] Legal/support pages reachable logged-out; real 404.
 - [x] CI (build + qa:launch + model-consistency).
 - [x] Responsive desktop + mobile; mobile bottom-nav; 0 console errors.
-- [ ] 🔒 Persistence fix (Section 2) — **blocker**.
+- [x] Persistence fix (Section 2) — disk configured in `render.yaml`; 🔒 owner confirms paid instance on Blueprint connect.
 - [ ] 🔒 Billing live keys + enable flag (Section 3).
 - [ ] 🔒 Domain/DNS + origins + sitemap/robots host (Section 4).
 - [ ] 🔒 Sentry DSN + analytics domain (Section 5) — optional but recommended.

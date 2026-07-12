@@ -31,11 +31,17 @@ Why this is the cleanest path:
 
 - `APP_ORIGIN=https://your-render-service.onrender.com`
 - `CORS_ALLOWED_ORIGINS=https://your-render-service.onrender.com`
-- `PULSEPEAK_DB_PATH=/tmp/pulsepeak-db.json`
+- `PULSEPEAK_DB_PATH=/data/pulsepeak-db.json`
 
-`/tmp/pulsepeak-db.json` is the lowest-manual-work staging path. It is fine for staging, but data is ephemeral and can reset on restart or redeploy.
+`render.yaml` now mounts a 1 GB persistent disk at `/data` and points
+`PULSEPEAK_DB_PATH` there, so user data **survives deploys and restarts**.
+The store auto-creates the directory and seeds an empty DB on first boot —
+no manual setup needed. Render disks require a paid instance (Starter+);
+a free web service cannot mount one.
 
-If you want persistent staging data later, point `PULSEPEAK_DB_PATH` to a mounted disk path instead.
+For a throwaway demo with no data retention you can override
+`PULSEPEAK_DB_PATH=/tmp/pulsepeak-db.json` (ephemeral), but the persistent
+`/data` default is correct for anything real.
 
 ## Stripe webhook
 
