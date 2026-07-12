@@ -36,7 +36,17 @@ reviewed separately under theme atmosphere (Task #6).
 audit methodology lives in this register's history; re-run by measuring
 naturalWidth vs rendered width × DPR on every route.
 
-## §HD-MUSCLE-TYPE — HD regeneration of muscle figures + workout-type photos (owner-gated)
+## §HD-MUSCLE-TYPE — HD regeneration of muscle figures + workout-type photos ✅ COMPLETE 2026-07-11
+**✅ SHIPPED (2026-07-11, commit 3d55cb3):** All 14 assets regenerated HD via the
+Gemini API (`gemini-3-pro-image` reference-editing for the 8 muscle figures from a
+consistent chest reference; `imagen-4.0-generate-001` 16:9 for the 6 type photos).
+Muscle figures 928×1152 (correct muscle in crimson #C6283B, incl. fixed arms=biceps
+and posterior back/glutes views); type photos 1408×768 cinematic dark-gym. No UI
+watermark (API path — not the consumer app). All 14 passed the AI Image Gate;
+`qa:workout-library` 14/14; verified rendering in the live DOM. The display-pop
+filter stopgap was removed from `styles-polish.css` (real HD no longer needs it).
+Original request/spec below for the record.
+
 **Owner (2026-07-11):** the Browse-by-Muscle-Group figures are "dull, with a
 shadow image/watermark in the background"; want HD + prominent. The Popular
 Workout Types photos also need sharper HD.
