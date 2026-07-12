@@ -4743,6 +4743,202 @@ const EXERCISE_LIBRARY_CONTENT_OVERRIDES = {
     regressions: ["Reduce the squat depth", "Press only, without the squat"],
     cues: ["Squat, then stand and press in one flow", "Press straight up", "Stand tall before the press finishes"]
   },
+  "goblet squat to press": {
+    category: "Full body",
+    equipment: ["Dumbbells", "Kettlebell"],
+    primaryMuscles: ["Quads", "Glutes", "Shoulders"],
+    secondaryMuscles: ["Core", "Triceps"],
+    difficulty: "Beginner",
+    jointStress: "moderate",
+    movementPattern: "Squat to overhead press",
+    trainingUse: "Full-body strength linking a squat to an overhead press",
+    description:
+      "The goblet squat to press links a squat and an overhead press. You squat holding one weight at the chest, then stand and press it overhead in one flow.",
+    setup:
+      "Hold one dumbbell or kettlebell at chest height with both hands, elbows close to the body, and feet about shoulder-width.",
+    execution:
+      "Squat down between the hips until the thighs are about parallel, keeping the chest tall and the weight at the chest. Drive up through the heels and, as you stand tall, press the weight straight overhead. Lower it back to the chest and flow into the next squat.",
+    breathing: "Breathe in as you squat. Exhale as you drive up and press.",
+    tempo: "Squat under control, then stand and press in one motion.",
+    stepSequence: [
+      { title: "Start", description: "Hold the weight at the chest with elbows tucked and stand tall." },
+      { title: "Mid", description: "Squat down until the thighs are about parallel, weight still at the chest." },
+      { title: "Peak", description: "Drive up through the heels and press the weight straight overhead." },
+      { title: "Finish", description: "Lower the weight back to the chest, ready for the next rep." }
+    ],
+    commonMistakes: [
+      "Pressing before standing fully upright",
+      "Letting the chest drop forward in the squat",
+      "Pressing the weight forward instead of straight up",
+      "Arching the low back at the top"
+    ],
+    safetyNotes: [
+      "Use a weight you can press overhead with control.",
+      "Keep the core braced so the low back stays neutral.",
+      "Stop if the shoulders or low back feel strained."
+    ],
+    modifications: ["Do the squat and press as two separate moves", "Use a lighter weight"],
+    progressions: ["Use a heavier weight", "Dumbbell thruster", "Faster continuous pace"],
+    regressions: ["Goblet squat only", "Reduce the squat depth"],
+    cues: ["Squat, then stand and press in one flow", "Press straight overhead", "Keep the weight close to the chest in the squat"]
+  },
+  "push-up to down dog": {
+    category: "Full body",
+    equipment: ["Bodyweight"],
+    primaryMuscles: ["Chest", "Shoulders"],
+    secondaryMuscles: ["Triceps", "Core"],
+    difficulty: "Beginner",
+    jointStress: "low",
+    movementPattern: "Push to pike",
+    trainingUse: "Upper-body pressing with shoulder mobility and core control",
+    description:
+      "The push-up to down dog pairs a push-up with a downward-dog (pike) position. You do a push-up, then push the hips up and back into an upside-down V before the next rep.",
+    setup:
+      "Start in a high plank with the hands under the shoulders, feet about hip-width, and the body in a straight line from head to heels.",
+    execution:
+      "Bend the elbows to lower into a push-up until the chest is just above the floor, then press back up. From the top, push the hips up and back so the body forms an upside-down V (down dog), with the head between the arms and the heels reaching toward the floor. Come back to the plank and start the next push-up.",
+    breathing: "Exhale as you press up. Inhale as you move into down dog.",
+    tempo: "Lower for 2 seconds, press up, then flow into down dog under control.",
+    stepSequence: [
+      { title: "Start", description: "Hold a high plank with hands under the shoulders and a straight line head to heels." },
+      { title: "Mid", description: "Bend the elbows to lower into a push-up, then press back up." },
+      { title: "Peak", description: "Push the hips up and back into a down-dog V, head between the arms." },
+      { title: "Finish", description: "Return to the plank, ready for the next push-up." }
+    ],
+    commonMistakes: [
+      "Letting the hips sag in the push-up",
+      "Bending the knees a lot in down dog instead of reaching the hips up and back",
+      "Rushing between the two positions",
+      "Shrugging the shoulders in down dog"
+    ],
+    safetyNotes: [
+      "Drop to the knees for the push-up if needed.",
+      "Move into down dog only as far as the shoulders allow.",
+      "Stop if the wrists or shoulders feel strained."
+    ],
+    modifications: ["Push-up from the knees", "Hold a brief pike instead of a full down dog"],
+    progressions: ["Deeper down dog", "Add a pike push-up at the top", "Slow, controlled tempo"],
+    regressions: ["Incline push-up to pike", "Push-up only"],
+    cues: ["Straight line in the push-up", "Hips up and back for down dog", "Head between the arms at the top"]
+  },
+  "single-leg glute bridge": {
+    category: "Glutes",
+    equipment: ["Bodyweight"],
+    primaryMuscles: ["Glutes"],
+    secondaryMuscles: ["Hamstrings", "Core"],
+    difficulty: "Intermediate",
+    jointStress: "low",
+    movementPattern: "Single-leg hip extension",
+    trainingUse: "Single-leg glute strength and hip stability",
+    description:
+      "The single-leg glute bridge trains one glute at a time. You lift the hips using one foot while the other leg stays off the floor, which increases the load and challenges hip stability.",
+    setup:
+      "Lie on your back with one foot flat on the floor and the knee bent. Straighten the other leg or hold that knee toward your chest so only one foot is planted.",
+    execution:
+      "Drive through the heel of the planted foot to lift the hips until the body forms a straight line from the shoulders to the knee. Squeeze the glute at the top and keep the hips level — do not let one side drop — then lower slowly. Finish all reps, then switch legs.",
+    breathing: "Exhale as you lift. Inhale as you lower.",
+    tempo: "Lift for 1 second, squeeze briefly, lower for 2-3 seconds.",
+    stepSequence: [
+      { title: "Start", description: "Lie on your back with one foot planted and the other leg lifted off the floor." },
+      { title: "Mid", description: "Drive through the planted heel and lift the hips." },
+      { title: "Peak", description: "Reach a straight line shoulder-to-knee with the hips level and glute squeezed." },
+      { title: "Finish", description: "Lower slowly under control, then switch legs after all reps." }
+    ],
+    commonMistakes: [
+      "Letting the hips tilt or one side drop",
+      "Pushing through the toes instead of the heel",
+      "Arching the low back to gain height",
+      "Resting the lifted leg on the floor"
+    ],
+    safetyNotes: [
+      "Keep the hips level to protect the low back.",
+      "Move through a range you can control.",
+      "Ease off if the low back or hamstring cramps."
+    ],
+    modifications: ["Keep the lifted foot lightly touching for balance", "Two-leg glute bridge"],
+    progressions: ["Hold a weight on the hips", "Elevate the planted foot on a step", "Add a pause at the top"],
+    regressions: ["Two-leg glute bridge", "Use a shorter range"],
+    cues: ["Drive through the heel", "Keep the hips level", "Squeeze the glute at the top"]
+  },
+  "step-up to knee drive": {
+    category: "Legs",
+    equipment: ["Bodyweight", "Dumbbells"],
+    primaryMuscles: ["Quads", "Glutes"],
+    secondaryMuscles: ["Hamstrings", "Core", "Hip flexors"],
+    difficulty: "Intermediate",
+    jointStress: "moderate",
+    movementPattern: "Single-leg step to knee drive",
+    trainingUse: "Single-leg strength, balance, and driving power",
+    description:
+      "The step-up to knee drive adds a knee drive to a step-up. You step onto a box with one leg, then drive the other knee up to hip height before stepping back down.",
+    setup:
+      "Stand facing a sturdy box or step. Place one whole foot on top, lean slightly over that lead leg, and keep the torso tall.",
+    execution:
+      "Push through the lead foot to stand tall on top of the box. As you reach the top, drive the trailing knee up in front of you to about hip height and balance for a moment. Lower that leg, step back down under control, and repeat. Finish the reps, then switch legs.",
+    breathing: "Exhale as you step up and drive the knee. Inhale as you step down.",
+    tempo: "Step up and drive under control; lower slowly.",
+    stepSequence: [
+      { title: "Start", description: "Place the whole lead foot on the box and lean slightly over the lead leg." },
+      { title: "Mid", description: "Push through the lead foot to stand tall on top of the box." },
+      { title: "Peak", description: "Drive the trailing knee up to hip height and balance for a moment." },
+      { title: "Finish", description: "Lower the knee, step down under control, and switch legs after all reps." }
+    ],
+    commonMistakes: [
+      "Pushing off the back foot instead of driving through the lead foot",
+      "Rushing the knee drive and losing balance",
+      "Letting the torso collapse forward",
+      "Dropping back down without control"
+    ],
+    safetyNotes: [
+      "Use a box height you can control with good balance.",
+      "Keep the whole lead foot on the box.",
+      "Hold light support or lower the box if balance is shaky."
+    ],
+    modifications: ["Plain step-up without the knee drive", "Hold a wall for balance"],
+    progressions: ["Hold dumbbells", "Use a higher box", "Add a small hop at the top"],
+    regressions: ["Lower box", "Step-up only"],
+    cues: ["Drive through the lead foot", "Knee up to hip height", "Stay tall and balanced on top"]
+  },
+  "renegade row": {
+    category: "Full body",
+    equipment: ["Dumbbells"],
+    primaryMuscles: ["Mid-back", "Lats"],
+    secondaryMuscles: ["Core", "Biceps", "Shoulders"],
+    difficulty: "Advanced",
+    jointStress: "moderate",
+    movementPattern: "Plank with alternating row",
+    trainingUse: "Back strength plus anti-rotation core stability",
+    description:
+      "The renegade row is a plank held on two dumbbells while you row one dumbbell at a time. The core has to resist twisting as each arm pulls.",
+    setup:
+      "Start in a high plank with each hand gripping a dumbbell placed about shoulder-width, feet wider than the hips for a stable base, and the body in a straight line.",
+    execution:
+      "Keeping the hips level and square to the floor, row one dumbbell up toward the hip by driving the elbow back. Lower it under control, then row the other side. Do not let the hips rock or twist as you pull. Alternate arms for the set.",
+    breathing: "Exhale as you row. Inhale as you lower.",
+    tempo: "Row under control; keep the plank steady the whole time.",
+    stepSequence: [
+      { title: "Start", description: "Hold a high plank on the dumbbells with feet wide and a straight line head to heels." },
+      { title: "Mid", description: "Row one dumbbell toward the hip while the hips stay level." },
+      { title: "Peak", description: "Elbow back and shoulder blade squeezed, with no twist through the torso." },
+      { title: "Finish", description: "Lower under control, then row the other side." }
+    ],
+    commonMistakes: [
+      "Letting the hips twist or rock with each row",
+      "Feet too close together, making the plank unstable",
+      "Yanking with the arm instead of driving the elbow",
+      "Letting the hips sag"
+    ],
+    safetyNotes: [
+      "Widen the feet for a stable base.",
+      "Use light dumbbells until the plank stays steady.",
+      "Keep the wrists stacked over the dumbbells.",
+      "Stop if the low back sags or strains."
+    ],
+    modifications: ["Row from the knees", "Alternate lifting a hand with no dumbbells"],
+    progressions: ["Heavier dumbbells", "Feet closer together", "Add a push-up between rows"],
+    regressions: ["Knees down", "Bent-over row instead"],
+    cues: ["Hips stay level and square", "Drive the elbow back", "Widen the feet to stay stable"]
+  },
   plank: {
     category: "Core",
     equipment: ["Bodyweight"],
